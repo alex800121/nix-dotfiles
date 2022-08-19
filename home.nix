@@ -1,12 +1,14 @@
 { config, pkgs, ... }:
 
 {
+
   nix = {
     package = pkgs.nix;
     settings = {
       experimental-features = "nix-command flakes";
     };
   };
+
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
   home.username = "alex800121";
@@ -25,8 +27,21 @@
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
-  home.packages = (with pkgs; [
-    curl neofetch freshfetch ripgrep wget gcc_multi gccMultiStdenv xclip nodejs
+  home.packages = (with pkgs; with pkgs.python39Packages; [
+    firefox
+    microsoft-edge
+    curl unzip wget alacritty ripgrep vim
+    gcc_multi gccMultiStdenv
+    neofetch freshfetch
+    python39
+    dmidecode
+    xclip
+    nodejs
+    libchewing
+    gtk3
+    pip
+    distro psutil distutils_extra distlib  devtools click power py-dmidecode
+    setuptools setuptools-git
   ] );
 
   home.file = {
@@ -41,12 +56,40 @@
     # "\.profile".source = programs/bash/.profile;
     # "\.bash_logout".source = programs/bash/.bash_logout;
   };
-
-  xdg.configFile = {
-    "nvim" = {
-      recursive = true;
-      source = programs/nvim;
+  
+  programs.bash = {
+    enable = true;
+    enableCompletion = true;
+    sessionVariables = {
+      EDITOR = "nvim";
+      VISUAL = "nvim";
     };
+    shellOptions = [
+       "histappend" "checkwinsize" "extglob" "globstar" "checkjobs" "-cdspell"
+    ];
+    shellAliases = {
+      ls = "ls --color=auto";
+      ll = "ls -alF";
+      la = "ls -A";
+      l = "ls -CF";
+      sshrpi4 = "ssh alex800121@alexrpi4gate.duckdns.org";
+      sshubuntu = "ssh alex800121@alexubuntugate.duckdns.org";
+      sshdormrpi = "ssh -p 40000 pi@alexrpi4gate.duckdns.org";
+      sshdormubu = "ssh -p 40000 pi@alexubuntugate.duckdns.org";
+      nv = "nvim";
+    };
+    historyControl = [ "ignoredups" "ignorespace" ];
+    historyFileSize = 100000;
+    historySize = 10000;
+    bashrcExtra = ''
+      if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then
+        . $HOME/.nix-profile/etc/profile.d/nix.sh;
+      fi
+
+      PS1='\[\033[01;34m\]\W \[\033[00m\]\$ '
+      set editing-mode vi
+      set completion-ignore-case on
+    '';
   };
 
   programs.neovim = let
@@ -95,6 +138,12 @@
       tree-sitter
     ] );
   };
+  xdg.configFile = {
+    "nvim" = {
+      recursive = true;
+      source = programs/nvim;
+    };
+  };
 
   programs.git = {
     enable = true;
@@ -132,7 +181,7 @@
     escapeTime = 0;
     extraConfig = ''
       # reload config without killing server
-      # bind r source-file ~/.tmux.conf \; display-message "Config reloaded..."
+      # bind r source-file ~/.tmux.conf \; display-message "Config reloaded"
 
       # "|" splits the current window vertically, and "-" splits it horizontally
       unbind '"'
