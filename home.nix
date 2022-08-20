@@ -27,10 +27,10 @@
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
-  home.packages = (with pkgs; with pkgs.python39Packages; [
+  home.packages = (with pkgs; [
     firefox
     microsoft-edge
-    curl unzip wget alacritty ripgrep vim
+    curl unzip wget ripgrep vim
     gcc_multi gccMultiStdenv
     neofetch freshfetch
     python39
@@ -39,10 +39,11 @@
     nodejs
     libchewing
     gtk3
+  ]) ++ (with pkgs.python39Packages; [
     pip
     distro psutil distutils_extra distlib  devtools click power py-dmidecode
     setuptools setuptools-git
-  ] );
+  ]);
 
   home.file = {
     # "\.haskeline".source = programs/haskell/.haskeline;
@@ -51,9 +52,6 @@
     #   recursive = true;
     #   source = programs/cabal/.cabal;
     # };
-    # "\.bashrc".source = programs/bash/.bashrc;
-    # "\.bash_aliases".source = programs/bash/.bash_aliases;
-    # "\.profile".source = programs/bash/.profile;
     # "\.bash_logout".source = programs/bash/.bash_logout;
   };
   
@@ -87,9 +85,22 @@
       fi
 
       PS1='\[\033[01;34m\]\W \[\033[00m\]\$ '
-      set editing-mode vi
-      set completion-ignore-case on
+      set -o vi
     '';
+  };
+
+  programs.readline = {
+    enable = true;
+    extraConfig = "set completion-ignore-case On";
+  };
+
+  programs.alacritty = {
+    enable = true;
+    package = pkgs.alacritty;
+  };
+  xdg.configFile."alacritty" = {
+    recursive = true;
+    source = programs/alacritty;
   };
 
   programs.neovim = let
@@ -138,11 +149,9 @@
       tree-sitter
     ] );
   };
-  xdg.configFile = {
-    "nvim" = {
-      recursive = true;
-      source = programs/nvim;
-    };
+  xdg.configFile."nvim" = {
+    recursive = true;
+    source = programs/nvim;
   };
 
   programs.git = {
@@ -168,18 +177,19 @@
 
   programs.tmux = {
     enable = true;
+    sensibleOnTop = true;
     plugins = with pkgs.tmuxPlugins; [
-      sensible
       resurrect
     ];
     terminal = "screen-256color";
-    keyMode = "vi";
+    # keyMode = "vi";
     baseIndex = 1;
     historyLimit = 10000;
     prefix = "C-a";
     shortcut = "a";
     escapeTime = 0;
     extraConfig = ''
+      setw -g mode-keys vi
       # reload config without killing server
       # bind r source-file ~/.tmux.conf \; display-message "Config reloaded"
 
@@ -223,5 +233,4 @@
       set -g visual-activity on
     '';
   };
-
 }
