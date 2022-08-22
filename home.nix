@@ -24,6 +24,12 @@
   # changes in each release.
   home.stateVersion = "22.11";
 
+  dconf.settings = {
+    "org/gnome/desktop/peripherals/touchpad".tap-to-click = true;
+    "org/gnome/desktop/peripherals/touchpad".disable-while-typing = true;
+    "org/gnome/settings-daemon/plugins/power".sleep-inactive-ac-type = "nothing";
+  };
+
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
@@ -99,7 +105,7 @@
     package = pkgs.alacritty;
   };
   xdg.configFile."alacritty" = {
-    recursive = true;
+    # recursive = true;
     source = programs/alacritty;
   };
 
@@ -150,7 +156,7 @@
     ] );
   };
   xdg.configFile."nvim" = {
-    recursive = true;
+    # recursive = true;
     source = programs/nvim;
   };
 

@@ -11,13 +11,13 @@
       <home-manager/nixos>
     ];
 
-  boot.kernelPackages = pkgs.linuxPackages_5_19;
-  boot.kernelPatches = [
-    {
-      name = "keyboard";
-      patch = ./patches/keyboard.patch;
-    }
-  ];
+  boot.kernelPackages = pkgs.linuxPackages_testing;
+  # boot.kernelPatches = [
+  #   {
+  #     name = "keyboard";
+  #     patch = ./patches/keyboard.patch;
+  #   }
+  # ];
 
   hardware.enableAllFirmware = true; 
 
@@ -107,17 +107,7 @@
 
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome = {
-    enable = true;
-    # extraGSettingsOverrides = ''
-    #   [org/gnome/desktop/peripherals/touchpad] 
-    #   tap-to-click=true
-    #
-    #   [org/gnome/settings-daemon/plugins/power]
-    #   power-button-action='suspend'
-    #   sleep-inactive-ac-type='nothing'
-    # '';
-  };
+  services.xserver.desktopManager.gnome.enable = true;
 
   # Configure keymap in X11
   services.xserver = {
@@ -126,7 +116,7 @@
   };
 
   # Enable CUPS to print documents.
-  services.printing.enable = true;
+  # services.printing.enable = true;
   
   # Enable bluetooth
   hardware.bluetooth.enable = true;
@@ -147,15 +137,6 @@
   # Enable touchpad support (enabled default in most desktopManager).
   services.xserver.libinput = {
     enable = true;
-    touchpad = {
-      tapping = true;
-      scrollMethod = "twofinger";
-      naturalScrolling = true;
-      horizontalScrolling = true;
-      accelProfile = "adaptive";
-      tappingDragLock = true;
-      disableWhileTyping = false;
-    };
     mouse.additionalOptions = "Option \"HighResolutionWheelScrolling\" \"false\"\n";
   };
 
