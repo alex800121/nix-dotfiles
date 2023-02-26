@@ -1,0 +1,3 @@
+:set prompt "> "
+:m + System.IO
+hSetBuffering stdin LineBuffering
