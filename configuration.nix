@@ -41,11 +41,11 @@
     };
   };
 
-  # fileSystems."/media/alex800121/Asus" = {
-  #   device = "/dev/disk/by-uuid/F2D200EBD200B63F";
-  #   fsType = "ntfs";
-  #   options = [ "rw" "uid=1000" ];
-  # };
+  fileSystems."/media/alex800121/Asus" = {
+    device = "/dev/disk/by-uuid/AC6E34966E345B72";
+    fsType = "ntfs";
+    options = [ "rw" "uid=1000" ];
+  };
 
   nix = {
     # package = pkgs.nix; # or versioned attributes like nixVersions.nix_2_8
@@ -66,7 +66,23 @@
   services.auto-cpufreq.enable = true;
   services.thermald.enable = true;
 
-  networking.hostName = "nixos"; # Define your hostname.
+  networking = {
+    hostName = "nixos"; # Define your hostname.
+    # useDHCP = true;
+    firewall.enable = false;
+    networkmanager = {
+      # enable = false;
+      enable = true;
+      dhcp = "dhcpcd";
+      dns = "dnsmasq";
+    };
+    # wireless = {
+    #   enable = true;
+    #   userControlled.enable = true;
+    # };
+
+  };
+  # services.connman.enable = true;
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -74,7 +90,6 @@
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Enable networking
-  networking.networkmanager.enable = true;
 
   # Set your time zone.
   time.hardwareClockInLocalTime = true;
@@ -163,7 +178,8 @@
   users.users.alex800121 = {
     isNormalUser = true;
     description = "alex800121";
-    extraGroups = [ "sudo" "networkmanager" "wheel" ];
+    # extraGroups = [ "sudo" "networkmanager" "wheel" ];
+    extraGroups = [ "sudo" "wheel" ];
   };
 
   home-manager = {
@@ -199,13 +215,14 @@
     enable = true;
     locate = pkgs.plocate;
     localuser = null;
+    prunePaths = [ "/media/alex800121" ];
+    interval = "hourly";
   };
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
-  networking.firewall.enable = false;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

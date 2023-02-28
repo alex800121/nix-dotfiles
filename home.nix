@@ -92,6 +92,7 @@
   fonts.fontconfig.enable = true;
 
   home.packages = (with pkgs; [
+    libreoffice
     spotify
     nix-prefetch-git
     cabal2nix
@@ -121,12 +122,12 @@
   xdg.mimeApps = {
     enable = true;
     defaultApplications = {
-      "x-scheme-handler/http" = "microsoft-edge.desktop";
+      "x-scheme-handler/http" = ["microsoft-edge.desktop" "firefox.desktop;"];
       "application/xhtml+xml" = ["microsoft-edge.desktop" "firefox.desktop;"];
-      "text/html" = "microsoft-edge.desktop";
-      "x-scheme-handler/https" = "microsoft-edge.desktop";
-      "x-scheme-handler/about" = "microsoft-edge.desktop";
-      "x-scheme-handler/unknown" = "microsoft-edge.desktop";
+      "text/html" = ["microsoft-edge.desktop" "firefox.desktop;"];
+      "x-scheme-handler/https" = ["microsoft-edge.desktop" "firefox.desktop;"];
+      "x-scheme-handler/about" = ["microsoft-edge.desktop" "firefox.desktop;"];
+      "x-scheme-handler/unknown" = ["microsoft-edge.desktop"];
     };
     associations.added = {
       "x-scheme-handler/http"  =  ["microsoft-edge.desktop" "firefox.desktop;"];
@@ -151,19 +152,20 @@
 
 
   programs.neovim = let
-    smart-splits-nvim = pkgs.vimUtils.buildVimPlugin {
-      name = "smart-splits-nvim";
-      src = pkgs.fetchFromGitHub {
-        owner = "mrjones2014";
-        repo = "smart-splits.nvim";
-        rev = "c8d80d90f3c783ac0ea21f256c74d541a7b66a72";
-        sha256 = "0vchzaflnrbxnmq2j2zfms8a6xadj75sq0jpxvgmngry5fyb6r1z";
-      };
-    };
+    # smart-splits-nvim = pkgs.vimUtils.buildVimPlugin {
+    #   name = "smart-splits-nvim";
+    #   src = pkgs.fetchFromGitHub {
+    #     owner = "mrjones2014";
+    #     repo = "smart-splits.nvim";
+    #     rev = "c8d80d90f3c783ac0ea21f256c74d541a7b66a72";
+    #     sha256 = "0vchzaflnrbxnmq2j2zfms8a6xadj75sq0jpxvgmngry5fyb6r1z";
+    #   };
+    # };
   in {
     enable = true;
     plugins = ( with pkgs.vimPlugins; [
       # packer-nvim
+      smart-splits-nvim
       dracula-vim
       popup-nvim
       plenary-nvim
