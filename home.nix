@@ -94,6 +94,7 @@
   home.packages = (with pkgs; [
     libreoffice
     spotify
+    # spotify-tui
     nix-prefetch-git
     cabal2nix
     curl
@@ -167,7 +168,9 @@
       # packer-nvim
       smart-splits-nvim
       dracula-vim
+      tokyonight-nvim
       popup-nvim
+      gruvbox-nvim
       plenary-nvim
       comment-nvim
       nvim-web-devicons

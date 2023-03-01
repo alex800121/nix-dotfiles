@@ -42,4 +42,4 @@ opt.pumheight = 10
 opt.showtabline = 2
 opt.updatetime = 300
 vim.cmd [[let netrw_browser_split=0]]
-vim.cmd [[colorscheme dracula]]
+vim.cmd [[colorscheme gruvbox]]
