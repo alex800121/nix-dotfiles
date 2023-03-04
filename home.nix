@@ -35,7 +35,7 @@
   };
 
   # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
+  # programs.home-manager.enable = true;
 
   programs.bash = {
     enable = true;
@@ -138,18 +138,18 @@
     };
   };
 
-  home.file = {
-    # "\.haskeline".source = programs/haskell/.haskeline;
-    # "\.ghci".source = programs/haskell/.ghci;
-    # "\.cabal" = {
-    #   recursive = true;
-    #   source = programs/cabal/.cabal;
-    # };
-    # "\.bashrc".source = programs/bash/.bashrc;
-    # "\.bash_aliases".source = programs/bash/.bash_aliases;
-    # "\.profile".source = programs/bash/.profile;
-    # "\.bash_logout".source = programs/bash/.bash_logout;
-  };
+  # home.file = {
+  #   "\.haskeline".source = programs/haskell/.haskeline;
+  #   "\.ghci".source = programs/haskell/.ghci;
+  #   "\.cabal" = {
+  #     recursive = true;
+  #     source = programs/cabal/.cabal;
+  #   };
+  #   "\.bashrc".source = programs/bash/.bashrc;
+  #   "\.bash_aliases".source = programs/bash/.bash_aliases;
+  #   "\.profile".source = programs/bash/.profile;
+  #   "\.bash_logout".source = programs/bash/.bash_logout;
+  # };
 
 
   programs.neovim = let

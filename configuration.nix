@@ -54,14 +54,6 @@
     '';
   };
 
-  # nixpkgs.overlays = [ (self: super: {
-  #   auto-cpufreq = super.auto-cpufreq.overridePythonAttrs(old: rec{
-  #     patches = old.patches ++ [
-  #       ./patches/detect_charging.patch
-  #     ];
-  #   } );
-  # } ) ];
-
   services.power-profiles-daemon.enable = false;
   services.auto-cpufreq.enable = true;
   services.thermald.enable = true;
@@ -95,11 +87,10 @@
   time.hardwareClockInLocalTime = true;
   time.timeZone = "Asia/Taipei";
 
-  programs.bash = {
-    enableCompletion = true;
-    enableLsColors = true;
-  };
-
+  # programs.bash = {
+  #   enableCompletion = true;
+  #   enableLsColors = true;
+  # };
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.utf8";
@@ -188,6 +179,7 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.allowBroken = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
