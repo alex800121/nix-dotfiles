@@ -66,7 +66,8 @@
       # enable = false;
       enable = true;
       dhcp = "dhcpcd";
-      # dns = "dnsmasq";
+      dns = "default";
+      # dns = "systemd-resolved";
     };
     # wireless = {
     #   enable = true;

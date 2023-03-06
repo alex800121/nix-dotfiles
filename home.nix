@@ -110,7 +110,7 @@
     microsoft-edge
     gcc_multi gccMultiStdenv 
     rustup openssh ssh-copy-id gh 
-    cabal-install haskell.packages.ghc944.haskell-language-server haskell.compiler.ghc94 ghcid
+    # cabal-install haskell.packages.ghc944.haskell-language-server haskell.compiler.ghc94 ghcid
     (nerdfonts.override { fonts = [ "Hack" ]; })
   ] );
 
