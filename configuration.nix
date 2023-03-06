@@ -42,7 +42,7 @@
   };
 
   fileSystems."/media/alex800121/Asus" = {
-    device = "/dev/disk/by-uuid/AC6E34966E345B72";
+    device = "/dev/disk/by-uuid/F2D200EBD200B63F";
     fsType = "ntfs";
     options = [ "rw" "uid=1000" ];
   };
@@ -66,7 +66,7 @@
       # enable = false;
       enable = true;
       dhcp = "dhcpcd";
-      dns = "dnsmasq";
+      # dns = "dnsmasq";
     };
     # wireless = {
     #   enable = true;
