@@ -59,7 +59,7 @@
   services.thermald.enable = true;
 
   networking = {
-    hostName = "nixos"; # Define your hostname.
+    hostName = "acer-nixos"; # Define your hostname.
     # useDHCP = true;
     firewall.enable = false;
     networkmanager = {
@@ -67,7 +67,8 @@
       enable = true;
       # dhcp = "internal";
       dhcp = "dhcpcd";
-      dns = "default";
+      dns = "dnsmasq";
+      # dns = "default";
       # dns = "systemd-resolved";
     };
     # wireless = {
@@ -178,7 +179,7 @@
     isNormalUser = true;
     description = "alex800121";
     # extraGroups = [ "sudo" "networkmanager" "wheel" ];
-    extraGroups = [ "sudo" "wheel" ];
+    extraGroups = [ "sudo" "wheel" "code-server" ];
   };
 
   home-manager = {
@@ -208,7 +209,18 @@
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
+  services.openssh = {
+    enable = true;
+    ports = [ 22 ];
+    settings = {
+      UseDns = true;
+      PermitRootLogin = "prohibit-password";
+      PasswordAuthentication = false;
+      # PasswordAuthentication = true;
+      GatewayPorts = "yes";
+    };
+    allowSFTP = true;
+  };
 
   # Enable the Locate
   services.locate = {
@@ -219,6 +231,15 @@
     interval = "hourly";
   };
 
+  services.code-server = {
+    enable = true;
+    port = 4444;
+    user = "alex800121";
+    host = "192.168.0.102";
+    auth = "password";
+    # printf "password" | sha256sum | cut -d' ' -f1
+    hashedPassword = "58cb754c8c077d146dc4a5651ef3cbc79ccfd99c4ad37244ef0ccc3e8470365c";
+  };
   # services.spotifyd.enable = true;
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
