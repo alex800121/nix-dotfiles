@@ -235,11 +235,30 @@
     enable = true;
     port = 4444;
     user = "alex800121";
-    host = "192.168.0.102";
+    host = "127.0.0.1";
     auth = "password";
     # printf "password" | sha256sum | cut -d' ' -f1
     hashedPassword = "58cb754c8c077d146dc4a5651ef3cbc79ccfd99c4ad37244ef0ccc3e8470365c";
   };
+
+  systemd.user.services.revtunnel = {
+    enable = true;
+    description = "Reverse tunnel for acer-nixos";
+    after = [ "network.target" ];
+    script = ''
+      ${pkgs.openssh}/bin/ssh -vvv -N -T -o "ExitOnForwardFailure yes" -o "UserKnownHostsFile /home/alex800121/.ssh/known_hosts" -R 60000:127.0.0.1:4444 -R 50000:127.0.0.1:22 alex800121@alexrpi4gate.ubddns.org -p 30000 -i /home/alex800121/.ssh/id_ed25519 
+    '';
+    serviceConfig = {
+      Type = "simple";
+      # ExecStart = ''
+      #   ${pkgs.openssh}/bin/ssh -vvv -N -T -o ExitOnForwardFailure yes -R 60000:127.0.0.1:4444 -R 50000:127.0.0.1:22 alex800121@alexrpi4gate.ubddns.org -p 30000 -i /home/alex800121/.ssh/id_ed25519
+      # '';
+      Restart = "on-failure";
+      RestartSec = 5;
+    };
+    wantedBy = [ "default.target" ];
+  };
+
   # services.spotifyd.enable = true;
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
