@@ -307,5 +307,28 @@
     enableUpdateCheck = true;
     mutableExtensionsDir = true;
   };
+  
 
+
+  # systemd.user.services.revtunnel = {
+  #   # enable = true;
+  #   Unit = {
+  #     Description = "Reverse tunnel for acer-nixos";
+  #     After = "network.target";
+  #   };
+  #   # script = ''
+  #   #   ${pkgs.openssh}/bin/ssh -vvv -N -T -o ExitOnForwardFailure yes -R 60000:127.0.0.1:4444 -R 50000:127.0.0.1:22 alex800121@alexrpi4gate.ubddns.org -p 30000 -i /home/alex800121/.ssh/id_ed25519
+  #   # '';
+  #   Service = {
+  #     # Type = "simple";
+  #     ExecStart = ''
+  #       ${pkgs.openssh}/bin/ssh -vvv -N -T -o ExitOnForwardFailure yes -R 60000:127.0.0.1:4444 -R 50000:127.0.0.1:22 alex800121@alexrpi4gate.ubddns.org -p 30000 -i /home/alex800121/.ssh/id_ed25519
+  #     '';
+  #     Restart = "on-failure";
+  #     RestartSec = "5s";
+  #   };
+  #   Install = {
+  #     WantedBy = [ "default.target" ];
+  #   };
+  # };
 }
