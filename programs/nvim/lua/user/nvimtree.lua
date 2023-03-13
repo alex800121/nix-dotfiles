@@ -132,18 +132,18 @@ nvim_tree.setup({
       error = "",
     },
   },
-  filters = {
-    dotfiles = false,
-    custom = {},
-    exclude = {},
-  },
+  -- filters = {
+  --   dotfiles = false,
+  --   custom = {},
+  --   exclude = {},
+  -- },
   filesystem_watchers = {
     enable = false,
     -- interval = 100,
   },
   git = {
     enable = true,
-    ignore = true,
+    ignore = false,
     timeout = 400,
   },
   actions = {
