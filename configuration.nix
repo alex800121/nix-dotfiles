@@ -170,7 +170,7 @@
     isNormalUser = true;
     description = "alex800121";
     # extraGroups = [ "sudo" "networkmanager" "wheel" ];
-    extraGroups = [ "sudo" "wheel" ];
+    extraGroups = [ "sudo" "wheel" "code-server" ];
   };
 
   home-manager = {
@@ -209,6 +209,18 @@
     localuser = null;
     prunePaths = [ "/media/alex800121" ];
     interval = "hourly";
+  };
+
+  services.teamviewer.enable = true;
+
+  services.code-server = {
+    user = "alex800121";
+    port = 4444;
+    enable = true;
+    host = "127.0.0.1";
+    auth = "password";
+    hashedPassword = "58cb754c8c077d146dc4a5651ef3cbc79ccfd99c4ad37244ef0ccc3e8470365c";
+    # extraArguments = [ "--user-data-dir /home/alex800121/.vscode" ];
   };
 
   # services.spotifyd.enable = true;

@@ -1,5 +1,4 @@
 { config, pkgs, ... }:
-
 {
   # nix = {
   #   package = pkgs.nix;
@@ -91,7 +90,10 @@
 
   fonts.fontconfig.enable = true;
 
-  home.packages = (with pkgs; [
+  home.packages = let
+    xr18 = import ./programs/xr18.nix { inherit pkgs; };
+  in (with pkgs; [
+    xr18
     libreoffice
     spotify
     # spotify-tui
@@ -110,6 +112,7 @@
     microsoft-edge
     gcc_multi gccMultiStdenv 
     rustup openssh ssh-copy-id gh 
+    teamviewer
     cabal-install haskell.packages.ghc944.haskell-language-server haskell.compiler.ghc94 ghcid
     (nerdfonts.override { fonts = [ "Hack" ]; })
   ] );
@@ -308,16 +311,6 @@
     enableExtensionUpdateCheck = true;
     enableUpdateCheck = true;
     mutableExtensionsDir = true;
-    # haskell = {
-    #   enable = true;
-    #   hie.enable = false;
-    # };
-    # extensions = with pkgs.vscode-extensions; [
-    #   haskell.haskell
-    #   asvetliakov.vscode-neovim
-    #   ms-vscode-remote.remote-ssh
-    # ];
-
   };
 
 }
