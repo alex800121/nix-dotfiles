@@ -178,9 +178,17 @@
   };
 
   # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-  nixpkgs.config.allowBroken = true;
+  # nixpkgs.config.allowUnfree = true;
+  # nixpkgs.config.allowBroken = true;
 
+  nixpkgs = {
+    config = {
+      allowBroken = true;
+      allowUnfree = true;
+      # allowUnsupportedSystem = true;
+    };
+    # overlays = [ (import /etc/nixos/pkgs) ];
+  };
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [

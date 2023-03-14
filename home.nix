@@ -7,11 +7,14 @@
   #   };
   # };
 
-  nixpkgs.config = {
-    allowBroken = true;
-    allowUnfree = true;
-    allowUnsupportedSystem = true;
-  };
+  # nixpkgs = {
+  #   config = {
+  #     allowBroken = true;
+  #     allowUnfree = true;
+  #     allowUnsupportedSystem = true;
+  #   };
+  #   overlays = [ (import /etc/nixos/pkgs) ];
+  # };
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
   home.username = "alex800121";
@@ -91,9 +94,9 @@
   fonts.fontconfig.enable = true;
 
   home.packages = let
-    xr18 = import ./programs/xr18.nix { inherit pkgs; };
+    # xr18 = import ./programs/xr18.nix {};
   in (with pkgs; [
-    xr18
+    x-air-edit
     libreoffice
     spotify
     # spotify-tui
