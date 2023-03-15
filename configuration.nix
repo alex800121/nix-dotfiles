@@ -182,9 +182,9 @@
     extraGroups = [ "sudo" "wheel" "code-server" ];
   };
 
-  home-manager = {
-    users.alex800121 = import ./home.nix { inherit config pkgs; }; 
-  };
+  # home-manager = {
+  #   users.alex800121 = import ./home.nix { inherit config pkgs; }; 
+  # };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -241,19 +241,19 @@
     hashedPassword = "58cb754c8c077d146dc4a5651ef3cbc79ccfd99c4ad37244ef0ccc3e8470365c";
   };
 
-  systemd.user.services.revtunnel = {
+  systemd.services.revtunnel = {
     enable = true;
     description = "Reverse tunnel for acer-nixos";
-    after = [ "network.target" ];
+    after = [ "network.target" "home-manager-alex800121.service" ];
     script = ''
-      ${pkgs.openssh}/bin/ssh -vvv -N -T -o "ExitOnForwardFailure yes" -o "UserKnownHostsFile /home/alex800121/.ssh/known_hosts" -R 60000:127.0.0.1:4444 -R 50000:127.0.0.1:22 alex800121@alexrpi4gate.ubddns.org -p 30000 -i /home/alex800121/.ssh/id_ed25519 
+      ${pkgs.openssh}/bin/ssh -vvv -N -T -o "ExitOnForwardFailure=yes" -o "UserKnownHostsFile=/home/alex800121/.ssh/known_hosts" -R 60000:127.0.0.1:4444 -R 50000:127.0.0.1:22 alex800121@alexrpi4gate.ubddns.org -p 30000 -i /home/alex800121/.ssh/id_ed25519 
     '';
     serviceConfig = {
       Type = "simple";
       # ExecStart = ''
       #   ${pkgs.openssh}/bin/ssh -vvv -N -T -o ExitOnForwardFailure yes -R 60000:127.0.0.1:4444 -R 50000:127.0.0.1:22 alex800121@alexrpi4gate.ubddns.org -p 30000 -i /home/alex800121/.ssh/id_ed25519
       # '';
-      Restart = "on-failure";
+      Restart = "always";
       RestartSec = 5;
     };
     wantedBy = [ "default.target" ];
