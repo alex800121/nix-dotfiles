@@ -67,8 +67,8 @@
       enable = true;
       # dhcp = "internal";
       dhcp = "dhcpcd";
-      dns = "dnsmasq";
-      # dns = "default";
+      # dns = "dnsmasq";
+      dns = "default";
       # dns = "systemd-resolved";
     };
     # wireless = {

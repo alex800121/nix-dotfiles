@@ -83,10 +83,10 @@
     nix-direnv.enable = true;
   };
 
-  programs.ssh = {
-    enable = true;
-  };
-
+  # programs.ssh = {
+  #   enable = true;
+  # };
+  #
   fonts.fontconfig.enable = true;
 
   home.packages = (with pkgs; [
