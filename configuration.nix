@@ -234,6 +234,14 @@
 
   services.onedrive.enable = true;
 
+  # programs.nix-ld.enable = true;
+  # environment.variables = {
+  #   NIX_LD_LIBRARY_PATH = lib.makeLibraryPath [
+  #     pkgs.stdenv.cc.cc
+  #   ];
+  #   NIX_LD = lib.fileContents "${pkgs.stdenv.cc}/nix-support/dynamic-linker";
+  # };
+
   # services.spotifyd.enable = true;
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];

@@ -5,12 +5,11 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    # overlays = {
-    #   url = "path:./pkgs";
-    #   flake = false;
-    # };
+    # nix-ld.url = "github:Mic92/nix-ld";
+    # nix-ld.inputs.nixpkgs.follows = "nixpkgs";
   };
 
+  # outputs = inputs@{ nixpkgs, home-manager, nix-ld, ... }: {
   outputs = inputs@{ nixpkgs, home-manager, ... }: {
     nixosConfigurations = {
       nixos = nixpkgs.lib.nixosSystem {
@@ -23,6 +22,7 @@
               ];
             }
           )
+          # nix-ld.nixosModules.nix-ld
           ./configuration.nix
           home-manager.nixosModules.home-manager
           {
@@ -31,7 +31,6 @@
               useUserPackages = true;
               users.alex800121 = import ./home.nix;
               backupFileExtension = "bak";
-              # extraSpecialArgs = { inherit x-air-edit; };
             };
 
             # Optionally, use home-manager.extraSpecialArgs to pass
