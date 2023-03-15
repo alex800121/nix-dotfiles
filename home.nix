@@ -123,7 +123,26 @@
   dconf.settings = {
     "org/gnome/desktop/peripherals/touchpad".tap-to-click = true;
     "org/gnome/desktop/peripherals/touchpad".disable-while-typing = true;
+    "org/gnome/desktop/peripherals/touchpad".natural-scroll = true;
+    "org/gnome/desktop/peripherals/touchpad".speed = 0.19999999999999996;
+    "org/gnome/desktop/peripherals/touchpad".two-finger-scrolling-enabled = true;
     "org/gnome/settings-daemon/plugins/power".sleep-inactive-ac-type = "nothing";
+    "org/gnome/desktop/peripherals/mouse".natural-scroll = false;
+    "org/gnome/desktop/peripherals/mouse".speed=0.24778761061946897;
+    "org/gnome/settings-daemon/plugins/media-keys".custom-keybindings = ["/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"];
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
+      binding = "<Super>t";
+      command = "alacritty";
+      name = "Terminal";
+    };
+    "org/gnome/shell".favorite-apps = [
+      "microsoft-edge.desktop"
+      "spotify.desktop"
+      "code.desktop"
+      "Alacritty.desktop"
+      "org.gnome.Nautilus.desktop"
+      "writer.desktop"
+    ];
   };
 
   xdg.mimeApps = {
