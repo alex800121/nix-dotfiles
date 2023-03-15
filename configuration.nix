@@ -41,10 +41,16 @@
     };
   };
 
-  fileSystems."/media/alex800121/Asus" = {
-    device = "/dev/disk/by-uuid/AC6E34966E345B72";
-    fsType = "ntfs";
-    options = [ "rw" "uid=1000" ];
+  fileSystems = {
+    "/media/alex800121/Asus" = {
+      device = "/dev/disk/by-uuid/AC6E34966E345B72";
+      fsType = "ntfs";
+      options = [ "rw" "uid=1000" ];
+    };
+    "/home/alex800121/OneDrive" = {
+      device = "/media/alex800121/Asus/Users/alex800121/OneDrive/";
+      options = [ "bind" ];
+    };
   };
 
   nix = {
@@ -59,7 +65,7 @@
   services.thermald.enable = true;
 
   networking = {
-    hostName = "nixos"; # Define your hostname.
+    hostName = "asus-nixos"; # Define your hostname.
     # useDHCP = true;
     firewall.enable = false;
     networkmanager = {
@@ -174,9 +180,9 @@
     extraGroups = [ "sudo" "wheel" "code-server" ];
   };
 
-  home-manager = {
-    users.alex800121 = import ./home.nix { inherit config pkgs; }; 
-  };
+  # home-manager = {
+  #   users.alex800121 = import ./home.nix { inherit config pkgs lib; }; 
+  # };
 
   # Allow unfree packages
   # nixpkgs.config.allowUnfree = true;
