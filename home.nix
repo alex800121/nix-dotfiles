@@ -329,6 +329,7 @@
     '';
   };
   programs.vscode = {
+    package = pkgs.vscode-fhs;
     enable = true;
     enableExtensionUpdateCheck = true;
     enableUpdateCheck = true;
