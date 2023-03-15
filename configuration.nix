@@ -155,6 +155,7 @@
       wqy_zenhei
       wqy_microhei
       hack-font
+      vistafonts-cht
     ];
 
     fontconfig = {
@@ -221,15 +222,17 @@
 
   services.teamviewer.enable = true;
 
-  services.code-server = {
-    user = "alex800121";
-    port = 4444;
-    enable = true;
-    host = "127.0.0.1";
-    auth = "password";
-    hashedPassword = "58cb754c8c077d146dc4a5651ef3cbc79ccfd99c4ad37244ef0ccc3e8470365c";
-    # extraArguments = [ "--user-data-dir /home/alex800121/.vscode" ];
-  };
+  # services.code-server = {
+  #   user = "alex800121";
+  #   port = 4444;
+  #   enable = true;
+  #   host = "127.0.0.1";
+  #   auth = "password";
+  #   hashedPassword = "58cb754c8c077d146dc4a5651ef3cbc79ccfd99c4ad37244ef0ccc3e8470365c";
+  #   # extraArguments = [ "--user-data-dir /home/alex800121/.vscode" ];
+  # };
+
+  services.onedrive.enable = true;
 
   # services.spotifyd.enable = true;
   # Open ports in the firewall.
