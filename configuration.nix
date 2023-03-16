@@ -177,7 +177,7 @@
     isNormalUser = true;
     description = "alex800121";
     # extraGroups = [ "sudo" "networkmanager" "wheel" ];
-    extraGroups = [ "sudo" "wheel" "code-server" ];
+    extraGroups = [ "networkmanager" "sudo" "wheel" "code-server" ];
   };
 
   # home-manager = {
@@ -239,7 +239,7 @@
   #   # extraArguments = [ "--user-data-dir /home/alex800121/.vscode" ];
   # };
 
-  services.onedrive.enable = true;
+  # services.onedrive.enable = true;
 
   # programs.nix-ld.enable = true;
   # environment.variables = {

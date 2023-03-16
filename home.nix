@@ -96,6 +96,7 @@
   home.packages = let
     # xr18 = import ./programs/xr18.nix {};
   in (with pkgs; [
+    onedrive
     x-air-edit
     libreoffice
     spotify
@@ -342,4 +343,19 @@
     mutableExtensionsDir = true;
   };
 
+  systemd.user.services."onedrive" = {
+    Unit.Description = "Onedrive sync service";
+    Service = {
+      Type = "simple";
+      ExecStart = ''
+        ${pkgs.onedrive}/bin/onedrive --monitor --confdir=%h/.config/onedrive
+      '';
+      Restart = "on-failure";
+      RestartSec = "3s";
+      # RestartPreventExitStatus=3;
+    };
+    Install = {
+      WantedBy = [ "default.target" ];
+    };
+  };
 }
