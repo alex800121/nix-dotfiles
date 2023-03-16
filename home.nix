@@ -83,9 +83,16 @@
     nix-direnv.enable = true;
   };
 
-  # programs.ssh = {
-  #   enable = true;
-  # };
+  programs.ssh = {
+    enable = true;
+    matchBlocks = {
+      "github.com" = {
+        host = "github.com";
+        hostname = "github.com";
+        identityFile = "/home/alex800121/.ssh/id_ed25519";
+      };
+    };
+  };
 
   fonts.fontconfig.enable = true;
 
