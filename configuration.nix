@@ -67,8 +67,8 @@
       enable = true;
       # dhcp = "internal";
       dhcp = "dhcpcd";
-      # dns = "dnsmasq";
-      dns = "default";
+      dns = "dnsmasq";
+      # dns = "default";
       # dns = "systemd-resolved";
     };
     # wireless = {
@@ -79,6 +79,8 @@
   };
   # services.connman.enable = true;
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+
+  services.teamviewer.enable = true;
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -179,7 +181,7 @@
     isNormalUser = true;
     description = "alex800121";
     # extraGroups = [ "sudo" "networkmanager" "wheel" ];
-    extraGroups = [ "sudo" "wheel" "code-server" ];
+    extraGroups = [ "networkmanager" "sudo" "wheel" "code-server" ];
   };
 
   # home-manager = {
@@ -222,6 +224,7 @@
     allowSFTP = true;
   };
 
+  programs.ssh.startAgent = true;
   # Enable the Locate
   services.locate = {
     enable = true;
@@ -231,15 +234,18 @@
     interval = "hourly";
   };
 
-  services.code-server = {
-    enable = true;
-    port = 4444;
-    user = "alex800121";
-    host = "127.0.0.1";
-    auth = "password";
-    # printf "password" | sha256sum | cut -d' ' -f1
-    hashedPassword = "58cb754c8c077d146dc4a5651ef3cbc79ccfd99c4ad37244ef0ccc3e8470365c";
-  };
+  # services.code-server = {
+  #   enable = true;
+  #   port = 4444;
+  #   user = "alex800121";
+  #   host = "127.0.0.1";
+  #   auth = "password";
+  #   # printf "password" | sha256sum | cut -d' ' -f1
+  #   hashedPassword = "58cb754c8c077d146dc4a5651ef3cbc79ccfd99c4ad37244ef0ccc3e8470365c";
+  #   extraArguments = [
+  #     "--verbose"
+  #   ];
+  # };
 
   systemd.services.revtunnel = {
     enable = true;

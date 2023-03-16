@@ -86,10 +86,11 @@
   # programs.ssh = {
   #   enable = true;
   # };
-  #
+
   fonts.fontconfig.enable = true;
 
   home.packages = (with pkgs; [
+    # vscode-fhs
     libreoffice
     spotify
     # spotify-tui
