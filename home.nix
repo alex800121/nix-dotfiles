@@ -232,9 +232,15 @@
     ] );
     extraConfig = "luafile $HOME/.config/nvim/init_lua.lua";
   };
-  xdg.configFile.nvim = {
-    recursive = true;
-    source = ./programs/nvim;
+  xdg.configFile = {
+    nvim = {
+      recursive = true;
+      source = ./programs/nvim;
+    };
+    onedrive = {
+      recursive = true;
+      source = ./programs/onedrive;
+    };
   };
 
   programs.git = {
