@@ -5,6 +5,8 @@
 { config, pkgs, lib, ... }:
 
 {
+
+
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
@@ -181,7 +183,7 @@
     isNormalUser = true;
     description = "alex800121";
     # extraGroups = [ "sudo" "networkmanager" "wheel" ];
-    extraGroups = [ "networkmanager" "sudo" "wheel" "code-server" ];
+    extraGroups = [ "root" "networkmanager" "sudo" "wheel" "code-server" ];
   };
 
   # home-manager = {
@@ -223,8 +225,8 @@
     };
     allowSFTP = true;
   };
-
   programs.ssh.startAgent = true;
+
   # Enable the Locate
   services.locate = {
     enable = true;

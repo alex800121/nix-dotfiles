@@ -83,16 +83,17 @@
     nix-direnv.enable = true;
   };
 
-  programs.ssh = {
-    enable = true;
-    matchBlocks = {
-      "github.com" = {
-        host = "github.com";
-        hostname = "github.com";
-        identityFile = "/home/alex800121/.ssh/id_ed25519";
-      };
-    };
-  };
+  # programs.ssh = {
+  #   enable = true;
+  #   matchBlocks = {
+  #     "github.com" = {
+  #       host = "github.com";
+  #       user = "git";
+  #       hostname = "github.com";
+  #       identityFile = "/home/alex800121/.ssh/id_ed25519";
+  #     };
+  #   };
+  # };
 
   fonts.fontconfig.enable = true;
 
@@ -115,7 +116,7 @@
     libchewing
     microsoft-edge
     gcc_multi gccMultiStdenv 
-    rustup ssh-copy-id gh 
+    rustup openssh ssh-copy-id gh 
     cabal-install haskell.packages.ghc944.haskell-language-server haskell.compiler.ghc94 ghcid
     (nerdfonts.override { fonts = [ "Hack" ]; })
   ] );
