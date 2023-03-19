@@ -225,7 +225,7 @@
     };
     allowSFTP = true;
   };
-  programs.ssh.startAgent = true;
+  # programs.ssh.startAgent = true;
 
   # Enable the Locate
   services.locate = {
