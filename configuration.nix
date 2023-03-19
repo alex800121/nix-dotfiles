@@ -249,7 +249,7 @@
   #   ];
   # };
 
-  systemd.services.revtunnel = {
+  systemd.user.services.revtunnel = {
     enable = true;
     description = "Reverse tunnel for acer-nixos";
     after = [ "network.target" "home-manager-alex800121.service" ];
