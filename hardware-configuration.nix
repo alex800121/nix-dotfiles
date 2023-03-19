@@ -14,7 +14,7 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/a7482d4c-62b5-4190-80af-e8fe2a7bd999";
+    { device = "/dev/disk/by-uuid/c1052c06-ee19-403f-b09e-28d2b982435d";
       fsType = "ext4";
     };
 
@@ -32,7 +32,7 @@
   # still possible to use this option, but it's recommended to use it in conjunction
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   networking.useDHCP = lib.mkDefault true;
-  # networking.interfaces.enp0s20f0u3u4.useDHCP = lib.mkDefault true;
+  # networking.interfaces.enp0s20f0u1u4.useDHCP = lib.mkDefault true;
   # networking.interfaces.wlp0s20f3.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
