@@ -85,14 +85,9 @@
 
   # programs.ssh = {
   #   enable = true;
-  #   matchBlocks = {
-  #     "github.com" = {
-  #       host = "github.com";
-  #       user = "git";
-  #       hostname = "github.com";
-  #       identityFile = "/home/alex800121/.ssh/id_ed25519";
-  #     };
-  #   };
+  #   extraConfig = '' 
+  #     AddKeysToAgent yes
+  #   '';
   # };
 
   fonts.fontconfig.enable = true;
@@ -319,4 +314,24 @@
     mutableExtensionsDir = true;
   };
   
+  # systemd.user.services.revtunnel = {
+  #   Unit = {
+  #     Description = "Reverse tunnel for acer-nixos";
+  #     After = [ "network.target" "ssh-agent.service" "home-manager-alex800121.service" ];
+  #     Type = "simple";
+  #   };
+  #   Service = {
+  #     ExecStart = ''
+  #       ${pkgs.openssh}/bin/ssh -vvv -N -T -o "ExitOnForwardFailure=yes" \
+  #       -o "UserKnownHostsFile=/home/alex800121/.ssh/known_hosts" -R 60000:127.0.0.1:4444 -R 50000:127.0.0.1:22 \
+  #       alex800121@alexrpi4gate.ubddns.org -p 30000
+  #     '';
+  #     Restart = "always";
+  #     RestartSec = "5s";
+  #   };
+  #   Install = {
+  #     WantedBy = [ "default.target" ];
+  #   };
+  # };
+
 }
