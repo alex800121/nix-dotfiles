@@ -95,36 +95,31 @@ local function lsp_keymaps(bufnr, ori_cwd)
   buf_set_map("n", "[d", vim.diagnostic.goto_prev)
   buf_set_map("n", "]d", vim.diagnostic.goto_next)
   buf_set_map("n", "[]", vim.diagnostic.setloclist)
-  local function custom_e_toggle()
-    require("nvim-tree").toggle(false, false, ori_cwd)
-  end
-  vim.keymap.set("n", "<leader>e", custom_e_toggle, opts)
-  local function custom_p_toggle()
-    local view = require("nvim-tree.view")
-    local nvim_tree = require("nvim-tree")
-    local previous_buf = vim.api.nvim_get_current_buf()
-    local cwd_list = vim.lsp.buf.list_workspace_folders()
-    local utils = require("nvim-tree.utils")
-    if view.is_visible() then
-      nvim_tree.change_dir(ori_cwd)
-      -- nvim_tree.change_root(ori_cwd, previous_buf)
-      view.close()
-    else
-      if next(cwd_list) then
-        print("success")
-        nvim_tree.open(cwd_list[1])
-      else
-        print("fail")
-        nvim_tree.open(ori_cwd)
-      end
-      local bufname = vim.api.nvim_buf_get_name(previous_buf)
-      local filepath = utils.canonical_path(vim.fn.fnamemodify(bufname, ":p"))
-      vim.schedule(function()
-        require("nvim-tree.actions.find-file").fn(filepath)
-      end)
-    end
-  end
-  vim.keymap.set("n", "<leader>p", custom_p_toggle, opts)
+  -- local function custom_p_toggle()
+  --   local view = require("nvim-tree.view")
+  --   local nvim_tree = require("nvim-tree")
+  --   local previous_buf = vim.api.nvim_get_current_buf()
+  --   local cwd_list = vim.lsp.buf.list_workspace_folders()
+  --   local utils = require("nvim-tree.utils")
+  --   if view.is_visible() then
+  --     nvim_tree.change_dir(ori_cwd)
+  --     -- nvim_tree.change_root(ori_cwd, previous_buf) view.close()
+  --   else
+  --     if next(cwd_list) then
+  --       print("success")
+  --       nvim_tree.open(cwd_list[1])
+  --     else
+  --       print("fail")
+  --       nvim_tree.open(ori_cwd)
+  --     end
+  --     local bufname = vim.api.nvim_buf_get_name(previous_buf)
+  --     local filepath = utils.canonical_path(vim.fn.fnamemodify(bufname, ":p"))
+  --     vim.schedule(function()
+  --       require("nvim-tree.actions.find-file").fn(filepath)
+  --     end)
+  --   end
+  -- end
+  -- vim.keymap.set("n", "<leader>p", custom_p_toggle, opts)
   vim.cmd [[ command! Format execute 'lua vim.lsp.buf.formatting()' ]]
 end
 
