@@ -11,6 +11,11 @@ if not config_status_ok then
   return
 end
 
+local api_status_ok, nvim_tree_api = pcall(require, "nvim-tree.api")
+if not api_status_ok then
+  return
+end
+
 local tree_cb = nvim_tree_config.nvim_tree_callback
 
 nvim_tree.setup({
@@ -194,6 +199,11 @@ nvim_tree.setup({
     },
   },
 })
+
+local function custom_e_toggle()
+  nvim_tree_api.tree.toggle(ori_cwd, false, false, false, true)
+end
+vim.keymap.set("n", "<leader>e", custom_e_toggle, opts)
 
 -- local function open_nvim_tree()
 --

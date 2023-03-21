@@ -117,7 +117,9 @@
     gcc_multi gccMultiStdenv 
     rustup openssh ssh-copy-id gh 
     teamviewer
-    cabal-install haskell.packages.ghc944.haskell-language-server haskell.compiler.ghc944 ghcid
+    # cabal-install haskell-language-server ghc ghcid
+    cabal-install ghcid haskell.compiler.ghc944 haskell.packages.ghc944.haskell-language-server 
+
     (nerdfonts.override { fonts = [ "Hack" ]; })
   ] );
 

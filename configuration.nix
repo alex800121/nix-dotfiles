@@ -11,7 +11,8 @@
       # <home-manager/nixos>
     ];
 
-  boot.kernelPackages = pkgs.linuxPackages_6_2;
+  boot.kernelPackages = pkgs.linuxPackages_zen;
+  # boot.kernelPackages = pkgs.linuxPackages_6_2;
   # boot.kernelPatches = [
   #   {
   #     name = "keyboard";
@@ -61,8 +62,25 @@
   };
 
   services.power-profiles-daemon.enable = false;
-  services.auto-cpufreq.enable = true;
-  services.thermald.enable = true;
+  powerManagement = {
+    enable = true;
+  };
+  services.tlp = {
+    enable = true;
+    settings = {
+      CPU_BOOST_ON_AC = 1;
+      CPU_BOOST_ON_BAT = 0;
+      CPU_SCALING_GOVERNOR_ON_AC = "performance";
+      # CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+      CPU_SCALING_GOVERNOR_ON_BAT = "schedutil";
+      START_CHARGE_THRESH_BAT0 = 75;
+      STOP_CHARGE_THRESH_BAT0 = 80;
+      START_CHARGE_THRESH_BAT1 = 75;
+      STOP_CHARGE_THRESH_BAT1 = 80;
+    };
+  };
+  # services.auto-cpufreq.enable = true;
+  # services.thermald.enable = true;
 
   networking = {
     hostName = "asus-nixos"; # Define your hostname.
@@ -206,11 +224,11 @@
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
-  programs.mtr.enable = true;
-  programs.gnupg.agent = {
-    enable = true;
-    enableSSHSupport = true;
-  };
+  # programs.mtr.enable = true;
+  # programs.gnupg.agent = {
+  #   enable = true;
+  #   enableSSHSupport = true;
+  # };
 
   # List services that you want to enable:
 
@@ -237,16 +255,6 @@
   #   auth = "password";
   #   hashedPassword = "58cb754c8c077d146dc4a5651ef3cbc79ccfd99c4ad37244ef0ccc3e8470365c";
   #   # extraArguments = [ "--user-data-dir /home/alex800121/.vscode" ];
-  # };
-
-  # services.onedrive.enable = true;
-
-  # programs.nix-ld.enable = true;
-  # environment.variables = {
-  #   NIX_LD_LIBRARY_PATH = lib.makeLibraryPath [
-  #     pkgs.stdenv.cc.cc
-  #   ];
-  #   NIX_LD = lib.fileContents "${pkgs.stdenv.cc}/nix-support/dynamic-linker";
   # };
 
   # services.spotifyd.enable = true;
