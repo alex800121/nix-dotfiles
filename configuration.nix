@@ -11,8 +11,8 @@
       # <home-manager/nixos>
     ];
 
-  boot.kernelPackages = pkgs.linuxPackages_zen;
-  # boot.kernelPackages = pkgs.linuxPackages_6_2;
+  # boot.kernelPackages = pkgs.linuxPackages_zen;
+  boot.kernelPackages = pkgs.linuxPackages_6_2;
   # boot.kernelPatches = [
   #   {
   #     name = "keyboard";
@@ -57,7 +57,7 @@
   nix = {
     # package = pkgs.nix; # or versioned attributes like nixVersions.nix_2_8
     extraOptions = ''
-      experimental-features = nix-command flakes
+      experimental-features = nix-command flakes repl-flake
     '';
   };
 
@@ -138,7 +138,14 @@
 
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  services.xserver.desktopManager.gnome = {
+    enable = true;
+    extraGSettingsOverrides = ''
+      [org.gnome.desktop.wm.keybindings]
+      switch-group=['<Super>Above_Tab']
+      switch-group-backward=['<Shift><Super>Above_Tab']
+    '';
+  };
 
   # Configure keymap in X11
   services.xserver = {
@@ -150,13 +157,61 @@
   # services.printing.enable = true;
   
   # Enable bluetooth
-  hardware.bluetooth.enable = true;
+  hardware.bluetooth = {
+    enable = true;
+    settings = {
+      General = {
+        Enable = "Source,Sink,Media,Socket";
+      };
+    };
+  };
   services.blueman.enable = true;
 
   # Enable sound with pipewire.
   sound.enable = true;
-  hardware.pulseaudio.enable = true;
-  # security.rtkit.enable = true;
+  hardware.pulseaudio.enable = false;
+  # hardware.pulseaudio = {
+  #   package = pkgs.pulseaudioFull;
+  #   enable = true;
+  # };
+
+  security.rtkit.enable = true;
+
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    pulse.enable = true;
+    wireplumber.enable = true;
+    # wireplumber.enable = false;
+    # media-session.enable = true;
+    # media-session.config.bluez-monitor = {
+    #   properties = {
+    #     "bluez5.codecs" = [ "sbc" "aac" "ldac" "aptx" "aptx_hd" ];
+    #     "bluez5.mdbc-support" = true;
+    #   };
+    #   # rules = [
+    #   #   {
+    #   #     actions = {
+    #   #       update-props = {
+    #   #         "bluez5.auto-connect" = [ "hsp_hs" "hfp_hf" "a2dp_sink" ];
+    #   #         "bluez5.hw-volume" =
+    #   #           [ "hsp_ag" "hfp_ag" "a2dp_source" "a2dp_sink" ];
+    #   #         "bluez5.autoswitch-profile" = false;
+    #   #       };
+    #   #     };
+    #   #     matches = [{ "device.name" = "~bluez_card.*"; }];
+    #   #   }
+    #   #   {
+    #   #     actions = { update-props = { "node.pause-on-idle" = false; }; };
+    #   #     matches = [
+    #   #       { "node.name" = "~bluez_input.*"; }
+    #   #       { "node.name" = "~bluez_output.*"; }
+    #   #     ];
+    #   #   }
+    #   # ];
+    # };
+  };
+  
   # services.pipewire = {
   #   enable = true;
   #   alsa.enable = true;
@@ -195,7 +250,7 @@
     isNormalUser = true;
     description = "alex800121";
     # extraGroups = [ "sudo" "networkmanager" "wheel" ];
-    extraGroups = [ "networkmanager" "sudo" "wheel" "code-server" ];
+    extraGroups = [ "audio" "networkmanager" "sudo" "wheel" "code-server" ];
   };
 
   # home-manager = {
@@ -210,9 +265,8 @@
     config = {
       allowBroken = true;
       allowUnfree = true;
-      # allowUnsupportedSystem = true;
+      pulseaudio = true;
     };
-    # overlays = [ (import /etc/nixos/pkgs) ];
   };
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -224,17 +278,17 @@
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
-
+  programs.mtr.enable = true;
+  programs.gnupg.agent = {
+    enable = true;
+    enableSSHSupport = true;
+    pinentryFlavor = "curses";
+  };
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
-  programs.ssh.startAgent = true;
+  # programs.ssh.startAgent = true;
 
   # Enable the Locate
   services.locate = {
@@ -244,18 +298,6 @@
     prunePaths = [ "/media/alex800121" ];
     interval = "hourly";
   };
-
-  services.teamviewer.enable = true;
-
-  # services.code-server = {
-  #   user = "alex800121";
-  #   port = 4444;
-  #   enable = true;
-  #   host = "127.0.0.1";
-  #   auth = "password";
-  #   hashedPassword = "58cb754c8c077d146dc4a5651ef3cbc79ccfd99c4ad37244ef0ccc3e8470365c";
-  #   # extraArguments = [ "--user-data-dir /home/alex800121/.vscode" ];
-  # };
 
   # services.spotifyd.enable = true;
   # Open ports in the firewall.
