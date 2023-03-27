@@ -1,24 +1,18 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, ... }: let
+  uname = "alex800121";
+in
 {
-  # nix = {
+  nix = {
   #   package = pkgs.nix;
-  #   settings = {
-  #     experimental-features = "nix-command flakes repl-flake";
-  #   };
-  # };
+    settings = {
+      experimental-features = "nix-command flakes repl-flake";
+    };
+  };
 
-  # nixpkgs = {
-  #   config = {
-  #     allowBroken = true;
-  #     allowUnfree = true;
-  #     allowUnsupportedSystem = true;
-  #   };
-  #   overlays = [ (import /etc/nixos/pkgs) ];
-  # };
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
-  home.username = "alex800121";
-  home.homeDirectory = "/home/alex800121";
+  home.username = uname;
+  home.homeDirectory = "/home/${uname}";
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
@@ -32,8 +26,8 @@
 
   home.sessionVariables = {
     BROWSER = "microsoft-edge";
-    EDITOR = "nvim";
-    VISUAL = "nvim";
+    EDITOR = "hx";
+    VISUAL = "hx";
   };
 
   # Let Home Manager install and manage itself.
@@ -96,6 +90,7 @@
   home.packages = let
     # xr18 = import ./programs/xr18.nix {};
   in (with pkgs; [
+    pavucontrol
     onedrive
     x-air-edit
     libreoffice
@@ -117,6 +112,7 @@
     gcc_multi gccMultiStdenv 
     rustup openssh ssh-copy-id gh 
     teamviewer
+    zoom-us
     # cabal-install haskell-language-server ghc ghcid
     cabal-install ghcid haskell.compiler.ghc944 haskell.packages.ghc944.haskell-language-server 
 
@@ -180,17 +176,7 @@
   # };
 
 
-  programs.neovim = let
-    # smart-splits-nvim = pkgs.vimUtils.buildVimPlugin {
-    #   name = "smart-splits-nvim";
-    #   src = pkgs.fetchFromGitHub {
-    #     owner = "mrjones2014";
-    #     repo = "smart-splits.nvim";
-    #     rev = "c8d80d90f3c783ac0ea21f256c74d541a7b66a72";
-    #     sha256 = "0vchzaflnrbxnmq2j2zfms8a6xadj75sq0jpxvgmngry5fyb6r1z";
-    #   };
-    # };
-  in {
+  programs.neovim = {
     enable = true;
     plugins = ( with pkgs.vimPlugins; [
       # packer-nvim
@@ -244,6 +230,10 @@
       recursive = true;
       source = ./programs/onedrive;
     };
+    # helix = {
+    #   recursive = true;
+    #   source = ./programs/helix;
+    # };
   };
 
   programs.git = {
@@ -251,24 +241,28 @@
     userName = "alex800121";
     userEmail = "alex800121@hotmail.com";
   };
-  
-  # programs.gh = {
-  #   enable = true;
-  #   enableGitCredentialHelper = true;
-  #   settings = {
-  #     git_protocol = "ssh";
-  #     prompt = "enabled";
-  #     aliases = {
-  #       co = "pr checkout";
-  #     };
-  #     editor = "nvim";
-  #   };
-  # };
-  
+
   programs.htop.enable = true;
 
   programs.helix = {
     enable = true;
+    settings = {
+      theme = "dark_plus";
+      editor = {
+        line-number = "relative";
+        bufferline = "multiple";
+      };
+      keys.normal = {
+        space.e = "file_picker";
+        space.w = ":w";
+        space.q = ":q";
+      };
+    };
+    languages = [
+      {
+        name = "haskell";
+      }
+    ];
   };
 
   programs.alacritty = {
@@ -337,6 +331,7 @@
       set -g visual-activity on
     '';
   };
+
   programs.vscode = {
     package = pkgs.vscode-fhs;
     enable = true;
@@ -350,7 +345,7 @@
     Service = {
       Type = "simple";
       ExecStart = ''
-        ${pkgs.onedrive}/bin/onedrive --monitor --confdir=%h/.config/onedrive
+        ${pkgs.onedrive}/bin/onedrive --monitor --confdir=/home/${uname}/.config/onedrive
       '';
       Restart = "on-failure";
       RestartSec = "3s";
