@@ -65,19 +65,10 @@
     # useDHCP = true;
     firewall.enable = false;
     networkmanager = {
-      # enable = false;
       enable = true;
-      # dhcp = "internal";
       dhcp = "dhcpcd";
       dns = "dnsmasq";
-      # dns = "default";
-      # dns = "systemd-resolved";
     };
-    # wireless = {
-    #   enable = true;
-    #   userControlled.enable = true;
-    # };
-
   };
   # services.connman.enable = true;
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -253,7 +244,7 @@
   systemd.user.services.revtunnel = {
     enable = true;
     description = "Reverse tunnel for acer-nixos";
-    after = [ "network.target" "ssh-agent.service" "home-manager-alex800121.service" ];
+    after = [ "network.target" "home-manager-alex800121.service" ];
     script = ''
       ${pkgs.openssh}/bin/ssh -vvv -N -T -o "ExitOnForwardFailure=yes" \
       -o "UserKnownHostsFile=/home/alex800121/.ssh/known_hosts" -R 60000:127.0.0.1:4444 -R 50000:127.0.0.1:22 \
@@ -267,6 +258,20 @@
     wantedBy = [ "default.target" ];
   };
 
+  programs.nix-ld = {
+    enable = true;
+    libraries = with pkgs; [
+      # stdenv.cc.libc
+      stdenv.cc.cc
+      # libstdcxx5
+      # icu
+      # libunwind
+      # libuuid
+      # lttng-ust
+      # openssl
+      # krb5
+    ];
+  };
   # services.spotifyd.enable = true;
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
