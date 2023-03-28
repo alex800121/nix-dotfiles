@@ -234,6 +234,10 @@ in
     #   recursive = true;
     #   source = ./programs/helix;
     # };
+    nixpkgs = {
+      recursive = true;
+      source = ./programs/nixpkgs;
+    };
   };
 
   programs.git = {
