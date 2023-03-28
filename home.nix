@@ -7,11 +7,11 @@
   #   };
   # };
 
-  nixpkgs.config = {
-    allowBroken = true;
-    allowUnfree = true;
-    allowUnsupportedSystem = true;
-  };
+  # nixpkgs.config = {
+  #   allowBroken = true;
+  #   allowUnfree = true;
+  #   allowUnsupportedSystem = true;
+  # };
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
   home.username = "alex800121";
@@ -29,8 +29,8 @@
 
   home.sessionVariables = {
     BROWSER = "microsoft-edge";
-    EDITOR = "nvim";
-    VISUAL = "nvim";
+    EDITOR = "hx";
+    VISUAL = "hx";
   };
 
   # Let Home Manager install and manage itself.
@@ -307,7 +307,7 @@
   };
 
   programs.vscode = {
-    package = pkgs.vscode-fhs;
+    # package = pkgs.vscode-fhs;
     enable = true;
     enableExtensionUpdateCheck = true;
     enableUpdateCheck = true;
