@@ -1,5 +1,6 @@
-{ config, pkgs, ... }:
-{
+{ config, pkgs, inputs, ... }: let
+  nixpkgsStable = import inputs.nixpkgsStable { system = "x86_64-linux"; };
+in {
   # nix = {
   #   package = pkgs.nix;
   #   settings = {
@@ -95,7 +96,7 @@
   home.packages = (with pkgs; let hls = haskell-language-server.override { supportedGhcVersions = ["944"]; }; in [
   # home.packages = (with pkgs; [
     # vscode-fhs
-    libreoffice
+    nixpkgsStable.libreoffice
     spotify
     # spotify-tui
     nix-prefetch-git
@@ -159,17 +160,7 @@
   # };
 
 
-  programs.neovim = let
-    # smart-splits-nvim = pkgs.vimUtils.buildVimPlugin {
-    #   name = "smart-splits-nvim";
-    #   src = pkgs.fetchFromGitHub {
-    #     owner = "mrjones2014";
-    #     repo = "smart-splits.nvim";
-    #     rev = "c8d80d90f3c783ac0ea21f256c74d541a7b66a72";
-    #     sha256 = "0vchzaflnrbxnmq2j2zfms8a6xadj75sq0jpxvgmngry5fyb6r1z";
-    #   };
-    # };
-  in {
+  programs.neovim = {
     enable = true;
     plugins = ( with pkgs.vimPlugins; [
       # packer-nvim
