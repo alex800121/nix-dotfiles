@@ -92,7 +92,8 @@
 
   fonts.fontconfig.enable = true;
 
-  home.packages = (with pkgs; [
+  home.packages = (with pkgs; let hls = haskell-language-server.override { supportedGhcVersions = ["944"]; }; in [
+  # home.packages = (with pkgs; [
     # vscode-fhs
     libreoffice
     spotify
@@ -112,7 +113,11 @@
     microsoft-edge
     gcc_multi gccMultiStdenv 
     rustup openssh ssh-copy-id gh 
-    cabal-install haskell.packages.ghc944.haskell-language-server haskell.compiler.ghc94 ghcid
+    cabal-install haskell.compiler.ghc944 ghcid
+    hls
+    # (pkgs.haskell-langauge-server.override { supportedGhcVersions = [ "944" ]; })
+    # cabal-install haskell.packages.ghc944.haskell-language-server haskell.compiler.ghc94 ghcid
+    nil
     (nerdfonts.override { fonts = [ "Hack" ]; })
   ] );
 
@@ -237,6 +242,38 @@
 
   programs.helix = {
     enable = true;
+    settings = {
+      theme = "dark_plus";
+      editor = {
+        line-number = "relative";
+        bufferline = "multiple";
+      };
+      editor.cursor-shape = {
+        insert = "bar";
+        normal = "block";
+        select = "underline";
+      };
+      editor.file-picker = {
+        hidden = false;
+        parents = false;
+        # ignore = false;
+        git-ignore = false;
+        # git-global = false;
+        # git-exclude = false;
+      };
+      keys.normal = {
+        space.w = ":w";
+        space.q = ":q";
+        space.x = ":bc";
+        L = "goto_next_buffer";
+        H = "goto_previous_buffer";
+      };
+    };
+    languages = [
+      {
+        name = "haskell";
+      }
+    ];
   };
 
   programs.alacritty = {
