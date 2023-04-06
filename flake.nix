@@ -37,8 +37,38 @@
               sharedModules = [
                 ./programs/onedrive
               ];
-              backupFileExtension = "bak";
               extraSpecialArgs = { inherit inputs system userName; };
+              backupFileExtension = "bak";
+            };
+          }
+        ];
+      };
+      acer-nixos = let
+        system = "x86_64-linux";
+        hostName = "acer-nixos";
+        userName = "alex800121";
+      in nixpkgs.lib.nixosSystem {
+        inherit system;
+        specialArgs = { inherit hostName userName; };
+        modules = [
+          { 
+            nixpkgs.overlays = [
+              (import ./overlays)
+            ];
+          }
+          nixos-hardware.nixosModules.common-cpu-amd-pstate
+          ./configuration.nix
+          ./hardware_config/acer.nix
+          ./programs/nix-ld
+          ./programs/revtunnel
+          home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users."${userName}" = import ./home.nix;
+              extraSpecialArgs = { inherit inputs system userName; };
+              backupFileExtension = "bak";
             };
           }
         ];

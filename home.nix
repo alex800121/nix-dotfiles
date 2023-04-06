@@ -40,10 +40,6 @@ in {
   programs.bash = {
     enable = true;
     enableCompletion = true;
-    # sessionVariables = {
-    #   EDITOR = "nvim";
-    #   VISUAL = "nvim";
-    # };
     shellOptions = [
        "histappend" "checkwinsize" "extglob" "globstar" "checkjobs" "-cdspell"
     ];
@@ -84,16 +80,16 @@ in {
     nix-direnv.enable = true;
   };
 
-  /* programs.ssh = {
-    enable = true;
-    hashKnownHosts = true;
-  }; */
+  # programs.ssh = {
+  #   enable = true;
+  #   extraConfig = '' 
+  #     AddKeysToAgent yes
+  #   '';
+  # };
 
   fonts.fontconfig.enable = true;
 
-  home.packages = let
-    # hls = pkgs.haskell-language-server.override { supportedGhcVersions = [ "927" "944" ]; };
-  in (with pkgs; [
+  home.packages = [
     musescore
     pavucontrol
     x-air-edit
@@ -117,8 +113,9 @@ in {
     zoom-us
     cabal-install ghcid haskell.compiler.ghc944
     (haskell-language-server.override { supportedGhcVersions = [ "927" "944" ]; })
+    nil
     (nerdfonts.override { fonts = [ "Hack" ]; })
-  ] );
+  ];
 
   dconf.settings = {
     "org/gnome/desktop/peripherals/touchpad".tap-to-click = true;
@@ -238,6 +235,11 @@ in {
       editor.soft-wrap = {
         enable = true;
       };
+      editor.cursor-shape = {
+        insert = "bar";
+        normal = "block";
+        select = "underline";
+      };
       keys.normal = {
         space.e = "file_picker";
         space.w = ":w";
@@ -321,6 +323,7 @@ in {
       set -g visual-activity on
     '';
   };
+
   programs.vscode = {
     # package = pkgs.vscode-fhs;
     enable = true;
