@@ -88,8 +88,9 @@ in
   fonts.fontconfig.enable = true;
 
   home.packages = let
-    # xr18 = import ./programs/xr18.nix {};
+    # hls = pkgs.haskell-language-server.override { supportedGhcVersions = [ "927" "944" ]; };
   in (with pkgs; [
+    musescore
     pavucontrol
     onedrive
     x-air-edit
@@ -114,8 +115,8 @@ in
     teamviewer
     zoom-us
     # cabal-install haskell-language-server ghc ghcid
-    cabal-install ghcid haskell.compiler.ghc944 haskell.packages.ghc944.haskell-language-server 
-
+    cabal-install ghcid haskell.compiler.ghc944 # haskell.packages.ghc944.haskell-language-server 
+    (haskell-language-server.override { supportedGhcVersions = [ "927" "944" ]; })
     (nerdfonts.override { fonts = [ "Hack" ]; })
   ] );
 
@@ -256,15 +257,29 @@ in
         line-number = "relative";
         bufferline = "multiple";
       };
+      editor.file-picker = {
+        hidden = false;
+        parents = false;
+        git-ignore = false;
+      };
+      editor.soft-wrap = {
+        enable = true;
+      };
       keys.normal = {
         space.e = "file_picker";
         space.w = ":w";
         space.q = ":q";
+        space.x = ":bc";
+        L = ":bn";
+        H = ":bp";
       };
     };
     languages = [
       {
         name = "haskell";
+      }
+      {
+        name = "nix";
       }
     ];
   };

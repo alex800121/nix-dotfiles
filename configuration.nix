@@ -56,6 +56,13 @@
 
   nix = {
     # package = pkgs.nix; # or versioned attributes like nixVersions.nix_2_8
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = ''
+        --delete-older-than 7d
+      '';
+    };
     extraOptions = ''
       experimental-features = nix-command flakes repl-flake
     '';
@@ -91,6 +98,7 @@
       enable = true;
       dhcp = "dhcpcd";
       dns = "dnsmasq";
+      # wifi.backend = "iwd";
     };
     # wireless = {
     #   enable = true;
@@ -271,6 +279,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    helix
     vim
     curl
     wget
