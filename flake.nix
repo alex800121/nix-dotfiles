@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgsStable.url = "github:nixos/nixpkgs/nixos-22.11";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
@@ -20,6 +21,9 @@
               useUserPackages = true;
               users.alex800121 = import ./home.nix;
               backupFileExtension = "bak";
+              extraSpecialArgs = {
+                inherit inputs;
+              };
             };
 
             # Optionally, use home-manager.extraSpecialArgs to pass
