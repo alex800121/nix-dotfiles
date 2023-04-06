@@ -1,22 +1,16 @@
-{ config, pkgs, inputs, ... }: let
+{ config, pkgs, inputs, userName, ... }: let
   nixpkgsStable = import inputs.nixpkgsStable { system = "x86_64-linux"; };
 in {
-  # nix = {
-  #   package = pkgs.nix;
-  #   settings = {
-  #     experimental-features = "nix-command flakes repl-flake";
-  #   };
-  # };
+  nix = {
+    settings = {
+      experimental-features = "nix-command flakes repl-flake";
+    };
+  };
 
-  # nixpkgs.config = {
-  #   allowBroken = true;
-  #   allowUnfree = true;
-  #   allowUnsupportedSystem = true;
-  # };
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
-  home.username = "alex800121";
-  home.homeDirectory = "/home/alex800121";
+  home.username = userName;
+  home.homeDirectory = "/home/${userName}";
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
@@ -40,10 +34,6 @@ in {
   programs.bash = {
     enable = true;
     enableCompletion = true;
-    # sessionVariables = {
-    #   EDITOR = "nvim";
-    #   VISUAL = "nvim";
-    # };
     shellOptions = [
        "histappend" "checkwinsize" "extglob" "globstar" "checkjobs" "-cdspell"
     ];
@@ -93,12 +83,11 @@ in {
 
   fonts.fontconfig.enable = true;
 
-  home.packages = (with pkgs; let hls = haskell-language-server.override { supportedGhcVersions = ["944"]; }; in [
+  home.packages = with pkgs; [
   # home.packages = (with pkgs; [
     # vscode-fhs
     nixpkgsStable.libreoffice
     spotify
-    # spotify-tui
     nix-prefetch-git
     cabal2nix
     curl
@@ -115,12 +104,10 @@ in {
     gcc_multi gccMultiStdenv 
     rustup openssh ssh-copy-id gh 
     cabal-install haskell.compiler.ghc944 ghcid
-    hls
-    # (pkgs.haskell-langauge-server.override { supportedGhcVersions = [ "944" ]; })
-    # cabal-install haskell.packages.ghc944.haskell-language-server haskell.compiler.ghc94 ghcid
+    (haskell-language-server.override { supportedGhcVersions = ["944"]; })
     nil
     (nerdfonts.override { fonts = [ "Hack" ]; })
-  ] );
+  ];
 
   dconf.settings = {
     "org/gnome/desktop/peripherals/touchpad".tap-to-click = true;
@@ -163,7 +150,6 @@ in {
   programs.neovim = {
     enable = true;
     plugins = ( with pkgs.vimPlugins; [
-      # packer-nvim
       smart-splits-nvim
       dracula-vim
       tokyonight-nvim
@@ -335,31 +321,9 @@ in {
   };
 
   programs.vscode = {
-    # package = pkgs.vscode-fhs;
     enable = true;
     enableExtensionUpdateCheck = true;
     enableUpdateCheck = true;
     mutableExtensionsDir = true;
   };
-  
-  # systemd.user.services.revtunnel = {
-  #   Unit = {
-  #     Description = "Reverse tunnel for acer-nixos";
-  #     After = [ "network.target" "ssh-agent.service" "home-manager-alex800121.service" ];
-  #     Type = "simple";
-  #   };
-  #   Service = {
-  #     ExecStart = ''
-  #       ${pkgs.openssh}/bin/ssh -vvv -N -T -o "ExitOnForwardFailure=yes" \
-  #       -o "UserKnownHostsFile=/home/alex800121/.ssh/known_hosts" -R 60000:127.0.0.1:4444 -R 50000:127.0.0.1:22 \
-  #       alex800121@alexrpi4gate.ubddns.org -p 30000
-  #     '';
-  #     Restart = "always";
-  #     RestartSec = "5s";
-  #   };
-  #   Install = {
-  #     WantedBy = [ "default.target" ];
-  #   };
-  # };
-
 }
