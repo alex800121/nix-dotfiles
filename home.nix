@@ -1,18 +1,22 @@
-{ config, pkgs, lib, ... }: let
-  uname = "alex800121";
-in
-{
+{ config, pkgs, lib, inputs, userName, system, ... }: let
+  nixpkgsStable = import inputs.nixpkgsStable { inherit system; };
+in {
   nix = {
-  #   package = pkgs.nix;
     settings = {
       experimental-features = "nix-command flakes repl-flake";
+    };
+  };
+  xdg.configFile = {
+    nixpkgs = {
+      recursive = true;
+      source = ./programs/nixpkgs;
     };
   };
 
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
-  home.username = uname;
-  home.homeDirectory = "/home/${uname}";
+  home.username = userName;
+  home.homeDirectory = "/home/${userName}";
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
@@ -92,11 +96,9 @@ in
   in (with pkgs; [
     musescore
     pavucontrol
-    onedrive
     x-air-edit
-    libreoffice
+    nixpkgsStable.libreoffice
     spotify
-    # spotify-tui
     nix-prefetch-git
     cabal2nix
     curl
@@ -110,12 +112,10 @@ in
     dmidecode
     libchewing
     microsoft-edge
-    gcc_multi gccMultiStdenv 
     rustup openssh ssh-copy-id gh 
     teamviewer
     zoom-us
-    # cabal-install haskell-language-server ghc ghcid
-    cabal-install ghcid haskell.compiler.ghc944 # haskell.packages.ghc944.haskell-language-server 
+    cabal-install ghcid haskell.compiler.ghc944
     (haskell-language-server.override { supportedGhcVersions = [ "927" "944" ]; })
     (nerdfonts.override { fonts = [ "Hack" ]; })
   ] );
@@ -163,24 +163,9 @@ in
     };
   };
 
-  # home.file = {
-  #   "\.haskeline".source = programs/haskell/.haskeline;
-  #   "\.ghci".source = programs/haskell/.ghci;
-  #   "\.cabal" = {
-  #     recursive = true;
-  #     source = programs/cabal/.cabal;
-  #   };
-  #   "\.bashrc".source = programs/bash/.bashrc;
-  #   "\.bash_aliases".source = programs/bash/.bash_aliases;
-  #   "\.profile".source = programs/bash/.profile;
-  #   "\.bash_logout".source = programs/bash/.bash_logout;
-  # };
-
-
   programs.neovim = {
     enable = true;
     plugins = ( with pkgs.vimPlugins; [
-      # packer-nvim
       smart-splits-nvim
       dracula-vim
       tokyonight-nvim
@@ -226,18 +211,6 @@ in
     nvim = {
       recursive = true;
       source = ./programs/nvim;
-    };
-    onedrive = {
-      recursive = true;
-      source = ./programs/onedrive;
-    };
-    # helix = {
-    #   recursive = true;
-    #   source = ./programs/helix;
-    # };
-    nixpkgs = {
-      recursive = true;
-      source = ./programs/nixpkgs;
     };
   };
 
@@ -286,10 +259,8 @@ in
 
   programs.alacritty = {
     enable = true;
-    # package = pkgs.alacritty;
   };
   xdg.configFile."alacritty" = {
-    # recursive = true;
     source = programs/alacritty;
   };
 
@@ -350,28 +321,11 @@ in
       set -g visual-activity on
     '';
   };
-
   programs.vscode = {
-    package = pkgs.vscode-fhs;
+    # package = pkgs.vscode-fhs;
     enable = true;
     enableExtensionUpdateCheck = true;
     enableUpdateCheck = true;
     mutableExtensionsDir = true;
-  };
-
-  systemd.user.services."onedrive" = {
-    Unit.Description = "Onedrive sync service";
-    Service = {
-      Type = "simple";
-      ExecStart = ''
-        ${pkgs.onedrive}/bin/onedrive --monitor --confdir=/home/${uname}/.config/onedrive
-      '';
-      Restart = "on-failure";
-      RestartSec = "3s";
-      # RestartPreventExitStatus=3;
-    };
-    Install = {
-      WantedBy = [ "default.target" ];
-    };
   };
 }

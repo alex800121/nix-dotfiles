@@ -2,60 +2,38 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, ... }:
-
-{
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      # <home-manager/nixos>
-    ];
+{ config, pkgs, lib, userName, hostName, ... }: {
+  # imports =
+  #   [ # Include the results of the hardware scan.
+  #     # ./hardware-configuration.nix
+  #     ./hardware_config/asus.nix
+  #   ];
 
   # boot.kernelPackages = pkgs.linuxPackages_zen;
   boot.kernelPackages = pkgs.linuxPackages_6_2;
-  # boot.kernelPatches = [
-  #   {
-  #     name = "keyboard";
-  #     patch = ./patches/keyboard.patch;
-  #   }
-  # ];
 
   hardware.enableAllFirmware = true; 
 
+  console = {
+    earlySetup = true;
+    font = "${pkgs.terminus_font}/share/consolefonts/ter-v32n.psf.gz";
+  };
   # Bootloader.
   boot = {
     supportedFilesystems = [ "ntfs" ];
     loader = {
-      systemd-boot.enable = true;
+      systemd-boot = {
+        enable = true;
+        consoleMode = "1";
+      };
       efi = {
         canTouchEfiVariables = true;
         efiSysMountPoint = "/boot";
       };
-      # grub = {
-      #   devices = [ "nodev" ];
-      #   efiSupport = true;
-      #   enable = true;
-      #   version = 2;
-      #   useOSProber = true;
-      #   fontSize = 40;
-      # };
-    };
-  };
-
-  fileSystems = {
-    "/media/alex800121/Asus" = {
-      device = "/dev/disk/by-uuid/AC6E34966E345B72";
-      fsType = "ntfs";
-      options = [ "rw" "uid=1000" ];
-    };
-    "/home/alex800121/OneDrive" = {
-      device = "/media/alex800121/Asus/Users/alex800121/OneDrive/";
-      options = [ "bind" ];
     };
   };
 
   nix = {
-    # package = pkgs.nix; # or versioned attributes like nixVersions.nix_2_8
     gc = {
       automatic = true;
       dates = "weekly";
@@ -90,21 +68,13 @@
   # services.thermald.enable = true;
 
   networking = {
-    hostName = "asus-nixos"; # Define your hostname.
-    # useDHCP = true;
+    inherit hostName; # Define your hostname.
     firewall.enable = false;
     networkmanager = {
-      # enable = false;
       enable = true;
       dhcp = "dhcpcd";
       dns = "dnsmasq";
-      # wifi.backend = "iwd";
     };
-    # wireless = {
-    #   enable = true;
-    #   userControlled.enable = true;
-    # };
-
   };
   # services.connman.enable = true;
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -118,11 +88,6 @@
   # Set your time zone.
   time.hardwareClockInLocalTime = true;
   time.timeZone = "Asia/Taipei";
-
-  # programs.bash = {
-  #   enableCompletion = true;
-  #   enableLsColors = true;
-  # };
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.utf8";
@@ -190,44 +155,8 @@
     alsa.enable = true;
     pulse.enable = true;
     wireplumber.enable = true;
-    # wireplumber.enable = false;
-    # media-session.enable = true;
-    # media-session.config.bluez-monitor = {
-    #   properties = {
-    #     "bluez5.codecs" = [ "sbc" "aac" "ldac" "aptx" "aptx_hd" ];
-    #     "bluez5.mdbc-support" = true;
-    #   };
-    #   # rules = [
-    #   #   {
-    #   #     actions = {
-    #   #       update-props = {
-    #   #         "bluez5.auto-connect" = [ "hsp_hs" "hfp_hf" "a2dp_sink" ];
-    #   #         "bluez5.hw-volume" =
-    #   #           [ "hsp_ag" "hfp_ag" "a2dp_source" "a2dp_sink" ];
-    #   #         "bluez5.autoswitch-profile" = false;
-    #   #       };
-    #   #     };
-    #   #     matches = [{ "device.name" = "~bluez_card.*"; }];
-    #   #   }
-    #   #   {
-    #   #     actions = { update-props = { "node.pause-on-idle" = false; }; };
-    #   #     matches = [
-    #   #       { "node.name" = "~bluez_input.*"; }
-    #   #       { "node.name" = "~bluez_output.*"; }
-    #   #     ];
-    #   #   }
-    #   # ];
-    # };
   };
   
-  # services.pipewire = {
-  #   enable = true;
-  #   alsa.enable = true;
-  #   alsa.support32Bit = true;
-  #   pulse.enable = true;
-  #   jack.enable = true;
-  # };
-
   # Enable touchpad support (enabled default in most desktopManager).
   services.xserver.libinput = {
     enable = true;
@@ -257,17 +186,8 @@
   users.users.alex800121 = {
     isNormalUser = true;
     description = "alex800121";
-    # extraGroups = [ "sudo" "networkmanager" "wheel" ];
     extraGroups = [ "audio" "networkmanager" "sudo" "wheel" "code-server" ];
   };
-
-  # home-manager = {
-  #   users.alex800121 = import ./home.nix { inherit config pkgs lib; }; 
-  # };
-
-  # Allow unfree packages
-  # nixpkgs.config.allowUnfree = true;
-  # nixpkgs.config.allowBroken = true;
 
   nixpkgs = {
     config = {
@@ -308,7 +228,6 @@
     interval = "hourly";
   };
 
-  # services.spotifyd.enable = true;
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
@@ -321,5 +240,4 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.05"; # Did you read the comment?
-
 }
