@@ -2,24 +2,15 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, userName, hostName, ... }:
 
 {
-
-
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      # <home-manager/nixos>
-    ];
+  # imports =
+  #   [ # Include the results of the hardware scan.
+  #     ./hardware-configuration.nix
+  #   ];
 
   boot.kernelPackages = pkgs.linuxPackages_6_2;
-  # boot.kernelPatches = [
-  #   {
-  #     name = "keyboard";
-  #     patch = ./patches/keyboard.patch;
-  #   }
-  # ];
 
   hardware.enableAllFirmware = true; 
 
@@ -32,25 +23,10 @@
         canTouchEfiVariables = true;
         efiSysMountPoint = "/boot";
       };
-      # grub = {
-      #   devices = [ "nodev" ];
-      #   efiSupport = true;
-      #   enable = true;
-      #   version = 2;
-      #   useOSProber = true;
-      #   fontSize = 40;
-      # };
     };
   };
 
-  fileSystems."/media/alex800121/Asus" = {
-    device = "/dev/disk/by-uuid/F2D200EBD200B63F";
-    fsType = "ntfs";
-    options = [ "rw" "uid=1000" ];
-  };
-
   nix = {
-    # package = pkgs.nix; # or versioned attributes like nixVersions.nix_2_8
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
@@ -61,7 +37,7 @@
   services.thermald.enable = true;
 
   networking = {
-    hostName = "acer-nixos"; # Define your hostname.
+    inherit hostName;
     # useDHCP = true;
     firewall.enable = false;
     networkmanager = {
@@ -112,7 +88,7 @@
 
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager = {
-    autoLogin.user = "alex800121";
+    autoLogin.user = userName;
     # hiddenUsers = ["root"];
     gdm = {
       enable = true;
@@ -170,9 +146,9 @@
     };
   };
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.alex800121 = {
+  users.users."${userName}" = {
     isNormalUser = true;
-    description = "alex800121";
+    description = "${userName}";
     # extraGroups = [ "sudo" "networkmanager" "wheel" ];
     extraGroups = [ "root" "networkmanager" "sudo" "wheel" "code-server" ];
   };
@@ -241,49 +217,5 @@
   #   ];
   # };
 
-  systemd.user.services.revtunnel = {
-    enable = true;
-    description = "Reverse tunnel for acer-nixos";
-    after = [ "network.target" "home-manager-alex800121.service" ];
-    script = ''
-      ${pkgs.openssh}/bin/ssh -vvv -N -T -o "ExitOnForwardFailure=yes" \
-      -o "UserKnownHostsFile=/home/alex800121/.ssh/known_hosts" -R 60000:127.0.0.1:4444 -R 50000:127.0.0.1:22 \
-      alex800121@alexrpi4gate.ubddns.org -p 30000
-    '';
-    serviceConfig = {
-      Type = "simple";
-      Restart = "always";
-      RestartSec = 5;
-    };
-    wantedBy = [ "default.target" ];
-  };
-
-  programs.nix-ld = {
-    enable = true;
-    libraries = with pkgs; [
-      # stdenv.cc.libc
-      stdenv.cc.cc
-      # libstdcxx5
-      # icu
-      # libunwind
-      # libuuid
-      # lttng-ust
-      # openssl
-      # krb5
-    ];
-  };
-  # services.spotifyd.enable = true;
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.05"; # Did you read the comment?
-
 }

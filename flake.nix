@@ -10,19 +10,27 @@
 
   outputs = inputs@{ nixpkgs, home-manager, ... }: {
     nixosConfigurations = {
-      acer-nixos = nixpkgs.lib.nixosSystem {
+      acer-nixos = let
         system = "x86_64-linux";
+        hostName = "acer-nixos";
+        userName = "alex800121";
+      in nixpkgs.lib.nixosSystem {
+        inherit system;
+        specialArgs = { inherit hostName userName; };
         modules = [
           ./configuration.nix
+          ./hardware_config/acer.nix
+          ./programs/nix-ld
+          ./programs/revtunnel
           home-manager.nixosModules.home-manager
           {
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
-              users.alex800121 = import ./home.nix;
+              users."${userName}" = import ./home.nix;
               backupFileExtension = "bak";
               extraSpecialArgs = {
-                inherit inputs;
+                inherit inputs userName;
               };
             };
 
