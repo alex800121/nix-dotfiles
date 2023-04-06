@@ -89,7 +89,7 @@ in {
 
   fonts.fontconfig.enable = true;
 
-  home.packages = [
+  home.packages = with pkgs; [
     musescore
     pavucontrol
     x-air-edit
