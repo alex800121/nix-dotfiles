@@ -261,10 +261,11 @@ in {
 
   programs.alacritty = {
     enable = true;
+    settings = import ./programs/alacritty-settings.nix;
   };
-  xdg.configFile."alacritty" = {
-    source = programs/alacritty;
-  };
+  # xdg.configFile."alacritty" = {
+  #   source = programs/alacritty;
+  # };
 
   programs.tmux = {
     enable = true;
