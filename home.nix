@@ -95,6 +95,7 @@ in {
   fonts.fontconfig.enable = true;
 
   home.packages = with pkgs; [
+    yj
     musescore
     pavucontrol
     x-air-edit
