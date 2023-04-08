@@ -26,7 +26,7 @@
               (import ./overlays)
             ];
           }
-          nixos-hardware.nixosModules.common-cpu-amd-pstate
+          
           ./configuration.nix
           
           home-manager.nixosModules.home-manager
@@ -55,6 +55,7 @@
       };
       extraModules = [
         ./hardware/asus.nix
+        nixos-hardware.nixosModules.common-cpu-amd-pstate
       ];
     };
     acer-nixos = {
