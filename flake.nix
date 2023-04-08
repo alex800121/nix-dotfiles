@@ -13,7 +13,7 @@
 
   # outputs = inputs@{ nixpkgs, home-manager, nix-ld, ... }: {
   outputs = inputs@{ nixpkgs, home-manager, nixos-hardware, ... }: let
-    mkNixosConfig = { system, userConfig, ... }: {
+    mkNixosConfig = { system, userConfig, extraModules ? [], ... }: {
       nixosConfigurations."${userConfig.hostName}" = let
         inherit system;
         inherit userConfig;
@@ -28,7 +28,7 @@
           }
           nixos-hardware.nixosModules.common-cpu-amd-pstate
           ./configuration.nix
-          ./hardware_config/asus.nix
+          
           home-manager.nixosModules.home-manager
           {
             home-manager = {
@@ -42,7 +42,7 @@
               backupFileExtension = "bak";
             };
           }
-        ];
+        ] ++ extraModules;
       };
     };
     asus-nixos = {
@@ -53,6 +53,9 @@
         fontSize = 11.5;
         autoLogin = false;
       };
+      extraModules = [
+        ./hardware/asus.nix
+      ];
     };
     acer-nixos = {
       system = "x86_64-linux";
@@ -62,6 +65,9 @@
         fontSize = 16;
         autoLogin = true;
       };
+      extraModules = [
+        ./hardware/acer.nix
+      ];
     };
   in builtins.foldl' (x: y: nixpkgs.lib.recursiveUpdate x (mkNixosConfig y)) {} [ asus-nixos acer-nixos ];
 }
