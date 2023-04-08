@@ -1,5 +1,10 @@
-{ config, pkgs, lib, inputs, userName, system, userConfig, ... }: let
+{ config, pkgs, lib, inputs, system, userConfig, ... }: let
   nixpkgsStable = import inputs.nixpkgsStable { inherit system; };
+  defaultConfig = {
+    fontSize = 11.5;
+  };
+  updateConfig = lib.recursiveUpdate defaultConfig userConfig;
+  inherit (updateConfig) userName;
 in {
   nix = {
     settings = {
@@ -93,7 +98,7 @@ in {
     musescore
     pavucontrol
     x-air-edit
-    nixpkgsStable.libreoffice
+    libreoffice-fresh
     spotify
     nix-prefetch-git
     cabal2nix
@@ -261,12 +266,8 @@ in {
 
   programs.alacritty = {
     enable = true;
-    settings = import ./programs/alacritty/alacritty-settings.nix userConfig.fontSize;
+    settings = import ./programs/alacritty/alacritty-settings.nix userConfig;
   };
-  # xdg.configFile."alacritty" = {
-  #   recursive = true;
-  #   source = programs/alacritty;
-  # };
 
   programs.tmux = {
     enable = true;
@@ -325,7 +326,6 @@ in {
       set -g visual-activity on
     '';
   };
-
   programs.vscode = {
     # package = pkgs.vscode-fhs;
     enable = true;

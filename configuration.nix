@@ -1,10 +1,13 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ config, pkgs, lib, userName, hostName, ... }:
-
-{
+{ config, pkgs, lib, userConfig, ... }: let
+  defaultConfig = {
+    autoLogin = false;
+  };
+  updateConfig = lib.recursiveUpdate defaultConfig userConfig;
+  inherit (updateConfig) userName hostName autoLogin;
+in {
   boot.kernelPackages = pkgs.linuxPackages_6_2;
 
   hardware.enableAllFirmware = true; 
@@ -116,6 +119,7 @@
     '';
   };
   services.xserver.displayManager = {
+    autoLogin.enable = autoLogin;
     autoLogin.user = userName;
     # hiddenUsers = ["root"];
     gdm = {
