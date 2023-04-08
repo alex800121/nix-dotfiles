@@ -13,11 +13,8 @@
 
   # outputs = inputs@{ nixpkgs, home-manager, nix-ld, ... }: {
   outputs = inputs@{ nixpkgs, home-manager, nixos-hardware, ... }: let
-    mkNixosConfig = { system, userConfig, extraModules ? [], ... }: {
-      nixosConfigurations."${userConfig.hostName}" = let
-        inherit system;
-        inherit userConfig;
-      in nixpkgs.lib.nixosSystem {
+    mkNixosConfig = { system, userConfig, extraModules ? [], extraHMModules ? [], ... }: {
+      nixosConfigurations."${userConfig.hostName}" = nixpkgs.lib.nixosSystem {
         inherit system;
         specialArgs = { inherit userConfig; };
         modules = [
@@ -26,18 +23,13 @@
               (import ./overlays)
             ];
           }
-          
           ./configuration.nix
-          
-          home-manager.nixosModules.home-manager
-          {
+          home-manager.nixosModules.home-manager {
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
               users."${userConfig.userName}" = import ./home.nix;
-              sharedModules = [
-                ./programs/onedrive
-              ];
+              sharedModules = extraHMModules;
               extraSpecialArgs = { inherit inputs system userConfig; };
               backupFileExtension = "bak";
             };
@@ -57,6 +49,9 @@
         ./hardware/asus.nix
         nixos-hardware.nixosModules.common-cpu-amd-pstate
       ];
+      extraHMModules = [
+        ./programs/onedrive
+      ];
     };
     acer-nixos = {
       system = "x86_64-linux";
@@ -70,5 +65,8 @@
         ./hardware/acer.nix
       ];
     };
-  in builtins.foldl' (x: y: nixpkgs.lib.recursiveUpdate x (mkNixosConfig y)) {} [ asus-nixos acer-nixos ];
+  in builtins.foldl' (x: y: nixpkgs.lib.recursiveUpdate x (mkNixosConfig y)) {} [
+    asus-nixos 
+    acer-nixos
+  ];
 }
