@@ -1,4 +1,4 @@
-{ 
+fontSize: { 
   bell = { 
     animation = "EaseOutExpo"; 
     color = "#ffffff"; 
@@ -50,7 +50,7 @@
       x = 0; 
       y = 0; 
     }; 
-    size = 11.5; 
+    size = fontSize; 
   }; 
   hints = { 
     alphabet = "jfkdls;ahgurieowpq"; 
@@ -66,7 +66,10 @@
           mods = "None"; 
         }; 
         post_processing = true; 
-        regex = "(ipfs:|ipns:|magnet:|mailto:|gemini:|gopher:|https:|http:|news:|file:|git:|ssh:|ftp:)[^"; 
+        regex = ''
+          (ipfs:|ipns:|magnet:|mailto:|gemini:|gopher:|https:|http:|news:|file:|git:|ssh:|ftp:)\
+          [^\u0000-\u001F\u007F-\u009F<>"\\s{-}\\^⟨⟩`]+
+        '';
       }
     ]; 
   }; 

@@ -16,6 +16,9 @@
         system = "x86_64-linux";
         userName = "alex800121";
         hostName = "asus-nixos";
+        userConfig = {
+          fontSize = 11.5;
+        };
       in nixpkgs.lib.nixosSystem {
         inherit system;
         specialArgs = { inherit hostName userName; };
@@ -37,7 +40,7 @@
               sharedModules = [
                 ./programs/onedrive
               ];
-              extraSpecialArgs = { inherit inputs system userName; };
+              extraSpecialArgs = { inherit inputs system userName userConfig; };
               backupFileExtension = "bak";
             };
           }
@@ -47,6 +50,9 @@
         system = "x86_64-linux";
         hostName = "acer-nixos";
         userName = "alex800121";
+        userConfig = {
+          fontSize = 16;
+        };
       in nixpkgs.lib.nixosSystem {
         inherit system;
         specialArgs = { inherit hostName userName; };
@@ -67,7 +73,7 @@
               useGlobalPkgs = true;
               useUserPackages = true;
               users."${userName}" = import ./home.nix;
-              extraSpecialArgs = { inherit inputs system userName; };
+              extraSpecialArgs = { inherit inputs system userName userConfig; };
               backupFileExtension = "bak";
             };
           }

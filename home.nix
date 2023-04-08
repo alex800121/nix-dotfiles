@@ -1,4 +1,4 @@
-{ config, pkgs, lib, inputs, userName, system, ... }: let
+{ config, pkgs, lib, inputs, userName, system, userConfig, ... }: let
   nixpkgsStable = import inputs.nixpkgsStable { inherit system; };
 in {
   nix = {
@@ -261,9 +261,10 @@ in {
 
   programs.alacritty = {
     enable = true;
-    settings = import ./programs/alacritty-settings.nix;
+    settings = import ./programs/alacritty/alacritty-settings.nix userConfig.fontSize;
   };
   # xdg.configFile."alacritty" = {
+  #   recursive = true;
   #   source = programs/alacritty;
   # };
 
