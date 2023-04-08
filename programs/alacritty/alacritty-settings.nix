@@ -1,4 +1,4 @@
-fontSize: { 
+{ fontSize ? 11.5, ... }: { 
   bell = { 
     animation = "EaseOutExpo"; 
     color = "#ffffff"; 

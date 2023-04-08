@@ -1,4 +1,4 @@
-{ pkgs, userName, ... }: {
+{ pkgs, userConfig, ... }: {
   home.packages = [ pkgs.onedrive ];
 
   xdg.configFile = {
@@ -13,7 +13,7 @@
     Service = {
       Type = "simple";
       ExecStart = ''
-        ${pkgs.onedrive}/bin/onedrive --monitor --confdir=/home/${userName}/.config/onedrive
+        ${pkgs.onedrive}/bin/onedrive --monitor --confdir=/home/${userConfig.userName}/.config/onedrive
       '';
       Restart = "on-failure";
       RestartSec = "3s";
