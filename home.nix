@@ -98,7 +98,7 @@ in {
     musescore
     pavucontrol
     x-air-edit
-    libreoffice-fresh
+    libreoffice
     spotify
     nix-prefetch-git
     cabal2nix
