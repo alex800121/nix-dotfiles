@@ -63,6 +63,8 @@
       };
       extraModules = [
         ./hardware/acer.nix
+        ./programs/revtunnel
+        ./programs/nix-ld
       ];
     };
   in builtins.foldl' (x: y: nixpkgs.lib.recursiveUpdate x (mkNixosConfig y)) {} [

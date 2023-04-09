@@ -118,6 +118,7 @@ in {
     zoom-us
     cabal-install ghcid haskell.compiler.ghc944
     (haskell-language-server.override { supportedGhcVersions = [ "927" "944" ]; })
+    ormolu
     nil
     (nerdfonts.override { fonts = [ "Hack" ]; })
   ];
@@ -226,45 +227,8 @@ in {
 
   programs.helix = {
     enable = true;
-    settings = {
-      theme = "dark_plus";
-      editor = {
-        line-number = "relative";
-        bufferline = "always";
-        mouse = true;
-        completion-trigger-len = 1;
-      };
-      editor.file-picker = {
-        hidden = false;
-        parents = false;
-        git-ignore = false;
-      };
-      editor.soft-wrap = {
-        enable = true;
-      };
-      editor.cursor-shape = {
-        insert = "bar";
-        normal = "block";
-        select = "underline";
-      };
-      keys.normal = {
-        space.e = "file_picker";
-        space.w = ":w";
-        space.q = ":q";
-        space.x = ":bc";
-        L = ":bn";
-        H = ":bp";
-      };
-    };
-    languages = [
-      {
-        name = "haskell";
-        auto-format = true;
-      }
-      {
-        name = "nix";
-      }
-    ];
+    settings = import ./programs/helix/settings.nix;
+    languages = import ./programs/helix/languages.nix;
   };
 
   programs.alacritty = {
