@@ -230,7 +230,9 @@ in {
       theme = "dark_plus";
       editor = {
         line-number = "relative";
-        bufferline = "multiple";
+        bufferline = "always";
+        mouse = true;
+        completion-trigger-len = 1;
       };
       editor.file-picker = {
         hidden = false;
@@ -257,6 +259,7 @@ in {
     languages = [
       {
         name = "haskell";
+        auto-format = true;
       }
       {
         name = "nix";
