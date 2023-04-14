@@ -1,5 +1,5 @@
 { config, pkgs, lib, inputs, system, userConfig, ... }: let
-  nixpkgsStable = import inputs.nixpkgsStable { inherit system; };
+  nixpkgsStable = import inputs.nixpkgsStable { inherit system; config.allowUnfree = true; };
   defaultConfig = {
     fontSize = 11.5;
   };
@@ -99,7 +99,7 @@ in {
     pavucontrol
     x-air-edit
     libreoffice
-    spotify
+    nixpkgsStable.spotify
     nix-prefetch-git
     cabal2nix
     curl
@@ -146,6 +146,11 @@ in {
       "org.gnome.Nautilus.desktop"
       "writer.desktop"
     ];
+
+    "org/gnome/desktop/background".color-shading-type = "solid";
+    "org/gnome/desktop/background".picture-options = "none";
+    "org/gnome/desktop/background".primary-color = "#000000";
+    "org/gnome/desktop/background".secondary-color = "#f0f0f0";
   };
 
   xdg.mimeApps = {

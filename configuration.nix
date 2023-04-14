@@ -7,10 +7,12 @@
   };
   updateConfig = lib.recursiveUpdate defaultConfig userConfig;
   inherit (updateConfig) userName hostName autoLogin;
+  kernelVersion = "testing";
 in {
-  boot.kernelPackages = pkgs.linuxPackages_6_2;
+  boot.kernelPackages = pkgs."linuxPackages_${kernelVersion}";
 
   hardware.enableAllFirmware = true; 
+  hardware.enableRedistributableFirmware = true;
 
   console = {
     earlySetup = true;
@@ -44,18 +46,35 @@ in {
     '';
   };
 
+  services.fprintd = {
+    enable = true;
+    # tod = {
+    #  enable = true;
+    #  driver = pkgs.libfprint-2-tod1-vfs0090;
+    # };
+  };
+
+  services.logind = {
+    lidSwitch = "suspend";
+    lidSwitchDocked = "ignore";
+    lidSwitchExternalPower = "ignore";
+    killUserProcesses = false;
+  };
+
   services.power-profiles-daemon.enable = false;
+  # services.cpupower-gui.enable = true;
   powerManagement = {
     enable = true;
   };
   services.tlp = {
     enable = true;
+    # enable = false;
     settings = {
       CPU_BOOST_ON_AC = 1;
       CPU_BOOST_ON_BAT = 0;
       CPU_SCALING_GOVERNOR_ON_AC = "performance";
-      # CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
-      CPU_SCALING_GOVERNOR_ON_BAT = "schedutil";
+      CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+      # CPU_SCALING_GOVERNOR_ON_BAT = "schedutil";
       START_CHARGE_THRESH_BAT0 = 75;
       STOP_CHARGE_THRESH_BAT0 = 80;
       START_CHARGE_THRESH_BAT1 = 75;
@@ -65,19 +84,29 @@ in {
   # services.auto-cpufreq.enable = true;
   # services.thermald.enable = true;
 
+  services.resolved.enable = true;
   networking = {
     inherit hostName; # Define your hostname.
     firewall.enable = false;
     networkmanager = {
       enable = true;
       dhcp = "dhcpcd";
-      dns = "dnsmasq";
+      dns = "systemd-resolved";
     };
+    # wireless = {
+    #   enable = true;
+    #   userControlled.enable = true;
+    #   networks = {
+    #     DaddyAlex = {
+    #       pskRaw = "76990429141a7325c5d4448c998cb4db13bd02acc376ef4f0b27299bbff552d1";
+    #     };
+    #   };
+    # };
   };
   # services.connman.enable = true;
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
-  services.teamviewer.enable = true;
+  # services.teamviewer.enable = true;
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -193,7 +222,7 @@ in {
   users.users."${userName}" = {
     isNormalUser = true;
     description = "${userName}";
-    extraGroups = [ "audio" "networkmanager" "sudo" "wheel" "code-server" ];
+    extraGroups = [ "audio" "networkmanager" "sudo" "wheel" "code-server" "input" ];
   };
 
   nixpkgs = {
@@ -210,9 +239,11 @@ in {
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     helix
-    vim
+    neovim
+    linuxKernel.packages."linux_${kernelVersion}".cpupower
     curl
     wget
+    wpa_supplicant_gui
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
