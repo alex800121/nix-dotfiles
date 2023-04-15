@@ -41,16 +41,9 @@ in {
         --delete-older-than 7d
       '';
     };
-    settings = {
-      experimental-features = [
-        "nix-command"
-        "flakes"
-        "repl-flake"
-      ];
-    };
-    # extraOptions = ''
-    #   experimental-features = nix-command flakes repl-flake
-    # '';
+    extraOptions = ''
+      experimental-features = nix-command flakes repl-flake
+    '';
   };
 
   services.fprintd = {
@@ -63,7 +56,7 @@ in {
 
   services.logind = {
     lidSwitch = "suspend";
-    lidSwitchDocked = "suspend";
+    lidSwitchDocked = "ignore";
     lidSwitchExternalPower = "ignore";
     killUserProcesses = false;
   };
@@ -79,22 +72,17 @@ in {
     settings = {
       CPU_BOOST_ON_AC = 1;
       CPU_BOOST_ON_BAT = 0;
-      CPU_HWP_DYN_BOOST_ON_AC = 1;
-      CPU_HWP_DYN_BOOST_ON_BAT = 0;
       CPU_SCALING_GOVERNOR_ON_AC = "performance";
       CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
       # CPU_SCALING_GOVERNOR_ON_BAT = "schedutil";
       CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
       CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
-      PLATFORM_PROFILE_ON_AC = "performance";
-      PLATFORM_PROFILE_ON_BAT = "low-power";
       START_CHARGE_THRESH_BAT0 = 75;
       STOP_CHARGE_THRESH_BAT0 = 80;
       START_CHARGE_THRESH_BAT1 = 75;
       STOP_CHARGE_THRESH_BAT1 = 80;
     };
   };
-
   # services.auto-cpufreq.enable = true;
   # services.thermald.enable = true;
 

@@ -14,7 +14,7 @@
   boot.kernelModules = [ "kvm-amd" "amd-pstate" ];
   boot.kernelParams = [ 
     "initcall_blacklist=acpi_cpufreq_init" 
-    # "amd_pstate.shared_mem=1"
+    "amd_pstate.shared_mem=1"
     # "amd_pstate=passive" 
     "amd_pstate=active" 
     "amdgpu.sg_display=0" 
