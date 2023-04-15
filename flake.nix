@@ -20,7 +20,8 @@
         modules = [
           { 
             nixpkgs.overlays = [
-              (import ./overlays)
+              (import ./overlays/x-air-edit)
+              (import ./overlays/tlp)
             ];
           }
           ./configuration.nix
