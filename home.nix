@@ -120,6 +120,7 @@ in {
     (haskell-language-server.override { supportedGhcVersions = [ "927" "944" ]; })
     ormolu
     nil
+    nixpkgs-fmt
     (nerdfonts.override { fonts = [ "Hack" ]; })
   ];
 
