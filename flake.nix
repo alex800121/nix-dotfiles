@@ -72,8 +72,22 @@
         ./programs/nix-ld
       ];
     };
+    acer-tp = {
+      system = "x86_64-linux";
+      userConfig = {
+        hostName = "acer-tp";
+        userName = "alex800121";
+        fontSize = 16;
+        autoLogin = true;
+      };
+      extraModules = [
+        ./hardware/acer-tp.nix
+        ./programs/nix-ld
+      ];
+    };
   in builtins.foldl' (x: y: nixpkgs.lib.recursiveUpdate x (mkNixosConfig y)) {} [
     asus-nixos 
     acer-nixos
+    acer-tp
   ];
 }
