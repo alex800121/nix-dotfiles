@@ -86,15 +86,20 @@ in {
   # services.auto-cpufreq.enable = true;
   # services.thermald.enable = true;
 
-  services.resolved.enable = true;
+  # services.resolved.enable = true;
+  services.dnsmasq = {
+    enable = true;
+    alwaysKeepRunning = true;
+    resolveLocalQueries = true;
+  };
   networking = {
     inherit hostName; # Define your hostname.
     firewall.enable = false;
     networkmanager = {
       enable = true;
       dhcp = "dhcpcd";
-      dns = "systemd-resolved";
-      # dns = "dnsmasq";
+      # dns = "systemd-resolved";
+      dns = "dnsmasq";
     };
     # wireless = {
     #   enable = true;
