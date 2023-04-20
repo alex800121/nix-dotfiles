@@ -46,9 +46,9 @@ in {
     '';
   };
 
-  # services.fprintd = {
-  #   enable = true;
-  # };
+  services.fprintd = {
+    enable = true;
+  };
 
   services.logind = {
     lidSwitch = "suspend";
