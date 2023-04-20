@@ -46,13 +46,9 @@ in {
     '';
   };
 
-  services.fprintd = {
-    enable = true;
-    # tod = {
-    #  enable = true;
-    #  driver = pkgs.libfprint-2-tod1-vfs0090;
-    # };
-  };
+  # services.fprintd = {
+  #   enable = true;
+  # };
 
   services.logind = {
     lidSwitch = "suspend";
@@ -158,7 +154,6 @@ in {
   services.xserver.displayManager = {
     autoLogin.enable = autoLogin;
     autoLogin.user = userName;
-    # hiddenUsers = ["root"];
     gdm = {
       enable = true;
     };
@@ -187,10 +182,6 @@ in {
   # Enable sound with pipewire.
   sound.enable = true;
   hardware.pulseaudio.enable = false;
-  # hardware.pulseaudio = {
-  #   package = pkgs.pulseaudioFull;
-  #   enable = true;
-  # };
 
   security.rtkit.enable = true;
 
@@ -283,7 +274,8 @@ in {
       PermitRootLogin = "prohibit-password";
       PasswordAuthentication = false;
       # PasswordAuthentication = true;
-      GatewayPorts = "clientspecified";
+      GatewayPorts = "yes";
+      # GatewayPorts = "clientspecified";
     };
     allowSFTP = true;
   };
