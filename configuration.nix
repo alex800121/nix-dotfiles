@@ -28,7 +28,7 @@ in {
       };
       efi = {
         canTouchEfiVariables = true;
-        efiSysMountPoint = "/boot";
+        # efiSysMountPoint = "/boot";
       };
     };
   };
@@ -94,6 +94,7 @@ in {
       enable = true;
       dhcp = "dhcpcd";
       dns = "systemd-resolved";
+      # dns = "dnsmasq";
     };
     # wireless = {
     #   enable = true;
@@ -277,7 +278,7 @@ in {
       PermitRootLogin = "prohibit-password";
       PasswordAuthentication = false;
       # PasswordAuthentication = true;
-      GatewayPorts = "yes";
+      GatewayPorts = "clientspecified";
     };
     allowSFTP = true;
   };
