@@ -273,10 +273,16 @@ in {
       UseDns = true;
       PermitRootLogin = "prohibit-password";
       PasswordAuthentication = false;
-      # PasswordAuthentication = true;
-      GatewayPorts = "yes";
-      # GatewayPorts = "clientspecified";
+      # GatewayPorts = "yes";
+      GatewayPorts = "clientspecified";
+      X11Forwarding = true;
     };
+    extraConfig = ''
+      PermitTunnel yes
+      PermitTTY yes
+      AllowStreamLocalForwarding yes
+      AllowTcpForwarding yes
+    '';
     allowSFTP = true;
   };
 
