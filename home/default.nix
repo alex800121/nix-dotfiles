@@ -1,4 +1,4 @@
-{ config, pkgs, lib, inputs, system, userConfig, ... }: let
+{ config, pkgs, lib, inputs, system, userConfig, imports ? [], ... }: let
   nixpkgsStable = import inputs.nixpkgsStable { inherit system; config.allowUnfree = true; };
   defaultConfig = {
     fontSize = 11.5;
@@ -6,6 +6,7 @@
   updateConfig = lib.recursiveUpdate defaultConfig userConfig;
   inherit (updateConfig) userName;
 in {
+  inherit imports;
   nix = {
     settings = {
       experimental-features = "nix-command flakes repl-flake";
@@ -14,7 +15,7 @@ in {
   xdg.configFile = {
     nixpkgs = {
       recursive = true;
-      source = ./programs/nixpkgs;
+      source = ../programs/nixpkgs;
     };
   };
 
@@ -219,7 +220,7 @@ in {
   xdg.configFile = {
     nvim = {
       recursive = true;
-      source = ./programs/nvim;
+      source = ../programs/nvim;
     };
   };
 
@@ -233,13 +234,13 @@ in {
 
   programs.helix = {
     enable = true;
-    settings = import ./programs/helix/settings.nix;
-    languages = import ./programs/helix/languages.nix;
+    settings = import ../programs/helix/settings.nix;
+    languages = import ../programs/helix/languages.nix;
   };
 
   programs.alacritty = {
     enable = true;
-    settings = import ./programs/alacritty/alacritty-settings.nix userConfig;
+    settings = import ../programs/alacritty/alacritty-settings.nix userConfig;
   };
 
   programs.tmux = {
