@@ -24,14 +24,17 @@
               (import ./overlays/tlp)
             ];
           }
-          ./configuration.nix
+          ./configuration
           home-manager.nixosModules.home-manager {
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
-              users."${userConfig.userName}" = import ./home.nix;
-              sharedModules = extraHMModules;
-              extraSpecialArgs = { inherit inputs system userConfig; };
+              users."${userConfig.userName}" = import ./home;
+              # sharedModules = extraHMModules;
+              extraSpecialArgs = { 
+                inherit inputs system userConfig;
+                imports = extraHMModules; 
+              };
               backupFileExtension = "bak";
             };
           }
