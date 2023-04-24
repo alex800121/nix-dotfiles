@@ -86,6 +86,8 @@
       extraModules = [
         ./hardware/acer-tp.nix
         ./programs/nix-ld
+        ./programs/duckdns
+        ./programs/code-tunnel
       ];
     };
   in builtins.foldl' (x: y: nixpkgs.lib.recursiveUpdate x (mkNixosConfig y)) {} [
