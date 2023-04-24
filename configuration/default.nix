@@ -273,8 +273,8 @@ in {
       UseDns = true;
       PermitRootLogin = "prohibit-password";
       PasswordAuthentication = false;
-      # GatewayPorts = "yes";
-      GatewayPorts = "clientspecified";
+      GatewayPorts = "yes";
+      # GatewayPorts = "clientspecified";
       X11Forwarding = true;
     };
     extraConfig = ''
