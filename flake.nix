@@ -9,14 +9,15 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    agenix.url = "github:ryantm/agenix";
   };
 
   # outputs = inputs@{ nixpkgs, home-manager, nix-ld, ... }: {
-  outputs = inputs@{ nixpkgs, home-manager, nixos-hardware, ... }: let
+  outputs = inputs@{ nixpkgs, home-manager, nixos-hardware, agenix, ... }: let
     mkNixosConfig = { system, userConfig, extraModules ? [], extraHMModules ? [], ... }: {
       nixosConfigurations."${userConfig.hostName}" = nixpkgs.lib.nixosSystem {
         inherit system;
-        specialArgs = { inherit userConfig; };
+        specialArgs = { inherit userConfig inputs system; };
         modules = [
           { 
             nixpkgs.overlays = [
@@ -25,6 +26,7 @@
             ];
           }
           ./configuration
+          agenix.nixosModules.default
           home-manager.nixosModules.home-manager {
             home-manager = {
               useGlobalPkgs = true;
@@ -86,6 +88,7 @@
       extraModules = [
         ./hardware/acer-tp.nix
         ./programs/nix-ld
+        # ./programs/ddclient
         ./programs/duckdns
         ./programs/code-tunnel
       ];

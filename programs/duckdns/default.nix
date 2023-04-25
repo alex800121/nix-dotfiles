@@ -1,30 +1,53 @@
-{ pkgs, ... }: {
-  systemd.user.services.duckdns = {
+{ config, pkgs, ... }: let
+  duckscript = pkgs.writeShellScript "duck.sh" ''
+    ${pkgs.curl}/bin/curl -k "https://www.duckdns.org/update?domains=alexacer-tp&token=@password_placeholder@&ip="
+  '';
+  RuntimeDirectory = "duckdns";
+in {
+  users.groups.duckdns = {};
+  users.extraUsers.duckdns = {
+    name = "duckdns";
+    group = "duckdns";
+    isSystemUser = true;
+  };
+  age.secrets.ddtoken = {
+    file = ../../secrets/ddtoken.age;
+    owner = "duckdns";
+    group = "duckdns";
+    # owner = "root";
+    # group = "root";
+  };
+
+  systemd.services.duckdns = {
     enable = true;
-    description = "Duckdns update";
-    wantedBy = [
-      "default.target"
-    ];
-    after = [
-      "network.target"
-    ];
-    path = [
-      pkgs.curl
-    ];
-    script = ''
-      curl -k -o ~/duck.log "https://www.duckdns.org/update?domains=alexrpi4gate&token=fb3b6437-b770-4b59-9daf-4097801ed20a&ip="
-    '';
+    description = "duckdns update";
+    wantedBy = [ "default.target" ];
+    after = [ "network-online.target" ];
+    restartTriggers = [ config.age.secrets.ddtoken.path ];
+    path = [ pkgs.bash pkgs.coreutils-full pkgs.curl ];
     serviceConfig = {
       Type = "oneshot";
-      Restart = "on-failure";
-      RestartSec = "10s";
+      DynamicUser = true;
+      # DynamicUser = false;
+      # User = "root";
+      # Group = "root";
+      RuntimeDirectoryMode = "0700";
+      inherit RuntimeDirectory;
+      ExecStartPre = [
+        ''${pkgs.coreutils-full}/bin/install ${duckscript} /run/${RuntimeDirectory}/duck.sh''
+        ''${pkgs.gnused}/bin/sed -i "s#@password_placeholder@#$(${pkgs.coreutils-full}/bin/cat "${config.age.secrets.ddtoken.path}")#" "/run/${RuntimeDirectory}/duck.sh"''
+        ''${pkgs.coreutils-full}/bin/cat /run/${RuntimeDirectory}/duck.sh''
+      ];
+      ExecStart = ''
+        /run/${RuntimeDirectory}/duck.sh
+      '';
     };
   };
-  systemd.user.timers.duckdns = {
+  systemd.timers.duckdns = {
+    wantedBy = [ "timers.target" ];
     timerConfig = {
       OnUnitActiveSec = "5min";
       OnBootSec = "5min";
-      # Unit = "duckdns.service";
     };
   };
 }
