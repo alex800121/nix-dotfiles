@@ -75,7 +75,7 @@
         ./hardware/acer.nix
         ./programs/revtunnel
         ./programs/nix-ld
-        ./programs/code-tunnel
+        # ./programs/code-tunnel
       ];
     };
     acer-tp = {
@@ -89,7 +89,6 @@
       extraModules = [
         ./hardware/acer-tp.nix
         ./programs/nix-ld
-        # ./programs/ddclient
         ./programs/duckdns
         ./programs/code-tunnel
       ];
