@@ -14,8 +14,6 @@ in {
     file = ../../secrets/ddtoken.age;
     owner = "duckdns";
     group = "duckdns";
-    # owner = "root";
-    # group = "root";
   };
 
   systemd.services.duckdns = {
@@ -28,9 +26,6 @@ in {
     serviceConfig = {
       Type = "oneshot";
       DynamicUser = true;
-      # DynamicUser = false;
-      # User = "root";
-      # Group = "root";
       RuntimeDirectoryMode = "0700";
       inherit RuntimeDirectory;
       ExecStartPre = [

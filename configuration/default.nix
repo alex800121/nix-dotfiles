@@ -58,17 +58,6 @@ in {
   };
 
 
-  # services.ddclient = {
-  #   enable = true;
-  #   interval = "5min";
-  #   server = "duckdns.org";
-  #   protocol = "duckdns";
-  #   passwordFile = config.age.secrets.ddtoken.path;
-  #   domains = [ "alexrpi4gate" ];
-  #   configFile = config.age.secrets.ddtoken.path;
-
-  # };
-
   services.power-profiles-daemon.enable = false;
   # services.cpupower-gui.enable = true;
   powerManagement = {
