@@ -75,6 +75,7 @@
         ./hardware/acer.nix
         ./programs/revtunnel
         ./programs/nix-ld
+        ./programs/code-tunnel
       ];
     };
     acer-tp = {
