@@ -6,7 +6,7 @@
     script = ''
       ${pkgs.openssh}/bin/ssh -vvv -N -T -o "ExitOnForwardFailure=yes" \
       -o "UserKnownHostsFile=/home/${userConfig.userName}/.ssh/known_hosts" -R 51000:localhost:22 \
-      alex800121@alexrpi4gate.duckdns.org -p 31000
+      alex800121@alexacer-tp.duckdns.org -p 31000
     '';
     serviceConfig = {
       Type = "simple";
