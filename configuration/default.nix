@@ -1,7 +1,7 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-{ config, pkgs, lib, userConfig, ... }: let
+{ config, pkgs, lib, userConfig, inputs, system, ... }: let
   defaultConfig = {
     autoLogin = false;
   };
@@ -56,6 +56,7 @@ in {
     lidSwitchExternalPower = "suspend";
     killUserProcesses = false;
   };
+
 
   services.power-profiles-daemon.enable = false;
   # services.cpupower-gui.enable = true;
@@ -230,6 +231,7 @@ in {
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINZLAWYLkwEtjlj2e65MwoDOLWUKJBBrjeDf4K0CcuIz alex800121@DaddyAlexAsus"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJxDNBfYv0w8MLJOLK2nn2kmEpH20G8Y0Mauw9GMHvda alex800121@DaddyAlexAsus"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEydwYcKvthPPxPt4P7YkzUgzHahKk/gAMUv7py/jeCN alex800121@acer-nixos"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPEelyNLu6y1owoChvv/BfkI4LytFnb7QCyDWPNDAywc"
     ];
   };
 
@@ -252,6 +254,7 @@ in {
     curl
     wget
     wpa_supplicant_gui
+    inputs.agenix.packages."${system}".default
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -273,8 +276,8 @@ in {
       UseDns = true;
       PermitRootLogin = "prohibit-password";
       PasswordAuthentication = false;
-      # GatewayPorts = "yes";
-      GatewayPorts = "clientspecified";
+      GatewayPorts = "yes";
+      # GatewayPorts = "clientspecified";
       X11Forwarding = true;
     };
     extraConfig = ''
