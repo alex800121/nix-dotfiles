@@ -9,9 +9,9 @@
       Restart = "always";
       RestartSec = 10;
     };
-    path = [
-      pkgs.bash
-    ];
+    # path = [
+    #   pkgs.bash
+    # ];
     script = ''
       ${pkgs.vscode}/lib/vscode/bin/code-tunnel --verbose --cli-data-dir /home/${userConfig.userName}/.vscode-cli tunnel service internal-run
     '';
