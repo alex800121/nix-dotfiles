@@ -1,7 +1,11 @@
-{ config, pkgs, lib, inputs, system, userConfig, imports ? [], ... }: {
+{ config, pkgs, lib, inputs, system, userConfig, ... }: {
   programs.neovim = {
     enable = true;
     plugins = ( with pkgs.vimPlugins; [
+      {
+        plugin = gruvbox-nvim;
+	optional = false;
+      }
     ] );
     extraPackages = ( with pkgs; [
     ] );
@@ -9,10 +13,10 @@
       print("Hello")
     '';
   };
-  xdg.configFile = {
-    nvim = {
-      recursive = true;
-      source = ./luaConfig;
-    };
-  };
+  # xdg.configFile = {
+  #   nvim = {
+  #     recursive = true;
+  #     source = ./luaConfig;
+  #   };
+  # };
 }
