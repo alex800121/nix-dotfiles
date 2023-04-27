@@ -9,11 +9,19 @@
       Restart = "always";
       RestartSec = 10;
     };
-    # path = [
-    #   pkgs.bash
-    # ];
+    path = [
+      "/run/wrappers/"
+      "/home/${userConfig.userName}/.nix-profile/"
+      "/etc/profiles/per-user/${userConfig.userName}/"
+      "/nix/var/nix/profiles/default/"
+      "/run/current-system/sw/"
+    ];
+    preStart = ''
+      echo $PATH
+      /usr/bin/env
+    '';
     script = ''
-      ${pkgs.vscode}/lib/vscode/bin/code-tunnel --verbose --cli-data-dir /home/${userConfig.userName}/.vscode-cli tunnel service internal-run
+      ${pkgs.vscode}/lib/vscode/bin/code-tunnel --verbose --log trace --cli-data-dir /home/${userConfig.userName}/.vscode-cli tunnel service internal-run
     '';
     wantedBy = [ "default.target" ];
   };
