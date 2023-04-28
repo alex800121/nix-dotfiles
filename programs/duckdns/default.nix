@@ -28,7 +28,7 @@ in {
       DynamicUser = true;
       RuntimeDirectoryMode = "0700";
       inherit RuntimeDirectory;
-      LoadCredential = ''ddtoken:${config.age.secrets.ddtoken.path}'';
+      LoadCredentialEncrypted = ''ddtoken:${config.age.secrets.ddtoken.path}'';
       ExecStart = duckscript;
     };
   };
