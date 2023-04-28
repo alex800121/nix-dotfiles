@@ -1,6 +1,6 @@
 { config, pkgs, ... }: let
   duckscript = pkgs.writeShellScript "duck.sh" ''
-    ${pkgs.curl}/bin/curl -k "https://www.duckdns.org/update?domains=alexacer-tp&token=@password_placeholder@&ip="
+    ${pkgs.curl}/bin/curl -k "https://www.duckdns.org/update?domains=alexacer-tp&token=$(systemd-creds cat ddtoken)&ip="
   '';
   RuntimeDirectory = "duckdns";
 in {
@@ -22,20 +22,14 @@ in {
     wantedBy = [ "default.target" ];
     after = [ "network-online.target" ];
     restartTriggers = [ config.age.secrets.ddtoken.path ];
-    path = [ pkgs.bash pkgs.coreutils-full pkgs.curl ];
+    path = [ pkgs.bash ];
     serviceConfig = {
       Type = "oneshot";
       DynamicUser = true;
       RuntimeDirectoryMode = "0700";
       inherit RuntimeDirectory;
-      ExecStartPre = [
-        ''${pkgs.coreutils-full}/bin/install ${duckscript} /run/${RuntimeDirectory}/duck.sh''
-        ''${pkgs.gnused}/bin/sed -i "s#@password_placeholder@#$(${pkgs.coreutils-full}/bin/cat "${config.age.secrets.ddtoken.path}")#" "/run/${RuntimeDirectory}/duck.sh"''
-        ''${pkgs.coreutils-full}/bin/cat /run/${RuntimeDirectory}/duck.sh''
-      ];
-      ExecStart = ''
-        /run/${RuntimeDirectory}/duck.sh
-      '';
+      LoadCredential = ''ddtoken:${config.age.secrets.ddtoken.path}'';
+      ExecStart = duckscript;
     };
   };
   systemd.timers.duckdns = {
