@@ -2,21 +2,20 @@
   programs.neovim = {
     enable = true;
     plugins = ( with pkgs.vimPlugins; [
-      {
-        plugin = gruvbox-nvim;
-	optional = false;
-      }
+      gruvbox-nvim
+      which-key-nvim
     ] );
     extraPackages = ( with pkgs; [
     ] );
     extraLuaConfig = ''
       print("Hello")
+      require("user/options")    
     '';
   };
-  # xdg.configFile = {
-  #   nvim = {
-  #     recursive = true;
-  #     source = ./luaConfig;
-  #   };
-  # };
+  xdg.configFile = {
+    nvim = {
+      recursive = true;
+      source = ./luaConfig;
+    };
+  };
 }
