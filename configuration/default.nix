@@ -47,9 +47,9 @@ in {
     '';
   };
 
-  services.fprintd = {
-    enable = true;
-  };
+  # services.fprintd = {
+  #   enable = true;
+  # };
 
   services.logind = {
     lidSwitch = "suspend";
@@ -235,7 +235,8 @@ in {
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPEelyNLu6y1owoChvv/BfkI4LytFnb7QCyDWPNDAywc"
     ];
   };
-
+  security.sudo.wheelNeedsPassword = false; 
+   
   nixpkgs = {
     config = {
       allowBroken = true;
