@@ -1,13 +1,10 @@
-{ config, pkgs, lib, inputs, system, userConfig, extraHMModules ? [], ... }: let
+{ config, pkgs, lib, inputs, system, userConfig, imports ? [], ... }: let
   nixpkgsStable = import inputs.nixpkgsStable { inherit system; config.allowUnfree = true; };
   defaultConfig = {
     fontSize = 11.5;
   };
   updateConfig = lib.recursiveUpdate defaultConfig userConfig;
   inherit (updateConfig) userName;
-  imports = [
-    ../programs/nvim
-  ] ++ extraHMModules;
 in {
   inherit imports;
   nix = {
