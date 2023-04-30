@@ -34,7 +34,8 @@
               users."${userConfig.userName}" = import ./home;
               # sharedModules = extraHMModules;
               extraSpecialArgs = { 
-                inherit inputs system userConfig extraHMModules; 
+                inherit inputs system userConfig;
+                imports =  extraHMModules; 
               };
               backupFileExtension = "bak";
             };
@@ -60,6 +61,7 @@
       ];
       extraHMModules = [
         ./programs/onedrive
+        ./programs/nvim
       ];
     };
     acer-nixos = {
@@ -75,6 +77,8 @@
         ./programs/revtunnel
         ./programs/nix-ld
         ./programs/code-tunnel
+      ];
+      extraHMModules = [
         ./programs/nvim
       ];
     };
@@ -91,6 +95,9 @@
         ./programs/nix-ld
         ./programs/duckdns
         ./programs/code-tunnel
+      ];
+      extraHMModules = [
+        ./programs/nvim
       ];
     };
   in builtins.foldl' (x: y: nixpkgs.lib.recursiveUpdate x (mkNixosConfig y)) {} [
