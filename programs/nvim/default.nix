@@ -9,7 +9,8 @@
     ] );
     extraLuaConfig = ''
       print("Hello")
-      require("user/options")    
+      require("user/options")
+      require("user/keymaps")
     '';
   };
   xdg.configFile = {
