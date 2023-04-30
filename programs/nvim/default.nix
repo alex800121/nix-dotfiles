@@ -4,6 +4,13 @@
     plugins = ( with pkgs.vimPlugins; [
       gruvbox-nvim
       which-key-nvim
+      { 
+        plugin = bufferline-nvim;
+        optional = false;
+        type = "lua";
+        config = ''
+        '';
+      }
     ] );
     viAlias = true;
     vimAlias = true;
@@ -14,6 +21,7 @@
       print("Hello")
       require("user/options")
       require("user/keymaps")
+      --require("user/buffer")
     '';
   };
   # xdg.configFile = {
