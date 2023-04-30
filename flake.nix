@@ -34,8 +34,7 @@
               users."${userConfig.userName}" = import ./home;
               # sharedModules = extraHMModules;
               extraSpecialArgs = { 
-                inherit inputs system userConfig;
-                imports = extraHMModules; 
+                inherit inputs system userConfig extraHMModules; 
               };
               backupFileExtension = "bak";
             };
