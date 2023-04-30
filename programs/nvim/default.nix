@@ -5,6 +5,9 @@
       gruvbox-nvim
       which-key-nvim
     ] );
+    viAlias = true;
+    vimAlias = true;
+    vimdiffAlias = true;
     extraPackages = ( with pkgs; [
     ] );
     extraLuaConfig = ''
