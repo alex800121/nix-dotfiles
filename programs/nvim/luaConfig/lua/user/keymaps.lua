@@ -7,18 +7,17 @@ vim.keymap.set("n", "<leader>h", ":bprevious<CR>", { noremap = true, buffer = fa
 vim.keymap.set("n", "<leader>w", ":w<CR>", { noremap = true, buffer = false });
 
 --sudo write
---draft 1
-vim.keymap.set("n", "<leader>W", "<cmd>silent w !sudo tee %<CR>", { noremap = true, buffer = false });
+--draft 2.5
+vim.keymap.set("n", "<leader>W", function()
+  vim.api.nvim_exec2([[
+    silent write !sudo tee %
+    echohl WarningMsg | echomsg "Sudo write." | echohl None
+  ]], {})
+end, { noremap = true, buffer = false, silent = true });
 vim.api.nvim_create_autocmd({"FileChangedShell"}, { 
   pattern = { "*" },
   command = [[
-    let v:fcs_choice="reload"
-  ]]
-})
-vim.api.nvim_create_autocmd({"FileChangedShellPost"}, { 
-  pattern = { "*" },
-  command = [[
-    echohl WarningMsg | echo "File changed. Automatic reload." | echohl None
+    let v:fcs_choice="edit"
   ]]
 })
 
