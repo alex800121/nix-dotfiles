@@ -16,10 +16,10 @@
       require("user/keymaps")
     '';
   };
-  xdg.configFile = {
-    nvim = {
-      recursive = true;
-      source = ./luaConfig;
-    };
-  };
+  # xdg.configFile = {
+  #   nvim = {
+  #     recursive = true;
+  #     source = ./luaConfig;
+  #   };
+  # };
 }

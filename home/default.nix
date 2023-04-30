@@ -36,8 +36,8 @@ in {
 
   home.sessionVariables = {
     BROWSER = "microsoft-edge";
-    EDITOR = "nvim";
-    VISUAL = "nvim";
+    EDITOR = "hx";
+    VISUAL = "hx";
   };
 
   # Let Home Manager install and manage itself.
