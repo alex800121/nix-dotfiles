@@ -122,7 +122,7 @@ in {
     ormolu
     nil
     nixpkgs-fmt
-    (nerdfonts.override { fonts = [ "Hack" ]; })
+    nerdfonts
   ];
 
   dconf.settings = {

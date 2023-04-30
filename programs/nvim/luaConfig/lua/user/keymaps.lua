@@ -25,3 +25,6 @@ vim.api.nvim_create_autocmd({"FileChangedShell"}, {
 
 vim.keymap.set("n", "<leader>q", ":qa<CR>", { noremap = true, buffer = false })
 vim.keymap.set("n", "<leader>x", ":bdelete<CR>", { noremap = true, buffer = false })
+
+vim.keymap.set("v", ">", ">gv", { noremap = true, buffer = false })
+vim.keymap.set("v", "<", "<gv", { noremap = true, buffer = false })
