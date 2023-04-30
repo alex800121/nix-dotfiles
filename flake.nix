@@ -76,6 +76,7 @@
         ./programs/revtunnel
         ./programs/nix-ld
         ./programs/code-tunnel
+        ./programs/nvim
       ];
     };
     acer-tp = {
