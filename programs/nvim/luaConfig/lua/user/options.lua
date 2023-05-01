@@ -10,6 +10,6 @@ vim.opt.smarttab = true
 vim.opt.softtabstop = 2
 vim.opt.shiftwidth = 2
 
-vim.cmd.colorscheme("gruvbox")
+vim.cmd.colorscheme("onedark")
 vim.opt.termguicolors = true
 

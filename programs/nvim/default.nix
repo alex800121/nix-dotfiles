@@ -4,14 +4,10 @@
     plugins = ( with pkgs.vimPlugins; [
       gruvbox-nvim
       which-key-nvim
-      {
-        plugin = bufferline-nvim;
-        optional = false;
-      }
-      {
-        plugin = nvim-tree-lua;
-        optional = false;
-      }
+      bufferline-nvim
+      nvim-tree-lua
+      onedark-nvim
+      onedarkpro-nvim
     ] );
     viAlias = true;
     vimAlias = true;
