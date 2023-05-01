@@ -1,15 +1,22 @@
-require'bufferline'.setup{
+local status, bufferline = pcall(require, 'bufferline')
+if not status then
+  return
+end
+
+bufferline.setup{
   options = {
     mode = "buffers", -- set to "tabs" to only show tabpages instead
-    -- style_preset = bufferline.presets.default, -- or bufferline.presets.minimal,
+    style_preset = bufferline.style_preset.default, -- or bufferline.presets.minimal,
     themable = true, -- allows highlight groups to be overriden i.e. sets highlights as default
-    numbers = "both",
+    numbers = function(opts)
+      return(string.format('%s.%s', opts.ordinal, opts.lower(opts.id)))
+    end,
     close_command = "bdelete! %d",       -- can be a string | function, | false see "Mouse actions"
     right_mouse_command = "bdelete! %d", -- can be a string | function | false, see "Mouse actions"
     left_mouse_command = "buffer %d",    -- can be a string | function, | false see "Mouse actions"
     middle_mouse_command = nil,          -- can be a string | function, | false see "Mouse actions"
     indicator = {
-      icon = '▎', -- this should be omitted if indicator style is not 'icon'
+      --icon = '▎', -- this should be omitted if indicator style is not 'icon'
       style = 'underline',
     },
     buffer_close_icon = '',
@@ -27,12 +34,26 @@ require'bufferline'.setup{
     -- bufnr (buffer only) | int        | the number of the active buffer
     -- buffers (tabs only) | table(int) | the numbers of the buffers in the tab
     -- tabnr (tabs only)   | int        | the "handle" of the tab, can be converted to its ordinal number using: `vim.api.nvim_tabpage_get_number(buf.tabnr)`
+      if buf.bufnr ~= vim.fn.bufnr() then
+        return(buf.name)
+      end
+      local a = {} 
+      for n in string.gmatch(buf.path, '/.') do
+        table.insert(a, n)
+      end
+      local path = nil
+      if #a <= 4 then
+        path = table.concat(a, "", 1, (#a - 1)) .. '/'
+      else
+        path = a[1] .. '/..' .. a[#a - 2] .. a[#a - 1] .. '/'
+      end 
+      return(path .. buf.name)
     end,
-    max_name_length = 18,
+    max_name_length = 30,
     max_prefix_length = 15, -- prefix used when a buffer is de-duplicated
     truncate_names = true, -- whether or not tab names should be truncated
-    tab_size = 18,
-    --diagnostics = false | "nvim_lsp" | "coc",
+    tab_size = 0,
+    diagnostics = false, -- | "nvim_lsp" | "coc",
     diagnostics_update_in_insert = false,
     -- The diagnostics indicator can be set to nil to keep the buffer name highlight but delete the highlighting
     -- diagnostics_indicator = function(count, level, diagnostics_dict, context)

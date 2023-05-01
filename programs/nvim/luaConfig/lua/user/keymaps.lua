@@ -2,8 +2,8 @@ vim.keymap.set("n", " ", "<Nop>", { noremap = true, buffer = false })
 vim.g.mapleader = " "
 vim.keymap.set("n", "L", "<Nop>", { noremap = true, buffer = false })
 vim.keymap.set("n", "H", "<Nop>", { noremap = true, buffer = false })
-vim.keymap.set("n", "L", ":bnext<CR>", { noremap = true, buffer = false })
-vim.keymap.set("n", "H", ":bprevious<CR>", { noremap = true, buffer = false })
+vim.keymap.set("n", "L", ":BufferLineCycleNext<cr>", { noremap = true, buffer = false })
+vim.keymap.set("n", "H", ":BufferLineCyclePrev<cr>", { noremap = true, buffer = false })
 
 --normal write
 vim.keymap.set("n", "<leader>w", ":w<CR>", { noremap = true, buffer = false })
