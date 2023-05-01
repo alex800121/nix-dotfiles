@@ -12,7 +12,7 @@ bufferline.setup{
       return(string.format('%s.%s', opts.ordinal, opts.lower(opts.id)))
     end,
     close_command = "bdelete! %d",       -- can be a string | function, | false see "Mouse actions"
-    right_mouse_command = "bdelete! %d", -- can be a string | function | false, see "Mouse actions"
+    -- right_mouse_command = "bdelete! %d", -- can be a string | function | false, see "Mouse actions"
     left_mouse_command = "buffer %d",    -- can be a string | function, | false see "Mouse actions"
     middle_mouse_command = nil,          -- can be a string | function, | false see "Mouse actions"
     indicator = {
@@ -45,7 +45,7 @@ bufferline.setup{
       if #a <= 4 then
         path = table.concat(a, "", 1, (#a - 1)) .. '/'
       else
-        path = a[1] .. '/..' .. a[#a - 2] .. a[#a - 1] .. '/'
+        path = '..' .. a[#a - 3] .. a[#a - 2] .. a[#a - 1] .. '/'
       end 
       return(path .. buf.name)
     end,
@@ -112,7 +112,7 @@ bufferline.setup{
     always_show_bufferline = true,
     hover = {
       enabled = true,
-      delay = 200,
+      delay = 0,
       reveal = {'close'}
     },
     sort_by = 'insert_after_current'

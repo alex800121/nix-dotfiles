@@ -4,14 +4,10 @@
     plugins = ( with pkgs.vimPlugins; [
       gruvbox-nvim
       which-key-nvim
-      {
-        plugin = bufferline-nvim;
-        optional = false;
-      }
-      {
-        plugin = nvim-tree-lua;
-        optional = false;
-      }
+      bufferline-nvim
+      nvim-tree-lua
+      nvim-web-devicons
+      onedark-nvim
     ] );
     viAlias = true;
     vimAlias = true;
@@ -25,6 +21,13 @@
       require'user/keymaps'
       require'user/buffer'
       require'user/nvimtree'
+
+      local onedark = require'onedark'
+      onedark.setup {
+        style = 'warmer'
+      }
+      onedark.load()
+
     '';
   };
   # xdg.configFile = {

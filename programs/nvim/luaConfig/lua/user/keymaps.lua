@@ -2,11 +2,11 @@ vim.keymap.set("n", " ", "<Nop>", { noremap = true, buffer = false })
 vim.g.mapleader = " "
 vim.keymap.set("n", "L", "<Nop>", { noremap = true, buffer = false })
 vim.keymap.set("n", "H", "<Nop>", { noremap = true, buffer = false })
-vim.keymap.set("n", "L", ":BufferLineCycleNext<cr>", { noremap = true, buffer = false })
-vim.keymap.set("n", "H", ":BufferLineCyclePrev<cr>", { noremap = true, buffer = false })
+vim.keymap.set("n", "L", "<cmd>BufferLineCycleNext<cr>", { noremap = true, buffer = false })
+vim.keymap.set("n", "H", "<cmd>BufferLineCyclePrev<cr>", { noremap = true, buffer = false })
 
 --normal write
-vim.keymap.set("n", "<leader>w", ":w<CR>", { noremap = true, buffer = false })
+vim.keymap.set("n", "<leader>w", "<cmd>w<CR>", { noremap = true, buffer = false })
 
 --sudo write
 --draft 2.5
@@ -23,8 +23,10 @@ vim.api.nvim_create_autocmd({"FileChangedShell"}, {
   ]]
 })
 
-vim.keymap.set("n", "<leader>q", ":qa<CR>", { noremap = true, buffer = false })
-vim.keymap.set("n", "<leader>x", ":bdelete<CR>", { noremap = true, buffer = false })
+vim.keymap.set("n", "<leader>q", "<cmd>qa<CR>", { noremap = true, buffer = false })
+vim.keymap.set("n", "<leader>x", "<cmd>bdelete<CR>", { noremap = true, buffer = false })
 
 vim.keymap.set("v", ">", ">gv", { noremap = true, buffer = false })
 vim.keymap.set("v", "<", "<gv", { noremap = true, buffer = false })
+
+vim.keymap.set("n", "<leader>e", "<cmd>NvimTreeToggle<cr>", { noremap = true, buffer = false })
