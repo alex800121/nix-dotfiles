@@ -1,7 +1,12 @@
+local status, nvimtree = pcall(require, 'nvim-tree')
+if not status then
+  return
+end
+
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
-require'nvim-tree'.setup({
+nvimtree.setup({
   auto_reload_on_write = true,
   disable_netrw = true,
   hijack_cursor = false,
