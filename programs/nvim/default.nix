@@ -6,8 +6,8 @@
       which-key-nvim
       bufferline-nvim
       nvim-tree-lua
+      nvim-web-devicons
       onedark-nvim
-      onedarkpro-nvim
     ] );
     viAlias = true;
     vimAlias = true;
@@ -21,6 +21,13 @@
       require'user/keymaps'
       require'user/buffer'
       require'user/nvimtree'
+
+      local onedark = require'onedark'
+      onedark.setup {
+        style = 'warmer'
+      }
+      onedark.load()
+
     '';
   };
   # xdg.configFile = {
