@@ -3,6 +3,7 @@ vim.g.mapleader = " "
 vim.keymap.set("n", "L", "<Nop>", { noremap = true, buffer = false })
 vim.keymap.set("n", "H", "<Nop>", { noremap = true, buffer = false })
 vim.keymap.set("n", "L", "<cmd>BufferLineCycleNext<cr>", { noremap = true, buffer = false })
+--vim.keymap.set("n", "L", vim.cmd('BufferLineCycleNext'), { noremap = true, buffer = false })
 vim.keymap.set("n", "H", "<cmd>BufferLineCyclePrev<cr>", { noremap = true, buffer = false })
 
 --normal write
