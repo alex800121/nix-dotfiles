@@ -17,10 +17,10 @@
     ] );
     extraLuaConfig = ''
       print("Hello")
-      require'user/options'
-      require'user/keymaps'
-      require'user/buffer'
-      require'user/nvimtree'
+      require'user.options'
+      require'user.keymaps'
+      require'user.buffer'
+      require'user.nvimtree'.setup()
     '';
   };
   # xdg.configFile = {
