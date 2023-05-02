@@ -47,14 +47,6 @@ in {
     '';
   };
 
-  services.logind = {
-    lidSwitch = "suspend";
-    lidSwitchDocked = "ignore";
-    lidSwitchExternalPower = "suspend";
-    killUserProcesses = false;
-  };
-
-
   services.power-profiles-daemon.enable = false;
   # services.cpupower-gui.enable = true;
   powerManagement = {
