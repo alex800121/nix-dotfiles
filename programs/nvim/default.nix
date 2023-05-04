@@ -8,19 +8,28 @@
       nvim-tree-lua
       nvim-web-devicons
       onedark-nvim
+      nvim-treesitter
+      plenary-nvim
+      telescope-fzf-native-nvim
+      telescope-nvim
     ] );
     viAlias = true;
     vimAlias = true;
     vimdiffAlias = true;
     extraPackages = ( with pkgs; [
       nerdfonts
+      ripgrep
+      fd
     ] );
     extraLuaConfig = ''
       print("Hello")
       require'user.options'
       require'user.keymaps'
       require'user.buffer'
+      require'nvim-web-devicons'.setup()
       require'user.nvimtree'.setup()
+      require'user.treesitter'
+      require'user.telescope'
     '';
   };
   # xdg.configFile = {

@@ -3,7 +3,6 @@ local api = require'nvim-tree.api'
 local M = {}
 
 function M.my_on_attach(bufnr)
-  M.cwd = vim.fn.getcwd()
   local function opts(desc)
     return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
   end
@@ -16,7 +15,6 @@ function M.my_on_attach(bufnr)
   vim.keymap.set('n', '<C-x>', api.node.open.horizontal,              opts('Open: Horizontal Split'))
   vim.keymap.set('n', '<BS>',  api.node.navigate.parent_close,        opts('Close Directory'))
   vim.keymap.set('n', '<CR>',  api.node.open.edit,                    opts('Open'))
-  vim.keymap.set('n', 'l',     api.node.open.edit,                    opts('Open'))
   vim.keymap.set('n', '<Tab>', api.node.open.preview,                 opts('Open Preview'))
   vim.keymap.set('n', '>',     api.node.navigate.sibling.next,        opts('Next Sibling'))
   vim.keymap.set('n', '<',     api.node.navigate.sibling.prev,        opts('Previous Sibling'))
@@ -47,7 +45,7 @@ function M.my_on_attach(bufnr)
   vim.keymap.set('n', 'o',     api.node.open.edit,                    opts('Open'))
   vim.keymap.set('n', 'O',     api.node.open.no_window_picker,        opts('Open: No Window Picker'))
   vim.keymap.set('n', 'p',     api.fs.paste,                          opts('Paste'))
-  vim.keymap.set('n', 'P',     api.node.navigate.parent,              opts('Parent Directory'))
+  vim.keymap.set('n', 'P',     api.node.navigate.parent_close,        opts('Parent Directory'))
   vim.keymap.set('n', 'q',     api.tree.close,                        opts('Close'))
   vim.keymap.set('n', 'r',     api.fs.rename,                         opts('Rename'))
   vim.keymap.set('n', 'R',     api.tree.reload,                       opts('Refresh'))
@@ -66,7 +64,8 @@ function M.setup()
   vim.g.loaded_netrw = 1
   vim.g.loaded_netrwPlugin = 1
 
-  vim.keymap.set("n", "<leader>e", api.tree.toggle, { noremap = true, buffer = false })
+  vim.keymap.set("n", "<leader>e", api.tree.toggle, { noremap = true, buffer = false, desc = "nvim-tree: toggle" })
+
 
   nvimtree.setup({
     auto_reload_on_write = true,
@@ -75,22 +74,24 @@ function M.setup()
     hijack_netrw = true,
     hijack_unnamed_buffer_when_opening = false,
     sort_by = "name",
-    root_dirs = { M.cwd },
+    root_dirs = {},
     prefer_startup_root = true,
     sync_root_with_cwd = false,
     reload_on_bufenter = false,
     respect_buf_cwd = true,
     on_attach = M.my_on_attach,
-    remove_keymaps = false,
     select_prompts = false,
     view = {
       centralize_selection = false,
       cursorline = true,
       debounce_delay = 15,
-      width = 40,
-      hide_root_folder = false,
+      width = {
+        min = 30,
+        max = 50,
+        padding = 1
+      },
       side = "left",
-      preserve_window_proportions = false,
+      preserve_window_proportions = true,
       number = false,
       relativenumber = false,
       signcolumn = "yes",
@@ -110,10 +111,10 @@ function M.setup()
     renderer = {
       add_trailing = false,
       group_empty = false,
-      highlight_git = false,
+      highlight_git = true,
       full_name = false,
       highlight_opened_files = "none",
-      highlight_modified = "none",
+      highlight_modified = "icon",
       root_folder_label = ":~:s?$?/..?",
       indent_width = 2,
       indent_markers = {
@@ -183,7 +184,7 @@ function M.setup()
       args = {},
     },
     diagnostics = {
-      enable = false,
+      enable = true,
       show_on_dirs = false,
       show_on_open_dirs = true,
       debounce_delay = 50,
@@ -218,7 +219,7 @@ function M.setup()
       timeout = 400,
     },
     modified = {
-      enable = false,
+      enable = true,
       show_on_dirs = true,
       show_on_open_dirs = true,
     },
