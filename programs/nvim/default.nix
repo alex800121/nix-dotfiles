@@ -12,6 +12,7 @@
       plenary-nvim
       telescope-fzf-native-nvim
       telescope-nvim
+      undotree
     ] );
     viAlias = true;
     vimAlias = true;
@@ -30,6 +31,7 @@
       require'user.nvimtree'.setup()
       require'user.treesitter'
       require'user.telescope'
+      require'user.undotree'
     '';
   };
   # xdg.configFile = {

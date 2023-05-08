@@ -3,6 +3,8 @@ local api = require'nvim-tree.api'
 local M = {}
 
 function M.my_on_attach(bufnr)
+  M.oricwd = vim.fn.getcwd()
+  M.current_file = vim.fn.expand('%:p')
   local function opts(desc)
     return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
   end
@@ -60,12 +62,20 @@ function M.my_on_attach(bufnr)
   vim.keymap.set('n', '<2-RightMouse>', api.tree.change_root_to_node, opts('CD'))
 end
 
+function M.custom_toggle()
+  if api.tree.is_visible() then
+    api.tree.change_root((M.oricwd or vim.fn.getcwd()))
+    api.tree.close()
+  else
+    api.tree.open()
+  end
+end
+
 function M.setup()
   vim.g.loaded_netrw = 1
   vim.g.loaded_netrwPlugin = 1
 
-  vim.keymap.set("n", "<leader>e", api.tree.toggle, { noremap = true, buffer = false, desc = "nvim-tree: toggle" })
-
+  vim.keymap.set("n", "<leader>e", M.custom_toggle, { noremap = true, buffer = false, desc = "nvim-tree: toggle" })
 
   nvimtree.setup({
     auto_reload_on_write = true,
@@ -176,7 +186,7 @@ function M.setup()
     },
     update_focused_file = {
       enable = true,
-      update_root = true,
+      update_root = false,
       ignore_list = {},
     },
     system_open = {
