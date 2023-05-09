@@ -89,6 +89,7 @@ in {
   fonts.fontconfig.enable = true;
 
   home.packages = with pkgs; [
+    google-chrome
     musescore
     pavucontrol
     x-air-edit
