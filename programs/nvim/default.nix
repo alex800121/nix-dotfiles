@@ -8,11 +8,20 @@
       nvim-tree-lua
       nvim-web-devicons
       onedark-nvim
-      nvim-treesitter
+      (nvim-treesitter.withPlugins (p: with p; [
+        tree-sitter-lua 
+        tree-sitter-haskell 
+        tree-sitter-rust 
+        tree-sitter-c 
+        tree-sitter-vim 
+        tree-sitter-nix 
+      ]))
       plenary-nvim
       telescope-fzf-native-nvim
       telescope-nvim
       undotree
+      lualine-nvim
+      vim-fugitive
     ] );
     viAlias = true;
     vimAlias = true;
@@ -32,6 +41,7 @@
       require'user.treesitter'
       require'user.telescope'
       require'user.undotree'
+      require'user.lualine'
     '';
   };
   # xdg.configFile = {
