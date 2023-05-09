@@ -67,7 +67,12 @@ function M.custom_toggle()
     api.tree.change_root((M.oricwd or vim.fn.getcwd()))
     api.tree.close()
   else
-    api.tree.open()
+    api.tree.open({
+      path = M.oricwd or M.current_file or vim.fn.getcwd(),
+      current_window = false,
+      find_file = true,
+      update_root = true
+    })
   end
 end
 
@@ -75,7 +80,8 @@ function M.setup()
   vim.g.loaded_netrw = 1
   vim.g.loaded_netrwPlugin = 1
 
-  vim.keymap.set("n", "<leader>e", M.custom_toggle, { noremap = true, buffer = false, desc = "nvim-tree: toggle" })
+  vim.keymap.set("n", "<leader>e", api.tree.toggle, { noremap = true, buffer = false, desc = "nvim-tree: toggle" })
+  vim.keymap.set("n", "<leader>p", M.custom_toggle, { noremap = true, buffer = false, desc = "nvim-tree: custom toggle" })
 
   nvimtree.setup({
     auto_reload_on_write = true,
@@ -185,7 +191,7 @@ function M.setup()
       auto_open = true,
     },
     update_focused_file = {
-      enable = true,
+      enable = false,
       update_root = false,
       ignore_list = {},
     },
