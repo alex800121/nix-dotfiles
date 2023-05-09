@@ -22,6 +22,17 @@
       undotree
       lualine-nvim
       vim-fugitive
+      comment-nvim
+      luasnip
+      nvim-lspconfig
+      nvim-cmp
+      cmp_luasnip
+      cmp-nvim-lsp
+      cmp-nvim-lua
+      cmp-treesitter
+      cmp-path
+      cmp-buffer
+      cmp-cmdline
     ] );
     viAlias = true;
     vimAlias = true;
@@ -30,6 +41,7 @@
       nerdfonts
       ripgrep
       fd
+      (haskell-language-server.override { supportedGhcVersions = [ "927" "944" ]; })
     ] );
     extraLuaConfig = ''
       print("Hello")
@@ -42,6 +54,9 @@
       require'user.telescope'
       require'user.undotree'
       require'user.lualine'
+      require'user.comment'
+      require'user.lsp'
+      require'user.cmp'
     '';
   };
   # xdg.configFile = {
