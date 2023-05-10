@@ -56,7 +56,6 @@
       require'user.lualine'
       require'user.comment'
       require'user.lsp'
-      require'user.cmp'
     '';
   };
   # xdg.configFile = {
