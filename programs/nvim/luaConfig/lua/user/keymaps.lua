@@ -32,4 +32,3 @@ vim.keymap.set("n", "<leader>x", "<cmd>bdelete<CR>", { noremap = true, buffer = 
 vim.keymap.set("v", ">", ">gv", { noremap = true, buffer = false })
 vim.keymap.set("v", "<", "<gv", { noremap = true, buffer = false })
 
-vim.keymap.set("n", "<leader>e", "<cmd>NvimTreeToggle<cr>", { noremap = true, buffer = false })

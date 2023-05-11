@@ -220,7 +220,6 @@ in {
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINZLAWYLkwEtjlj2e65MwoDOLWUKJBBrjeDf4K0CcuIz alex800121@DaddyAlexAsus"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJxDNBfYv0w8MLJOLK2nn2kmEpH20G8Y0Mauw9GMHvda alex800121@DaddyAlexAsus"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEydwYcKvthPPxPt4P7YkzUgzHahKk/gAMUv7py/jeCN alex800121@acer-nixos"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPEelyNLu6y1owoChvv/BfkI4LytFnb7QCyDWPNDAywc"
     ];
   };
   security.sudo.wheelNeedsPassword = false; 
@@ -250,13 +249,21 @@ in {
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   programs.mtr.enable = true;
-  programs.gnupg.agent = {
-    enable = true;
-    enableSSHSupport = true;
-    pinentryFlavor = "curses";
-  };
+  # programs.gnupg = {
+  #   dirmngr.enable = true;
+  #   agent = {
+  #     enable = true;
+  #     enableSSHSupport = true;
+  #     enableExtraSocket = true;
+  #     enableBrowserSocket = true;
+  #     pinentryFlavor = "curses";
+  #   };
+  # };
 
   # List services that you want to enable:
+  programs.ssh = {
+    startAgent = true;
+  };
 
   # Enable the OpenSSH daemon.
   services.openssh = {
@@ -284,7 +291,7 @@ in {
     enable = true;
     locate = pkgs.plocate;
     localuser = null;
-    prunePaths = [ "/media/alex800121" ];
+    # prunePaths = [ "/media/alex800121" ];
     interval = "hourly";
   };
 
