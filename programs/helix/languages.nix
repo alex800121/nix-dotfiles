@@ -6,7 +6,7 @@
       haskell.formattingProvider = "ormolu";
       haskell.plugin.rename.config.diff = true;
     };
-    # formatter = { command = "ormolu"; };
+    formatter = { command = "ormolu"; };
   }
   {
     name = "nix";
