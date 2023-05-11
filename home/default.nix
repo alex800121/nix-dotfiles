@@ -86,16 +86,10 @@ in {
     nix-direnv.enable = true;
   };
 
-  # programs.ssh = {
-  #   enable = true;
-  #   extraConfig = '' 
-  #     AddKeysToAgent yes
-  #   '';
-  # };
-
   fonts.fontconfig.enable = true;
 
   home.packages = with pkgs; [
+    google-chrome
     musescore
     pavucontrol
     x-air-edit
@@ -114,7 +108,7 @@ in {
     dmidecode
     libchewing
     microsoft-edge
-    rustup openssh ssh-copy-id gh 
+    rustup gh 
     teamviewer
     zoom-us
     cabal-install ghcid haskell.compiler.ghc944
