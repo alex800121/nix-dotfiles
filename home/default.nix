@@ -86,7 +86,7 @@ in {
     nix-direnv.enable = true;
   };
 
-  fonts.fontconfig.enable = true;
+  # fonts.fontconfig.enable = true;
 
   home.packages = with pkgs; [
     google-chrome
@@ -116,7 +116,7 @@ in {
     ormolu
     nil
     nixpkgs-fmt
-    nerdfonts
+    # nerdfonts
   ];
 
   dconf.settings = {
