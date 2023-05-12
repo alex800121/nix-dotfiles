@@ -42,6 +42,8 @@
       ripgrep
       fd
       (haskell-language-server.override { supportedGhcVersions = [ "927" "944" ]; })
+      nil
+      lua-language-server
     ] );
     extraLuaConfig = ''
       print("Hello")

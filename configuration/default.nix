@@ -191,19 +191,22 @@ in {
   fonts = {
     enableDefaultFonts = true;
     fonts = with pkgs; [
+      nerdfonts
       noto-fonts-cjk-sans
       noto-fonts-cjk-serif
+      noto-fonts-emoji
       wqy_zenhei
       wqy_microhei
-      hack-font
       vistafonts-cht
     ];
 
     fontconfig = {
+      enable = true;
       defaultFonts = {
         serif = [ "Noto Serif CJK TC" "Ubuntu" ];
         sansSerif = [ "Noto Sans CJK TC" "Ubuntu" ];
         monospace = [ "Noto Sans Mono CJK TC" "Ubuntu" ];
+        emoji = ["Noto Color Emoji" ];
       };
     };
   };
