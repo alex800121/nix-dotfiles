@@ -23,6 +23,7 @@
             nixpkgs.overlays = [
               (import ./overlays/x-air-edit)
               (import ./overlays/tlp)
+              (import ./overlays/nvim-web-devicons)
             ];
           }
           ./configuration
