@@ -1,4 +1,6 @@
-{ config, pkgs, lib, inputs, system, userConfig, ... }: {
+{ config, pkgs, lib, inputs, system, userConfig, ... }: let
+  nixpkgsStable = import inputs.nixpkgsStable { inherit system; config.allowUnfree = true; };
+in {
   programs.neovim = {
     enable = true;
     plugins = ( with pkgs.vimPlugins; [
@@ -47,10 +49,10 @@
     ] );
     extraLuaConfig = ''
       print("Hello")
+      require'nvim-web-devicons'.setup()
       require'user.options'
       require'user.keymaps'
       require'user.buffer'
-      require'nvim-web-devicons'.setup()
       require'user.nvimtree'.setup()
       require'user.treesitter'
       require'user.telescope'
