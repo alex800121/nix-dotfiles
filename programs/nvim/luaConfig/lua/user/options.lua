@@ -19,10 +19,10 @@ vim.opt.scrolloff = 10
 vim.opt.timeout = true
 vim.opt.timeoutlen = 0
 
-local onedark = require'onedark'
-onedark.setup {
-  style = 'darker'
-}
-onedark.load()
+-- local onedark = require'onedark'
+-- onedark.setup {
+--   style = 'darker'
+-- }
+-- onedark.load()
 
---vim.cmd.colorscheme("onedark")
+vim.cmd.colorscheme("gruvbox")
