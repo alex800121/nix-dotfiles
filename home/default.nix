@@ -186,63 +186,67 @@ in {
     settings = import ../programs/alacritty/alacritty-settings.nix userConfig;
   };
 
-  programs.tmux = {
+  programs.zellij = {
     enable = true;
-    plugins = with pkgs.tmuxPlugins; [
-      sensible
-      resurrect
-    ];
-    terminal = "screen-256color";
-    keyMode = "vi";
-    baseIndex = 1;
-    historyLimit = 10000;
-    prefix = "C-a";
-    shortcut = "a";
-    escapeTime = 0;
-    extraConfig = ''
-      # reload config without killing server
-      # bind r source-file ~/.tmux.conf \; display-message "Config reloaded..."
-
-      # "|" splits the current window vertically, and "-" splits it horizontally
-      unbind '"'
-      unbind %
-      bind l split-window -h -c "#{pane_current_path}"
-      bind h split-window -h -c "#{pane_current_path}"
-      bind j split-window -v -c "#{pane_current_path}"
-      bind k split-window -v -c "#{pane_current_path}"
-
-      # Pane navigation (vim-like)
-      bind -n M-h select-pane -L
-      bind -n M-j select-pane -D
-      bind -n M-k select-pane -U
-      bind -n M-l select-pane -R
-
-      # Pane resizing
-      bind -n C-h resize-pane -L 2
-      bind -n C-j resize-pane -D 1
-      bind -n C-k resize-pane -U 1
-      bind -n C-l resize-pane -R 2
-
-      ### other optimization
-      # set the shell you like (zsh, "which zsh" to find the path)
-      # set -g default-command /bin/zsh
-      # set -g default-shell /bin/zsh
-
-      # mouse is great!
-      set-option -g mouse on
-
-      # stop auto renaming
-      setw -g automatic-rename off
-      set-option -g allow-rename off
-
-      # renumber windows sequentially after closing
-      set -g renumber-windows on
-
-      # window notifications; display activity on other window
-      setw -g monitor-activity on
-      set -g visual-activity on
-    '';
+    # enableBashIntegration = true;
   };
+  # programs.tmux = {
+  #   enable = true;
+  #   plugins = with pkgs.tmuxPlugins; [
+  #     sensible
+  #     resurrect
+  #   ];
+  #   terminal = "screen-256color";
+  #   keyMode = "vi";
+  #   baseIndex = 1;
+  #   historyLimit = 10000;
+  #   prefix = "C-a";
+  #   shortcut = "a";
+  #   escapeTime = 0;
+  #   extraConfig = ''
+  #     # reload config without killing server
+  #     # bind r source-file ~/.tmux.conf \; display-message "Config reloaded..."
+
+  #     # "|" splits the current window vertically, and "-" splits it horizontally
+  #     unbind '"'
+  #     unbind %
+  #     bind l split-window -h -c "#{pane_current_path}"
+  #     bind h split-window -h -c "#{pane_current_path}"
+  #     bind j split-window -v -c "#{pane_current_path}"
+  #     bind k split-window -v -c "#{pane_current_path}"
+
+  #     # Pane navigation (vim-like)
+  #     bind -n M-h select-pane -L
+  #     bind -n M-j select-pane -D
+  #     bind -n M-k select-pane -U
+  #     bind -n M-l select-pane -R
+
+  #     # Pane resizing
+  #     bind -n C-h resize-pane -L 2
+  #     bind -n C-j resize-pane -D 1
+  #     bind -n C-k resize-pane -U 1
+  #     bind -n C-l resize-pane -R 2
+
+  #     ### other optimization
+  #     # set the shell you like (zsh, "which zsh" to find the path)
+  #     # set -g default-command /bin/zsh
+  #     # set -g default-shell /bin/zsh
+
+  #     # mouse is great!
+  #     set-option -g mouse on
+
+  #     # stop auto renaming
+  #     setw -g automatic-rename off
+  #     set-option -g allow-rename off
+
+  #     # renumber windows sequentially after closing
+  #     set -g renumber-windows on
+
+  #     # window notifications; display activity on other window
+  #     setw -g monitor-activity on
+  #     set -g visual-activity on
+  #   '';
+  # };
   programs.vscode = {
     # package = pkgs.vscode-fhs;
     enable = true;
