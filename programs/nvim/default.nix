@@ -35,6 +35,7 @@ in {
       cmp-path
       cmp-buffer
       cmp-cmdline
+      lspkind-nvim
     ] );
     viAlias = true;
     vimAlias = true;
