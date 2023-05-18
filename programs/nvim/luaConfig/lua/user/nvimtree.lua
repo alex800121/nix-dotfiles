@@ -62,26 +62,11 @@ function M.my_on_attach(bufnr)
   vim.keymap.set('n', '<2-RightMouse>', api.tree.change_root_to_node, opts('CD'))
 end
 
-function M.custom_toggle()
-  if api.tree.is_visible() then
-    api.tree.change_root((M.oricwd or vim.fn.getcwd()))
-    api.tree.close()
-  else
-    api.tree.open({
-      path = M.oricwd or M.current_file or vim.fn.getcwd(),
-      current_window = false,
-      find_file = true,
-      update_root = true
-    })
-  end
-end
-
 function M.setup()
   vim.g.loaded_netrw = 1
   vim.g.loaded_netrwPlugin = 1
 
-  vim.keymap.set("n", "<leader>e", api.tree.toggle, { noremap = true, buffer = false, desc = "nvim-tree: toggle" })
-  vim.keymap.set("n", "<leader>p", M.custom_toggle, { noremap = true, buffer = false, desc = "nvim-tree: custom toggle" })
+  vim.keymap.set("n", "<leader>e", "<cmd>NvimTreeToggle<cr>", { noremap = true, buffer = false, desc = "nvim-tree: toggle" })
 
   nvimtree.setup({
     auto_reload_on_write = true,
@@ -92,7 +77,7 @@ function M.setup()
     sort_by = "name",
     root_dirs = {},
     prefer_startup_root = true,
-    sync_root_with_cwd = false,
+    sync_root_with_cwd = true,
     reload_on_bufenter = false,
     respect_buf_cwd = true,
     on_attach = M.my_on_attach,
@@ -191,8 +176,8 @@ function M.setup()
       auto_open = true,
     },
     update_focused_file = {
-      enable = false,
-      update_root = false,
+      enable = true,
+      update_root = true,
       ignore_list = {},
     },
     system_open = {
