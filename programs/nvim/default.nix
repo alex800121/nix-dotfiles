@@ -1,15 +1,17 @@
-{ config, pkgs, lib, inputs, system, userConfig, ... }: let
-  nixpkgsStable = import inputs.nixpkgsStable { inherit system; config.allowUnfree = true; };
-in {
+{ config, pkgs, lib, inputs, system, userConfig, ... }: {
   programs.neovim = {
     enable = true;
     plugins = ( with pkgs.vimPlugins; [
       gruvbox-nvim
       which-key-nvim
+      bufdelete-nvim
       bufferline-nvim
+      project-nvim
+      gitsigns-nvim
       nvim-tree-lua
       nvim-web-devicons
       onedark-nvim
+      indent-blankline-nvim
       (nvim-treesitter.withPlugins (p: with p; [
         tree-sitter-lua 
         tree-sitter-haskell 
@@ -26,6 +28,7 @@ in {
       vim-fugitive
       comment-nvim
       luasnip
+      friendly-snippets
       nvim-lspconfig
       nvim-cmp
       cmp_luasnip
@@ -49,11 +52,13 @@ in {
       lua-language-server
     ] );
     extraLuaConfig = ''
-      print("Hello")
+      vim.loader.enable()
       require'nvim-web-devicons'.setup()
       require'user.options'
       require'user.keymaps'
+      require'user.indent'
       require'user.buffer'
+      require'user.project'
       require'user.nvimtree'.setup()
       require'user.treesitter'
       require'user.telescope'
@@ -61,6 +66,7 @@ in {
       require'user.lualine'
       require'user.comment'
       require'user.lsp'
+      require'user.gitsigns'
     '';
   };
   # xdg.configFile = {

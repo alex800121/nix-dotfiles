@@ -19,10 +19,24 @@ vim.opt.scrolloff = 10
 vim.opt.timeout = true
 vim.opt.timeoutlen = 0
 
+vim.opt.updatetime = 100
+
+vim.opt.clipboard = 'unnamedplus'
+vim.opt.conceallevel = 0
+
+vim.opt.hlsearch = true
+
+vim.opt.showmode = false
+
+vim.opt.splitright = true
+vim.opt.splitbelow = true
+
+vim.opt.signcolumn = "yes"
+
+vim.opt.cursorline = true
 -- local onedark = require'onedark'
 -- onedark.setup {
 --   style = 'darker'
 -- }
 -- onedark.load()
-
 vim.cmd.colorscheme("gruvbox")

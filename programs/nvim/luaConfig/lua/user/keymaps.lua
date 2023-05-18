@@ -2,15 +2,16 @@ local whichkey = require'which-key'
 
 whichkey.setup()
 
---vim.keymap.set("n", " ", "<Nop>", { noremap = true, buffer = false })
+local opts = { noremap = true, buffer = false }
+vim.keymap.set("n", " ", "<Nop>", opts)
 vim.g.mapleader = " "
-vim.keymap.set("n", "L", "<Nop>", { noremap = true, buffer = false })
-vim.keymap.set("n", "H", "<Nop>", { noremap = true, buffer = false })
-vim.keymap.set("n", "L", "<cmd>BufferLineCycleNext<cr>", { noremap = true, buffer = false })
-vim.keymap.set("n", "H", "<cmd>BufferLineCyclePrev<cr>", { noremap = true, buffer = false })
+vim.keymap.set("n", "L", "<Nop>", opts)
+vim.keymap.set("n", "H", "<Nop>", opts)
+vim.keymap.set("n", "L", "<cmd>BufferLineCycleNext<cr>", opts)
+vim.keymap.set("n", "H", "<cmd>BufferLineCyclePrev<cr>", opts)
 
 --normal write
-vim.keymap.set("n", "<leader>W", "<cmd>w<CR>", { noremap = true, buffer = false })
+vim.keymap.set("n", "<leader>W", "<cmd>w<CR>", opts)
 
 --sudo write
 -- vim.keymap.set("n", "<leader>W", function()
@@ -26,9 +27,26 @@ vim.keymap.set("n", "<leader>W", "<cmd>w<CR>", { noremap = true, buffer = false 
 --   ]]
 -- })
 
-vim.keymap.set("n", "<leader>q", "<cmd>qa<CR>", { noremap = true, buffer = false })
-vim.keymap.set("n", "<leader>x", "<cmd>bdelete<CR>", { noremap = true, buffer = false })
+vim.keymap.set("n", "<leader>q", "<cmd>q<CR>", opts)
+vim.keymap.set("n", "<leader>Q", "<cmd>qa<CR>", opts)
+vim.keymap.set("n", "<leader>x", "<cmd>Bdelete<CR>", opts)
+vim.keymap.set("n", "<leader>X", "<cmd>Bdelete!<CR>", opts)
 
-vim.keymap.set("v", ">", ">gv", { noremap = true, buffer = false })
-vim.keymap.set("v", "<", "<gv", { noremap = true, buffer = false })
+vim.keymap.set("v", ">", ">gv", opts)
+vim.keymap.set("v", "<", "<gv", opts)
 
+vim.keymap.set("v", "p", '"_dP', opts)
+
+-- Better window navigation
+vim.keymap.set("n", "<C-h>", "<C-w>h", opts)
+vim.keymap.set("n", "<C-j>", "<C-w>j", opts)
+vim.keymap.set("n", "<C-k>", "<C-w>k", opts)
+vim.keymap.set("n", "<C-l>", "<C-w>l", opts)
+
+-- Resize with arrows
+vim.keymap.set("n", "<C-Up>", ":resize -2<CR>", opts)
+vim.keymap.set("n", "<C-Down>", ":resize +2<CR>", opts)
+vim.keymap.set("n", "<C-Left>", ":vertical resize -2<CR>", opts)
+vim.keymap.set("n", "<C-Right>", ":vertical resize +2<CR>", opts)
+
+vim.keymap.set("n", "<leader> ", "<cmd>nohlsearch<CR>", opts)
