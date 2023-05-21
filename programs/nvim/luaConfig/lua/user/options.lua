@@ -39,4 +39,4 @@ vim.opt.cursorline = true
 --   style = 'darker'
 -- }
 -- onedark.load()
-vim.cmd.colorscheme("gruvbox")
+vim.cmd.colorscheme('gruvbox')

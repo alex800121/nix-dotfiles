@@ -112,7 +112,7 @@ in {
     dmidecode
     libchewing
     microsoft-edge
-    rustup gh 
+    gh 
     teamviewer
     zoom-us
     cabal-install ghcid haskell.compiler.ghc944
@@ -120,6 +120,7 @@ in {
     ormolu
     nil
     nixpkgs-fmt
+    # rust-bin.stable.latest.default
     # nerdfonts
   ];
 
@@ -192,7 +193,6 @@ in {
 
   programs.zellij = {
     enable = true;
-    # enableBashIntegration = true;
   };
   # programs.tmux = {
   #   enable = true;

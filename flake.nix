@@ -10,10 +10,11 @@
     };
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     agenix.url = "github:ryantm/agenix";
+    rust-overlay.url = "github:oxalica/rust-overlay";
   };
 
   # outputs = inputs@{ nixpkgs, home-manager, nix-ld, ... }: {
-  outputs = inputs@{ nixpkgs, home-manager, nixos-hardware, agenix, ... }: let
+  outputs = inputs@{ nixpkgs, home-manager, nixos-hardware, agenix, rust-overlay, ... }: let
     mkNixosConfig = { system, userConfig, extraModules ? [], extraHMModules ? [], ... }: {
       nixosConfigurations."${userConfig.hostName}" = nixpkgs.lib.nixosSystem {
         inherit system;
@@ -24,6 +25,7 @@
               (import ./overlays/x-air-edit)
               (import ./overlays/tlp)
               (import ./overlays/nvim-web-devicons)
+              rust-overlay.overlays.default
             ];
           }
           ./configuration
