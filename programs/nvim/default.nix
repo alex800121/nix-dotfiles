@@ -20,6 +20,7 @@
         tree-sitter-vim 
         tree-sitter-nix 
       ]))
+      nvim-treesitter-parsers.kdl
       plenary-nvim
       telescope-fzf-native-nvim
       telescope-nvim
