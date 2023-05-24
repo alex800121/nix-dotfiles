@@ -98,7 +98,7 @@ in {
     pavucontrol
     x-air-edit
     libreoffice
-    nixpkgsStable.spotify
+    spotify
     nix-prefetch-git
     cabal2nix
     curl
