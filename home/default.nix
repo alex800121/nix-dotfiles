@@ -120,7 +120,7 @@ in {
     ormolu
     nil
     nixpkgs-fmt
-    # rust-bin.stable.latest.default
+    rust-bin.nightly.latest.complete gcc
     # nerdfonts
   ];
 
