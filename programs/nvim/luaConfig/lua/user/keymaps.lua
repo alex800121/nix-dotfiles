@@ -9,6 +9,7 @@ vim.keymap.set("n", "L", "<Nop>", opts)
 vim.keymap.set("n", "H", "<Nop>", opts)
 vim.keymap.set("n", "L", "<cmd>BufferLineCycleNext<cr>", opts)
 vim.keymap.set("n", "H", "<cmd>BufferLineCyclePrev<cr>", opts)
+vim.keymap.set("n", "<ESC>", "<cmd>nohlsearch<cr><ESC>", opts)
 
 --normal write
 vim.keymap.set("n", "<leader>W", "<cmd>w<CR>", opts)

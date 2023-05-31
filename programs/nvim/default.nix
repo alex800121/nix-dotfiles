@@ -30,6 +30,7 @@
       comment-nvim
       luasnip
       friendly-snippets
+      lsp_signature-nvim
       nvim-lspconfig
       nvim-cmp
       cmp_luasnip
@@ -40,6 +41,7 @@
       cmp-buffer
       cmp-cmdline
       lspkind-nvim
+      cmp-nvim-lsp-signature-help
     ] );
     viAlias = true;
     vimAlias = true;

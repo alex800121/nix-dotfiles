@@ -4,6 +4,12 @@ local luasnip = require 'luasnip'
 local lspkind = require 'lspkind'
 require("luasnip.loaders.from_vscode").lazy_load()
 
+local has_words_before = function()
+  unpack = unpack or table.unpack
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+end
+
 vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
 
 -- Global setup.
@@ -18,26 +24,57 @@ cmp.setup({
     documentation = cmp.config.window.bordered(),
   },
   mapping = cmp.mapping.preset.insert({
-     ["<C-k>"] = cmp.mapping(cmp.mapping.select_prev_item(), { "i" }),
-     ["<C-j>"] = cmp.mapping(cmp.mapping.select_next_item(), { "i" }),
-     ["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-1), { "i", "c" }),
-     ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(1), { "i", "c" }),
-     ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
-     ["<C-e>"] = cmp.mapping(cmp.mapping.close(), { "i", "c" }),
-     ['<C-y>'] = cmp.mapping.confirm({ select = true }),
-     ['<CR>'] = cmp.mapping.confirm({ select = false }),
+    ["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-1), { "i", "c" }),
+    ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(1), { "i", "c" }),
+    ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
+    ["<C-e>"] = cmp.mapping(cmp.mapping.close(), { "i", "c" }),
+    ['<C-y>'] = cmp.mapping.confirm({ select = true }),
+    ['<CR>'] = cmp.mapping.confirm({ select = false }),
+    ["<Tab>"] = cmp.mapping(
+      function(fallback)
+        if cmp.visible() then
+          cmp.select_next_item()
+        elseif require("luasnip").expand_or_jumpable() then
+          require("luasnip").expand_or_jump()
+        elseif has_words_before() then
+          cmp.complete()
+        else
+          fallback()
+        end
+      end, { "i", "s" }
+    ),
+    ["<S-Tab>"] = cmp.mapping(
+      function(fallback)
+        if cmp.visible() then
+          cmp.select_prev_item()
+        elseif require("luasnip").jumpable(-1) then
+          require("luasnip").jump(-1)
+        else
+          fallback()
+        end
+      end, { "i", "s" }
+    ),
   }),
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
-    { name = 'luasnip' }, -- For luasnip users.
+    { name = 'luasnip' }, -- for luasnip users.
     { name = 'nvim_lua' },
     { name = 'buffer' },
     { name = 'path' },
+    { name = 'nvim_lsp_signature_help' },
   }),
   formatting = {
     fields = { "kind", "abbr", "menu" },
     format = lspkind.cmp_format({
       mode = 'symbol_text',       -- show only symbol annotations
+      menu = ({
+        buffer = "[Buffer]",
+        nvim_lsp = "[LSP]",
+        luasnip = "[LuaSnip]",
+        nvim_lua = "[Lua]",
+        path = "[Path]",
+        nvim_lsp_signature_help = "[SigHelp]",
+      }),
       maxwidth = 50,         -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
       ellipsis_char = '...', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
     })
@@ -104,19 +141,19 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', '<space>of', vim.diagnostic.open_float, opts('Open float'))
   vim.keymap.set('n', '<space>sl', vim.diagnostic.setloclist, opts('Set Location List'))
   vim.keymap.set('n', '<space>sf', vim.diagnostic.setqflist, opts('Set Quickfix List'))
-  vim.api.nvim_create_autocmd("CursorHold", {
-    buffer = bufnr,
-    callback = function()
-      local localopts = {
-        focusable = false,
-        close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
-        border = 'rounded',
-        source = 'always',
-        scope = 'cursor',
-      }
-      vim.diagnostic.open_float(nil, localopts)
-    end
-  })
+  -- vim.api.nvim_create_autocmd("CursorHold", {
+  --   buffer = bufnr,
+  --   callback = function()
+  --     local localopts = {
+  --       focusable = false,
+  --       close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
+  --       border = 'rounded',
+  --       source = 'always',
+  --       scope = 'cursor',
+  --     }
+  --     vim.diagnostic.open_float(nil, localopts)
+  --   end
+  -- })
 end
 
 lspconfig['hls'].setup({
@@ -179,6 +216,16 @@ lspconfig['lua_ls'].setup({
 })
 
 lspconfig['rust_analyzer'].setup({
+  settings = {
+    ["rust-analyzer"] = {
+      checkOnSave = true,
+      check = {
+        enable = true,
+        command = "clippy",
+        features = "all",
+      },
+    },
+  },
   capabilities = capabilities,
   on_attach = on_attach,
 })
