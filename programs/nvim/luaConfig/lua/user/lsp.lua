@@ -218,11 +218,23 @@ lspconfig['lua_ls'].setup({
 lspconfig['rust_analyzer'].setup({
   settings = {
     ["rust-analyzer"] = {
+      -- checkOnSave = true,
+      -- check = {
+      --   enable = true,
+      --   command = "clippy",
+      --   features = "all",
+      -- },
+      cargo = {
+        features = "all",
+      },
+      -- Add clippy lints for Rust.
       checkOnSave = true,
       check = {
-        enable = true,
         command = "clippy",
         features = "all",
+      },
+      procMacro = {
+        enable = true,
       },
     },
   },

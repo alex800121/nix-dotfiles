@@ -47,6 +47,7 @@
     vimAlias = true;
     vimdiffAlias = true;
     extraPackages = ( with pkgs; [
+      tree-sitter
       nerdfonts
       ripgrep
       fd
