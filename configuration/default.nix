@@ -179,8 +179,10 @@ in {
   services.pipewire = {
     enable = true;
     alsa.enable = true;
+    alsa.support32Bit = true;
     pulse.enable = true;
     wireplumber.enable = true;
+    jack.enable = true;
   };
   
   # Enable touchpad support (enabled default in most desktopManager).
