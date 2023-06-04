@@ -32,6 +32,7 @@
       friendly-snippets
       lsp_signature-nvim
       nvim-lspconfig
+      nvim-autopairs
       nvim-cmp
       cmp_luasnip
       cmp-nvim-lsp

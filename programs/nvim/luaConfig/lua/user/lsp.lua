@@ -2,6 +2,10 @@ local lspconfig = require 'lspconfig'
 local cmp = require 'cmp'
 local luasnip = require 'luasnip'
 local lspkind = require 'lspkind'
+local lsp_signature = require 'lsp_signature'
+local autopairs = require 'nvim-autopairs'
+local cmp_autopairs = require 'nvim-autopairs.completion.cmp'
+
 require("luasnip.loaders.from_vscode").lazy_load()
 
 local has_words_before = function()
@@ -11,6 +15,8 @@ local has_words_before = function()
 end
 
 vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
+
+lsp_signature.setup()
 
 -- Global setup.
 cmp.setup({
@@ -73,7 +79,7 @@ cmp.setup({
         luasnip = "[LuaSnip]",
         nvim_lua = "[Lua]",
         path = "[Path]",
-        nvim_lsp_signature_help = "[SigHelp]",
+        nvim_lsp_signature_help = "[Signature]",
       }),
       maxwidth = 50,         -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
       ellipsis_char = '...', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
@@ -101,6 +107,13 @@ cmp.setup.cmdline(':', {
     { name = 'cmdline' }
   })
 })
+
+autopairs.setup()
+
+cmp.event:on(
+  'confirm_done',
+  cmp_autopairs.on_confirm_done()
+)
 
 -- Setup lspconfig.
 
