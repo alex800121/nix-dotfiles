@@ -22,7 +22,7 @@
   };
 
   # outputs = inputs@{ nixpkgs, home-manager, nix-ld, ... }: {
-  outputs = inputs@{ nixpkgs, home-manager, nixos-hardware, agenix, rust-overlay, ... }: let
+  outputs = inputs@{ nixpkgs, home-manager, nixos-hardware, agenix, rust-overlay, nixpkgsUnstable, ... }: let
     mkNixosConfig = { system, userConfig, extraModules ? [], extraHMModules ? [], ... }: {
       nixosConfigurations."${userConfig.hostName}" = nixpkgs.lib.nixosSystem {
         inherit system;
