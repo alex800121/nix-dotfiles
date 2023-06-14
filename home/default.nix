@@ -1,5 +1,5 @@
 { config, pkgs, lib, inputs, system, userConfig, imports ? [], ... }: let
-  nixpkgsStable = import inputs.nixpkgsStable { inherit system; config.allowUnfree = true; };
+  # nixpkgsStable = import inputs.nixpkgsStable { inherit system; config.allowUnfree = true; };
   defaultConfig = {
     fontSize = 11.5;
   };
