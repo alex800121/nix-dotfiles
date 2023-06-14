@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
-    nixpkgsUnstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    # nixpkgsStable.url = "github:nixos/nixpkgs/nixos-22.11";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -22,7 +22,7 @@
   };
 
   # outputs = inputs@{ nixpkgs, home-manager, nix-ld, ... }: {
-  outputs = inputs@{ nixpkgs, home-manager, nixos-hardware, agenix, rust-overlay, nixpkgsUnstable, ... }: let
+  outputs = inputs@{ nixpkgs, home-manager, nixos-hardware, agenix, rust-overlay, ... }: let
     mkNixosConfig = { system, userConfig, extraModules ? [], extraHMModules ? [], ... }: {
       nixosConfigurations."${userConfig.hostName}" = nixpkgs.lib.nixosSystem {
         inherit system;
@@ -32,7 +32,7 @@
             nixpkgs.overlays = [
               (import ./overlays/x-air-edit)
               (import ./overlays/tlp)
-              (import ./overlays/nvim-web-devicons)
+              # (import ./overlays/nvim-web-devicons)
               rust-overlay.overlays.default
             ];
           }
