@@ -115,8 +115,8 @@ in {
     gh 
     teamviewer
     zoom-us
-    cabal-install ghcid haskell.compiler.ghc944
-    (haskell-language-server.override { supportedGhcVersions = [ "927" "944" ]; })
+    cabal-install ghcid haskell.compiler.ghc945
+    (haskell-language-server.override { supportedGhcVersions = [ "945" ]; })
     ormolu
     nil
     nixpkgs-fmt
