@@ -1,4 +1,6 @@
-{ pkgs, userConfig, ... }: {
+{ pkgs, userConfig, inputs, system, ... }: let
+  nixpkgsUnstable = import inputs.nixpkgsUnstable { inherit system; config.allowUnfree = true; };
+in {
   systemd.user.services.code-tunnel = {
     enable = true;
     description = "Visual Studio Code Tunnel";
@@ -21,7 +23,7 @@
       /usr/bin/env
     '';
     script = ''
-      ${pkgs.vscode}/lib/vscode/bin/code-tunnel --verbose --log trace --cli-data-dir /home/${userConfig.userName}/.vscode-cli tunnel service internal-run
+      ${nixpkgsUnstable.vscode}/lib/vscode/bin/code-tunnel --verbose --log trace --cli-data-dir /home/${userConfig.userName}/.vscode-cli tunnel service internal-run
     '';
     wantedBy = [ "default.target" ];
   };
