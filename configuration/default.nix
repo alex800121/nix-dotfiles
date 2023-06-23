@@ -258,6 +258,8 @@ in {
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    qjackctl
+    pavucontrol
     helix
     neovim
     linuxKernel.packages."linux_${kernelVersion}".cpupower
@@ -334,5 +336,5 @@ in {
   #   ];
   # };
 
-  system.stateVersion = "23.05"; # Did you read the comment?
+  system.stateVersion = "23.11"; # Did you read the comment?
 }
