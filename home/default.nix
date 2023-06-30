@@ -1,5 +1,5 @@
 { config, pkgs, lib, inputs, system, userConfig, imports ? [], ... }: let
-  # nixpkgsStable = import inputs.nixpkgsStable { inherit system; config.allowUnfree = true; };
+  nixpkgsUnstable = import inputs.nixpkgsUnstable { inherit system; config.allowUnfree = true; };
   defaultConfig = {
     fontSize = 11.5;
   };
@@ -40,8 +40,8 @@ in {
 
   home.sessionVariables = {
     BROWSER = "microsoft-edge";
-    EDITOR = "hx";
-    VISUAL = "hx";
+    EDITOR = "nvim";
+    VISUAL = "nvim";
   };
 
   # Let Home Manager install and manage itself.
@@ -93,6 +93,7 @@ in {
   # fonts.fontconfig.enable = true;
 
   home.packages = with pkgs; [
+    libsForQt5.plasma-browser-integration
     ardour
     helvum
     google-chrome
@@ -189,7 +190,8 @@ in {
 
   programs.alacritty = {
     enable = true;
-    settings = import ../programs/alacritty/alacritty-settings.nix userConfig;
+    package = nixpkgsUnstable.alacritty;
+    settings = import ../programs/alacritty/alacritty-settings.nix updateConfig;
   };
 
   programs.zellij = {

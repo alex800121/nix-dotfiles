@@ -23,14 +23,20 @@
       url = "github:oxalica/rust-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    networkmanager-dmenu = {
+      url = "github:firecat53/networkmanager-dmenu";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   # outputs = inputs@{ nixpkgs, home-manager, nix-ld, ... }: {
-  outputs = inputs@{ nixpkgs, home-manager, nixos-hardware, agenix, rust-overlay, nixpkgsUnstable, ... }: let
+  outputs = inputs@{ nixpkgs, home-manager, nixos-hardware, agenix, rust-overlay, nixpkgsUnstable, networkmanager-dmenu, ... }: let
     mkNixosConfig = { system, userConfig, extraModules ? [], extraHMModules ? [], ... }: {
       nixosConfigurations."${userConfig.hostName}" = nixpkgs.lib.nixosSystem {
         inherit system;
-        specialArgs = { inherit userConfig inputs system; };
+        specialArgs = { 
+          inherit userConfig inputs system; 
+        };
         modules = [
           { 
             nixpkgs.overlays = [
@@ -75,6 +81,8 @@
         nixos-hardware.nixosModules.common-pc-laptop-ssd
         inputs.musnix.nixosModules.musnix
         ./programs/musnix
+        # ./de/gnome
+        ./de/hyprland
       ];
       extraHMModules = [
         ./programs/onedrive
@@ -91,6 +99,7 @@
       };
       extraModules = [
         ./hardware/acer.nix
+        ./de/gnome
         ./programs/revtunnel
         ./programs/nix-ld
         ./programs/code-tunnel
@@ -109,6 +118,7 @@
       };
       extraModules = [
         ./hardware/acer-tp.nix
+        ./de/gnome
         ./programs/nix-ld
         ./programs/duckdns
         ./programs/code-tunnel

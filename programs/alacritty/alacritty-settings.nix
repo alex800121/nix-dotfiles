@@ -551,7 +551,7 @@
       x = 6; 
       y = 6; 
     }; 
-    startup_mode = "Fullscreen"; 
+    startup_mode = "Maximized"; 
     title = "Alacritty"; 
   }; 
   working_directory = "None"; 
