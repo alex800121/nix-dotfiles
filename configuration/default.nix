@@ -7,8 +7,7 @@
     autoLogin = false;
   };
   updateConfig = lib.recursiveUpdate defaultConfig userConfig;
-  inherit (updateConfig) userName hostName autoLogin;
-  # kernelVersion = "testing";
+  inherit (updateConfig) userName hostName;
   kernelVersion = "6_3";
 in {
   boot.kernelPackages = pkgs."linuxPackages_${kernelVersion}";
@@ -70,8 +69,6 @@ in {
       STOP_CHARGE_THRESH_BAT1 = 80;
     };
   };
-  # services.auto-cpufreq.enable = true;
-  # services.thermald.enable = true;
 
   # services.resolved.enable = true;
   services.dnsmasq = {
@@ -84,9 +81,10 @@ in {
     firewall.enable = false;
     networkmanager = {
       enable = true;
-      dhcp = "dhcpcd";
+      # dhcp = "dhcpcd";
       # dns = "systemd-resolved";
-      dns = "dnsmasq";
+      # dns = "dnsmasq";
+      dns = "default";
     };
     # wireless = {
     #   enable = true;
@@ -98,10 +96,6 @@ in {
     #   };
     # };
   };
-  # services.connman.enable = true;
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # services.teamviewer.enable = true;
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -132,23 +126,6 @@ in {
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
-
-  # Enable the GNOME Desktop Environment.
-  services.xserver.desktopManager.gnome = {
-    enable = true;
-    extraGSettingsOverrides = ''
-      [org.gnome.desktop.wm.keybindings]
-      switch-group=['<Super>Above_Tab']
-      switch-group-backward=['<Shift><Super>Above_Tab']
-    '';
-  };
-  services.xserver.displayManager = {
-    autoLogin.enable = autoLogin;
-    autoLogin.user = userName;
-    gdm = {
-      enable = true;
-    };
-  };
 
   # Configure keymap in X11
   services.xserver = {
@@ -201,6 +178,7 @@ in {
       wqy_zenhei
       wqy_microhei
       vistafonts-cht
+      font-awesome
     ];
 
     fontconfig = {
@@ -274,16 +252,6 @@ in {
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   programs.mtr.enable = true;
-  # programs.gnupg = {
-  #   dirmngr.enable = true;
-  #   agent = {
-  #     enable = true;
-  #     enableSSHSupport = true;
-  #     enableExtraSocket = true;
-  #     enableBrowserSocket = true;
-  #     pinentryFlavor = "curses";
-  #   };
-  # };
 
   # List services that you want to enable:
   programs.ssh = {

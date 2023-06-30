@@ -66,6 +66,6 @@
   # hardware.video.hidpi.enable = lib.mkDefault true;
 
   hardware.amdgpu.loadInInitrd = true;
-  hardware.amdgpu.amdvlk = true;
+  hardware.amdgpu.amdvlk = false;
   hardware.amdgpu.opencl = true;
 }
