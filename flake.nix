@@ -44,6 +44,9 @@
               (import ./overlays/tlp)
               (import ./overlays/nvim-web-devicons)
               rust-overlay.overlays.default
+              (self: super: {
+                networkmanager_dmenu = networkmanager-dmenu.packages."${system}".default;
+              })
             ];
           }
           ./configuration
@@ -81,7 +84,7 @@
         nixos-hardware.nixosModules.common-pc-laptop-ssd
         inputs.musnix.nixosModules.musnix
         ./programs/musnix
-        # ./de/gnome
+        ./de/gnome
         ./de/hyprland
       ];
       extraHMModules = [

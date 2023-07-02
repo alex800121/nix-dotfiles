@@ -18,7 +18,7 @@ in {
       source = ../programs/nixpkgs;
     };
     fcitx5 = {
-      recursive = true;
+      # recursive = true;
       source = ../programs/fcitx5;
     };
   };
@@ -42,6 +42,7 @@ in {
     BROWSER = "microsoft-edge";
     EDITOR = "nvim";
     VISUAL = "nvim";
+    SUDO_EDITOR = "nvim";
   };
 
   # Let Home Manager install and manage itself.

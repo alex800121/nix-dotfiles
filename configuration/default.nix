@@ -247,7 +247,15 @@ in {
     wpa_supplicant_gui
     git
     inputs.agenix.packages."${system}".default
+    showmethekey
+    wev
   ];
+
+  environment.variables = {
+    EDITOR = "nvim";
+    VISUAL = "nvim";
+    SUDO_EDITOR = "nvim";
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
