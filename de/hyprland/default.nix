@@ -12,16 +12,9 @@ in {
   services.xserver.displayManager = {
     autoLogin.enable = autoLogin;
     autoLogin.user = userName;
-    # lightdm = {
-    #   enable = true;
-    # };
     gdm = {
       enable = true;
     };
-    # sddm = {
-    #   enable = true;
-    #   enableHidpi = true;
-    # };
   };
   programs.hyprland.enable = true;
   programs.hyprland.package = nixpkgsUnstable.hyprland.override {
@@ -30,6 +23,10 @@ in {
   };
   programs.hyprland.xwayland.enable = true;
   programs.hyprland.xwayland.hidpi = true;
+
+  xdg.portal.xdgOpenUsePortal = true;
+  xdg.portal.wlr.enable = true;
+
   environment.systemPackages = [
     # swaynotificationcenter
     nixpkgsUnstable.mako
@@ -38,5 +35,8 @@ in {
     (nixpkgsUnstable.waybar.overrideAttrs (oldAttrs: { mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true "]; }))
     pkgs.wofi
     pkgs.networkmanagerapplet
+    pkgs.networkmanager_dmenu
+    pkgs.pw-volume
+    pkgs.brightnessctl
   ];
 }

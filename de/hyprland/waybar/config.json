@@ -3,9 +3,11 @@
     "spacing": 4,
     "modules-left": [ "wlr/workspaces" ],
     "modules-center": [ "clock" ],
-    "modules-right": [ "pulseaudio" , "network", "cpu", "temperature", "backlight", "battery", "tray"],
+    "modules-right": [ "tray", "pulseaudio" , "network", "cpu", "temperature", "backlight", "battery" ],
     "wlr/workspaces": {
-        "sort-by-name": true
+        "sort-by-name": true,
+        "on-click": "activate",
+        "on-click-right": "close"
     },
     "tray": {
         "spacing": 10
@@ -13,7 +15,7 @@
     "clock": {
         "format": "{:%Y-%m-%d %a %H:%M}",
         "tooltip": true,
-        "tooltip-format": "<tt><small>{calendar}</small></tt>"
+        "tooltip-format": "<tt><big>{calendar}</big></tt>"
     },
     "cpu": {
         "format": "{usage}% ",
@@ -51,13 +53,14 @@
         "format-disconnected": "Disconnected ⚠",
         "tooltip": true,
         "tooltip-format": "{ifname} via {gwaddr}: {ipaddr}/{cidr} ",
-        "on-click": "sleep 0.1 && networkmanager_dmenu"
+        "on-click": "sleep 0.05 && networkmanager_dmenu",
+        "on-double-click": "nm-connection-editor"
     },
     "pulseaudio": {
         "format": "{volume}% {icon} {format_source}",
         "format-bluetooth": "{volume}% {icon} {format_source}",
-        "format-bluetooth-muted": " {icon} {format_source}",
-        "format-muted": " {format_source}",
+        "format-bluetooth-muted": "󰖁 {icon} {format_source}",
+        "format-muted": "󰖁 {format_source}",
         "format-source": "{volume}% ",
         "format-source-muted": "",
         "format-icons": {
@@ -67,12 +70,12 @@
             "phone": "",
             "portable": "",
             "car": "",
-            "default": ["", "", ""]
+            "default": ["󰕿", "󰖀", "󰕾"]
         },
         "max-volume": 150,
         "reverse-scrolling": true,
         "scroll-step": 1,
         "on-click": "pavucontrol",
-        "on-click-right": "helvum"
+        "on-double-click": "helvum"
     }
 }

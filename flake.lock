@@ -124,6 +124,26 @@
         "type": "github"
       }
     },
+    "networkmanager-dmenu": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1688085328,
+        "narHash": "sha256-cJeDYk2BQv2ZWGC96I7lXFFYgseWj68ZfvE7ATW46U0=",
+        "owner": "firecat53",
+        "repo": "networkmanager-dmenu",
+        "rev": "265230c7ecaccf7e10f84d4414cd175f85a5b30a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "firecat53",
+        "repo": "networkmanager-dmenu",
+        "type": "github"
+      }
+    },
     "nixos-hardware": {
       "locked": {
         "lastModified": 1686838567,
@@ -177,6 +197,7 @@
         "agenix": "agenix",
         "home-manager": "home-manager_2",
         "musnix": "musnix",
+        "networkmanager-dmenu": "networkmanager-dmenu",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
         "nixpkgsUnstable": "nixpkgsUnstable",
