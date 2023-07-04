@@ -15,6 +15,8 @@ in {
   hardware.enableAllFirmware = true; 
   hardware.enableRedistributableFirmware = true;
 
+  hardware.acpilight.enable = true;
+
   console = {
     earlySetup = true;
     font = "${pkgs.terminus_font}/share/consolefonts/ter-v32n.psf.gz";

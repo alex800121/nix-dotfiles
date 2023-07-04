@@ -84,7 +84,7 @@
         nixos-hardware.nixosModules.common-pc-laptop-ssd
         inputs.musnix.nixosModules.musnix
         ./programs/musnix
-        ./de/gnome
+        # ./de/gnome
         ./de/hyprland
       ];
       extraHMModules = [

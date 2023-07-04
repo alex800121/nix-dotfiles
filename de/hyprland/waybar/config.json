@@ -47,14 +47,17 @@
         "format-icons": ["", "", "", "", ""]
     },
     "network": {
-        "format-wifi": "{essid} ({signalStrength}%) ",
+        "format-wifi": "{essid} {icon}",
         "format-ethernet": "{ipaddr}/{cidr} ",
         "format-linked": "{ifname} (No IP) ",
         "format-disconnected": "Disconnected ⚠",
+        "format-icons": {
+            "default": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"]
+        },
         "tooltip": true,
         "tooltip-format": "{ifname} via {gwaddr}: {ipaddr}/{cidr} ",
         "on-click": "sleep 0.05 && networkmanager_dmenu",
-        "on-double-click": "nm-connection-editor"
+        "on-click-right": "nm-connection-editor"
     },
     "pulseaudio": {
         "format": "{volume}% {icon} {format_source}",
@@ -76,6 +79,6 @@
         "reverse-scrolling": true,
         "scroll-step": 1,
         "on-click": "pavucontrol",
-        "on-double-click": "helvum"
+        "on-click-right": "helvum"
     }
 }
