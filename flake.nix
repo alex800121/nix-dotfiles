@@ -29,13 +29,12 @@
     };
   };
 
-  # outputs = inputs@{ nixpkgs, home-manager, nix-ld, ... }: {
   outputs = inputs@{ nixpkgs, home-manager, nixos-hardware, agenix, rust-overlay, nixpkgsUnstable, networkmanager-dmenu, ... }: let
-    mkNixosConfig = { system, userConfig, extraModules ? [], extraHMModules ? [], ... }: {
+    mkNixosConfig = { system, userConfig, extraModules ? [], hmModules ? [], ... }: {
       nixosConfigurations."${userConfig.hostName}" = nixpkgs.lib.nixosSystem {
         inherit system;
         specialArgs = { 
-          inherit userConfig inputs system; 
+          inherit userConfig inputs extraModules hmModules;
         };
         modules = [
           { 
@@ -43,6 +42,7 @@
               (import ./overlays/x-air-edit)
               (import ./overlays/tlp)
               (import ./overlays/nvim-web-devicons)
+              (import ./overlays/microsoft-edge)
               rust-overlay.overlays.default
               (self: super: {
                 networkmanager_dmenu = networkmanager-dmenu.packages."${system}".default;
@@ -55,16 +55,14 @@
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
-              users."${userConfig.userName}" = import ./home;
-              # sharedModules = extraHMModules;
+              users."${userConfig.userName}".imports = hmModules;
               extraSpecialArgs = { 
-                inherit inputs system userConfig;
-                imports =  extraHMModules; 
+                inherit inputs userConfig; 
               };
               backupFileExtension = "bak";
             };
           }
-        ] ++ extraModules;
+        ];
       };
     };
     asus-nixos = {
@@ -87,7 +85,8 @@
         # ./de/gnome
         ./de/hyprland
       ];
-      extraHMModules = [
+      hmModules = [
+        ./home
         ./programs/onedrive
         ./programs/nvim
       ];
@@ -107,7 +106,8 @@
         ./programs/nix-ld
         ./programs/code-tunnel
       ];
-      extraHMModules = [
+      hmModules = [
+        ./home
         ./programs/nvim
       ];
     };
@@ -126,7 +126,8 @@
         ./programs/duckdns
         ./programs/code-tunnel
       ];
-      extraHMModules = [
+      hmModules = [
+        ./home
         ./programs/nvim
       ];
     };

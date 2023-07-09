@@ -3,7 +3,7 @@
     "spacing": 4,
     "modules-left": [ "wlr/workspaces" ],
     "modules-center": [ "clock" ],
-    "modules-right": [ "tray", "pulseaudio" , "network", "cpu", "temperature", "backlight", "battery" ],
+    "modules-right": [ "tray", "pulseaudio" , "network", "backlight", "battery" ],
     "wlr/workspaces": {
         "sort-by-name": true,
         "on-click": "activate",
@@ -43,8 +43,8 @@
         "format": "{capacity}% {icon}",
         "format-charging": "{capacity}% ",
         "format-plugged": "{capacity}% ",
-        "format-alt": "{time} {icon}",
-        "format-icons": ["", "", "", "", ""]
+        "format-icons": ["", "", "", "", ""],
+        "on-click": "sleep 0.1 && wofi-power"
     },
     "network": {
         "format-wifi": "{essid} {icon}",
@@ -73,6 +73,9 @@
             "phone": "",
             "portable": "",
             "car": "",
+            "hifi": ["󰕿", "󰖀", "󰕾"],
+            "hdmi": ["󰕿", "󰖀", "󰕾"],
+            "speaker": ["󰕿", "󰖀", "󰕾"],
             "default": ["󰕿", "󰖀", "󰕾"]
         },
         "max-volume": 150,

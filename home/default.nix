@@ -1,12 +1,15 @@
-{ config, pkgs, lib, inputs, system, userConfig, imports ? [], ... }: let
-  nixpkgsUnstable = import inputs.nixpkgsUnstable { inherit system; config.allowUnfree = true; };
+{ pkgs, lib, inputs, userConfig, ... }: let
+  nixpkgsUnstable = import inputs.nixpkgsUnstable {
+    inherit (pkgs) system;
+    config.allowUnfree = true;
+  };
   defaultConfig = {
     fontSize = 11.5;
   };
   updateConfig = lib.recursiveUpdate defaultConfig userConfig;
   inherit (updateConfig) userName;
 in {
-  inherit imports;
+  nixpkgs.config.allowUnfree = true;
   nix = {
     settings = {
       experimental-features = "nix-command flakes repl-flake";
@@ -94,6 +97,7 @@ in {
   # fonts.fontconfig.enable = true;
 
   home.packages = with pkgs; [
+    nixpkgsUnstable.wineWowPackages.waylandFull
     libsForQt5.plasma-browser-integration
     ardour
     helvum

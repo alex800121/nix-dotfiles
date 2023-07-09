@@ -1,4 +1,4 @@
-{ config, pkgs, lib, inputs, system, userConfig, ... }: {
+{ config, pkgs, lib, userConfig, ... }: {
   programs.neovim = {
     enable = true;
     plugins = ( with pkgs.vimPlugins; [
@@ -56,28 +56,25 @@
       nil
       lua-language-server
     ] );
-    extraLuaConfig = ''
-      vim.loader.enable()
-      require'nvim-web-devicons'.setup()
-      require'user.options'
-      require'user.keymaps'
-      require'user.indent'
-      require'user.buffer'
-      require'user.project'
-      require'user.nvimtree'.setup()
-      require'user.treesitter'
-      require'user.telescope'
-      require'user.undotree'
-      require'user.lualine'
-      require'user.comment'
-      require'user.lsp'
-      require'user.gitsigns'
-    '';
+    # extraLuaConfig = ''
+    #   vim.loader.enable()
+    #   require'nvim-web-devicons'.setup()
+    #   require'user.options'
+    #   require'user.keymaps'
+    #   require'user.indent'
+    #   require'user.buffer'
+    #   require'user.project'
+    #   require'user.nvimtree'.setup()
+    #   require'user.treesitter'
+    #   require'user.telescope'
+    #   require'user.undotree'
+    #   require'user.lualine'
+    #   require'user.comment'
+    #   require'user.lsp'
+    #   require'user.gitsigns'
+    # '';
   };
-  # xdg.configFile = {
-  #   nvim = {
-  #     recursive = true;
-  #     source = ./luaConfig;
-  #   };
-  # };
+  xdg.configFile.nvim = {
+    source = ./luaConfig;
+  };
 }
