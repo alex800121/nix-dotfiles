@@ -1,7 +1,7 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-{ config, pkgs, lib, userConfig, inputs, system, ... }: let
+{ config, pkgs, lib, userConfig, inputs, imports, extraModules, ... }: let
   # nixpkgsStable = import inputs.nixpkgsStable { inherit system; config.allowUnfree = true; };
   defaultConfig = {
     autoLogin = false;
@@ -9,7 +9,9 @@
   updateConfig = lib.recursiveUpdate defaultConfig userConfig;
   inherit (updateConfig) userName hostName;
   kernelVersion = "6_3";
+  inherit (pkgs) system;
 in {
+  imports = extraModules;
   boot.kernelPackages = pkgs."linuxPackages_${kernelVersion}";
 
   hardware.enableAllFirmware = true; 
@@ -21,6 +23,19 @@ in {
     earlySetup = true;
     font = "${pkgs.terminus_font}/share/consolefonts/ter-v32n.psf.gz";
   };
+
+  services.kmscon.enable = true;
+  services.kmscon.hwRender = true;
+  services.kmscon.extraConfig = ''
+    font-size=14
+  '';
+  services.kmscon.fonts = [
+    {
+      name = "Hack Nerd Font Mono";
+      package = pkgs.nerdfonts;
+    }
+  ];
+
   # Bootloader.
   boot = {
     supportedFilesystems = [ "ntfs" ];
@@ -121,6 +136,7 @@ in {
         fcitx5-chinese-addons
         fcitx5-configtool
         fcitx5-gtk
+        libsForQt5.fcitx5-qt
         # fcitx5-rime
       ];
     };

@@ -1,11 +1,10 @@
 { pkgs, userConfig, ... }: {
+
   home.packages = [ pkgs.onedrive ];
 
-  xdg.configFile = {
-    onedrive = {
-      recursive = true;
-      source = ./.;
-    };
+  xdg.configFile.onedrive = {
+    recursive = true;
+    source = ./.;
   };
 
   systemd.user.services."onedrive" = {
