@@ -14,6 +14,10 @@
   };
 in {
   home-manager.users.alex800121.xdg.configFile."networkmanager-dmenu".source = ./networkmanager-dmenu;
+  home-manager.users.alex800121.xdg.configFile."xsettingsd/xsettingsd.conf".text = ''
+    Gdk/UnscaledDPI 98304
+    Gdk/WindowScalingFactor 2
+  '';
   services.xserver.displayManager = {
     autoLogin.enable = autoLogin;
     autoLogin.user = userName;
