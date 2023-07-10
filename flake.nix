@@ -87,7 +87,7 @@
       ];
       hmModules = [
         ./home
-        ./programs/onedrive
+        # ./programs/onedrive
         ./programs/nvim
       ];
     };

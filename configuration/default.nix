@@ -213,7 +213,7 @@ in {
   users.users."${userName}" = {
     isNormalUser = true;
     description = "${userName}";
-    extraGroups = [ "audio" "networkmanager" "sudo" "wheel" "code-server" "input" ];
+    extraGroups = [ "libvirtd" "audio" "networkmanager" "sudo" "wheel" "code-server" "input" ];
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOX1Dxv7vWO7viGCaMwdYFk7m468d3ZGiu1jyPTALQuN alex800121@alexrpi4dorm"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFGPC8SQm7EwFy2KF1LZlryWjfR/X7xG68LsTMGneU1z alex800121@alexrpi4tp"
@@ -249,11 +249,33 @@ in {
     };
   };
 
+  programs.dconf.enable = true;
+  virtualisation = {
+    libvirtd = {
+      enable = true;
+      qemu = {
+        swtpm.enable = true;
+        ovmf.enable = true;
+        ovmf.packages = [ pkgs.OVMFFull.fd ];
+      };
+    };
+    spiceUSBRedirection.enable = true;
+  };
+  services.spice-vdagentd.enable = true;
+  hardware.opengl.enable = true;
 
   # Allow unfree packages
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    gparted xorg.xhost xorg.xrdb xsettingsd
+    virt-manager
+    virt-viewer
+    spice spice-gtk
+    spice-protocol
+    win-virtio
+    win-spice
+    gnome.adwaita-icon-theme
     busybox
     qjackctl
     pavucontrol

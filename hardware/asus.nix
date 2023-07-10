@@ -34,17 +34,16 @@
     { device = "/dev/disk/by-uuid/2f13de69-409e-4116-ba72-243f93e6c887"; }
   ];
 
-  fileSystems = {
-    "/media/alex800121/Asus" = {
-      device = "/dev/disk/by-uuid/AC6E34966E345B72";
-      fsType = "ntfs";
-      options = [ "rw" "uid=1000" ];
-    };
-    "/home/alex800121/OneDrive" = {
-      device = "/media/alex800121/Asus/Users/alex800121/OneDrive/";
-      options = [ "bind" ];
-    };
-  };
+  # fileSystems."/media/alex800121/Asus" = {
+  #   device = "/dev/disk/by-uuid/AC6E34966E345B72";
+  #   fsType = "ntfs";
+  #   options = [ "rw" "uid=1000" ];
+  # };
+  #
+  # fileSystems."/home/alex800121/OneDrive" = {
+  #   device = "/media/alex800121/Asus/Users/alex800121/OneDrive/";
+  #   options = [ "bind" ];
+  # };
 
   services.logind = {
     lidSwitch = "suspend";
