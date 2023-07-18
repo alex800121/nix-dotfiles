@@ -113,7 +113,7 @@ in {
     freshfetch
     ripgrep
     wget
-    xclip
+    wl-clipboard
     nodejs
     firefox
     dmidecode
