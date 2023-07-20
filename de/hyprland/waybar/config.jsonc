@@ -5,7 +5,9 @@
     "modules-center": [ "clock" ],
     "modules-right": [ "tray", "pulseaudio" , "network", "backlight", "battery" ],
     "wlr/workspaces": {
-        "sort-by-name": true,
+        "sort-by-name": false,
+        "sort-by-coordinates": true,
+        "sort-by-number": false,
         "on-click": "activate",
         "on-click-right": "close"
     },
