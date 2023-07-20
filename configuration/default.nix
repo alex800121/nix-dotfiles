@@ -113,7 +113,8 @@ in {
 
   # Set your time zone.
   time.hardwareClockInLocalTime = true;
-  time.timeZone = "Asia/Taipei";
+  services.automatic-timezoned.enable = true;
+  # time.timeZone = "Asia/Taipei";
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.utf8";

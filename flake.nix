@@ -84,6 +84,7 @@
         ./programs/musnix
         # ./de/gnome
         ./de/hyprland
+        ./hardware/asus/single-partition-passthrough.nix
       ];
       hmModules = [
         ./home
