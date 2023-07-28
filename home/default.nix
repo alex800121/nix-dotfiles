@@ -42,7 +42,7 @@ in {
   home.stateVersion = "23.05";
 
   home.sessionVariables = {
-    BROWSER = "microsoft-edge";
+    BROWSER = "firefox";
     EDITOR = "nvim";
     VISUAL = "nvim";
     SUDO_EDITOR = "nvim";
@@ -97,7 +97,7 @@ in {
   # fonts.fontconfig.enable = true;
 
   home.packages = with pkgs; [
-    nixpkgsUnstable.wineWowPackages.waylandFull
+    # nixpkgsUnstable.wineWowPackages.waylandFull
     libsForQt5.plasma-browser-integration
     ardour
     helvum
@@ -123,11 +123,15 @@ in {
     teamviewer
     zoom-us
     cabal-install ghcid haskell.compiler.ghc945
-    (haskell-language-server.override { supportedGhcVersions = [ "945" ]; })
-    ormolu
-    nil
-    nixpkgs-fmt
-    rust-bin.stable.latest.complete gcc
+    # (haskell-language-server.override { supportedGhcVersions = [ "945" ]; })
+    # ormolu
+    # nil
+    # nixpkgs-fmt
+    gcc
+    rust-bin.stable.latest.complete 
+    # (rust-bin.selectLatestNightlyWith (toolchain: toolchain.complete.override {
+    #   extensions = [ "rust-src" ];
+    # }))
     # nerdfonts
   ];
 
@@ -147,7 +151,7 @@ in {
       name = "Terminal";
     };
     "org/gnome/shell".favorite-apps = [
-      "microsoft-edge.desktop"
+      "firefox.desktop"
       "spotify.desktop"
       "code.desktop"
       "Alacritty.desktop"
@@ -164,18 +168,18 @@ in {
   xdg.mimeApps = {
     enable = true;
     defaultApplications = {
-      "x-scheme-handler/http" = ["microsoft-edge.desktop" "firefox.desktop;"];
-      "application/xhtml+xml" = ["microsoft-edge.desktop" "firefox.desktop;"];
-      "text/html" = ["microsoft-edge.desktop" "firefox.desktop;"];
-      "x-scheme-handler/https" = ["microsoft-edge.desktop" "firefox.desktop;"];
-      "x-scheme-handler/about" = ["microsoft-edge.desktop" "firefox.desktop;"];
-      "x-scheme-handler/unknown" = ["microsoft-edge.desktop"];
+      "x-scheme-handler/http" = ["firefox.desktop" "microsoft-edge.desktop"];
+      "application/xhtml+xml" = ["firefox.desktop" "microsoft-edge.desktop"];
+      "text/html" = ["firefox.desktop" "microsoft-edge.desktop"];
+      "x-scheme-handler/https" = ["firefox.desktop" "microsoft-edge.desktop"];
+      "x-scheme-handler/about" = ["firefox.desktop" "microsoft-edge.desktop"];
+      "x-scheme-handler/unknown" = ["firefox.desktop" "microsoft-edge.desktop"];
     };
     associations.added = {
-      "x-scheme-handler/http"  =  ["microsoft-edge.desktop" "firefox.desktop;"];
-      "application/xhtml+xml" = ["microsoft-edge.desktop" "firefox.desktop;"];
-      "text/html" = ["microsoft-edge.desktop" "firefox.desktop;"];
-      "x-scheme-handler/https" = ["microsoft-edge.desktop" "firefox.desktop;"];
+      "x-scheme-handler/http"  =  ["firefox.desktop" "microsoft-edge.desktop"];
+      "application/xhtml+xml" = ["firefox.desktop" "microsoft-edge.desktop"];
+      "text/html" = ["firefox.desktop" "microsoft-edge.desktop"];
+      "x-scheme-handler/https" = ["firefox.desktop" "microsoft-edge.desktop"];
     };
   };
 
@@ -265,5 +269,8 @@ in {
     enableExtensionUpdateCheck = true;
     enableUpdateCheck = true;
     mutableExtensionsDir = true;
+    # extensions = [
+    #   pkgs.vscode-extensions.vadimcn.vscode-lldb
+    # ];
   };
 }

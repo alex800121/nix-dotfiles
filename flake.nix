@@ -41,11 +41,18 @@
             nixpkgs.overlays = [
               (import ./overlays/x-air-edit)
               (import ./overlays/tlp)
-              (import ./overlays/nvim-web-devicons)
+              # (import ./overlays/nvim-web-devicons)
               (import ./overlays/microsoft-edge)
               rust-overlay.overlays.default
               (self: super: {
                 networkmanager_dmenu = networkmanager-dmenu.packages."${system}".default;
+              })
+              (self: super: let
+                pkgs = import nixpkgsUnstable { inherit system; };
+              in {
+                libsForQt5 = super.libsForQt5 // {
+                  sddm = pkgs.libsForQt5.sddm;
+                };
               })
             ];
           }

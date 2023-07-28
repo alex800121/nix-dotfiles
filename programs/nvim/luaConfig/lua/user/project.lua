@@ -40,7 +40,3 @@ project.setup({
   -- telescope
   datapath = vim.fn.stdpath("data"),
 })
-
-local telescope = require'telescope'
-telescope.load_extension('projects')
-vim.keymap.set('n', '<leader>fp', function() telescope.extensions.projects.projects({}) end, { desc = "Fuzzy project", noremap = true, buffer = false })
