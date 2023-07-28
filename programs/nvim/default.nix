@@ -1,4 +1,6 @@
-{ config, pkgs, lib, inputs, system, userConfig, ... }: {
+{ config, pkgs, lib, userConfig, ... }: {
+  home.sessionVariables."CODELLDB_PATH" = "${pkgs.vscode-extensions.vadimcn.vscode-lldb}/adapter/codelldb";
+  home.sessionVariables."LIBLLDB_PATH" = "${pkgs.vscode-extensions.vadimcn.vscode-lldb}/lldb/lib/liblldb.so";
   programs.neovim = {
     enable = true;
     plugins = ( with pkgs.vimPlugins; [
@@ -19,8 +21,11 @@
         tree-sitter-c 
         tree-sitter-vim 
         tree-sitter-nix 
+        tree-sitter-json
       ]))
       nvim-treesitter-parsers.kdl
+      nvim-treesitter-parsers.jsonc
+      nvim-treesitter-textobjects
       plenary-nvim
       telescope-fzf-native-nvim
       telescope-nvim
@@ -43,6 +48,8 @@
       cmp-cmdline
       lspkind-nvim
       cmp-nvim-lsp-signature-help
+      nvim-dap
+      nvim-dap-ui
     ] );
     viAlias = true;
     vimAlias = true;
@@ -52,32 +59,15 @@
       nerdfonts
       ripgrep
       fd
-      (haskell-language-server.override { supportedGhcVersions = [ "927" "944" ]; })
+      (haskell-language-server.override { supportedGhcVersions = [ "945" ]; })
+      ormolu
       nil
       lua-language-server
+      nixpkgs-fmt
+      vscode-extensions.vadimcn.vscode-lldb
     ] );
-    extraLuaConfig = ''
-      vim.loader.enable()
-      require'nvim-web-devicons'.setup()
-      require'user.options'
-      require'user.keymaps'
-      require'user.indent'
-      require'user.buffer'
-      require'user.project'
-      require'user.nvimtree'.setup()
-      require'user.treesitter'
-      require'user.telescope'
-      require'user.undotree'
-      require'user.lualine'
-      require'user.comment'
-      require'user.lsp'
-      require'user.gitsigns'
-    '';
   };
-  # xdg.configFile = {
-  #   nvim = {
-  #     recursive = true;
-  #     source = ./luaConfig;
-  #   };
-  # };
+  xdg.configFile.nvim = {
+    source = ./luaConfig;
+  };
 }

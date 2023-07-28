@@ -1,0 +1,94 @@
+{
+    "layer": "top",
+    "spacing": 4,
+    "modules-left": [ "wlr/workspaces" ],
+    // "modules-left": [ "hyprland/workspaces" ],
+    "modules-center": [ "clock" ],
+    "modules-right": [ "tray", "pulseaudio" , "network", "backlight", "battery" ],
+    "wlr/workspaces": {
+        "format": "{name}",
+        "sort-by-name": false,
+        "sort-by-coordinates": true,
+        "sort-by-number": true,
+        "on-click": "activate",
+        "on-click-right": "close"
+    },
+    "tray": {
+        "spacing": 10
+    },
+    "clock": {
+        "format": "{:%Y-%m-%d %a %H:%M}",
+        "tooltip": true,
+        "tooltip-format": "<tt><big>{calendar}</big></tt>"
+    },
+    "cpu": {
+        "format": "{usage}% ",
+        "tooltip": false
+    },
+    "memory": {
+        "format": "{}% "
+    },
+    "temperature": {
+        "critical-threshold": 80,
+        "format": "{temperatureC}°C {icon}",
+        "format-icons": ["", "", ""]
+    },
+    "backlight": {
+        "format": "{percent}% {icon}",
+        "format-icons": ["", "", "", "", "", "", "", "", ""],
+        "reverse-scrolling": true,
+        "scroll-step": 0.2
+    },
+    "battery": {
+        // "states": {
+        //     "warning": 30,
+        //     "critical": 15
+        // },
+        "format": "{capacity}% {icon}",
+        "format-charging": "{capacity}% {icon}",
+        "format-plugged": "{capacity}% ",
+        "format-icons": {
+            "discharging": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+            "charging": ["󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂅"],
+        },
+        "on-click": "sleep 0.15 && wofi-power"
+    },
+    "network": {
+        "format-wifi": "{essid} {icon}",
+        "format-ethernet": "{ipaddr}/{cidr} ",
+        "format-linked": "{ifname} (No IP) ",
+        "format-disconnected": "Disconnected ⚠",
+        "format-icons": {
+            "default": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"]
+        },
+        "tooltip": true,
+        "tooltip-format": "{ifname} via {gwaddr}: {ipaddr}/{cidr} ",
+        "on-click": "sleep 0.05 && networkmanager_dmenu",
+        "on-click-right": "nm-connection-editor"
+    },
+    "pulseaudio": {
+        "format": "{volume}% {icon} {format_source}",
+        "format-bluetooth": "{volume}% {icon} {format_source}",
+        "format-bluetooth-muted": "󰖁 {icon} {format_source}",
+        "format-muted": "󰖁 {format_source}",
+        "format-source": "{volume}% ",
+        "format-source-muted": "",
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "hifi": ["󰕿", "󰖀", "󰕾"],
+            "hdmi": ["󰕿", "󰖀", "󰕾"],
+            "speaker": ["󰕿", "󰖀", "󰕾"],
+            "default": ["󰕿", "󰖀", "󰕾"]
+        },
+        "max-volume": 150,
+        "reverse-scrolling": true,
+        "scroll-step": 1,
+        "on-click": "pavucontrol",
+        "on-click-right": "helvum"
+    }
+}
