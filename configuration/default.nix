@@ -80,8 +80,8 @@ in {
       # CPU_SCALING_GOVERNOR_ON_BAT = "schedutil";
       CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
       CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
-      # START_CHARGE_THRESH_BAT0 = 75;
-      # STOP_CHARGE_THRESH_BAT0 = 80;
+      START_CHARGE_THRESH_BAT0 = 75;
+      STOP_CHARGE_THRESH_BAT0 = 80;
       # START_CHARGE_THRESH_BAT1 = 75;
       # STOP_CHARGE_THRESH_BAT1 = 80;
     };
@@ -264,7 +264,7 @@ in {
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    bottles
+    # bottles
     gparted xorg.xhost xorg.xrdb xsettingsd parted
     virt-manager
     virt-viewer
@@ -288,11 +288,11 @@ in {
     wev
   ];
 
-  environment.variables = {
-    EDITOR = "nvim";
-    VISUAL = "nvim";
-    SUDO_EDITOR = "nvim";
-  };
+  # environment.variables = {
+  #   EDITOR = "nvim";
+  #   VISUAL = "nvim";
+  #   SUDO_EDITOR = "nvim";
+  # };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

@@ -6,7 +6,7 @@ bufferline.setup{
     style_preset = bufferline.style_preset.default, -- or bufferline.presets.minimal,
     themable = true, -- allows highlight groups to be overriden i.e. sets highlights as default
     numbers = function(opts)
-      return(string.format('%s.%s', opts.ordinal, opts.lower(opts.id)))
+      return(string.format('%s', opts.ordinal))
     end,
     close_command = "Bdelete %d",       -- can be a string | function, | false see "Mouse actions"
     right_mouse_command = "Bdelete %d", -- can be a string | function | false, see "Mouse actions"

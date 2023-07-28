@@ -18,34 +18,48 @@ in {
     Gdk/UnscaledDPI 98304
     Gdk/WindowScalingFactor 2
   '';
-  services.xserver.displayManager = {
-    autoLogin.enable = autoLogin;
-    autoLogin.user = userName;
-    gdm = {
-      enable = true;
+  home-manager.users.alex800121.services.mako = {
+    enable = true;
+    package = nixpkgsUnstable.mako;
+    actions = true;
+    anchor = "top-right";
+    defaultTimeout = 5000;
+    icons = true;
+    ignoreTimeout = false;
+    layer = "top";
+  };
+
+  services.xserver.displayManager.sddm = {
+    enable = true;
+    enableHidpi = true;
+    settings = {
+      X11 = {
+        ServerArguments = "-dpi 192";
+      };
     };
   };
+
   programs.hyprland.enable = true;
   programs.hyprland.package = hyprlandUnstable;
   programs.hyprland.xwayland.enable = true;
   programs.hyprland.xwayland.hidpi = true;
 
   xdg.portal.xdgOpenUsePortal = true;
-  xdg.portal.wlr.enable = true;
 
   environment.systemPackages = [
     # swaynotificationcenter
-    nixpkgsUnstable.mako
+    # nixpkgsUnstable.mako
     nixpkgsUnstable.hyprpaper
     nixpkgsUnstable.hyprpicker
     nixpkgsUnstable.gnome.nautilus
     (nixpkgsUnstable.waybar.overrideAttrs (oldAttrs: { mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true "]; }))
     pkgs.wofi
     pkgs.networkmanagerapplet
-    pkgs.networkmanager_dmenu
+    nixpkgsUnstable.networkmanager_dmenu
     pkgs.brightnessctl
     pkgs.swaylock
     pkgs.swayidle
+    pkgs.socat
     (import ./wofi-power { inherit pkgs; hyprland = hyprlandUnstable; })
   ];
 
@@ -62,5 +76,4 @@ in {
     XMODIFIERS = "@im=fcitx";
     NIXOS_OZONE_WL = "1";
   };
-
 }

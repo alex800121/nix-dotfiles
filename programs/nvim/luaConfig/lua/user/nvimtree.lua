@@ -66,7 +66,7 @@ function M.setup()
   vim.g.loaded_netrw = 1
   vim.g.loaded_netrwPlugin = 1
 
-  vim.keymap.set("n", "<leader>e", "<cmd>NvimTreeToggle<cr>", { noremap = true, buffer = false, desc = "nvim-tree: toggle" })
+  vim.keymap.set("n", "<leader>e", "<cmd>NvimTreeToggle<cr>", { noremap = true, buffer = false, desc = "NvimTree: Toggle" })
 
   nvimtree.setup({
     auto_reload_on_write = true,

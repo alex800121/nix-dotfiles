@@ -1,12 +1,12 @@
 * {
     /* `otf-font-awesome` is required to be installed for icons */
     font-family: FontAwesome, Roboto, Helvetica, Arial, sans-serif;
-    font-size: 13px;
+    font-size: 15;
 }
 
 window#waybar {
     background-color: rgba(0, 0, 0, 0.5);
-    border-bottom: 3px solid rgba(100, 114, 125, 0.5);
+    border-bottom: 3px solid rgba(0, 0, 0, 0.5);
     color: #ffffff;
     transition-property: background-color;
     transition-duration: .5s;
@@ -50,18 +50,22 @@ button:hover {
 
 #workspaces button {
     padding: 0 5px;
-    background-color: transparent;
+    /* background-color: transparent; */
     color: #ffffff;
 }
 
-#workspaces button:hover {
-    background: rgba(0, 0, 0, 0.2);
+#workspaces button.active {
+    background-color: #005500;
 }
 
-#workspaces button.focused {
-    background-color: #64727D;
-    box-shadow: inset 0 -3px #ffffff;
-}
+/* #workspaces button:hover { */
+/*     background: rgba(0, 0, 0, 0.2); */
+/* } */
+
+/* #workspaces button.focused { */
+/*     background-color: #64727D; */
+/*     box-shadow: inset 0 -3px #ffffff; */
+/* } */
 
 #workspaces button.urgent {
     background-color: #eb4d4b;
@@ -108,7 +112,8 @@ button:hover {
 }
 
 #clock {
-    background-color: #64727D;
+    background-color: transparent;
+    font-family: Hack Nerd Font Propo;
 }
 
 #battery {

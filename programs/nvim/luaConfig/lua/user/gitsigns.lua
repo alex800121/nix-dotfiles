@@ -1,4 +1,5 @@
 local gitsigns = require'gitsigns'
+local whichkey = require'which-key'
 
 gitsigns.setup({
   signs = {
@@ -53,20 +54,28 @@ gitsigns.setup({
     -- Actions
     map('n', '[h', gitsigns.prev_hunk, 'Hunk: Previous')
     map('n', ']h', gitsigns.next_hunk, 'Hunk: Next')
-    map('n', '<leader>hs', gitsigns.stage_hunk, 'Hunk: Stage')
-    map('n', '<leader>hr', gitsigns.reset_hunk, 'Hunk: Reset')
-    map('v', '<leader>hs', function() gitsigns.stage_hunk({vim.fn.line("."), vim.fn.line("v")}) end, 'Hunk: Stage')
-    map('v', '<leader>hr', function() gitsigns.reset_hunk({vim.fn.line("."), vim.fn.line("v")}) end, 'Hunk: Stage')
-    map('n', '<leader>Hs', gitsigns.stage_buffer, 'Buffer: Stage')
-    map('n', '<leader>hu', gitsigns.undo_stage_hunk, 'Hunk: Undo Stage')
-    map('n', '<leader>Hr', gitsigns.reset_buffer, 'Buffer: Reset')
-    map('n', '<leader>hp', gitsigns.preview_hunk, 'Hunk: Preview')
-    map('n', '<leader>bl', function() gitsigns.blame_line{full=true} end, 'Blame: This Line')
-    map('n', '<leader>bt', gitsigns.toggle_current_line_blame, 'Blame: Toggle')
-    map('n', '<leader>dd', gitsigns.diffthis, 'Vimdiff')
-    map('n', '<leader>dD', function() gitsigns.diffthis('~') end, 'Vimdiff?')
-    map('n', '<leader>td', gitsigns.toggle_deleted, 'Toggle Deleted')
+    map('n', '<leader>ghs', gitsigns.stage_hunk, 'Hunk: Stage')
+    map('n', '<leader>ghr', gitsigns.reset_hunk, 'Hunk: Reset')
+    map('v', '<leader>ghs', function() gitsigns.stage_hunk({vim.fn.line("."), vim.fn.line("v")}) end, 'Hunk: Stage')
+    map('v', '<leader>ghr', function() gitsigns.reset_hunk({vim.fn.line("."), vim.fn.line("v")}) end, 'Hunk: Stage')
+    map('n', '<leader>ghu', gitsigns.undo_stage_hunk, 'Hunk: Undo Stage')
+    map('n', '<leader>ghp', gitsigns.preview_hunk, 'Hunk: Preview')
+    map('n', '<leader>gHs', gitsigns.stage_buffer, 'Buffer: Stage')
+    map('n', '<leader>gHr', gitsigns.reset_buffer, 'Buffer: Reset')
+    map('n', '<leader>gbl', function() gitsigns.blame_line{full=true} end, 'Blame: This Line')
+    map('n', '<leader>gbt', gitsigns.toggle_current_line_blame, 'Blame: Toggle')
+    map('n', '<leader>gdd', gitsigns.diffthis, 'Vimdiff')
+    map('n', '<leader>gdD', function() gitsigns.diffthis('~') end, 'Vimdiff?')
+    map('n', '<leader>gD', gitsigns.toggle_deleted, 'Toggle Deleted')
 
+    whichkey.register({
+      ['<leader>g'] = { name = "+Gitsigns..." },
+      ['<leader>gh'] = { name = "+Gitsigns: Hunk..." },
+      ['<leader>gH'] = { name = "+Gitsigns: Buffer..." },
+      ['<leader>gb'] = { name = "+Gitsigns: Blame..." },
+      ['<leader>gd'] = { name = "+Gitsigns: Vimdiff..." },
+      ['<leader>gD'] = { name = "+Gitsigns: Toggle Deleted..." },
+    })
     -- Text object
     map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>', 'Hunk: Select')
   end

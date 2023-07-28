@@ -2,12 +2,14 @@
     "layer": "top",
     "spacing": 4,
     "modules-left": [ "wlr/workspaces" ],
+    // "modules-left": [ "hyprland/workspaces" ],
     "modules-center": [ "clock" ],
     "modules-right": [ "tray", "pulseaudio" , "network", "backlight", "battery" ],
     "wlr/workspaces": {
+        "format": "{name}",
         "sort-by-name": false,
         "sort-by-coordinates": true,
-        "sort-by-number": false,
+        "sort-by-number": true,
         "on-click": "activate",
         "on-click-right": "close"
     },
@@ -38,15 +40,18 @@
         "scroll-step": 0.2
     },
     "battery": {
-        "states": {
-            "warning": 30,
-            "critical": 15
-        },
+        // "states": {
+        //     "warning": 30,
+        //     "critical": 15
+        // },
         "format": "{capacity}% {icon}",
-        "format-charging": "{capacity}% ",
+        "format-charging": "{capacity}% {icon}",
         "format-plugged": "{capacity}% ",
-        "format-icons": ["", "", "", "", ""],
-        "on-click": "sleep 0.1 && wofi-power"
+        "format-icons": {
+            "discharging": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+            "charging": ["󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂅"],
+        },
+        "on-click": "sleep 0.15 && wofi-power"
     },
     "network": {
         "format-wifi": "{essid} {icon}",
