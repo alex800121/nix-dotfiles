@@ -1,25 +1,41 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-{ config, pkgs, lib, userConfig, inputs, system, ... }: let
+{ config, pkgs, lib, userConfig, inputs, imports, extraModules, ... }: let
   # nixpkgsStable = import inputs.nixpkgsStable { inherit system; config.allowUnfree = true; };
   defaultConfig = {
     autoLogin = false;
   };
   updateConfig = lib.recursiveUpdate defaultConfig userConfig;
-  inherit (updateConfig) userName hostName autoLogin;
-  # kernelVersion = "testing";
+  inherit (updateConfig) userName hostName;
   kernelVersion = "6_3";
+  inherit (pkgs) system;
 in {
+  imports = extraModules;
   boot.kernelPackages = pkgs."linuxPackages_${kernelVersion}";
 
   hardware.enableAllFirmware = true; 
   hardware.enableRedistributableFirmware = true;
 
+  hardware.acpilight.enable = true;
+
   console = {
     earlySetup = true;
     font = "${pkgs.terminus_font}/share/consolefonts/ter-v32n.psf.gz";
   };
+
+  services.kmscon.enable = true;
+  services.kmscon.hwRender = true;
+  services.kmscon.extraConfig = ''
+    font-size=14
+  '';
+  services.kmscon.fonts = [
+    {
+      name = "Hack Nerd Font Mono";
+      package = pkgs.nerdfonts;
+    }
+  ];
+
   # Bootloader.
   boot = {
     supportedFilesystems = [ "ntfs" ];
@@ -66,12 +82,10 @@ in {
       CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
       START_CHARGE_THRESH_BAT0 = 75;
       STOP_CHARGE_THRESH_BAT0 = 80;
-      START_CHARGE_THRESH_BAT1 = 75;
-      STOP_CHARGE_THRESH_BAT1 = 80;
+      # START_CHARGE_THRESH_BAT1 = 75;
+      # STOP_CHARGE_THRESH_BAT1 = 80;
     };
   };
-  # services.auto-cpufreq.enable = true;
-  # services.thermald.enable = true;
 
   # services.resolved.enable = true;
   services.dnsmasq = {
@@ -84,24 +98,12 @@ in {
     firewall.enable = false;
     networkmanager = {
       enable = true;
-      dhcp = "dhcpcd";
+      # dhcp = "dhcpcd";
       # dns = "systemd-resolved";
-      dns = "dnsmasq";
+      # dns = "dnsmasq";
+      dns = "default";
     };
-    # wireless = {
-    #   enable = true;
-    #   userControlled.enable = true;
-    #   networks = {
-    #     DaddyAlex = {
-    #       pskRaw = "76990429141a7325c5d4448c998cb4db13bd02acc376ef4f0b27299bbff552d1";
-    #     };
-    #   };
-    # };
   };
-  # services.connman.enable = true;
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # services.teamviewer.enable = true;
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -111,7 +113,8 @@ in {
 
   # Set your time zone.
   time.hardwareClockInLocalTime = true;
-  time.timeZone = "Asia/Taipei";
+  services.automatic-timezoned.enable = true;
+  # time.timeZone = "Asia/Taipei";
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.utf8";
@@ -125,6 +128,7 @@ in {
         fcitx5-chinese-addons
         fcitx5-configtool
         fcitx5-gtk
+        libsForQt5.fcitx5-qt
         # fcitx5-rime
       ];
     };
@@ -132,23 +136,6 @@ in {
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
-
-  # Enable the GNOME Desktop Environment.
-  services.xserver.desktopManager.gnome = {
-    enable = true;
-    extraGSettingsOverrides = ''
-      [org.gnome.desktop.wm.keybindings]
-      switch-group=['<Super>Above_Tab']
-      switch-group-backward=['<Shift><Super>Above_Tab']
-    '';
-  };
-  services.xserver.displayManager = {
-    autoLogin.enable = autoLogin;
-    autoLogin.user = userName;
-    gdm = {
-      enable = true;
-    };
-  };
 
   # Configure keymap in X11
   services.xserver = {
@@ -201,6 +188,7 @@ in {
       wqy_zenhei
       wqy_microhei
       vistafonts-cht
+      font-awesome
     ];
 
     fontconfig = {
@@ -217,7 +205,7 @@ in {
   users.users."${userName}" = {
     isNormalUser = true;
     description = "${userName}";
-    extraGroups = [ "audio" "networkmanager" "sudo" "wheel" "code-server" "input" ];
+    extraGroups = [ "disk" "libvirtd" "audio" "networkmanager" "sudo" "wheel" "code-server" "input" ];
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOX1Dxv7vWO7viGCaMwdYFk7m468d3ZGiu1jyPTALQuN alex800121@alexrpi4dorm"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFGPC8SQm7EwFy2KF1LZlryWjfR/X7xG68LsTMGneU1z alex800121@alexrpi4tp"
@@ -254,11 +242,38 @@ in {
     };
   };
 
+  programs.dconf.enable = true;
+  virtualisation = {
+    libvirtd = {
+      enable = true;
+      qemu = {
+        swtpm.enable = true;
+        ovmf.enable = true;
+        ovmf.packages = [ pkgs.OVMFFull.fd ];
+      };
+    };
+    spiceUSBRedirection.enable = true;
+  };
+
+  services.spice-vdagentd.enable = true;
+  hardware.opengl.enable = true;
+
+  virtualisation.lxd.enable = true;
+  virtualisation.waydroid.enable = true;
 
   # Allow unfree packages
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    # bottles
+    gparted xorg.xhost xorg.xrdb xsettingsd parted
+    virt-manager
+    virt-viewer
+    spice spice-gtk
+    spice-protocol
+    win-virtio
+    win-spice
+    gnome.adwaita-icon-theme
     busybox
     qjackctl
     pavucontrol
@@ -270,21 +285,19 @@ in {
     wpa_supplicant_gui
     git
     inputs.agenix.packages."${system}".default
+    showmethekey
+    wev
   ];
+
+  # environment.variables = {
+  #   EDITOR = "nvim";
+  #   VISUAL = "nvim";
+  #   SUDO_EDITOR = "nvim";
+  # };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   programs.mtr.enable = true;
-  # programs.gnupg = {
-  #   dirmngr.enable = true;
-  #   agent = {
-  #     enable = true;
-  #     enableSSHSupport = true;
-  #     enableExtraSocket = true;
-  #     enableBrowserSocket = true;
-  #     pinentryFlavor = "curses";
-  #   };
-  # };
 
   # List services that you want to enable:
   programs.ssh = {

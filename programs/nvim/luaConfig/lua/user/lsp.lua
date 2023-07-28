@@ -5,6 +5,7 @@ local lspkind = require 'lspkind'
 local lsp_signature = require 'lsp_signature'
 local autopairs = require 'nvim-autopairs'
 local cmp_autopairs = require 'nvim-autopairs.completion.cmp'
+local whichkey = require'which-key'
 
 require("luasnip.loaders.from_vscode").lazy_load()
 
@@ -134,24 +135,28 @@ local on_attach = function(client, bufnr)
   local bufopts = function(def) return { noremap = true, silent = true, buffer = bufnr, desc = 'LSP: ' .. def } end
   -- Mappings.
   -- See `:help vim.lsp.*` for documentation on any of the below functions
+  whichkey.register({
+    ['<leader>w'] = { name = "+Workspace Folder..." },
+    ['<leader>s'] = { name = "+Set ... List" },
+  })
   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts('declaration'))
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts('definition'))
-  vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts('hover'))
   vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts('implementation'))
   vim.keymap.set('n', 'gs', vim.lsp.buf.signature_help, bufopts('signature_help'))
+  vim.keymap.set('n', 'gt', vim.lsp.buf.type_definition, bufopts('type definition'))
+  vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts('references'))
+  vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts('Next diagnostic'))
+  vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts('Previous diagnostic'))
+  vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts('hover'))
+  vim.keymap.set('n', '<space>o', vim.diagnostic.open_float, opts('Open float'))
   vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts('add workspace folder'))
   vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts('remove workspace folder'))
   vim.keymap.set('n', '<space>wl', function()
     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
   end, bufopts('list workspace folder'))
-  vim.keymap.set('n', 'gtd', vim.lsp.buf.type_definition, bufopts('type definition'))
-  vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts('rename'))
-  vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts('code action'))
-  vim.keymap.set('n', 'grf', vim.lsp.buf.references, bufopts('references'))
+  vim.keymap.set('n', '<space>R', vim.lsp.buf.rename, bufopts('rename'))
+  vim.keymap.set('n', '<space>C', vim.lsp.buf.code_action, bufopts('code action'))
   vim.keymap.set('n', '<space>F', function() vim.lsp.buf.format { async = true } end, bufopts('code format'))
-  vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts('Next diagnostic'))
-  vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts('Previous diagnostic'))
-  vim.keymap.set('n', '<space>of', vim.diagnostic.open_float, opts('Open float'))
   vim.keymap.set('n', '<space>sl', vim.diagnostic.setloclist, opts('Set Location List'))
   vim.keymap.set('n', '<space>sf', vim.diagnostic.setqflist, opts('Set Quickfix List'))
   -- vim.api.nvim_create_autocmd("CursorHold", {
@@ -231,12 +236,6 @@ lspconfig['lua_ls'].setup({
 lspconfig['rust_analyzer'].setup({
   settings = {
     ["rust-analyzer"] = {
-      -- checkOnSave = true,
-      -- check = {
-      --   enable = true,
-      --   command = "clippy",
-      --   features = "all",
-      -- },
       cargo = {
         features = "all",
       },

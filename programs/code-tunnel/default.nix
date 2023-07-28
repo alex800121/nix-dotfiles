@@ -1,5 +1,5 @@
-{ pkgs, userConfig, inputs, system, ... }: let
-  nixpkgsUnstable = import inputs.nixpkgsUnstable { inherit system; config.allowUnfree = true; };
+{ pkgs, userConfig, inputs, ... }: let
+  nixpkgsUnstable = import inputs.nixpkgsUnstable { inherit (pkgs) system; config.allowUnfree = true; };
 in {
   systemd.user.services.code-tunnel = {
     enable = true;

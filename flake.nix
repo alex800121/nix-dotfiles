@@ -23,21 +23,37 @@
       url = "github:oxalica/rust-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    networkmanager-dmenu = {
+      url = "github:firecat53/networkmanager-dmenu";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  # outputs = inputs@{ nixpkgs, home-manager, nix-ld, ... }: {
-  outputs = inputs@{ nixpkgs, home-manager, nixos-hardware, agenix, rust-overlay, nixpkgsUnstable, ... }: let
-    mkNixosConfig = { system, userConfig, extraModules ? [], extraHMModules ? [], ... }: {
+  outputs = inputs@{ nixpkgs, home-manager, nixos-hardware, agenix, rust-overlay, nixpkgsUnstable, networkmanager-dmenu, ... }: let
+    mkNixosConfig = { system, userConfig, extraModules ? [], hmModules ? [], ... }: {
       nixosConfigurations."${userConfig.hostName}" = nixpkgs.lib.nixosSystem {
         inherit system;
-        specialArgs = { inherit userConfig inputs system; };
+        specialArgs = { 
+          inherit userConfig inputs extraModules hmModules;
+        };
         modules = [
           { 
             nixpkgs.overlays = [
               (import ./overlays/x-air-edit)
               (import ./overlays/tlp)
-              (import ./overlays/nvim-web-devicons)
+              # (import ./overlays/nvim-web-devicons)
+              (import ./overlays/microsoft-edge)
               rust-overlay.overlays.default
+              (self: super: {
+                networkmanager_dmenu = networkmanager-dmenu.packages."${system}".default;
+              })
+              (self: super: let
+                pkgs = import nixpkgsUnstable { inherit system; };
+              in {
+                libsForQt5 = super.libsForQt5 // {
+                  sddm = pkgs.libsForQt5.sddm;
+                };
+              })
             ];
           }
           ./configuration
@@ -46,16 +62,14 @@
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
-              users."${userConfig.userName}" = import ./home;
-              # sharedModules = extraHMModules;
+              users."${userConfig.userName}".imports = hmModules;
               extraSpecialArgs = { 
-                inherit inputs system userConfig;
-                imports =  extraHMModules; 
+                inherit inputs userConfig; 
               };
               backupFileExtension = "bak";
             };
           }
-        ] ++ extraModules;
+        ];
       };
     };
     asus-nixos = {
@@ -75,9 +89,13 @@
         nixos-hardware.nixosModules.common-pc-laptop-ssd
         inputs.musnix.nixosModules.musnix
         ./programs/musnix
+        # ./de/gnome
+        ./de/hyprland
+        ./hardware/asus/single-partition-passthrough.nix
       ];
-      extraHMModules = [
-        ./programs/onedrive
+      hmModules = [
+        ./home
+        # ./programs/onedrive
         ./programs/nvim
       ];
     };
@@ -91,11 +109,13 @@
       };
       extraModules = [
         ./hardware/acer.nix
+        ./de/gnome
         ./programs/revtunnel
         ./programs/nix-ld
         ./programs/code-tunnel
       ];
-      extraHMModules = [
+      hmModules = [
+        ./home
         ./programs/nvim
       ];
     };
@@ -109,11 +129,13 @@
       };
       extraModules = [
         ./hardware/acer-tp.nix
+        ./de/gnome
         ./programs/nix-ld
         ./programs/duckdns
         ./programs/code-tunnel
       ];
-      extraHMModules = [
+      hmModules = [
+        ./home
         ./programs/nvim
       ];
     };
