@@ -59,6 +59,10 @@ in {
         --delete-older-than 7d
       '';
     };
+    optimise = {
+      automatic = true;
+      dates = [ "weekly" ];
+    };
     extraOptions = ''
       experimental-features = nix-command flakes repl-flake
     '';
