@@ -1,4 +1,5 @@
 vim.loader.enable()
+
 require'nvim-web-devicons'.setup()
 require'user.options'
 require'user.keymaps'

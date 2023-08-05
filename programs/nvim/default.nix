@@ -50,6 +50,7 @@
       cmp-nvim-lsp-signature-help
       nvim-dap
       nvim-dap-ui
+      transparent-nvim
     ] );
     viAlias = true;
     vimAlias = true;

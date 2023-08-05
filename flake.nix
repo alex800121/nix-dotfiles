@@ -43,6 +43,7 @@
               (import ./overlays/tlp)
               # (import ./overlays/nvim-web-devicons)
               (import ./overlays/microsoft-edge)
+              (import ./overlays/transparent-nvim)
               rust-overlay.overlays.default
               (self: super: {
                 networkmanager_dmenu = networkmanager-dmenu.packages."${system}".default;

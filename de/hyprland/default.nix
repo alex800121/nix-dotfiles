@@ -13,6 +13,9 @@
     hidpiXWayland = config.programs.hyprland.xwayland.hidpi;
   };
 in {
+  services.gvfs.enable = true;
+  services.udisks2.enable = true;
+  services.devmon.enable = true;
   home-manager.users.alex800121.xdg.configFile."networkmanager-dmenu".source = ./networkmanager-dmenu;
   home-manager.users.alex800121.xdg.configFile."xsettingsd/xsettingsd.conf".text = ''
     Gdk/UnscaledDPI 98304
@@ -48,10 +51,12 @@ in {
 
   environment.systemPackages = [
     # swaynotificationcenter
-    # nixpkgsUnstable.mako
+    pkgs.shared-mime-info
+    pkgs.lxde.lxmenu-data
+    pkgs.lxqt.pcmanfm-qt
     nixpkgsUnstable.hyprpaper
     nixpkgsUnstable.hyprpicker
-    nixpkgsUnstable.gnome.nautilus
+    # nixpkgsUnstable.gnome.nautilus
     (nixpkgsUnstable.waybar.overrideAttrs (oldAttrs: { mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true "]; }))
     pkgs.wofi
     pkgs.networkmanagerapplet
