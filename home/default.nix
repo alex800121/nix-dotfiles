@@ -101,7 +101,7 @@ in {
     libsForQt5.plasma-browser-integration
     ardour
     helvum
-    google-chrome
+    # google-chrome
     musescore
     x-air-edit
     libreoffice
@@ -118,7 +118,7 @@ in {
     firefox
     dmidecode
     libchewing
-    microsoft-edge
+    # microsoft-edge
     gh 
     teamviewer
     zoom-us
@@ -167,20 +167,20 @@ in {
 
   xdg.mimeApps = {
     enable = true;
-    defaultApplications = {
-      "x-scheme-handler/http" = ["firefox.desktop" "microsoft-edge.desktop"];
-      "application/xhtml+xml" = ["firefox.desktop" "microsoft-edge.desktop"];
-      "text/html" = ["firefox.desktop" "microsoft-edge.desktop"];
-      "x-scheme-handler/https" = ["firefox.desktop" "microsoft-edge.desktop"];
-      "x-scheme-handler/about" = ["firefox.desktop" "microsoft-edge.desktop"];
-      "x-scheme-handler/unknown" = ["firefox.desktop" "microsoft-edge.desktop"];
-    };
-    associations.added = {
-      "x-scheme-handler/http"  =  ["firefox.desktop" "microsoft-edge.desktop"];
-      "application/xhtml+xml" = ["firefox.desktop" "microsoft-edge.desktop"];
-      "text/html" = ["firefox.desktop" "microsoft-edge.desktop"];
-      "x-scheme-handler/https" = ["firefox.desktop" "microsoft-edge.desktop"];
-    };
+    # defaultApplications = {
+    #   "x-scheme-handler/http" = ["firefox.desktop"];
+    #   "application/xhtml+xml" = ["firefox.desktop"];
+    #   "text/html" = ["firefox.desktop"];
+    #   "x-scheme-handler/https" = ["firefox.desktop"];
+    #   "x-scheme-handler/about" = ["firefox.desktop"];
+    #   "x-scheme-handler/unknown" = ["firefox.desktop"];
+    # };
+    # associations.added = {
+    #   "x-scheme-handler/http"  =  ["firefox.desktop"];
+    #   "application/xhtml+xml" = ["firefox.desktop"];
+    #   "text/html" = ["firefox.desktop"];
+    #   "x-scheme-handler/https" = ["firefox.desktop"];
+    # };
   };
 
   programs.git = {

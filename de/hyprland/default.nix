@@ -50,19 +50,16 @@ in {
   xdg.portal.xdgOpenUsePortal = true;
 
   environment.systemPackages = [
-    # swaynotificationcenter
-    pkgs.shared-mime-info
-    pkgs.lxde.lxmenu-data
-    pkgs.lxqt.pcmanfm-qt
     nixpkgsUnstable.hyprpaper
     nixpkgsUnstable.hyprpicker
-    # nixpkgsUnstable.gnome.nautilus
+    nixpkgsUnstable.gnome.nautilus
     (nixpkgsUnstable.waybar.overrideAttrs (oldAttrs: { mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true "]; }))
     pkgs.wofi
     pkgs.networkmanagerapplet
     nixpkgsUnstable.networkmanager_dmenu
     pkgs.brightnessctl
-    pkgs.swaylock
+    # pkgs.swaylock
+    pkgs.swaylock-effects
     pkgs.swayidle
     pkgs.socat
     (import ./wofi-power { inherit pkgs; hyprland = hyprlandUnstable; })

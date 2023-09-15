@@ -50,6 +50,10 @@
     lidSwitchDocked = "ignore";
     lidSwitchExternalPower = "suspend";
     killUserProcesses = false;
+    extraConfig = ''
+      HandlePowerKey=suspend
+      HandlePowerKeyLongPress=poweroff
+    '';
   };
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking

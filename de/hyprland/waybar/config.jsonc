@@ -4,7 +4,7 @@
     "modules-left": [ "wlr/workspaces" ],
     // "modules-left": [ "hyprland/workspaces" ],
     "modules-center": [ "clock" ],
-    "modules-right": [ "tray", "pulseaudio" , "network", "backlight", "battery" ],
+    "modules-right": [ "tray", "pulseaudio" , "network", "backlight", "idle_inhibitor", "battery" ],
     "wlr/workspaces": {
         "format": "{name}",
         "sort-by-name": false,
@@ -67,7 +67,7 @@
         "on-click-right": "nm-connection-editor"
     },
     "pulseaudio": {
-        "format": "{volume}% {icon} {format_source}",
+        "format": "{volume}% {icon}  {format_source}",
         "format-bluetooth": "{volume}% {icon} {format_source}",
         "format-bluetooth-muted": "󰖁 {icon} {format_source}",
         "format-muted": "󰖁 {format_source}",
@@ -90,5 +90,12 @@
         "scroll-step": 1,
         "on-click": "pavucontrol",
         "on-click-right": "helvum"
+    },
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "",
+            "deactivated": ""
+        }
     }
 }

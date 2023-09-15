@@ -1,5 +1,4 @@
-{ callPackage, stdenv, fetchurl, lib, curlWithGnuTls, libGL, libX11, libXext, alsa-lib, freetype, ... }:
-stdenv.mkDerivation rec {
+{ makeDesktopItem, stdenv, fetchurl, lib, curlWithGnuTls, libGL, libX11, libXext, alsa-lib, freetype, ... }: let
   brand = "Behringer";
   type = "X-AIR";
   version = "1.7";
@@ -7,7 +6,25 @@ stdenv.mkDerivation rec {
   sha256 = "sha256-cuY47ZtTS+dgF02x5Z/X4YUtN1m2XNYEXbh3s7PmFrM=";
   homepage = "https://www.behringer.com/product.html?modelCode=P0BI8";
   pname = "${type}-Edit";
-
+  libPath = lib.makeLibraryPath [
+    curlWithGnuTls
+    libGL
+    libX11           # libX11.so.6
+    libXext          # libXext.so.6
+    alsa-lib          # libasound.so.2
+    freetype         # libfreetype.so.6
+    stdenv.cc.cc.lib # libstdc++.so.6
+  ];
+  meta = with lib; {
+    inherit homepage;
+    description = "Editor for the ${brand} ${type} digital mixer";
+    sourceProvenance = with sourceTypes; [ binaryNativeCode ];
+    license = licenses.unfree;
+    platforms = platforms.linux;
+    maintainers = [ maintainers.magnetophon ];
+  };
+in stdenv.mkDerivation {
+  inherit meta pname version;
   src = fetchurl {
     inherit url;
     inherit sha256;
@@ -17,34 +34,28 @@ stdenv.mkDerivation rec {
   dontBuild = true;
   dontStrip = true;
 
+  desktopItem = makeDesktopItem {
+    name = pname;
+    exec = "X-AIR-Edit -d";
+    icon = pname;
+    desktopName = "X Air Edit";
+    comment = meta.description;
+    categories = [ "Audio" ];
+  };
+
   installPhase = ''
     mkdir -p $out/bin
     cp ${pname} $out/bin
+    mkdir -p $out/share/pixmaps
+    mkdir -p $out/share/applications
+    cp ${pname}_icon.png $out/share/pixmaps/${pname}.png
+    install -D -t $out/share/applications $desktopItem/share/applications/*
   '';
-  preFixup = let
-    # we prepare our library path in the let clause to avoid it become part of the input of mkDerivation
-    libPath = lib.makeLibraryPath [
-      curlWithGnuTls
-      libGL
-      libX11           # libX11.so.6
-      libXext          # libXext.so.6
-      alsa-lib          # libasound.so.2
-      freetype         # libfreetype.so.6
-      stdenv.cc.cc.lib # libstdc++.so.6
-    ];
-  in ''
+
+  preFixup = ''
     patchelf \
       --set-interpreter "$(cat $NIX_CC/nix-support/dynamic-linker)" \
       --set-rpath "${libPath}" \
       $out/bin/${pname}
   '';
-
-  meta = with lib; {
-    inherit homepage;
-    description = "Editor for the ${brand} ${type} digital mixer";
-    sourceProvenance = with sourceTypes; [ binaryNativeCode ];
-    license = licenses.unfree;
-    platforms = platforms.linux;
-    maintainers = [ maintainers.magnetophon ];
-  };
 }
