@@ -2,13 +2,13 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 { config, pkgs, lib, userConfig, inputs, extraModules, ... }: let
-  # nixpkgsStable = import inputs.nixpkgsStable { inherit system; config.allowUnfree = true; };
+  nixpkgsUnstable = import inputs.nixpkgsUnstable { inherit system; config.allowUnfree = true; };
   defaultConfig = {
     autoLogin = false;
   };
   updateConfig = lib.recursiveUpdate defaultConfig userConfig;
   inherit (updateConfig) userName hostName;
-  kernelVersion = "6_3";
+  kernelVersion = "6_6";
   inherit (pkgs) system;
 in {
   imports = extraModules;
@@ -72,23 +72,6 @@ in {
   # services.cpupower-gui.enable = true;
   powerManagement = {
     enable = true;
-  };
-  services.tlp = {
-    enable = true;
-    # enable = false;
-    settings = {
-      CPU_BOOST_ON_AC = 1;
-      CPU_BOOST_ON_BAT = 0;
-      CPU_SCALING_GOVERNOR_ON_AC = "performance";
-      CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
-      # CPU_SCALING_GOVERNOR_ON_BAT = "schedutil";
-      CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
-      CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
-      START_CHARGE_THRESH_BAT0 = 75;
-      STOP_CHARGE_THRESH_BAT0 = 80;
-      # START_CHARGE_THRESH_BAT1 = 75;
-      # STOP_CHARGE_THRESH_BAT1 = 80;
-    };
   };
 
   # services.resolved.enable = true;
@@ -261,13 +244,14 @@ in {
     socat
     jq
     gparted xorg.xhost xorg.xrdb xsettingsd parted
-    virt-manager
-    virt-viewer
-    spice spice-gtk
-    spice-protocol
-    win-virtio
-    win-spice
-    gnome.adwaita-icon-theme
+    nixpkgsUnstable.virt-manager
+    nixpkgsUnstable.virt-viewer
+    nixpkgsUnstable.spice 
+    nixpkgsUnstable.spice-gtk
+    nixpkgsUnstable.spice-protocol
+    nixpkgsUnstable.win-virtio
+    nixpkgsUnstable.win-spice
+    nixpkgsUnstable.gnome.adwaita-icon-theme
     busybox
     qjackctl
     pavucontrol

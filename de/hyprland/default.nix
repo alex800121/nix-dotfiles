@@ -10,7 +10,7 @@
   inherit (updateConfig) userName autoLogin;
   hyprlandUnstable = nixpkgsUnstable.hyprland.override {
     enableXWayland = config.programs.hyprland.xwayland.enable;
-    hidpiXWayland = config.programs.hyprland.xwayland.hidpi;
+    # hidpiXWayland = config.programs.hyprland.xwayland.hidpi;
   };
 in {
   services.gvfs.enable = true;
@@ -45,14 +45,15 @@ in {
   programs.hyprland.enable = true;
   programs.hyprland.package = hyprlandUnstable;
   programs.hyprland.xwayland.enable = true;
-  programs.hyprland.xwayland.hidpi = true;
+  # programs.hyprland.xwayland.hidpi = true;
 
   xdg.portal.xdgOpenUsePortal = true;
 
   environment.systemPackages = [
     nixpkgsUnstable.hyprpaper
     nixpkgsUnstable.hyprpicker
-    nixpkgsUnstable.gnome.nautilus
+    # nixpkgsUnstable.gnome.nautilus
+    nixpkgsUnstable.pcmanfm nixpkgsUnstable.lxde.lxmenu-data nixpkgsUnstable.shared-mime-info
     (nixpkgsUnstable.waybar.overrideAttrs (oldAttrs: { mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true "]; }))
     pkgs.wofi
     pkgs.networkmanagerapplet

@@ -98,11 +98,12 @@ in {
 
   home.packages = with pkgs; [
     # nixpkgsUnstable.wineWowPackages.waylandFull
+    gnome-network-displays
     libsForQt5.plasma-browser-integration
     ardour
     helvum
     # google-chrome
-    musescore
+    nixpkgsUnstable.musescore
     x-air-edit
     libreoffice
     spotify
@@ -122,8 +123,9 @@ in {
     gh 
     teamviewer
     zoom-us
-    cabal-install ghcid haskell.compiler.ghc945
-    # (haskell-language-server.override { supportedGhcVersions = [ "945" ]; })
+    nixpkgsUnstable.cabal-install nixpkgsUnstable.ghcid nixpkgsUnstable.ghc
+    nixpkgsUnstable.haskell-language-server
+    # (nixpkgsUnstable.haskell-language-server.override { supportedGhcVersions = [ "947" ]; })
     # ormolu
     # nil
     # nixpkgs-fmt

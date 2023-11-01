@@ -40,7 +40,12 @@
           { 
             nixpkgs.overlays = [
               (import ./overlays/x-air-edit)
-              (import ./overlays/tlp)
+              # (import ./overlays/tlp)
+              (self: super: let
+                pkgsUnstable = import nixpkgsUnstable {inherit system;};
+              in {
+                tlp = pkgsUnstable.tlp;
+              })
               # (import ./overlays/nvim-web-devicons)
               (import ./overlays/microsoft-edge)
               (import ./overlays/transparent-nvim)
@@ -65,7 +70,7 @@
               useUserPackages = true;
               users."${userConfig.userName}".imports = hmModules;
               extraSpecialArgs = { 
-                inherit inputs userConfig; 
+                inherit inputs userConfig system;
               };
               backupFileExtension = "bak";
             };

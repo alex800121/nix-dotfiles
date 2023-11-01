@@ -1,4 +1,9 @@
-{ config, pkgs, lib, userConfig, ... }: {
+{ config, pkgs, lib, userConfig, inputs, system, ... }: let
+  nixpkgsUnstable = import inputs.nixpkgsUnstable {
+    inherit (pkgs) system;
+    config.allowUnfree = true;
+  };
+in {
   home.sessionVariables."CODELLDB_PATH" = "${pkgs.vscode-extensions.vadimcn.vscode-lldb}/share/vscode/extensions/vadimcn.vscode-lldb/adapter/codelldb";
   home.sessionVariables."LIBLLDB_PATH" = "${pkgs.vscode-extensions.vadimcn.vscode-lldb}/share/vscode/extensions/vadimcn.vscode-lldb/lldb/lib/liblldb.so";
   programs.neovim = {
@@ -60,7 +65,8 @@
       nerdfonts
       ripgrep
       fd
-      (haskell-language-server.override { supportedGhcVersions = [ "945" ]; })
+      # (nixpkgsUnstable.haskell-language-server.override { supportedGhcVersions = [ "947" ]; })
+      nixpkgsUnstable.haskell-language-server
       ormolu
       nil
       lua-language-server
