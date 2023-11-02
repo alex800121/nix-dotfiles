@@ -75,11 +75,11 @@ in {
   };
 
   # services.resolved.enable = true;
-  services.dnsmasq = {
-    enable = true;
-    alwaysKeepRunning = true;
-    resolveLocalQueries = true;
-  };
+  # services.dnsmasq = {
+  #   enable = true;
+  #   alwaysKeepRunning = true;
+  #   resolveLocalQueries = true;
+  # };
   networking = {
     inherit hostName; # Define your hostname.
     firewall.enable = false;
