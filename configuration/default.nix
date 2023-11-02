@@ -101,6 +101,8 @@ in {
   # Set your time zone.
   time.hardwareClockInLocalTime = true;
   services.automatic-timezoned.enable = true;
+  services.geoclue2.enableDemoAgent = lib.mkForce true;
+  # services.localtimed.enable = true;
   # time.timeZone = "Asia/Taipei";
 
   # Select internationalisation properties.
