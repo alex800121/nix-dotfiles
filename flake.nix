@@ -139,6 +139,7 @@
         ./programs/nix-ld
         ./programs/duckdns
         ./programs/code-tunnel
+        ./programs/wireguard
       ];
       hmModules = [
         ./home

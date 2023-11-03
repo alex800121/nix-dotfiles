@@ -88,7 +88,7 @@ in {
       # dhcp = "dhcpcd";
       # dns = "systemd-resolved";
       # dns = "dnsmasq";
-      dns = "default";
+      # dns = "default";
     };
   };
 
