@@ -1,17 +1,12 @@
-{ pkgs, config, userConfig, ... }: let
+{ pkgs, config, ... }: let
   port = 50541;
 
 in {
-  users.groups.wireguard = {};
-  users.extraUsers.wireguard = {
-    name = "wireguard";
-    group = "wireguard";
-    isSystemUser = true;
-  };
   age.secrets.wgkey = {
     file = ../../secrets/wgkey.age;
-    owner = "wireguard";
-    group = "wireguard";
+    owner = "systemd-network";
+    group = "systemd-network";
+    mode = "600";
   };
   environment.systemPackages = [ pkgs.qrencode pkgs.wireguard-tools ];
   systemd.network = {
@@ -30,8 +25,8 @@ in {
         wireguardPeers = [
           {
             wireguardPeerConfig = {
-              PublicKey = "xx";
-              AllowedIPs = ["10.100.0.2"];
+              PublicKey = "upKxh1DAailH/sUJTfa0QDj6ZLoqNJx8z4qFEHPXmCI=";
+              AllowedIPs = ["10.100.0.2/32"];
             };
           }
         ];
