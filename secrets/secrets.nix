@@ -5,4 +5,5 @@ let
 in
 {
   "ddtoken.age".publicKeys = acer-tp;
+  "wgkey.age".publicKeys = acer-tp;
 }
