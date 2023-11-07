@@ -98,6 +98,8 @@ in {
 
   home.packages = with pkgs; [
     # nixpkgsUnstable.wineWowPackages.waylandFull
+    nixpkgsUnstable.anki
+    nixpkgsUnstable.ciscoPacketTracer8
     gnome-network-displays
     libsForQt5.plasma-browser-integration
     ardour
@@ -122,7 +124,7 @@ in {
     # microsoft-edge
     gh 
     teamviewer
-    zoom-us
+    nixpkgsUnstable.zoom-us
     nixpkgsUnstable.cabal-install nixpkgsUnstable.ghcid nixpkgsUnstable.ghc
     nixpkgsUnstable.haskell-language-server
     # (nixpkgsUnstable.haskell-language-server.override { supportedGhcVersions = [ "947" ]; })
