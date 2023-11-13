@@ -97,13 +97,16 @@ in {
   # fonts.fontconfig.enable = true;
 
   home.packages = with pkgs; [
+    # wineWowPackages.waylandFull
+    # winetricks
+    bottles
     # nixpkgsUnstable.wineWowPackages.waylandFull
     nixpkgsUnstable.anki
     nixpkgsUnstable.ciscoPacketTracer8
     gnome-network-displays
     libsForQt5.plasma-browser-integration
     ardour
-    helvum
+    nixpkgsUnstable.helvum
     # google-chrome
     nixpkgsUnstable.musescore
     x-air-edit
@@ -171,6 +174,9 @@ in {
 
   xdg.mimeApps = {
     enable = true;
+    defaultApplications = {
+      "inode/directory" = ["pcmanfm.desktop"];
+    };
     # defaultApplications = {
     #   "x-scheme-handler/http" = ["firefox.desktop"];
     #   "application/xhtml+xml" = ["firefox.desktop"];
