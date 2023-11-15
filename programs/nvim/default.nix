@@ -56,6 +56,7 @@ in {
       nvim-dap
       nvim-dap-ui
       transparent-nvim
+      nixpkgsUnstable.vimPlugins.haskell-tools-nvim
     ] );
     viAlias = true;
     vimAlias = true;
@@ -67,7 +68,12 @@ in {
       fd
       # (nixpkgsUnstable.haskell-language-server.override { supportedGhcVersions = [ "947" ]; })
       nixpkgsUnstable.haskell-language-server
-      ormolu
+      nixpkgsUnstable.haskellPackages.hoogle
+      nixpkgsUnstable.haskellPackages.ghci-dap
+      nixpkgsUnstable.haskellPackages.haskell-dap
+      nixpkgsUnstable.haskellPackages.haskell-debug-adapter
+      nixpkgsUnstable.haskellPackages.fast-tags
+      nixpkgsUnstable.ormolu
       nil
       lua-language-server
       nixpkgs-fmt

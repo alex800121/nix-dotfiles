@@ -148,17 +148,17 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts('Next diagnostic'))
   vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts('Previous diagnostic'))
   vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts('hover'))
-  vim.keymap.set('n', '<space>o', vim.diagnostic.open_float, opts('Open float'))
-  vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts('add workspace folder'))
-  vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts('remove workspace folder'))
-  vim.keymap.set('n', '<space>wl', function()
+  vim.keymap.set('n', '<leader>o', vim.diagnostic.open_float, opts('Open float'))
+  vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, bufopts('add workspace folder'))
+  vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, bufopts('remove workspace folder'))
+  vim.keymap.set('n', '<leader>wl', function()
     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
   end, bufopts('list workspace folder'))
-  vim.keymap.set('n', '<space>R', vim.lsp.buf.rename, bufopts('rename'))
-  vim.keymap.set('n', '<space>C', vim.lsp.buf.code_action, bufopts('code action'))
-  vim.keymap.set('n', '<space>F', function() vim.lsp.buf.format { async = true } end, bufopts('code format'))
-  vim.keymap.set('n', '<space>sl', vim.diagnostic.setloclist, opts('Set Location List'))
-  vim.keymap.set('n', '<space>sf', vim.diagnostic.setqflist, opts('Set Quickfix List'))
+  vim.keymap.set('n', '<leader>R', vim.lsp.buf.rename, bufopts('rename'))
+  vim.keymap.set('n', '<leader>C', vim.lsp.buf.code_action, bufopts('code action'))
+  vim.keymap.set('n', '<leader>F', function() vim.lsp.buf.format { async = true } end, bufopts('code format'))
+  vim.keymap.set('n', '<leader>sl', vim.diagnostic.setloclist, opts('Set Location List'))
+  vim.keymap.set('n', '<leader>sf', vim.diagnostic.setqflist, opts('Set Quickfix List'))
   -- vim.api.nvim_create_autocmd("CursorHold", {
   --   buffer = bufnr,
   --   callback = function()
@@ -174,25 +174,25 @@ local on_attach = function(client, bufnr)
   -- })
 end
 
-lspconfig['hls'].setup({
-  filetypes = { 'haskell', 'lhaskell', 'cabal' },
-  cmd = { "haskell-language-server-wrapper", "--lsp" },
-  root_dir = function(filepath)
-    return (
-      lspconfig.util.root_pattern('hie.yaml', 'stack.yaml', 'cabal.project')(filepath)
-      or lspconfig.util.root_pattern('*.cabal', 'package.yaml')(filepath)
-    )
-  end,
-  settings = {
-    haskell = {
-      cabalFormattingProvider = "cabalfmt",
-      formattingProvider = "ormolu"
-    }
-  },
-  single_file_support = true,
-  capabilities = capabilities,
-  on_attach = on_attach
-})
+-- lspconfig['hls'].setup({
+--   filetypes = { 'haskell', 'lhaskell', 'cabal' },
+--   cmd = { "haskell-language-server-wrapper", "--lsp" },
+--   root_dir = function(filepath)
+--     return (
+--       lspconfig.util.root_pattern('hie.yaml', 'stack.yaml', 'cabal.project')(filepath)
+--       or lspconfig.util.root_pattern('*.cabal', 'package.yaml')(filepath)
+--     )
+--   end,
+--   settings = {
+--     haskell = {
+--       cabalFormattingProvider = "cabalfmt",
+--       formattingProvider = "ormolu"
+--     }
+--   },
+--   single_file_support = true,
+--   capabilities = capabilities,
+--   on_attach = on_attach
+-- })
 
 lspconfig['nil_ls'].setup({
   cmd = { "nil" },
