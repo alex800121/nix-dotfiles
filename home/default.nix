@@ -102,7 +102,7 @@ in {
     bottles
     # nixpkgsUnstable.wineWowPackages.waylandFull
     nixpkgsUnstable.anki
-    nixpkgsUnstable.ciscoPacketTracer8
+    # nixpkgsUnstable.ciscoPacketTracer8
     gnome-network-displays
     libsForQt5.plasma-browser-integration
     ardour
