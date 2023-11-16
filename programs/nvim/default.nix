@@ -57,6 +57,9 @@ in {
       nvim-dap-ui
       transparent-nvim
       nixpkgsUnstable.vimPlugins.haskell-tools-nvim
+      nixpkgsUnstable.vimPlugins.toggleterm-nvim
+      nixpkgsUnstable.vimPlugins.iron-nvim
+      pkgs.haskell-snippets-nvim
     ] );
     viAlias = true;
     vimAlias = true;

@@ -5,6 +5,7 @@ local whichkey = require'which-key'
 telescope.setup()
 telescope.load_extension('fzf')
 telescope.load_extension('projects')
+telescope.load_extension('ht')
 
 whichkey.register({
   ['<leader>f'] = { name = "+Fuzzy Find..." }

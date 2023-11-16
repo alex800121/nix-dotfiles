@@ -27,6 +27,9 @@
       url = "github:firecat53/networkmanager-dmenu";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    haskell-snippets = {
+      url = "github:mrcjkb/haskell-snippets.nvim";
+    };
   };
 
   outputs = inputs@{ nixpkgs, home-manager, nixos-hardware, agenix, rust-overlay, nixpkgsUnstable, networkmanager-dmenu, ... }: let
@@ -60,6 +63,7 @@
                   sddm = pkgs.libsForQt5.sddm;
                 };
               })
+              inputs.haskell-snippets.overlays.default
             ];
           }
           ./configuration

@@ -4,6 +4,11 @@ local whichkey = require 'which-key'
 local opts = function(def) return { noremap = true, silent = true, desc = def } end
 
 vim.g.haskell_tools = {
+  tools = { -- haskell-tools options
+    log = {
+      level = vim.log.levels.DEBUG,
+    },
+  },
   hls = {
     default_settings = {
       haskell = {

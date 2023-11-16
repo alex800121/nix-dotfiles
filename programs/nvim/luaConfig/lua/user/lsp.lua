@@ -5,7 +5,10 @@ local lspkind = require 'lspkind'
 local lsp_signature = require 'lsp_signature'
 local autopairs = require 'nvim-autopairs'
 local cmp_autopairs = require 'nvim-autopairs.completion.cmp'
-local whichkey = require'which-key'
+local whichkey = require 'which-key'
+local haskell_snippets = require('haskell-snippets').all
+
+luasnip.add_snippets('haskell', haskell_snippets, { key = 'haskell' })
 
 require("luasnip.loaders.from_vscode").lazy_load()
 
@@ -41,8 +44,8 @@ cmp.setup({
       function(fallback)
         if cmp.visible() then
           cmp.select_next_item()
-        elseif require("luasnip").expand_or_jumpable() then
-          require("luasnip").expand_or_jump()
+        elseif luasnip.expand_or_jumpable() then
+          luasnip.expand_or_jump()
         elseif has_words_before() then
           cmp.complete()
         else
@@ -54,8 +57,8 @@ cmp.setup({
       function(fallback)
         if cmp.visible() then
           cmp.select_prev_item()
-        elseif require("luasnip").jumpable(-1) then
-          require("luasnip").jump(-1)
+        elseif luasnip.jumpable(-1) then
+          luasnip.jump(-1)
         else
           fallback()
         end
@@ -73,7 +76,7 @@ cmp.setup({
   formatting = {
     fields = { "kind", "abbr", "menu" },
     format = lspkind.cmp_format({
-      mode = 'symbol_text',       -- show only symbol annotations
+      mode = 'symbol_text', -- show only symbol annotations
       menu = ({
         buffer = "[Buffer]",
         nvim_lsp = "[LSP]",
