@@ -19,6 +19,8 @@ in {
 
   hardware.acpilight.enable = true;
 
+  services.fwupd.enable = true;
+
   console = {
     earlySetup = true;
     font = "${pkgs.terminus_font}/share/consolefonts/ter-v32n.psf.gz";
@@ -74,18 +76,27 @@ in {
     enable = true;
   };
 
-  # services.resolved.enable = true;
-  services.dnsmasq = {
+  services.tlp = {
     enable = true;
+    # enable = false;
     settings = {
-      interface = "virbr0";
+      CPU_BOOST_ON_AC = 1;
+      CPU_BOOST_ON_BAT = 0;
+      CPU_DRIVER_OPMODE_ON_AC="active";
+      CPU_DRIVER_OPMODE_ON_BAT="active";
+      CPU_SCALING_GOVERNOR_ON_AC = "performance";
+      CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+      # CPU_SCALING_GOVERNOR_ON_BAT = "schedutil";
+      CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
+      CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
+      START_CHARGE_THRESH_BAT0 = 75;
+      STOP_CHARGE_THRESH_BAT0 = 80;
+      # START_CHARGE_THRESH_BAT1 = 75;
+      # STOP_CHARGE_THRESH_BAT1 = 80;
     };
-    # extraConfig = ''
-    #   interface=virbr0;
-    # '';
-    alwaysKeepRunning = true;
-    resolveLocalQueries = true;
   };
+
+  # services.resolved.enable = true;
   networking = {
     inherit hostName; # Define your hostname.
     firewall.enable = false;
@@ -226,23 +237,8 @@ in {
   };
 
   programs.dconf.enable = true;
-  virtualisation = {
-    libvirtd = {
-      enable = true;
-      qemu = {
-        swtpm.enable = true;
-        ovmf.enable = true;
-        ovmf.packages = [ pkgs.OVMFFull.fd ];
-      };
-    };
-    spiceUSBRedirection.enable = true;
-  };
-
-  services.spice-vdagentd.enable = true;
   hardware.opengl.enable = true;
 
-  virtualisation.lxd.enable = true;
-  virtualisation.waydroid.enable = true;
 
   # Allow unfree packages
   # List packages installed in system profile. To search, run:
@@ -252,13 +248,6 @@ in {
     socat
     jq
     gparted xorg.xhost xorg.xrdb xsettingsd parted
-    nixpkgsUnstable.virt-manager
-    nixpkgsUnstable.virt-viewer
-    nixpkgsUnstable.spice 
-    nixpkgsUnstable.spice-gtk
-    nixpkgsUnstable.spice-protocol
-    nixpkgsUnstable.win-virtio
-    nixpkgsUnstable.win-spice
     nixpkgsUnstable.gnome.adwaita-icon-theme
     busybox
     qjackctl

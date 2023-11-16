@@ -45,36 +45,6 @@
   #   options = [ "bind" ];
   # };
 
-  services.logind = {
-    lidSwitch = "suspend";
-    lidSwitchDocked = "ignore";
-    lidSwitchExternalPower = "suspend";
-    killUserProcesses = false;
-    extraConfig = ''
-      HandlePowerKey=suspend
-      HandlePowerKeyLongPress=poweroff
-    '';
-  };
-
-  services.tlp = {
-    enable = true;
-    # enable = false;
-    settings = {
-      CPU_BOOST_ON_AC = 1;
-      CPU_BOOST_ON_BAT = 0;
-      CPU_DRIVER_OPMODE_ON_AC="active";
-      CPU_DRIVER_OPMODE_ON_BAT="active";
-      CPU_SCALING_GOVERNOR_ON_AC = "performance";
-      CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
-      # CPU_SCALING_GOVERNOR_ON_BAT = "schedutil";
-      CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
-      CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
-      START_CHARGE_THRESH_BAT0 = 75;
-      STOP_CHARGE_THRESH_BAT0 = 80;
-      # START_CHARGE_THRESH_BAT1 = 75;
-      # STOP_CHARGE_THRESH_BAT1 = 80;
-    };
-  };
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
   # still possible to use this option, but it's recommended to use it in conjunction
@@ -85,8 +55,4 @@
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
   # hardware.video.hidpi.enable = lib.mkDefault true;
-
-  hardware.amdgpu.loadInInitrd = true;
-  hardware.amdgpu.amdvlk = false;
-  hardware.amdgpu.opencl = true;
 }

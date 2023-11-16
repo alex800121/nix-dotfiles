@@ -92,6 +92,8 @@
       };
       extraModules = [
         ./hardware/asus.nix
+        ./hardware/laptop.nix
+        ./hardware/amd.nix
         nixos-hardware.nixosModules.common-cpu-amd-pstate
         nixos-hardware.nixosModules.common-gpu-amd
         nixos-hardware.nixosModules.common-pc-laptop
@@ -99,6 +101,7 @@
         nixos-hardware.nixosModules.common-pc-laptop-ssd
         inputs.musnix.nixosModules.musnix
         ./programs/musnix
+        ./programs/winvirt
         # ./de/gnome
         ./de/hyprland
         ./hardware/asus/single-partition-passthrough.nix
@@ -119,6 +122,7 @@
       };
       extraModules = [
         ./hardware/acer.nix
+        ./hardware/desktop.nix
         ./de/gnome
         ./programs/revtunnel
         ./programs/nix-ld
@@ -139,6 +143,7 @@
       };
       extraModules = [
         ./hardware/acer-tp.nix
+        ./hardware/desktop.nix
         ./de/gnome
         ./programs/nix-ld
         ./programs/duckdns
