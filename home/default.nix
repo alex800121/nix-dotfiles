@@ -128,8 +128,8 @@ in {
     gh 
     teamviewer
     nixpkgsUnstable.zoom-us
-    nixpkgsUnstable.cabal-install nixpkgsUnstable.ghcid nixpkgsUnstable.ghc
-    nixpkgsUnstable.haskell-language-server
+    nixpkgsUnstable.cabal-install nixpkgsUnstable.ghcid nixpkgsUnstable.haskell.compiler.ghc963
+    # nixpkgsUnstable.haskell-language-server
     # (nixpkgsUnstable.haskell-language-server.override { supportedGhcVersions = [ "947" ]; })
     # ormolu
     # nil
@@ -176,6 +176,7 @@ in {
     enable = true;
     defaultApplications = {
       "inode/directory" = ["pcmanfm.desktop"];
+      "application/pdf"=["firefox.desktop"];
     };
     # defaultApplications = {
     #   "x-scheme-handler/http" = ["firefox.desktop"];

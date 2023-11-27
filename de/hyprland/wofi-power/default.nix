@@ -8,7 +8,7 @@
 
     entries="󰌾  Lock\n⇠  Logout\n⏾  Suspend\n󰜉  Reboot\n⏻  Shutdown"
 
-    selected=$(echo -e "$entries" | wofi -i --location=top_right --style=${./wofi-power.css} --width=120 --height=160 --show=dmenu --prompt=Power --define=layer=overlay --cache-file=/dev/null | awk '{print tolower($2)}')
+    selected=$(echo -e "$entries" | wofi -i --location=top_right --style=${./wofi-power.css} --width=120 --height=160 --normal-window --show=dmenu --prompt=Power --define=layer=overlay --cache-file=/dev/null | awk '{print tolower($2)}')
 
     
 

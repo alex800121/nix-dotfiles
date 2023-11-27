@@ -55,8 +55,8 @@ in {
     # nixpkgsUnstable.gnome.nautilus
     nixpkgsUnstable.pcmanfm nixpkgsUnstable.lxde.lxmenu-data nixpkgsUnstable.shared-mime-info
     (nixpkgsUnstable.waybar.overrideAttrs (oldAttrs: { mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true "]; }))
-    pkgs.wofi
-    pkgs.networkmanagerapplet
+    nixpkgsUnstable.wofi
+    nixpkgsUnstable.networkmanagerapplet
     nixpkgsUnstable.networkmanager_dmenu
     pkgs.brightnessctl
     # pkgs.swaylock
