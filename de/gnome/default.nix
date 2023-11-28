@@ -1,4 +1,8 @@
-{ lib, userConfig, ... }: let
+{ lib, userConfig, inputs, pkgs, ... }: let
+  nixpkgsUnstable = import inputs.nixpkgsUnstable {
+    inherit (pkgs) system;
+    allowUnfree = true;
+  };
   defaultConfig = {
     autoLogin = false;
   };
@@ -28,4 +32,8 @@ in {
     #   enableHidpi = true;
     # };
   };
+  services.gnome.gnome-settings-daemon.enable = true;
+  environment.systemPackages = [
+    nixpkgsUnstable.gnomeExtensions.kimpanel
+  ];
 }

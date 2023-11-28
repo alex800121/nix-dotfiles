@@ -10,6 +10,8 @@ vim.keymap.set("n", "H", "<Nop>", opts(''))
 vim.keymap.set("n", "L", "<cmd>BufferLineCycleNext<cr>", opts('Next Buffer'))
 vim.keymap.set("n", "H", "<cmd>BufferLineCyclePrev<cr>", opts('Previous Buffer'))
 vim.keymap.set("n", "<ESC>", "<cmd>nohlsearch<cr><ESC>", opts('Escape'))
+vim.keymap.set("n", "x", '"_x', opts('Delete 1 char under the cursor'))
+vim.keymap.set("n", "X", '"_X', opts('Delete 1 char before the cursor'))
 
 --normal write
 vim.keymap.set("n", "<leader>W", "<cmd>w<CR>", opts('Write'))

@@ -1,7 +1,7 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-{ config, pkgs, lib, userConfig, inputs, extraModules, ... }: let
+{ pkgs, lib, userConfig, inputs, extraModules, ... }: let
   nixpkgsUnstable = import inputs.nixpkgsUnstable { inherit system; config.allowUnfree = true; };
   defaultConfig = {
     autoLogin = false;
@@ -264,11 +264,15 @@ in {
     wev
   ];
 
-  # environment.variables = {
-  #   EDITOR = "nvim";
-  #   VISUAL = "nvim";
-  #   SUDO_EDITOR = "nvim";
-  # };
+  environment.variables = {
+    EDITOR = "nvim";
+    VISUAL = "nvim";
+    SUDO_EDITOR = "nvim";
+    QT_IM_MODULE = "fcitx";
+    GTK_IM_MODULE = "fcitx";
+    XMODIFIERS = "@im=fcitx";
+    NIXOS_OZONE_WL = "1";
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -307,6 +311,11 @@ in {
     localuser = null;
     # prunePaths = [ "/media/alex800121" ];
     interval = "hourly";
+  };
+
+  qt = {
+    enable = true;
+    style = "adwaita-dark";
   };
 
   # Open ports in the firewall.

@@ -102,8 +102,8 @@
         inputs.musnix.nixosModules.musnix
         ./programs/musnix
         ./programs/winvirt
-        # ./de/gnome
-        ./de/hyprland
+        ./de/gnome
+        # ./de/hyprland
         ./hardware/asus/single-partition-passthrough.nix
       ];
       hmModules = [
