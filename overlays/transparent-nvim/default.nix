@@ -1,5 +1,5 @@
 self: super: let
-  transparent-nvim = super.vimUtils.buildVimPluginFrom2Nix {
+  transparent-nvim = super.vimUtils.buildVimPlugin {
     pname = "transparent-nvim";
     version = "2023-07-06";
     src = super.fetchFromGitHub {

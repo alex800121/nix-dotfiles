@@ -34,6 +34,6 @@ in {
   };
   services.gnome.gnome-settings-daemon.enable = true;
   environment.systemPackages = [
-    nixpkgsUnstable.gnomeExtensions.kimpanel
+    pkgs.gnomeExtensions.kimpanel
   ];
 }

@@ -185,8 +185,8 @@ in {
   };
 
   fonts = {
-    enableDefaultFonts = true;
-    fonts = with pkgs; [
+    enableDefaultPackages = true;
+    packages = with pkgs; [
       nerdfonts
       noto-fonts-cjk-sans
       noto-fonts-cjk-serif
@@ -272,6 +272,7 @@ in {
     GTK_IM_MODULE = "fcitx";
     XMODIFIERS = "@im=fcitx";
     NIXOS_OZONE_WL = "1";
+    XCURSOR_THEME = "Adwaita";
   };
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -307,7 +308,7 @@ in {
   # Enable the Locate
   services.locate = {
     enable = true;
-    locate = pkgs.plocate;
+    package = pkgs.plocate;
     localuser = null;
     # prunePaths = [ "/media/alex800121" ];
     interval = "hourly";
@@ -335,5 +336,5 @@ in {
   #   ];
   # };
 
-  system.stateVersion = "23.05"; # Did you read the comment?
+  system.stateVersion = "23.11"; # Did you read the comment?
 }

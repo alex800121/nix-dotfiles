@@ -1,5 +1,5 @@
 self: super: let
-  nvim-web-devicons = super.vimUtils.buildVimPluginFrom2Nix {
+  nvim-web-devicons = super.vimUtils.buildVimPlugin {
     pname = "nvim-web-devicons";
     version = "2023-05-01";
     src = super.fetchFromGitHub {
