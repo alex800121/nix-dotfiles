@@ -105,8 +105,7 @@ in {
     gnome-network-displays
     libsForQt5.plasma-browser-integration
     ardour
-    nixpkgsUnstable.helvum
-    # google-chrome
+    helvum
     nixpkgsUnstable.musescore
     x-air-edit
     libreoffice
@@ -121,24 +120,21 @@ in {
     wl-clipboard
     nodejs
     firefox
+    # google-chrome
+    # microsoft-edge
     dmidecode
     libchewing
-    # microsoft-edge
     gh 
     teamviewer
     nixpkgsUnstable.zoom-us
-    nixpkgsUnstable.cabal-install nixpkgsUnstable.ghcid nixpkgsUnstable.haskell.compiler.ghc963
-    # nixpkgsUnstable.haskell-language-server
-    # (nixpkgsUnstable.haskell-language-server.override { supportedGhcVersions = [ "947" ]; })
-    # ormolu
-    # nil
-    # nixpkgs-fmt
+    nixpkgsUnstable.cabal-install 
+    nixpkgsUnstable.ghcid 
+    nixpkgsUnstable.haskell.compiler.ghc963
+    ormolu
+    nil
+    nixpkgs-fmt
     gcc
     rust-bin.stable.latest.complete 
-    # (rust-bin.selectLatestNightlyWith (toolchain: toolchain.complete.override {
-    #   extensions = [ "rust-src" ];
-    # }))
-    # nerdfonts
   ];
 
   dconf.settings = {

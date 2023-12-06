@@ -80,13 +80,15 @@ in {
     enable = true;
     # enable = false;
     settings = {
+      NMI_WATCHDOG = 0;
+      PLATFORM_PROFILE_ON_AC = "performance";
+      PLATFORM_PROFILE_ON_BAT = "low-power";
       CPU_BOOST_ON_AC = 1;
       CPU_BOOST_ON_BAT = 0;
       CPU_DRIVER_OPMODE_ON_AC="active";
       CPU_DRIVER_OPMODE_ON_BAT="active";
       CPU_SCALING_GOVERNOR_ON_AC = "performance";
       CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
-      # CPU_SCALING_GOVERNOR_ON_BAT = "schedutil";
       CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
       CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
       START_CHARGE_THRESH_BAT0 = 75;
@@ -244,11 +246,10 @@ in {
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    # bottles
     socat
     jq
     gparted xorg.xhost xorg.xrdb xsettingsd parted
-    nixpkgsUnstable.gnome.adwaita-icon-theme
+    gnome.adwaita-icon-theme
     busybox
     qjackctl
     pavucontrol

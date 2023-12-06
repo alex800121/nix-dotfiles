@@ -44,13 +44,6 @@
           { 
             nixpkgs.overlays = [
               (import ./overlays/x-air-edit)
-              # (import ./overlays/tlp)
-              (self: super: let
-                pkgsUnstable = import nixpkgsUnstable {inherit system;};
-              in {
-                tlp = pkgsUnstable.tlp;
-              })
-              # (import ./overlays/nvim-web-devicons)
               (import ./overlays/microsoft-edge)
               (import ./overlays/transparent-nvim)
               rust-overlay.overlays.default
