@@ -97,10 +97,9 @@ in {
   # fonts.fontconfig.enable = true;
 
   home.packages = with pkgs; [
-    # wineWowPackages.waylandFull
-    # winetricks
-    bottles
-    # nixpkgsUnstable.wineWowPackages.waylandFull
+    # bottles
+    winetricks
+    wineWowPackages.unstableFull
     nixpkgsUnstable.anki
     # nixpkgsUnstable.ciscoPacketTracer8
     gnome-network-displays

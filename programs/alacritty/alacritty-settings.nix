@@ -542,7 +542,7 @@
       general = "Alacritty"; 
       instance = "Alacritty"; 
     }; 
-    decorations = "full"; 
+    decorations = "none"; 
     dynamic_padding = true; 
     dynamic_title = true; 
     gtk_theme_variant = "None"; 

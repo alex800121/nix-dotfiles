@@ -33,7 +33,8 @@ in {
     # };
   };
   services.gnome.gnome-settings-daemon.enable = true;
-  environment.systemPackages = [
-    pkgs.gnomeExtensions.kimpanel
+  environment.systemPackages = with pkgs; [
+    gnomeExtensions.kimpanel
+    gnomeExtensions.appindicator
   ];
 }
