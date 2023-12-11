@@ -46,6 +46,7 @@
               (import ./overlays/x-air-edit)
               (import ./overlays/microsoft-edge)
               (import ./overlays/transparent-nvim)
+              # (import ./overlays/libfprint-2-tod1-goodix)
               rust-overlay.overlays.default
               (self: super: {
                 networkmanager_dmenu = networkmanager-dmenu.packages."${system}".default;

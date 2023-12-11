@@ -108,7 +108,8 @@ in {
     helvum
     nixpkgsUnstable.musescore
     x-air-edit
-    libreoffice
+    # libreoffice
+    onlyoffice-bin_7_5
     spotify
     nix-prefetch-git
     cabal2nix

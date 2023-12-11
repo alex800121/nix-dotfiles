@@ -197,6 +197,7 @@ in {
       wqy_microhei
       vistafonts-cht
       font-awesome
+      cantarell-fonts
     ];
 
     fontconfig = {

@@ -1,5 +1,4 @@
-{ config, lib, pkgs, modulesPath, ... }:
-{
+{ config, lib, pkgs, inputs, modulesPath, ... }: {
   services.logind = {
     lidSwitch = "suspend";
     lidSwitchDocked = "ignore";
@@ -10,4 +9,7 @@
       HandlePowerKeyLongPress=poweroff
     '';
   };
+  # services.fprintd.enable = true;
+  # services.fprintd.tod.enable = true;
+  # services.fprintd.tod.driver = pkgs.libfprint-2-tod1-goodix;
 }
