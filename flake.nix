@@ -34,11 +34,11 @@
   };
 
   outputs = inputs@{ nixpkgs, home-manager, nixos-hardware, agenix, rust-overlay, nixpkgsUnstable, networkmanager-dmenu, ... }: let
-    mkNixosConfig = { system, userConfig, extraModules ? [], hmModules ? [], ... }: {
+    mkNixosConfig = { system, userConfig, extraModules ? [], hmModules ? [], kernelVersion, ... }: {
       nixosConfigurations."${userConfig.hostName}" = nixpkgs.lib.nixosSystem {
         inherit system;
         specialArgs = { 
-          inherit userConfig inputs extraModules hmModules;
+          inherit kernelVersion userConfig inputs extraModules hmModules;
         };
         modules = [
           { 
@@ -61,7 +61,6 @@
               inputs.haskell-snippets.overlays.default
             ];
           }
-          ./configuration
           agenix.nixosModules.default
           home-manager.nixosModules.home-manager {
             home-manager = {
@@ -74,11 +73,30 @@
               backupFileExtension = "bak";
             };
           }
-        ];
+        ] ++ extraModules;
       };
+    };
+    alexrpi4dorm = {
+      system = "aarch64-linux";
+      kernelVersion = "rpi4";
+      userConfig = {
+        hostName = "alexrpi4dorm";
+        userName = "alex800121";
+        fontSize = 11.5;
+        autoLogin = true;
+      };
+      extraModules = [
+        ./configuration/rpi4.nix
+        nixos-hardware.nixosModules.raspberry-pi-4
+      ];
+      hmModules = [
+        ./home/rpi4.nix
+        ./programs/nvim
+      ];
     };
     asus-nixos = {
       system = "x86_64-linux";
+      kernelVersion = "6_6";
       userConfig = {
         hostName = "asus-nixos";
         userName = "alex800121";
@@ -86,6 +104,7 @@
         autoLogin = false;
       };
       extraModules = [
+        ./configuration
         ./hardware/asus.nix
         ./hardware/laptop.nix
         ./hardware/amd.nix
@@ -109,6 +128,7 @@
     };
     acer-nixos = {
       system = "x86_64-linux";
+      kernelVersion = "6_6";
       userConfig = {
         hostName = "acer-nixos";
         userName = "alex800121";
@@ -116,6 +136,7 @@
         autoLogin = true;
       };
       extraModules = [
+        ./configuration
         ./hardware/acer.nix
         ./hardware/desktop.nix
         ./de/gnome
@@ -130,6 +151,7 @@
     };
     acer-tp = {
       system = "x86_64-linux";
+      kernelVersion = "6_6";
       userConfig = {
         hostName = "acer-tp";
         userName = "alex800121";
@@ -137,6 +159,7 @@
         autoLogin = true;
       };
       extraModules = [
+        ./configuration
         ./hardware/acer-tp.nix
         ./hardware/desktop.nix
         ./de/gnome

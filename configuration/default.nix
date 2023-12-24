@@ -1,17 +1,15 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-{ pkgs, lib, userConfig, inputs, extraModules, ... }: let
+{ pkgs, lib, userConfig, inputs, kernelVersion, ... }: let
   nixpkgsUnstable = import inputs.nixpkgsUnstable { inherit system; config.allowUnfree = true; };
   defaultConfig = {
     autoLogin = false;
   };
   updateConfig = lib.recursiveUpdate defaultConfig userConfig;
   inherit (updateConfig) userName hostName;
-  kernelVersion = "6_6";
   inherit (pkgs) system;
 in {
-  imports = extraModules;
   boot.kernelPackages = pkgs."linuxPackages_${kernelVersion}";
 
   hardware.enableAllFirmware = true; 
@@ -226,6 +224,7 @@ in {
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPEelyNLu6y1owoChvv/BfkI4LytFnb7QCyDWPNDAywc alexanderlee800121@cs-458534110940-default"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID9ecjWEa+jhCOrW4+RkxY0sW7AtsCmTNvdMbdbV/WjG alex800121@acer-tp"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHaDVZZM189JmJc4uiR77DhzqsZ4u5UVtpcH33IR/YW4 alex800121@ipadair"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM/FOfzUF0nSno+780hSUGX1bDPqmfZpEUG0f/imEl3r alex800121@alexrpi4dorm"
     ];
   };
 
