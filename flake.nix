@@ -177,5 +177,6 @@
     asus-nixos 
     acer-nixos
     acer-tp
+    alexrpi4dorm
   ];
 }
