@@ -87,6 +87,7 @@
       };
       extraModules = [
         ./configuration/rpi4.nix
+        ./hardware/rpi4.nix
         nixos-hardware.nixosModules.raspberry-pi-4
       ];
       hmModules = [
