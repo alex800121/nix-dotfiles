@@ -95,45 +95,12 @@ in {
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
-  programs.ssh.startAgent = true;
-  services.openssh = {
-    enable = true;
-    ports = [ 22 ];
-    settings = {
-      UseDns = true;
-      PermitRootLogin = "prohibit-password";
-      PasswordAuthentication = false;
-      GatewayPorts = "yes";
-      # GatewayPorts = "clientspecified";
-      X11Forwarding = true;
-    };
-    extraConfig = ''
-      PermitTunnel yes
-      PermitTTY yes
-      AllowStreamLocalForwarding yes
-      AllowTcpForwarding yes
-    '';
-    allowSFTP = true;
-  };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users."${userName}" = {
     isNormalUser = true;
     description = "${userName}";
     extraGroups = [ "storage" "disk" "libvirtd" "audio" "networkmanager" "sudo" "wheel" "code-server" "input" ];
-    openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOX1Dxv7vWO7viGCaMwdYFk7m468d3ZGiu1jyPTALQuN alex800121@alexrpi4dorm"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFGPC8SQm7EwFy2KF1LZlryWjfR/X7xG68LsTMGneU1z alex800121@alexrpi4tp"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGf9DW0O5gkq0ephXxUl7SXgb6TMkAA7RgB9NIl4oKNi alex800121@nixos"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIARVVshQ9ZOtGRPIWensN5uP9nWE3tOI0Ojr6gX5ZaYq ed"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINZLAWYLkwEtjlj2e65MwoDOLWUKJBBrjeDf4K0CcuIz alex800121@DaddyAlexAsus"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJxDNBfYv0w8MLJOLK2nn2kmEpH20G8Y0Mauw9GMHvda alex800121@DaddyAlexAsus"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEydwYcKvthPPxPt4P7YkzUgzHahKk/gAMUv7py/jeCN alex800121@acer-nixos"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPEelyNLu6y1owoChvv/BfkI4LytFnb7QCyDWPNDAywc alexanderlee800121@cs-458534110940-default"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID9ecjWEa+jhCOrW4+RkxY0sW7AtsCmTNvdMbdbV/WjG alex800121@acer-tp"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHaDVZZM189JmJc4uiR77DhzqsZ4u5UVtpcH33IR/YW4 alex800121@ipadair"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM/FOfzUF0nSno+780hSUGX1bDPqmfZpEUG0f/imEl3r alex800121@alexrpi4dorm"
-    ];
   };
 
   security.sudo.wheelNeedsPassword = false; 
@@ -146,7 +113,6 @@ in {
     };
   };
   # List packages installed in system profile. To search, run:
-  # $ nix search wget
   environment.systemPackages = with pkgs; [
     neovim
     git
@@ -197,7 +163,7 @@ in {
   # and migrated your data accordingly.
   #
   # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
-  system.stateVersion = "24.05"; # Did you read the comment?
+  system.stateVersion = "23.11"; # Did you read the comment?
 
 }
 

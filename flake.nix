@@ -89,6 +89,7 @@
         ./configuration/rpi4.nix
         ./hardware/rpi4.nix
         nixos-hardware.nixosModules.raspberry-pi-4
+        ./programs/sshd
       ];
       hmModules = [
         ./home/rpi4.nix
@@ -120,6 +121,7 @@
         ./de/gnome
         # ./de/hyprland
         ./hardware/asus/single-partition-passthrough.nix
+        ./programs/sshd
       ];
       hmModules = [
         ./home
@@ -144,6 +146,7 @@
         ./programs/revtunnel
         ./programs/nix-ld
         ./programs/code-tunnel
+        ./programs/sshd
       ];
       hmModules = [
         ./home
@@ -168,6 +171,7 @@
         ./programs/duckdns
         ./programs/code-tunnel
         ./programs/wireguard
+        ./programs/sshd
       ];
       hmModules = [
         ./home
