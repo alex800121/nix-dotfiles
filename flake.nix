@@ -33,7 +33,18 @@
     };
   };
 
-  outputs = inputs@{ nixpkgs, home-manager, nixos-hardware, agenix, rust-overlay, nixpkgsUnstable, networkmanager-dmenu, ... }: let
+  outputs = inputs@{ self, nixpkgs, home-manager, nixos-hardware, agenix, rust-overlay, nixpkgsUnstable, networkmanager-dmenu, ... }: let
+    mkSdImage = { inputModule, ... }: {
+      image."${inputModule._module.specialArgs.userConfig.hostName}" = (inputModule.extendModules {
+        modules = [
+          "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
+          ({...}: {
+            sdImage.compressImage = false;
+            users.users."root".initialPassword = "root";
+          })
+        ];
+      }).config.system.build.sdImage;
+    };
     mkNixosConfig = { system, userConfig, extraModules ? [], hmModules ? [], kernelVersion, ... }: {
       nixosConfigurations."${userConfig.hostName}" = nixpkgs.lib.nixosSystem {
         inherit system;
@@ -75,6 +86,26 @@
           }
         ] ++ extraModules;
       };
+    };
+    alexrpi4tp = {
+      system = "aarch64-linux";
+      kernelVersion = "rpi4";
+      userConfig = {
+        hostName = "alexrpi4tp";
+        userName = "alex800121";
+        fontSize = 11.5;
+        autoLogin = true;
+      };
+      extraModules = [
+        ./configuration/rpi4.nix
+        ./hardware/rpi4.nix
+        nixos-hardware.nixosModules.raspberry-pi-4
+        ./programs/sshd
+      ];
+      hmModules = [
+        ./home/rpi4.nix
+        ./programs/nvim
+      ];
     };
     alexrpi4dorm = {
       system = "aarch64-linux";
@@ -178,10 +209,16 @@
         ./programs/nvim
       ];
     };
-  in builtins.foldl' (x: y: nixpkgs.lib.recursiveUpdate x (mkNixosConfig y)) {} [
-    asus-nixos 
-    acer-nixos
-    acer-tp
-    alexrpi4dorm
+    outputConfigs = builtins.foldl' (x: y: nixpkgs.lib.recursiveUpdate x (mkNixosConfig y)) {} [
+      asus-nixos 
+      acer-nixos
+      acer-tp
+      alexrpi4dorm
+      alexrpi4tp
+    ];
+  in builtins.foldl' (x: y: nixpkgs.lib.recursiveUpdate x y) {} [
+    (mkSdImage { inputModule = outputConfigs.nixosConfigurations.alexrpi4dorm; }) 
+    (mkSdImage { inputModule = outputConfigs.nixosConfigurations.alexrpi4tp; }) 
+    outputConfigs
   ];
 }
