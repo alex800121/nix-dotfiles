@@ -95,6 +95,25 @@
         ] ++ extraModules;
       };
     };
+    rpi4 = {
+      system = "aarch64-linux";
+      kernelVersion = "rpi4";
+      userConfig = {
+        hostName = "rpi4";
+        userName = "alex800121";
+        fontSize = 11.5;
+        autoLogin = true;
+      };
+      extraModules = [
+        ./configuration/rpi4sd.nix
+        ./hardware/rpi4.nix
+        nixos-hardware.nixosModules.raspberry-pi-4
+        ./programs/sshd
+      ];
+      hmModules = [
+        ./home/rpi4sd.nix
+      ];
+    };
     alexrpi4tp = {
       system = "aarch64-linux";
       kernelVersion = "rpi4";
@@ -225,10 +244,10 @@
       acer-tp
       alexrpi4dorm
       alexrpi4tp
+      rpi4
     ];
   in builtins.foldl' (x: y: nixpkgs.lib.recursiveUpdate x y) {} [
-    (mkSdImage { inputModule = outputConfigs.nixosConfigurations.alexrpi4dorm; }) 
-    (mkSdImage { inputModule = outputConfigs.nixosConfigurations.alexrpi4tp; }) 
+    (mkSdImage { inputModule = outputConfigs.nixosConfigurations.rpi4; }) 
     outputConfigs
   ];
 }
