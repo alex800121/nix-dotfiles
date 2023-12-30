@@ -10,6 +10,9 @@
   inherit (updateConfig) userName hostName;
   inherit (pkgs) system;
 in {
+  boot.binfmt.emulatedSystems = [
+    "aarch64-linux"
+  ];
   boot.kernelPackages = pkgs."linuxPackages_${kernelVersion}";
 
   hardware.enableAllFirmware = true; 
