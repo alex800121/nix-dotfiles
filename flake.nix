@@ -42,6 +42,14 @@
             sdImage.compressImage = false;
             users.users."root".initialPassword = "root";
           })
+          {
+            nixpkgs.overlays = [
+              (final: super: {
+                makeModulesClosure = x:
+                  super.makeModulesClosure (x // { allowMissing = true; });
+              })
+            ];
+          }
         ];
       }).config.system.build.sdImage;
     };
@@ -178,6 +186,7 @@
         ./programs/nix-ld
         ./programs/code-tunnel
         ./programs/sshd
+        ./programs/winvirt
       ];
       hmModules = [
         ./home
@@ -203,6 +212,7 @@
         ./programs/code-tunnel
         ./programs/wireguard
         ./programs/sshd
+        ./programs/winvirt
       ];
       hmModules = [
         ./home
