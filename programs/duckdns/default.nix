@@ -1,8 +1,10 @@
-{ config, pkgs, ... }: let
+{ config, pkgs, userConfig, ... }: let
+  ddtoken = "ddtoken-${hostName}";
   duckscript = pkgs.writeShellScript "duck.sh" ''
-    ${pkgs.curl}/bin/curl -k "https://www.duckdns.org/update?domains=alexacer-tp&token=$(systemd-creds cat ddtoken)&ip="
+    ${pkgs.curl}/bin/curl -k "https://www.duckdns.org/update?domains=alexacer-tp&token=$(systemd-creds cat ${ddtoken})&ip="
   '';
   RuntimeDirectory = "duckdns";
+  inherit (userConfig) hostName;
 in {
   users.groups.duckdns = {};
   users.extraUsers.duckdns = {
@@ -10,8 +12,8 @@ in {
     group = "duckdns";
     isSystemUser = true;
   };
-  age.secrets.ddtoken = {
-    file = ../../secrets/ddtoken.age;
+  age.secrets."${ddtoken}" = {
+    file = ../../secrets/${ddtoken}.age;
     owner = "duckdns";
     group = "duckdns";
   };
@@ -21,14 +23,14 @@ in {
     description = "duckdns update";
     wantedBy = [ "default.target" ];
     after = [ "network-online.target" ];
-    restartTriggers = [ config.age.secrets.ddtoken.path ];
+    restartTriggers = [ config.age.secrets."${ddtoken}".path ];
     path = [ pkgs.bash ];
     serviceConfig = {
       Type = "oneshot";
       DynamicUser = true;
       RuntimeDirectoryMode = "0700";
       inherit RuntimeDirectory;
-      LoadCredentialEncrypted = ''ddtoken:${config.age.secrets.ddtoken.path}'';
+      LoadCredentialEncrypted = ''${ddtoken}:${config.age.secrets."${ddtoken}".path}'';
       ExecStart = duckscript;
     };
   };
