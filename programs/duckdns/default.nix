@@ -1,10 +1,10 @@
 { config, pkgs, userConfig, ... }: let
+  inherit (userConfig) hostName url;
   ddtoken = "ddtoken-${hostName}";
   duckscript = pkgs.writeShellScript "duck.sh" ''
-    ${pkgs.curl}/bin/curl -k "https://www.duckdns.org/update?domains=alexacer-tp&token=$(systemd-creds cat ${ddtoken})&ip="
+    ${pkgs.curl}/bin/curl -k "https://www.duckdns.org/update?domains=${url}&token=$(systemd-creds cat ${ddtoken})&ip="
   '';
   RuntimeDirectory = "duckdns";
-  inherit (userConfig) hostName;
 in {
   users.groups.duckdns = {};
   users.extraUsers.duckdns = {
