@@ -1,7 +1,7 @@
 { config, pkgs, userConfig, ... }: let
   inherit (userConfig) hostName url;
   duckscript = pkgs.writeShellScript "duck.sh" ''
-    echo "https://www.duckdns.org/update?domains=${url}&token=$(systemd-creds cat ddtoken)&ip=" | ${pkgs.curl}/bin/curl -k -K -
+    ${pkgs.curl}/bin/curl -k "https://www.duckdns.org/update?domains=${url}&token=$(systemd-creds cat ddtoken)&ip=" 
   '';
   RuntimeDirectory = "duckdns";
 in {
@@ -15,6 +15,7 @@ in {
     file = ../../secrets/ddtoken-${hostName}.age;
     owner = "duckdns";
     group = "duckdns";
+    mode = "0600";
   };
 
   systemd.services.duckdns = {
