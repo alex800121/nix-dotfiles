@@ -38,10 +38,10 @@
       image."${inputModule._module.specialArgs.userConfig.hostName}" = (inputModule.extendModules {
         modules = [
           "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
-          ({...}: {
+          ({...}: { config = {
             sdImage.compressImage = false;
             users.users."root".initialPassword = "root";
-          })
+          };})
           {
             nixpkgs.overlays = [
               (final: super: {
@@ -244,10 +244,11 @@
       acer-tp
       alexrpi4dorm
       alexrpi4tp
-      rpi4
     ];
   in builtins.foldl' (x: y: nixpkgs.lib.recursiveUpdate x y) {} [
-    (mkSdImage { inputModule = outputConfigs.nixosConfigurations.rpi4; }) 
+    (mkSdImage { inputModule = (mkNixosConfig rpi4).nixosConfigurations.rpi4; }) 
+    (mkSdImage { inputModule = outputConfigs.nixosConfigurations.alexrpi4tp; }) 
+    (mkSdImage { inputModule = outputConfigs.nixosConfigurations.alexrpi4dorm; }) 
     outputConfigs
   ];
 }

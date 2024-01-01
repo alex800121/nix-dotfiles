@@ -101,7 +101,7 @@ in {
   users.users."${userName}" = {
     isNormalUser = true;
     description = "${userName}";
-    extraGroups = [ "storage" "disk" "audio" "networkmanager" "sudo" "wheel" "input" ];
+    extraGroups = [ "networkmanager" "wheel" ];
   };
 
   security.sudo.wheelNeedsPassword = false; 
@@ -121,6 +121,7 @@ in {
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
     curl
+    coreutils
   ];
 
   environment.variables = {

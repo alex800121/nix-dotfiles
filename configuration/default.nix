@@ -235,11 +235,11 @@ in {
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    coreutils
     socat
     jq
     gparted xorg.xhost xorg.xrdb xsettingsd parted
     gnome.adwaita-icon-theme
-    busybox
     qjackctl
     pavucontrol
     helix
