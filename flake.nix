@@ -122,6 +122,7 @@
         userName = "alex800121";
         fontSize = 11.5;
         autoLogin = true;
+        url = "alexrpi4gate";
       };
       extraModules = [
         ./configuration/rpi4.nix
@@ -220,6 +221,7 @@
         userName = "alex800121";
         fontSize = 16;
         autoLogin = true;
+        url = "alexacer-tp";
       };
       extraModules = [
         ./configuration
