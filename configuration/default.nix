@@ -69,6 +69,7 @@ in {
     extraOptions = ''
       experimental-features = nix-command flakes repl-flake
     '';
+    settings.trusted-users = [ "@wheel" ];
   };
 
   services.power-profiles-daemon.enable = false;
