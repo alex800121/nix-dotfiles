@@ -123,6 +123,7 @@
         fontSize = 11.5;
         autoLogin = true;
         url = "alexrpi4gate";
+        port = "30000";
       };
       extraModules = [
         ./configuration/rpi4.nix
@@ -144,12 +145,17 @@
         userName = "alex800121";
         fontSize = 11.5;
         autoLogin = true;
+        port = "50000";
+        revConfig = {
+          inherit (alexrpi4tp.userConfig) port url;
+        };
       };
       extraModules = [
         ./configuration/rpi4.nix
         ./hardware/rpi4.nix
         nixos-hardware.nixosModules.raspberry-pi-4
         ./programs/sshd
+        ./programs/revtunnel
       ];
       hmModules = [
         ./home/rpi4.nix
@@ -197,6 +203,10 @@
         userName = "alex800121";
         fontSize = 16;
         autoLogin = true;
+        port = "51000";
+        revConfig = {
+          inherit (acer-tp.userConfig) port url;
+        };
       };
       extraModules = [
         ./configuration
@@ -223,6 +233,7 @@
         fontSize = 16;
         autoLogin = true;
         url = "alexacer-tp";
+        port = "31000";
       };
       extraModules = [
         ./configuration

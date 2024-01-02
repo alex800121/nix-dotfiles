@@ -1,12 +1,12 @@
 { pkgs, userConfig, ... }: {
   systemd.user.services.revtunnel = {
     enable = true;
-    description = "Reverse tunnel for acer-nixos";
+    description = "Reverse tunnel for ${userConfig.hostName}";
     after = [ "network.target" "home-manager-${userConfig.userName}.service" ];
     script = ''
       ${pkgs.openssh}/bin/ssh -vvv -N -T -o "ExitOnForwardFailure=yes" \
-      -o "UserKnownHostsFile=/home/${userConfig.userName}/.ssh/known_hosts" -R 51000:localhost:22 \
-      alex800121@alexacer-tp.duckdns.org -p 31000
+      -o "UserKnownHostsFile=/home/${userConfig.userName}/.ssh/known_hosts" -R ${userConfig.port}:localhost:22 \
+      ${userConfig.userName}@${userConfig.revConfig.url}.duckdns.org -p ${userConfig.revConfig.port}
     '';
     serviceConfig = {
       Type = "simple";
