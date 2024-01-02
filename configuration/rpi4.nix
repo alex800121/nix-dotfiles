@@ -2,7 +2,7 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ pkgs, lib, userConfig, inputs, kernelVersion, ... }: let
+{ pkgs, lib, userConfig, inputs, kernelVersion, config, ... }: let
   nixpkgsUnstable = import inputs.nixpkgsUnstable { inherit system; config.allowUnfree = true; };
   defaultConfig = {
     autoLogin = false;
@@ -25,6 +25,111 @@ in {
     earlySetup = true;
     font = "${pkgs.terminus_font}/share/consolefonts/ter-v32n.psf.gz";
   };
+
+  hardware.raspberry-pi."4" = {
+    apply-overlays-dtmerge.enable = true; 
+    fkms-3d.enable = true; 
+    pwm0.enable = true; 
+  };
+  hardware.deviceTree.overlays = [
+    {
+      name = "gpio-fan";
+      dtsText = ''
+        /dts-v1/;
+
+        / {
+                compatible = "brcm,bcm2711";
+
+                fragment@0 {
+                        target-path = "/";
+
+                        __overlay__ {
+
+                                gpio-fan@0 {
+                                        compatible = "gpio-fan";
+                                        gpios = <0xffffffff 0x0c 0x00>;
+                                        gpio-fan,speed-map = <0x00 0x00 0x1388 0x01>;
+                                        #cooling-cells = <0x02>;
+                                        phandle = <0x02>;
+                                };
+                        };
+                };
+
+                fragment@1 {
+                        target = <0xffffffff>;
+
+                        __overlay__ {
+                                polling-delay = <0x7d0>;
+                        };
+                };
+
+                fragment@2 {
+                        target = <0xffffffff>;
+
+                        __overlay__ {
+
+                                trip-point@0 {
+                                        temperature = <0xd6d8>;
+                                        hysteresis = <0x2710>;
+                                        type = "active";
+                                        phandle = <0x01>;
+                                };
+                        };
+                };
+
+                fragment@3 {
+                        target = <0xffffffff>;
+
+                        __overlay__ {
+
+                                map0 {
+                                        trip = <0x01>;
+                                        cooling-device = <0x02 0x01 0x01>;
+                                };
+                        };
+                };
+
+                __overrides__ {
+                        gpiopin = <0x02 0x6770696f 0x733a3400 0x02 0x6272636d 0x2c70696e 0x733a3000>;
+                        temp = [00 00 00 01 74 65 6d 70 65 72 61 74 75 72 65 3a 30 00];
+                        hyst = [00 00 00 01 68 79 73 74 65 72 65 73 69 73 3a 30 00];
+                };
+
+                __symbols__ {
+                        fan0 = "/fragment@0/__overlay__/gpio-fan@0";
+                        cpu_hot = "/fragment@2/__overlay__/trip-point@0";
+                };
+
+                __fixups__ {
+                        gpio = "/fragment@0/__overlay__/gpio-fan@0:gpios:0";
+                        cpu_thermal = "/fragment@1:target:0";
+                        thermal_trips = "/fragment@2:target:0";
+                        cooling_maps = "/fragment@3:target:0";
+                };
+
+                __local_fixups__ {
+
+                        fragment@3 {
+
+                                __overlay__ {
+
+                                        map0 {
+                                                trip = <0x00>;
+                                                cooling-device = <0x00>;
+                                        };
+                                };
+                        };
+
+                        __overrides__ {
+                                gpiopin = <0x00 0x0c>;
+                                temp = <0x00>;
+                                hyst = <0x00>;
+                        };
+                };
+        };
+      '';
+    }
+  ];
 
   services.kmscon.enable = true;
   services.kmscon.hwRender = true;
@@ -121,6 +226,11 @@ in {
     wget
     curl
     coreutils
+    inputs.agenix.packages."${system}".default
+    raspberrypi-eeprom
+    libraspberrypi
+    raspberrypifw
+    device-tree_rpi
   ];
 
   environment.variables = {

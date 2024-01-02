@@ -129,6 +129,7 @@
         ./hardware/rpi4.nix
         nixos-hardware.nixosModules.raspberry-pi-4
         ./programs/sshd
+        ./programs/duckdns
       ];
       hmModules = [
         ./home/rpi4.nix
