@@ -1,6 +1,5 @@
 { pkgs, config, ... }: let
   port = 50541;
-
 in {
   age.secrets.wgkey = {
     file = ../../secrets/wgkey.age;

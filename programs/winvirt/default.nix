@@ -3,14 +3,14 @@
   nixpkgsUnstable = import inputs.nixpkgsUnstable { inherit system; config.allowUnfree = true; };
   inherit (pkgs) system;
 in {
-  services.dnsmasq = {
-    enable = true;
-    settings = {
-      interface = "virbr0";
-    };
-    alwaysKeepRunning = true;
-    resolveLocalQueries = true;
-  };
+  # services.dnsmasq = {
+  #   enable = true;
+  #   settings = {
+  #     interface = "virbr0";
+  #   };
+  #   alwaysKeepRunning = true;
+  #   resolveLocalQueries = true;
+  # };
   virtualisation = {
     libvirtd = {
       enable = true;

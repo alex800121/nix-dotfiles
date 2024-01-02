@@ -217,7 +217,6 @@
         ./programs/nix-ld
         ./programs/code-tunnel
         ./programs/sshd
-        ./programs/winvirt
       ];
       hmModules = [
         ./home
@@ -245,7 +244,6 @@
         ./programs/code-tunnel
         ./programs/wireguard
         ./programs/sshd
-        ./programs/winvirt
       ];
       hmModules = [
         ./home
