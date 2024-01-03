@@ -1,7 +1,8 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-{ pkgs, lib, userConfig, inputs, kernelVersion, ... }: let
+{ pkgs, lib, userConfig, inputs, kernelVersion, ... }:
+let
   nixpkgsUnstable = import inputs.nixpkgsUnstable { inherit system; config.allowUnfree = true; };
   defaultConfig = {
     autoLogin = false;
@@ -9,13 +10,14 @@
   updateConfig = lib.recursiveUpdate defaultConfig userConfig;
   inherit (updateConfig) userName hostName;
   inherit (pkgs) system;
-in {
+in
+{
   boot.binfmt.emulatedSystems = [
     "aarch64-linux"
   ];
-  boot.kernelPackages = pkgs."linuxPackages_${kernelVersion}";
+  boot.kernelPackages = lib.mkDefault pkgs."linuxPackages_${kernelVersion}";
 
-  hardware.enableAllFirmware = true; 
+  hardware.enableAllFirmware = true;
   hardware.enableRedistributableFirmware = true;
 
   hardware.acpilight.enable = true;
@@ -86,8 +88,8 @@ in {
       PLATFORM_PROFILE_ON_BAT = "low-power";
       CPU_BOOST_ON_AC = 1;
       CPU_BOOST_ON_BAT = 0;
-      CPU_DRIVER_OPMODE_ON_AC="active";
-      CPU_DRIVER_OPMODE_ON_BAT="active";
+      CPU_DRIVER_OPMODE_ON_AC = "active";
+      CPU_DRIVER_OPMODE_ON_BAT = "active";
       CPU_SCALING_GOVERNOR_ON_AC = "performance";
       CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
       CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
@@ -154,7 +156,7 @@ in {
 
   # Enable CUPS to print documents.
   # services.printing.enable = true;
-  
+
   # Enable bluetooth
   hardware.bluetooth = {
     enable = true;
@@ -180,7 +182,7 @@ in {
     wireplumber.enable = true;
     jack.enable = true;
   };
-  
+
   # Enable touchpad support (enabled default in most desktopManager).
   services.xserver.libinput = {
     enable = true;
@@ -207,7 +209,7 @@ in {
         serif = [ "Noto Serif CJK TC" "Ubuntu" ];
         sansSerif = [ "Noto Sans CJK TC" "Ubuntu" ];
         monospace = [ "Noto Sans Mono CJK TC" "Ubuntu" ];
-        emoji = ["Noto Color Emoji" ];
+        emoji = [ "Noto Color Emoji" ];
       };
     };
   };
@@ -219,8 +221,8 @@ in {
     extraGroups = [ "storage" "disk" "libvirtd" "audio" "networkmanager" "sudo" "wheel" "code-server" "input" ];
   };
 
-  security.sudo.wheelNeedsPassword = false; 
-   
+  security.sudo.wheelNeedsPassword = false;
+
   nixpkgs = {
     config = {
       allowBroken = true;
@@ -229,7 +231,6 @@ in {
     };
   };
 
-  programs.dconf.enable = true;
   hardware.opengl.enable = true;
 
   # Allow unfree packages
@@ -239,7 +240,11 @@ in {
     coreutils
     socat
     jq
-    gparted xorg.xhost xorg.xrdb xsettingsd parted
+    gparted
+    xorg.xhost
+    xorg.xrdb
+    xsettingsd
+    parted
     gnome.adwaita-icon-theme
     qjackctl
     pavucontrol
@@ -279,6 +284,8 @@ in {
     # prunePaths = [ "/media/alex800121" ];
     interval = "hourly";
   };
+
+  services.teamviewer.enable = true;
 
   qt = {
     enable = true;

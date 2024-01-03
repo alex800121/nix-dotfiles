@@ -202,6 +202,13 @@ lspconfig['nil_ls'].setup({
   filetype = { "nix" },
   root_dir = lspconfig.util.root_pattern("flake.nix", ".git"),
   single_file_support = true,
+  settings = {
+    ['nil'] = {
+      formatting = {
+        command = { "nixpkgs-fmt" },
+      },
+    },
+  },
   capabilities = capabilities,
   on_attach = on_attach
 })

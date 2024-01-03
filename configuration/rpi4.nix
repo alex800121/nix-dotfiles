@@ -2,7 +2,8 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ pkgs, lib, userConfig, inputs, kernelVersion, config, ... }: let
+{ pkgs, lib, userConfig, inputs, kernelVersion, config, ... }:
+let
   nixpkgsUnstable = import inputs.nixpkgsUnstable { inherit system; config.allowUnfree = true; };
   defaultConfig = {
     autoLogin = false;
@@ -10,12 +11,13 @@
   updateConfig = lib.recursiveUpdate defaultConfig userConfig;
   inherit (updateConfig) userName hostName;
   inherit (pkgs) system;
-in {
+in
+{
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "usbhid" "usb_storage" ];
   boot.kernelPackages = pkgs."linuxPackages_${kernelVersion}";
 
-  hardware.enableAllFirmware = true; 
+  hardware.enableAllFirmware = true;
   hardware.enableRedistributableFirmware = true;
   # Use the extlinux boot loader. (NixOS wants to enable GRUB by default)
   boot.loader.grub.enable = false;
@@ -27,9 +29,9 @@ in {
   };
 
   hardware.raspberry-pi."4" = {
-    apply-overlays-dtmerge.enable = true; 
-    fkms-3d.enable = true; 
-    pwm0.enable = true; 
+    apply-overlays-dtmerge.enable = true;
+    fkms-3d.enable = true;
+    pwm0.enable = true;
   };
   hardware.deviceTree.overlays = [
     {
@@ -185,7 +187,7 @@ in {
   # services.xserver.enable = true;
 
 
-  
+
 
   # Configure keymap in X11
   # services.xserver.xkb.layout = "us";
@@ -209,8 +211,8 @@ in {
     extraGroups = [ "storage" "disk" "libvirtd" "audio" "networkmanager" "sudo" "wheel" "code-server" "input" ];
   };
 
-  security.sudo.wheelNeedsPassword = false; 
-   
+  security.sudo.wheelNeedsPassword = false;
+
   nixpkgs = {
     config = {
       allowBroken = true;

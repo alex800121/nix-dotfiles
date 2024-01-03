@@ -135,36 +135,6 @@ in {
     rust-bin.stable.latest.complete 
   ];
 
-  dconf.settings = {
-    "org/gnome/desktop/peripherals/touchpad".tap-to-click = true;
-    "org/gnome/desktop/peripherals/touchpad".disable-while-typing = true;
-    "org/gnome/desktop/peripherals/touchpad".natural-scroll = true;
-    "org/gnome/desktop/peripherals/touchpad".speed = 0.19999999999999996;
-    "org/gnome/desktop/peripherals/touchpad".two-finger-scrolling-enabled = true;
-    "org/gnome/settings-daemon/plugins/power".sleep-inactive-ac-type = "nothing";
-    "org/gnome/desktop/peripherals/mouse".natural-scroll = false;
-    "org/gnome/desktop/peripherals/mouse".speed=0.24778761061946897;
-    "org/gnome/settings-daemon/plugins/media-keys".custom-keybindings = ["/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"];
-    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
-      binding = "<Super>t";
-      command = "alacritty";
-      name = "Terminal";
-    };
-    "org/gnome/shell".favorite-apps = [
-      "firefox.desktop"
-      "spotify.desktop"
-      "code.desktop"
-      "Alacritty.desktop"
-      "org.gnome.Nautilus.desktop"
-      "writer.desktop"
-    ];
-
-    "org/gnome/desktop/background".color-shading-type = "solid";
-    "org/gnome/desktop/background".picture-options = "none";
-    "org/gnome/desktop/background".primary-color = "#000000";
-    "org/gnome/desktop/background".secondary-color = "#f0f0f0";
-  };
-
   xdg.mimeApps = {
     enable = true;
     defaultApplications = {

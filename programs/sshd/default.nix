@@ -15,13 +15,14 @@ in {
       PasswordAuthentication = false;
       # GatewayPorts = "yes";
       GatewayPorts = "clientspecified";
-      X11Forwarding = true;
+      X11Forwarding = false;
     };
     extraConfig = ''
       PermitTunnel yes
       PermitTTY yes
       AllowStreamLocalForwarding yes
       AllowTcpForwarding yes
+      UsePAM no
     '';
     allowSFTP = true;
   };
