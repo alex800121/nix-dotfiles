@@ -108,7 +108,7 @@ in
     networkmanager = {
       enable = true;
       # dhcp = "dhcpcd";
-      # dns = "systemd-resolved";
+      dns = "systemd-resolved";
       # dns = "dnsmasq";
       # dns = "default";
     };

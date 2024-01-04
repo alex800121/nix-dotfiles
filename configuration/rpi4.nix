@@ -161,13 +161,16 @@ in
       experimental-features = nix-command flakes repl-flake
     '';
   };
+  services.resolved = {
+    enable = true;
+  };
   networking = {
     inherit hostName; # Define your hostname.
     firewall.enable = false;
     networkmanager = {
       enable = true;
       # dhcp = "dhcpcd";
-      # dns = "systemd-resolved";
+      dns = "systemd-resolved";
       # dns = "dnsmasq";
       # dns = "default";
     };
