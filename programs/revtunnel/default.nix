@@ -6,7 +6,6 @@
     script = ''
       ${pkgs.openssh}/bin/ssh -vvv -N -T -o "ExitOnForwardFailure=yes" \
       -o "UserKnownHostsFile=/home/${userConfig.userName}/.ssh/known_hosts" -R 0.0.0.0:${userConfig.port}:localhost:22 \
-      -o "StrictHostKeyChecking=no" \
       ${userConfig.userName}@${userConfig.revConfig.url}.duckdns.org -p ${userConfig.revConfig.port}
     '';
     serviceConfig = {
