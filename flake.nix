@@ -168,7 +168,7 @@
           ./programs/nvim
         ];
       };
-      asus-nixos-musnix = {
+      asus-musnix = {
         system = "x86_64-linux";
         kernelVersion = "6_6";
         userConfig = {
@@ -291,7 +291,7 @@
       };
       outputConfigs = builtins.foldl' (x: y: nixpkgs.lib.recursiveUpdate x (mkNixosConfig y)) { } [
         asus-nixos
-        asus-nixos-musnix
+        asus-musnix
         acer-nixos
         acer-tp
         alexrpi4dorm
