@@ -168,7 +168,7 @@
           ./programs/nvim
         ];
       };
-      asus-nixos = {
+      asus-nixos-musnix = {
         system = "x86_64-linux";
         kernelVersion = "6_6";
         userConfig = {
@@ -188,16 +188,40 @@
           nixos-hardware.nixosModules.common-pc-laptop-acpi_call
           nixos-hardware.nixosModules.common-pc-laptop-ssd
           inputs.musnix.nixosModules.musnix
-          # ({pkgs, ...}: {
-          #   musnix = {
-          #     enable = true;
-          #     alsaSeq.enable = true;
-          #     soundcardPciId = "63:00.6";
-          #     kernel.realtime = true;
-          #     kernel.packages = pkgs.linuxPackages_6_6_rt;
-          #   };
-          # })
           ./programs/musnix
+          ./programs/winvirt
+          ./de/gnome
+          # ./de/hyprland
+          ./hardware/asus/single-partition-passthrough.nix
+          ./programs/sshd
+        ];
+        hmModules = [
+          ./home
+          # ./programs/onedrive
+          ./programs/nvim
+        ];
+      };
+      asus-nixos = {
+        system = "x86_64-linux";
+        kernelVersion = "6_6";
+        userConfig = {
+          hostName = "asus-nixos";
+          userName = "alex800121";
+          fontSize = 11.5;
+          autoLogin = false;
+        };
+        extraModules = [
+          ./configuration
+          ./hardware/asus.nix
+          ./hardware/laptop.nix
+          ./hardware/amd.nix
+          nixos-hardware.nixosModules.common-cpu-amd-pstate
+          nixos-hardware.nixosModules.common-gpu-amd
+          nixos-hardware.nixosModules.common-pc-laptop
+          nixos-hardware.nixosModules.common-pc-laptop-acpi_call
+          nixos-hardware.nixosModules.common-pc-laptop-ssd
+          # inputs.musnix.nixosModules.musnix
+          # ./programs/musnix
           ./programs/winvirt
           ./de/gnome
           # ./de/hyprland
@@ -267,6 +291,7 @@
       };
       outputConfigs = builtins.foldl' (x: y: nixpkgs.lib.recursiveUpdate x (mkNixosConfig y)) { } [
         asus-nixos
+        asus-nixos-musnix
         acer-nixos
         acer-tp
         alexrpi4dorm

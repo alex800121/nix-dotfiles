@@ -201,6 +201,7 @@ in
       vistafonts-cht
       font-awesome
       cantarell-fonts
+      liberation_ttf
     ];
 
     fontconfig = {
