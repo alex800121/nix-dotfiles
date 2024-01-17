@@ -172,7 +172,7 @@
         system = "x86_64-linux";
         kernelVersion = "6_6";
         userConfig = {
-          hostName = "asus-nixos";
+          hostName = "asus-musnix";
           userName = "alex800121";
           fontSize = 11.5;
           autoLogin = false;
