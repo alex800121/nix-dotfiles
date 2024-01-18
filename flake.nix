@@ -168,39 +168,6 @@
           ./programs/nvim
         ];
       };
-      asus-musnix = {
-        system = "x86_64-linux";
-        kernelVersion = "6_6";
-        userConfig = {
-          hostName = "asus-musnix";
-          userName = "alex800121";
-          fontSize = 11.5;
-          autoLogin = false;
-        };
-        extraModules = [
-          ./configuration
-          ./hardware/asus.nix
-          ./hardware/laptop.nix
-          ./hardware/amd.nix
-          nixos-hardware.nixosModules.common-cpu-amd-pstate
-          nixos-hardware.nixosModules.common-gpu-amd
-          nixos-hardware.nixosModules.common-pc-laptop
-          nixos-hardware.nixosModules.common-pc-laptop-acpi_call
-          nixos-hardware.nixosModules.common-pc-laptop-ssd
-          inputs.musnix.nixosModules.musnix
-          ./programs/musnix
-          ./programs/winvirt
-          ./de/gnome
-          # ./de/hyprland
-          ./hardware/asus/single-partition-passthrough.nix
-          ./programs/sshd
-        ];
-        hmModules = [
-          ./home
-          # ./programs/onedrive
-          ./programs/nvim
-        ];
-      };
       asus-nixos = {
         system = "x86_64-linux";
         kernelVersion = "6_6";
@@ -220,8 +187,8 @@
           nixos-hardware.nixosModules.common-pc-laptop
           nixos-hardware.nixosModules.common-pc-laptop-acpi_call
           nixos-hardware.nixosModules.common-pc-laptop-ssd
-          # inputs.musnix.nixosModules.musnix
-          # ./programs/musnix
+          inputs.musnix.nixosModules.musnix
+          (import ./programs/musnix)
           ./programs/winvirt
           ./de/gnome
           # ./de/hyprland
@@ -291,7 +258,6 @@
       };
       outputConfigs = builtins.foldl' (x: y: nixpkgs.lib.recursiveUpdate x (mkNixosConfig y)) { } [
         asus-nixos
-        asus-musnix
         acer-nixos
         acer-tp
         alexrpi4dorm
