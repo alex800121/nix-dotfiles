@@ -145,6 +145,8 @@ in
     }
   ];
 
+  powerManagement.enable = false;
+
   nix = {
     gc = {
       automatic = true;
