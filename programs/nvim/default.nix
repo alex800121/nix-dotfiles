@@ -60,6 +60,7 @@ in {
       nixpkgsUnstable.vimPlugins.toggleterm-nvim
       nixpkgsUnstable.vimPlugins.iron-nvim
       pkgs.haskell-snippets-nvim
+      # scrollEOF-nvim
     ] );
     viAlias = true;
     vimAlias = true;

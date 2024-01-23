@@ -14,7 +14,7 @@ vim.opt.termguicolors = true
 
 vim.opt.mousemoveevent = true
 
-vim.opt.scrolloff = 999
+vim.opt.scrolloff = 20
 
 vim.opt.timeout = true
 vim.opt.timeoutlen = 0
