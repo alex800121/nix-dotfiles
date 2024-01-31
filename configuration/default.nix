@@ -286,7 +286,7 @@ in
     interval = "hourly";
   };
 
-  services.teamviewer.enable = true;
+  # services.teamviewer.enable = true;
 
   qt = {
     enable = true;

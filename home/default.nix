@@ -123,7 +123,7 @@ in {
     dmidecode
     libchewing
     gh 
-    teamviewer
+    # teamviewer
     nixpkgsUnstable.zoom-us
     nixpkgsUnstable.cabal-install 
     nixpkgsUnstable.ghcid 
