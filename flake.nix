@@ -188,8 +188,8 @@
           nixos-hardware.nixosModules.common-pc-laptop
           nixos-hardware.nixosModules.common-pc-laptop-acpi_call
           nixos-hardware.nixosModules.common-pc-laptop-ssd
-          inputs.musnix.nixosModules.musnix
-          (import ./programs/musnix)
+          # inputs.musnix.nixosModules.musnix
+          # (import ./programs/musnix)
           ./programs/winvirt
           ./de/gnome
           # ./de/hyprland
