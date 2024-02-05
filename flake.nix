@@ -190,10 +190,10 @@
           nixos-hardware.nixosModules.common-pc-laptop-ssd
           # inputs.musnix.nixosModules.musnix
           # (import ./programs/musnix)
-          ./programs/winvirt
+          # ./programs/winvirt
           ./de/gnome
           # ./de/hyprland
-          ./hardware/asus/single-partition-passthrough.nix
+          # ./hardware/asus/single-partition-passthrough.nix
           ./programs/sshd
         ];
         hmModules = [

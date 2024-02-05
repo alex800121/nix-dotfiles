@@ -8,7 +8,7 @@
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "usb_storage" "sd_mod" ];
+  boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "usb_storage" "sd_mod" "thunderbolt" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd" ];
   # boot.kernelModules = [ "kvm-amd" "amd-pstate" ];
@@ -31,7 +31,8 @@
   };
 
   swapDevices = [
-    { device = "/dev/disk/by-uuid/2f13de69-409e-4116-ba72-243f93e6c887"; }
+    # { device = "/dev/disk/by-uuid/2f13de69-409e-4116-ba72-243f93e6c887"; }
+    { device = "/dev/disk/by-uuid/d36b000f-2491-49da-8cdc-5e7158a2d003"; }
   ];
 
   # fileSystems."/media/alex800121/Asus" = {

@@ -1,8 +1,9 @@
-
-{ pkgs, inputs, ... }: let
+{ pkgs, inputs, ... }:
+let
   nixpkgsUnstable = import inputs.nixpkgsUnstable { inherit system; config.allowUnfree = true; };
   inherit (pkgs) system;
-in {
+in
+{
   # services.dnsmasq = {
   #   enable = true;
   #   settings = {
@@ -17,7 +18,10 @@ in {
       qemu = {
         swtpm.enable = true;
         ovmf.enable = true;
-        ovmf.packages = [ pkgs.OVMFFull.fd pkgs.pkgsCross.aarch64-multiplatform.OVMF.fd ];
+        ovmf.packages = [
+          pkgs.OVMFFull.fd
+          # pkgs.pkgsCross.aarch64-multiplatform.OVMF.fd
+        ];
       };
     };
     spiceUSBRedirection.enable = true;
@@ -28,7 +32,7 @@ in {
   environment.systemPackages = [
     nixpkgsUnstable.virt-manager
     nixpkgsUnstable.virt-viewer
-    nixpkgsUnstable.spice 
+    nixpkgsUnstable.spice
     nixpkgsUnstable.spice-gtk
     nixpkgsUnstable.spice-protocol
     nixpkgsUnstable.win-virtio

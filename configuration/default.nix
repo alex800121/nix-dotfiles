@@ -12,9 +12,9 @@ let
   inherit (pkgs) system;
 in
 {
-  boot.binfmt.emulatedSystems = [
-    "aarch64-linux"
-  ];
+  # boot.binfmt.emulatedSystems = [
+  #   "aarch64-linux"
+  # ];
   boot.kernelPackages = lib.mkDefault pkgs."linuxPackages_${kernelVersion}";
 
   hardware.enableAllFirmware = true;

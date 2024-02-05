@@ -97,8 +97,8 @@ in {
   # fonts.fontconfig.enable = true;
 
   home.packages = with pkgs; [
-    winetricks
-    wineWowPackages.unstableFull
+    nixpkgsUnstable.winetricks
+    nixpkgsUnstable.wineWowPackages.stagingFull
     gnome-network-displays
     libsForQt5.plasma-browser-integration
     ardour
