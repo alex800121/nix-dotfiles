@@ -98,7 +98,7 @@ in {
 
   home.packages = with pkgs; [
     nixpkgsUnstable.winetricks
-    nixpkgsUnstable.wineWowPackages.stagingFull
+    nixpkgsUnstable.wineWowPackages.full
     gnome-network-displays
     libsForQt5.plasma-browser-integration
     ardour
@@ -138,7 +138,7 @@ in {
   xdg.mimeApps = {
     enable = true;
     defaultApplications = {
-      "inode/directory" = ["pcmanfm.desktop"];
+      # "inode/directory" = ["pcmanfm.desktop"];
       "application/pdf"=["firefox.desktop"];
     };
     # defaultApplications = {
