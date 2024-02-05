@@ -173,7 +173,7 @@ in {
 
   programs.alacritty = {
     enable = true;
-    package = nixpkgsUnstable.alacritty;
+    package = pkgs.alacritty;
     settings = import ../programs/alacritty/alacritty-settings.nix updateConfig;
   };
 
