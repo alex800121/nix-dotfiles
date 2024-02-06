@@ -3,6 +3,20 @@
 in {
   programs.ssh = {
     startAgent = true;
+    extraConfig = ''
+      Host acer-tp
+          Hostname alexacer-tp.duckdns.org
+          Port 31000
+      Host acer-nixos
+          Hostname alexacer-tp.duckdns.org
+          Port 51000
+      Host alexrpi4dorm
+          Hostname alexrpi4gate.duckdns.org
+          Port 50000
+      Host alexrpi4tp
+          Hostname alexrpi4gate.duckdns.org
+          Port 30000
+    '';
   };
 
   # Enable the OpenSSH daemon.
