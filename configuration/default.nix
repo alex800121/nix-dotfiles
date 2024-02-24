@@ -234,6 +234,8 @@ in
 
   hardware.opengl.enable = true;
 
+  services.usbmuxd.enable = true;
+
   # Allow unfree packages
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -259,6 +261,8 @@ in
     inputs.agenix.packages."${system}".default
     showmethekey
     wev
+    libimobiledevice
+    ifuse
   ];
 
   environment.variables = {

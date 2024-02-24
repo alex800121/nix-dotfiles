@@ -99,13 +99,15 @@ in {
   home.packages = with pkgs; [
     nixpkgsUnstable.winetricks
     nixpkgsUnstable.wineWowPackages.full
+    nixpkgsUnstable.android-tools
+    nixpkgsUnstable.scrcpy
     gnome-network-displays
     libsForQt5.plasma-browser-integration
     ardour
     helvum
     nixpkgsUnstable.musescore
     x-air-edit
-    # libreoffice
+    libreoffice
     onlyoffice-bin_7_5
     spotify
     nix-prefetch-git
@@ -133,6 +135,7 @@ in {
     nixpkgs-fmt
     gcc
     rust-bin.stable.latest.complete 
+    telegram-desktop
   ];
 
   xdg.mimeApps = {

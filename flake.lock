@@ -256,6 +256,22 @@
         "type": "github"
       }
     },
+    "haskell-updates": {
+      "locked": {
+        "lastModified": 1707955944,
+        "narHash": "sha256-aaj9vCf3IkTkc+OK6+A77wEE84zLd+PlcujA2sr3k/M=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "82277a5b6360bb9feff6e743d32a59728be63b6b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "haskell-updates",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "hercules-ci-effects": {
       "inputs": {
         "flake-parts": "flake-parts_2",
@@ -520,6 +536,7 @@
       "inputs": {
         "agenix": "agenix",
         "haskell-snippets": "haskell-snippets",
+        "haskell-updates": "haskell-updates",
         "home-manager": "home-manager_2",
         "musnix": "musnix",
         "networkmanager-dmenu": "networkmanager-dmenu",
