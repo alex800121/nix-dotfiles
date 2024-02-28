@@ -105,7 +105,7 @@ in {
     libsForQt5.plasma-browser-integration
     ardour
     helvum
-    nixpkgsUnstable.musescore
+    musescore
     x-air-edit
     libreoffice
     onlyoffice-bin_7_5
