@@ -28,11 +28,11 @@
     [ { device = "/dev/disk/by-uuid/ef0976af-5b11-45b2-a938-d63efb18f85c"; }
     ];
 
-  fileSystems."/media/alex800121/Acer" = {
-    device = "/dev/disk/by-uuid/F2D200EBD200B63F";
-    fsType = "ntfs";
-    options = [ "rw" "uid=1000" ];
-  };
+  # fileSystems."/media/alex800121/Acer" = {
+  #   device = "/dev/disk/by-uuid/F2D200EBD200B63F";
+  #   fsType = "ntfs";
+  #   options = [ "rw" "uid=1000" ];
+  # };
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
