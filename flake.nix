@@ -191,7 +191,7 @@
           nixos-hardware.nixosModules.common-pc-laptop-ssd
           # inputs.musnix.nixosModules.musnix
           # (import ./programs/musnix)
-          # ./programs/winvirt
+          ./programs/virt
           ./de/gnome
           # ./de/hyprland
           # ./hardware/asus/single-partition-passthrough.nix
@@ -225,6 +225,7 @@
           ./programs/nix-ld
           ./programs/code-tunnel
           ./programs/sshd
+          ./programs/virt
         ];
         hmModules = [
           ./home
@@ -252,6 +253,7 @@
           ./programs/code-tunnel
           ./programs/wireguard
           ./programs/sshd
+          ./programs/virt
         ];
         hmModules = [
           ./home
