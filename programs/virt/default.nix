@@ -20,7 +20,7 @@ in
         ovmf.enable = true;
         ovmf.packages = [
           pkgs.OVMFFull.fd
-          # pkgs.pkgsCross.aarch64-multiplatform.OVMF.fd
+          # pkgs.pkgsCross.aarch64-multiplatform.OVMFFull.fd
         ];
       };
     };
