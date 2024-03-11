@@ -1,8 +1,8 @@
 { pkgs, ... }: {
-  specialisation."musnix" = {
-    inheritParentConfig = true;
-    configuration = {
-      system.nixos.tags = [ "musnix" ];
+  # specialisation."musnix" = {
+    # inheritParentConfig = true;
+    # configuration = {
+      # system.nixos.tags = [ "musnix" ];
       security.pam.loginLimits = [
         { domain = "@audio"; item = "memlock"; type = "-"   ; value = "unlimited"; }
         { domain = "@audio"; item = "rtprio" ; type = "-"   ; value = "99"       ; }
@@ -16,6 +16,6 @@
         kernel.realtime = true;
         kernel.packages = pkgs.linuxPackages_6_6_rt;
       };
-    };
-  };
+    # };
+  # };
 }

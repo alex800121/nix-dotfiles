@@ -57,8 +57,8 @@
           ];
         }).config.system.build.sdImage;
       };
-      mkNixosConfig = { system, userConfig, extraModules ? [ ], hmModules ? [ ], kernelVersion, ... }: {
-        nixosConfigurations."${userConfig.hostName}" = nixpkgs.lib.nixosSystem {
+      mkNixosConfig = { system, userConfig, extraModules ? [ ], hmModules ? [ ], kernelVersion, ... }: configName: {
+        nixosConfigurations."${configName}" = nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = {
             inherit kernelVersion userConfig inputs extraModules hmModules;
@@ -103,6 +103,7 @@
           ] ++ extraModules;
         };
       };
+      configs = {
       rpi4 = {
         system = "aarch64-linux";
         kernelVersion = "rpi4";
@@ -155,7 +156,7 @@
           autoLogin = true;
           port = "50000";
           revConfig = {
-            inherit (alexrpi4tp.userConfig) port url;
+            inherit (configs.alexrpi4tp.userConfig) port url;
           };
         };
         extraModules = [
@@ -167,6 +168,39 @@
         ];
         hmModules = [
           ./home/rpi4.nix
+          ./programs/nvim
+        ];
+      };
+      musnix = {
+        system = "x86_64-linux";
+        kernelVersion = "6_6";
+        userConfig = {
+          hostName = "asus-nixos";
+          userName = "alex800121";
+          fontSize = 11.5;
+          autoLogin = false;
+        };
+        extraModules = [
+          ./configuration
+          ./hardware/asus.nix
+          ./hardware/laptop.nix
+          ./hardware/amd.nix
+          nixos-hardware.nixosModules.common-cpu-amd-pstate
+          nixos-hardware.nixosModules.common-gpu-amd
+          nixos-hardware.nixosModules.common-pc-laptop
+          nixos-hardware.nixosModules.common-pc-laptop-acpi_call
+          nixos-hardware.nixosModules.common-pc-laptop-ssd
+          inputs.musnix.nixosModules.musnix
+          (import ./programs/musnix)
+          ./de/gnome
+          # ./de/hyprland
+          # ./hardware/asus/single-partition-passthrough.nix
+          # ./programs/winvirt
+          ./programs/sshd
+        ];
+        hmModules = [
+          ./home
+          # ./programs/onedrive
           ./programs/nvim
         ];
       };
@@ -191,10 +225,10 @@
           nixos-hardware.nixosModules.common-pc-laptop-ssd
           # inputs.musnix.nixosModules.musnix
           # (import ./programs/musnix)
-          # ./programs/winvirt
           ./de/gnome
           # ./de/hyprland
           # ./hardware/asus/single-partition-passthrough.nix
+          # ./programs/winvirt
           ./programs/sshd
         ];
         hmModules = [
@@ -213,7 +247,7 @@
           autoLogin = true;
           port = "51000";
           revConfig = {
-            inherit (acer-tp.userConfig) port url;
+            inherit (configs.acer-tp.userConfig) port url;
           };
         };
         extraModules = [
@@ -258,16 +292,18 @@
           ./programs/nvim
         ];
       };
-      outputConfigs = builtins.foldl' (x: y: nixpkgs.lib.recursiveUpdate x (mkNixosConfig y)) { } [
-        asus-nixos
-        acer-nixos
-        acer-tp
-        alexrpi4dorm
-        alexrpi4tp
+      };
+      outputConfigs = builtins.foldl' (x: y: nixpkgs.lib.recursiveUpdate x (mkNixosConfig configs."${y}" y)) { } [
+        "asus-nixos"
+        "acer-nixos"
+        "acer-tp"
+        "alexrpi4dorm"
+        "alexrpi4tp"
+        "musnix"
       ];
     in
     builtins.foldl' (x: y: nixpkgs.lib.recursiveUpdate x y) { } [
-      (mkSdImage { inputModule = (mkNixosConfig rpi4).nixosConfigurations.rpi4; })
+      (mkSdImage { inputModule = (mkNixosConfig configs.rpi4 "rpi4").nixosConfigurations.rpi4; })
       (mkSdImage { inputModule = outputConfigs.nixosConfigurations.alexrpi4tp; })
       (mkSdImage { inputModule = outputConfigs.nixosConfigurations.alexrpi4dorm; })
       outputConfigs
