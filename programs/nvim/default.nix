@@ -1,14 +1,16 @@
-{ config, pkgs, lib, userConfig, inputs, system, ... }: let
+{ config, pkgs, lib, userConfig, inputs, system, ... }:
+let
   nixpkgsUnstable = import inputs.nixpkgsUnstable {
     inherit (pkgs) system;
     config.allowUnfree = true;
   };
-in {
+in
+{
   home.sessionVariables."CODELLDB_PATH" = "${pkgs.vscode-extensions.vadimcn.vscode-lldb}/share/vscode/extensions/vadimcn.vscode-lldb/adapter/codelldb";
   home.sessionVariables."LIBLLDB_PATH" = "${pkgs.vscode-extensions.vadimcn.vscode-lldb}/share/vscode/extensions/vadimcn.vscode-lldb/lldb/lib/liblldb.so";
   programs.neovim = {
     enable = true;
-    plugins = ( with pkgs.vimPlugins; [
+    plugins = (with pkgs.vimPlugins; [
       gruvbox-nvim
       which-key-nvim
       bufdelete-nvim
@@ -20,12 +22,12 @@ in {
       onedark-nvim
       indent-blankline-nvim
       (nvim-treesitter.withPlugins (p: with p; [
-        tree-sitter-lua 
-        tree-sitter-haskell 
-        tree-sitter-rust 
-        tree-sitter-c 
-        tree-sitter-vim 
-        tree-sitter-nix 
+        tree-sitter-lua
+        tree-sitter-haskell
+        tree-sitter-rust
+        tree-sitter-c
+        tree-sitter-vim
+        tree-sitter-nix
         tree-sitter-json
       ]))
       nvim-treesitter-parsers.kdl
@@ -61,11 +63,11 @@ in {
       nixpkgsUnstable.vimPlugins.iron-nvim
       pkgs.haskell-snippets-nvim
       # scrollEOF-nvim
-    ] );
+    ]);
     viAlias = true;
     vimAlias = true;
     vimdiffAlias = true;
-    extraPackages = ( with pkgs; [
+    extraPackages = (with pkgs; [
       tree-sitter
       nerdfonts
       ripgrep
@@ -82,7 +84,7 @@ in {
       lua-language-server
       nixpkgs-fmt
       vscode-extensions.vadimcn.vscode-lldb
-    ] );
+    ]);
   };
   xdg.configFile.nvim = {
     source = ./luaConfig;
