@@ -38,95 +38,46 @@ in
       name = "gpio-fan";
       dtsText = ''
         /dts-v1/;
+        /plugin/;
 
         / {
                 compatible = "brcm,bcm2711";
 
                 fragment@0 {
                         target-path = "/";
-
                         __overlay__ {
-
-                                gpio-fan@0 {
+                                fan0: gpio-fan@0 {
                                         compatible = "gpio-fan";
-                                        gpios = <0xffffffff 0x0c 0x00>;
-                                        gpio-fan,speed-map = <0x00 0x00 0x1388 0x01>;
-                                        #cooling-cells = <0x02>;
-                                        phandle = <0x02>;
+                                        gpios = <&gpio 14 0>;
+                                        gpio-fan,speed-map = <0    0>,
+                                                                                 <5000 1>;
+                                        #cooling-cells = <2>;
                                 };
                         };
                 };
 
                 fragment@1 {
-                        target = <0xffffffff>;
-
+                        target = <&cpu_thermal>;
+                        polling-delay = <2000>;	/* milliseconds */
                         __overlay__ {
-                                polling-delay = <0x7d0>;
-                        };
-                };
-
-                fragment@2 {
-                        target = <0xffffffff>;
-
-                        __overlay__ {
-
-                                trip-point@0 {
-                                        temperature = <0xd6d8>;
-                                        hysteresis = <0x2710>;
-                                        type = "active";
-                                        phandle = <0x01>;
+                                trips {
+                                        cpu_hot: trip-point@0 {
+                                                temperature = <65000>;	/* (millicelsius) Fan started at 55°C */
+                                                hysteresis = <10000>;	/* (millicelsius) Fan stopped at 45°C */
+                                                type = "active";
+                                        };
                                 };
-                        };
-                };
-
-                fragment@3 {
-                        target = <0xffffffff>;
-
-                        __overlay__ {
-
-                                map0 {
-                                        trip = <0x01>;
-                                        cooling-device = <0x02 0x01 0x01>;
-                                };
-                        };
-                };
-
-                __overrides__ {
-                        gpiopin = <0x02 0x6770696f 0x733a3400 0x02 0x6272636d 0x2c70696e 0x733a3000>;
-                        temp = [00 00 00 01 74 65 6d 70 65 72 61 74 75 72 65 3a 30 00];
-                        hyst = [00 00 00 01 68 79 73 74 65 72 65 73 69 73 3a 30 00];
-                };
-
-                __symbols__ {
-                        fan0 = "/fragment@0/__overlay__/gpio-fan@0";
-                        cpu_hot = "/fragment@2/__overlay__/trip-point@0";
-                };
-
-                __fixups__ {
-                        gpio = "/fragment@0/__overlay__/gpio-fan@0:gpios:0";
-                        cpu_thermal = "/fragment@1:target:0";
-                        thermal_trips = "/fragment@2:target:0";
-                        cooling_maps = "/fragment@3:target:0";
-                };
-
-                __local_fixups__ {
-
-                        fragment@3 {
-
-                                __overlay__ {
-
+                                cooling-maps {
                                         map0 {
-                                                trip = <0x00>;
-                                                cooling-device = <0x00>;
+                                                trip = <&cpu_hot>;
+                                                cooling-device = <&fan0 1 1>;
                                         };
                                 };
                         };
-
-                        __overrides__ {
-                                gpiopin = <0x00 0x0c>;
-                                temp = <0x00>;
-                                hyst = <0x00>;
-                        };
+                };
+                __overrides__ {
+                        gpiopin = <&fan0>,"gpios:4", <&fan0>,"brcm,pins:0";
+                        temp = <&cpu_hot>,"temperature:0";
                 };
         };
       '';
