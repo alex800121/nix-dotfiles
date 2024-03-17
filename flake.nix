@@ -195,7 +195,7 @@
           ./de/gnome
           # ./de/hyprland
           # ./hardware/asus/single-partition-passthrough.nix
-          ./programs/winvirt
+          ./programs/virt
           ./programs/sshd
         ];
         hmModules = [

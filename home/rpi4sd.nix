@@ -94,22 +94,14 @@ in {
 
   home.packages = with pkgs; [
     nix-prefetch-git
-    # cabal2nix
     neofetch
-    # freshfetch
     ripgrep
     wl-clipboard
     nodejs
     dmidecode
     gh 
-    # nixpkgsUnstable.cabal-install 
-    # nixpkgsUnstable.ghcid 
-    # nixpkgsUnstable.haskell.compiler.ghc963
-    # ormolu
     nil
     nixpkgs-fmt
-    # gcc
-    # rust-bin.stable.latest.complete 
   ];
 
   programs.git = {

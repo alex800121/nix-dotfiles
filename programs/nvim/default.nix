@@ -72,8 +72,7 @@ in
       nerdfonts
       ripgrep
       fd
-      (nixpkgsUnstable.haskell-language-server.override { supportedGhcVersions = [ "963" ]; })
-      # nixpkgsUnstable.haskell-language-server
+      nixpkgsUnstable.haskell-language-server
       nixpkgsUnstable.haskellPackages.hoogle
       nixpkgsUnstable.haskellPackages.ghci-dap
       nixpkgsUnstable.haskellPackages.haskell-dap

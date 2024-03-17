@@ -104,8 +104,8 @@ in {
     gh 
     nixpkgsUnstable.cabal-install 
     nixpkgsUnstable.ghcid 
-    nixpkgsUnstable.haskell.compiler.ghc963
-    ormolu
+    nixpkgsUnstable.ghc
+    nixpkgsUnstable.ormolu
     nil
     nixpkgs-fmt
     gcc

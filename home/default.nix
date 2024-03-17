@@ -125,17 +125,20 @@ in {
     dmidecode
     libchewing
     gh 
-    # teamviewer
     nixpkgsUnstable.zoom-us
     nixpkgsUnstable.cabal-install 
     nixpkgsUnstable.ghcid 
-    nixpkgsUnstable.haskell.compiler.ghc963
-    ormolu
+    nixpkgsUnstable.ghc
+    nixpkgsUnstable.ormolu
     nil
     nixpkgs-fmt
     gcc
     rust-bin.stable.latest.complete 
     telegram-desktop
+    nixpkgsUnstable.kdePackages.kdenlive
+    nixpkgsUnstable.localsend
+    nixpkgsUnstable.obs-studio
+    gimp
   ];
 
   xdg.mimeApps = {
