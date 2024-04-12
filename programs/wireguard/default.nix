@@ -28,6 +28,12 @@ in {
               AllowedIPs = ["10.100.0.2/32"];
             };
           }
+          {
+            wireguardPeerConfig = {
+              PublicKey = "FtEhq103TNi0evV2VWQuZ3n6/62rXZuZI9zpaysboX0=";
+              AllowedIPs = ["10.100.0.3/32"];
+            };
+          }
         ];
       };
     };
