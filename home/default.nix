@@ -104,6 +104,7 @@ in {
     gnome-network-displays
     libsForQt5.plasma-browser-integration
     ardour
+    x42-plugins
     helvum
     musescore
     x-air-edit
