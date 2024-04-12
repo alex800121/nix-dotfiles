@@ -136,7 +136,7 @@ in {
     gcc
     rust-bin.stable.latest.complete 
     telegram-desktop
-    nixpkgsUnstable.kdePackages.kdenlive
+    kdenlive
     nixpkgsUnstable.localsend
     nixpkgsUnstable.obs-studio
     gimp
