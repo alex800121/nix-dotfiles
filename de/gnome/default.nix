@@ -16,16 +16,10 @@ in {
   services.xserver.displayManager = {
     autoLogin.enable = autoLogin;
     autoLogin.user = userName;
-    # lightdm = {
-    #   enable = true;
-    # };
+    defaultSession = "gnome";
     gdm = {
       enable = true;
     };
-    # sddm = {
-    #   enable = true;
-    #   enableHidpi = true;
-    # };
   };
   programs.dconf = {
     enable = true;

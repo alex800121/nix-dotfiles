@@ -193,6 +193,7 @@
           inputs.musnix.nixosModules.musnix
           (import ./programs/musnix)
           ./de/gnome
+          # ./de/plasma
           # ./de/hyprland
           # ./hardware/asus/single-partition-passthrough.nix
           ./programs/virt
@@ -227,6 +228,7 @@
           # (import ./programs/musnix)
           ./programs/virt
           ./de/gnome
+          # ./de/plasma
           # ./de/hyprland
           # ./hardware/asus/single-partition-passthrough.nix
           # ./programs/winvirt
@@ -286,7 +288,7 @@
           ./programs/nix-ld
           ./programs/duckdns
           ./programs/code-tunnel
-          ./programs/wireguard
+          ./programs/wireguard/acer-tp-server.nix
           ./programs/sshd
           ./programs/virt
         ];
