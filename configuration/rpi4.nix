@@ -114,9 +114,8 @@ in
       experimental-features = nix-command flakes repl-flake
     '';
   };
-  services.resolved = {
-    enable = true;
-  };
+  services.resolved.enable = true;
+  services.avahi.enable = true;
   networking = {
     inherit hostName; # Define your hostname.
     firewall.enable = false;
