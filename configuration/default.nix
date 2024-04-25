@@ -102,7 +102,14 @@ in
   };
 
   services.resolved.enable = true;
-  services.avahi.enable = true;
+  services.avahi = {
+    enable = true;
+    publish  = {
+      enable = true;
+      domain = true;
+      addresses = true;
+    };
+  };
   networking = {
     inherit hostName; # Define your hostname.
     firewall.enable = false;
