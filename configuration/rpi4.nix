@@ -125,6 +125,10 @@ in
       dns = "systemd-resolved";
       # dns = "dnsmasq";
       # dns = "default";
+      extraConfig = ''
+        [connection]
+        connection.mdns=1
+      '';
     };
   };
 
