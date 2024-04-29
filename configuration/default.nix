@@ -96,29 +96,31 @@ in
       CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
       START_CHARGE_THRESH_BAT0 = 75;
       STOP_CHARGE_THRESH_BAT0 = 80;
-      # START_CHARGE_THRESH_BAT1 = 75;
-      # STOP_CHARGE_THRESH_BAT1 = 80;
     };
   };
 
   services.resolved.enable = true;
   services.avahi = {
     enable = true;
-    publish  = {
+    publish = {
       enable = true;
       domain = true;
       addresses = true;
     };
   };
+  networking.nftables.enable = true;
+  networking.firewall = {
+    enable = true;
+    allowedUDPPorts = [
+      5353
+      50541
+    ];
+  };
   networking = {
     inherit hostName; # Define your hostname.
-    firewall.enable = false;
     networkmanager = {
       enable = true;
-      # dhcp = "dhcpcd";
       dns = "systemd-resolved";
-      # dns = "dnsmasq";
-      # dns = "default";
       extraConfig = ''
         [connection]
         connection.mdns=1

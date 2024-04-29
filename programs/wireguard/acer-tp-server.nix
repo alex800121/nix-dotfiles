@@ -25,13 +25,13 @@ in {
           {
             wireguardPeerConfig = {
               PublicKey = "upKxh1DAailH/sUJTfa0QDj6ZLoqNJx8z4qFEHPXmCI=";
-              AllowedIPs = ["10.100.0.2/32"];
+              AllowedIPs = ["10.100.0.2/32" "fcdd::2/128"];
             };
           }
           {
             wireguardPeerConfig = {
               PublicKey = "FtEhq103TNi0evV2VWQuZ3n6/62rXZuZI9zpaysboX0=";
-              AllowedIPs = ["10.100.0.3/32"];
+              AllowedIPs = ["10.100.0.3/32" "fcdd::3/128"];
             };
           }
         ];
@@ -39,7 +39,7 @@ in {
     };
     networks.wg0 = {
       matchConfig.Name = "wg0";
-      address = ["10.100.0.1/24"];
+      address = ["10.100.0.1/24" "fcdd::1/64"];
       networkConfig = {
         IPMasquerade = "both";
         IPForward = "yes";
