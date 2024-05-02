@@ -81,7 +81,6 @@ in
 
   services.tlp = {
     enable = true;
-    # enable = false;
     settings = {
       NMI_WATCHDOG = 0;
       PLATFORM_PROFILE_ON_AC = "performance";
@@ -108,7 +107,7 @@ in
       addresses = true;
     };
   };
-  networking.nftables.enable = true;
+  # networking.nftables.enable = true;
   networking.firewall = {
     enable = true;
     allowedUDPPorts = [
@@ -131,8 +130,6 @@ in
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
-  # Enable networking
 
   # Set your time zone.
   time.hardwareClockInLocalTime = true;
@@ -167,9 +164,6 @@ in
     layout = "us";
     xkbVariant = "";
   };
-
-  # Enable CUPS to print documents.
-  # services.printing.enable = true;
 
   # Enable bluetooth
   hardware.bluetooth = {
@@ -304,29 +298,10 @@ in
     interval = "hourly";
   };
 
-  # services.teamviewer.enable = true;
-
   qt = {
     enable = true;
     style = "adwaita-dark";
   };
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # services.code-server = {
-  #   enable = true;
-  #   port = 4444;
-  #   user = "alex800121";
-  #   host = "127.0.0.1";
-  #   auth = "password";
-  #   # printf "password" | sha256sum | cut -d' ' -f1
-  #   hashedPassword = "58cb754c8c077d146dc4a5651ef3cbc79ccfd99c4ad37244ef0ccc3e8470365c";
-  #   extraArguments = [
-  #     "--verbose"
-  #   ];
-  # };
 
   system.stateVersion = "23.11"; # Did you read the comment?
 }

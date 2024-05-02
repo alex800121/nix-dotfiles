@@ -7,7 +7,11 @@ in {
     group = "systemd-network";
     mode = "600";
   };
-  environment.systemPackages = [ pkgs.qrencode pkgs.wireguard-tools ];
+  environment.systemPackages = with pkgs; [
+    qrencode 
+    wireguard-tools 
+    nftables
+  ];
   systemd.network = {
     enable = true;
     netdevs = {
@@ -43,8 +47,22 @@ in {
       networkConfig = {
         IPMasquerade = "both";
         IPForward = "yes";
+        # MulticastDNS = "resolve";
+        # DNS = "127.0.0.53";
       };
     };
   };
   systemd.services."systemd-networkd".environment.SYSTEMD_LOG_LEVEL = "debug";
+  # networking.firewall.extraCommands = ''
+  #   iptables -A FORWARD -i wg0 -j ACCEPT
+  #   iptables -t nat -A POSTROUTING -s 10.100.0.1/24 -o enp0s13f0u1u3  -j MASQUERADE
+  #   ip6tables -A FORWARD -i wg0 -j ACCEPT
+  #   ip6tables -t nat -A POSTROUTING -s fcdd::1/64 -o enp0s13f0u1u3 -j MASQUERADE
+  # '';
+  # networking.firewall.extraStopCommands = ''
+  #   iptables -D FORWARD -i wg0 -j ACCEPT
+  #   iptables -t nat -D POSTROUTING -s 10.100.0.1/24 -o enp0s13f0u1u3 -j MASQUERADE
+  #   ip6tables -D FORWARD -i wg0 -j ACCEPT
+  #   ip6tables -t nat -D POSTROUTING -s fcdd::1/64 -o enp0s13f0u1u3 -j MASQUERADE
+  # '';
 }
