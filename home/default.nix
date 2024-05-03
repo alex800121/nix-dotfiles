@@ -140,6 +140,7 @@ in {
     nixpkgsUnstable.localsend
     nixpkgsUnstable.obs-studio
     gimp
+    wireshark
   ];
 
   xdg.mimeApps = {

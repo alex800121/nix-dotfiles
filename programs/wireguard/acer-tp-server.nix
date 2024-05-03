@@ -1,6 +1,8 @@
-{ pkgs, config, ... }: let
+{ pkgs, config, ... }:
+let
   port = 50541;
-in {
+in
+{
   age.secrets.wgkey = {
     file = ../../secrets/wgkey.age;
     owner = "systemd-network";
@@ -8,10 +10,17 @@ in {
     mode = "600";
   };
   environment.systemPackages = with pkgs; [
-    qrencode 
-    wireguard-tools 
+    qrencode
+    wireguard-tools
     nftables
   ];
+  # networking.nat = {
+  #   enable = true;
+  #   enableIPv6 = true;
+  #   externalInterface = "enp0s13f0u1u3";
+  #   internalInterfaces = [ "wg0" ];
+  #   externalIP = null;
+  # };
   systemd.network = {
     enable = true;
     netdevs = {
@@ -29,13 +38,13 @@ in {
           {
             wireguardPeerConfig = {
               PublicKey = "upKxh1DAailH/sUJTfa0QDj6ZLoqNJx8z4qFEHPXmCI=";
-              AllowedIPs = ["10.100.0.2/32" "fcdd::2/128"];
+              AllowedIPs = [ "10.100.0.2/32" "fcdd::2/128" ];
             };
           }
           {
             wireguardPeerConfig = {
               PublicKey = "FtEhq103TNi0evV2VWQuZ3n6/62rXZuZI9zpaysboX0=";
-              AllowedIPs = ["10.100.0.3/32" "fcdd::3/128"];
+              AllowedIPs = [ "10.100.0.3/32" "fcdd::3/128" ];
             };
           }
         ];
@@ -43,12 +52,11 @@ in {
     };
     networks.wg0 = {
       matchConfig.Name = "wg0";
-      address = ["10.100.0.1/24" "fcdd::1/64"];
+      address = [ "10.100.0.1/24" "fcdd::1/64" ];
       networkConfig = {
         IPMasquerade = "both";
         IPForward = "yes";
         # MulticastDNS = "resolve";
-        # DNS = "127.0.0.53";
       };
     };
   };
