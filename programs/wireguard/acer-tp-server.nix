@@ -21,14 +21,6 @@ in
   #   internalInterfaces = [ "wg0" ];
   #   externalIP = null;
   # };
-  networking.firewall = {
-    enable = true;
-    allowedUDPPorts = [
-      53
-      5353
-      50541
-    ];
-  };
   systemd.network = {
     enable = true;
     netdevs = {
