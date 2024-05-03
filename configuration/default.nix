@@ -108,13 +108,6 @@ in
     };
   };
   # networking.nftables.enable = true;
-  networking.firewall = {
-    enable = true;
-    allowedUDPPorts = [
-      5353
-      50541
-    ];
-  };
   networking = {
     inherit hostName; # Define your hostname.
     networkmanager = {
