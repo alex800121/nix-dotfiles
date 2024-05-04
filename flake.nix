@@ -233,6 +233,7 @@
           # ./hardware/asus/single-partition-passthrough.nix
           # ./programs/winvirt
           ./programs/sshd
+          ./programs/wireguard/client.nix
         ];
         hmModules = [
           ./home
@@ -288,7 +289,7 @@
           ./programs/nix-ld
           ./programs/duckdns
           ./programs/code-tunnel
-          ./programs/wireguard/acer-tp-server.nix
+          ./programs/wireguard/server.nix
           ./programs/sshd
           ./programs/virt
         ];

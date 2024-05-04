@@ -14,13 +14,15 @@ in
     wireguard-tools
     nftables
   ];
-  # networking.nat = {
-  #   enable = true;
-  #   enableIPv6 = true;
-  #   externalInterface = "enp0s13f0u1u3";
-  #   internalInterfaces = [ "wg0" ];
-  #   externalIP = null;
-  # };
+  networking.firewall = {
+    allowedTCPPorts = [
+      53
+    ];
+    allowedUDPPorts = [
+      53
+      port
+    ];
+  };
   systemd.network = {
     enable = true;
     netdevs = {
@@ -61,16 +63,4 @@ in
     };
   };
   systemd.services."systemd-networkd".environment.SYSTEMD_LOG_LEVEL = "debug";
-  # networking.firewall.extraCommands = ''
-  #   iptables -A FORWARD -i wg0 -j ACCEPT
-  #   iptables -t nat -A POSTROUTING -s 10.100.0.1/24 -o enp0s13f0u1u3  -j MASQUERADE
-  #   ip6tables -A FORWARD -i wg0 -j ACCEPT
-  #   ip6tables -t nat -A POSTROUTING -s fcdd::1/64 -o enp0s13f0u1u3 -j MASQUERADE
-  # '';
-  # networking.firewall.extraStopCommands = ''
-  #   iptables -D FORWARD -i wg0 -j ACCEPT
-  #   iptables -t nat -D POSTROUTING -s 10.100.0.1/24 -o enp0s13f0u1u3 -j MASQUERADE
-  #   ip6tables -D FORWARD -i wg0 -j ACCEPT
-  #   ip6tables -t nat -D POSTROUTING -s fcdd::1/64 -o enp0s13f0u1u3 -j MASQUERADE
-  # '';
 }

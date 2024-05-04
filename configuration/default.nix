@@ -100,17 +100,8 @@ in
 
   networking.firewall = {
     enable = true;
-    trustedInterfaces = [
-      "asus"
-      "wg0"
-    ];
-    allowedTCPPorts = [
-      53
-    ];
     allowedUDPPorts = [
-      53
       5353
-      50541
     ];
   };
   services.resolved.enable = true;
