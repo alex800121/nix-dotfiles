@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+{ pkgs, userConfig, ... }:
 let
   port = 50541;
 in
@@ -7,6 +7,14 @@ in
     wireguard-tools
     nftables
   ];
+  services.avahi = {
+    allowPointToPoint = true;
+    reflector = true;
+    allowInterfaces = [
+      "lo"
+      userConfig.hostName
+    ];
+  };
   networking.firewall = {
     allowedTCPPorts = [
       53

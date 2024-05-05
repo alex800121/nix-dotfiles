@@ -14,6 +14,15 @@ in
     wireguard-tools
     nftables
   ];
+  services.avahi = {
+    allowPointToPoint = true;
+    reflector = true;
+    allowInterfaces = [
+      "wg0"
+      "lo"
+    ];
+  };
+
   networking.firewall = {
     allowedTCPPorts = [
       53
@@ -58,7 +67,10 @@ in
       networkConfig = {
         IPMasquerade = "both";
         IPForward = "yes";
-        # MulticastDNS = "resolve";
+        MulticastDNS = "resolve";
+      };
+      linkConfig = {
+        Multicast = true;
       };
     };
   };
