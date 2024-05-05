@@ -95,8 +95,7 @@ in {
   home.packages = with pkgs; [
     nix-prefetch-git
     cabal2nix
-    neofetch
-    freshfetch
+    fastfetch
     ripgrep
     wl-clipboard
     nodejs

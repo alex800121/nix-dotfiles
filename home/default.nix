@@ -114,8 +114,7 @@ in {
     nix-prefetch-git
     cabal2nix
     curl
-    neofetch
-    freshfetch
+    fastfetch
     ripgrep
     wget
     wl-clipboard
