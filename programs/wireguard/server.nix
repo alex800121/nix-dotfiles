@@ -3,8 +3,8 @@ let
   port = 50541;
 in
 {
-  age.secrets.wgkey = {
-    file = ../../secrets/wgkey.age;
+  age.secrets.wg-server-key = {
+    file = ../../secrets/wg-server-key.age;
     owner = "systemd-network";
     group = "systemd-network";
     mode = "600";
@@ -42,7 +42,7 @@ in
           MTUBytes = "1500";
         };
         wireguardConfig = {
-          PrivateKeyFile = config.age.secrets.wgkey.path;
+          PrivateKeyFile = config.age.secrets.wg-server-key.path;
           ListenPort = port;
         };
         wireguardPeers = [

@@ -9,5 +9,5 @@ in
 {
   "ddtoken-acer-tp.age".publicKeys = acer-tp;
   "ddtoken-alexrpi4tp.age".publicKeys = alexrpi4tp;
-  "wgkey.age".publicKeys = acer-tp;
+  "wg-server-key.age".publicKeys = acer-tp;
 }
