@@ -12,6 +12,6 @@ in
 {
   "ddtoken-acer-tp.age".publicKeys = acer-tp;
   "ddtoken-alexrpi4tp.age".publicKeys = alexrpi4tp;
-  "wg-server-key.age".publicKeys = acer-tp;
-  "wg-client-key.age".publicKeys = asus-nixos;
+  "wg-acer-tp.age".publicKeys = acer-tp;
+  # "wg-asus-nixos.age".publicKeys = asus-nixos;
 }

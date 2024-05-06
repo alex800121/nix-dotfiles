@@ -1,10 +1,11 @@
-{ pkgs, config, ... }:
+{ pkgs, config, userConfig, ... }:
 let
   port = 50541;
+  hostName = userConfig.hostName;
 in
 {
-  age.secrets.wg-server-key = {
-    file = ../../secrets/wg-server-key.age;
+  age.secrets."wg-${hostName}" = {
+    file = ../../secrets/wg-${hostName}.age;
     owner = "systemd-network";
     group = "systemd-network";
     mode = "600";
@@ -42,7 +43,7 @@ in
           MTUBytes = "1500";
         };
         wireguardConfig = {
-          PrivateKeyFile = config.age.secrets.wg-server-key.path;
+          PrivateKeyFile = config.age.secrets."wg-${hostName}".path;
           ListenPort = port;
         };
         wireguardPeers = [
