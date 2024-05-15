@@ -111,6 +111,7 @@ in
       enable = true;
       domain = true;
       addresses = true;
+      workstation = true;
     };
   };
   # networking.nftables.enable = true;
