@@ -12,6 +12,7 @@ in
     reflector = true;
     allowInterfaces = [
       "lo"
+      "wlp1s0"
       userConfig.hostName
     ];
   };
