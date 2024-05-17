@@ -21,6 +21,7 @@ in
     allowInterfaces = [
       "wg0"
       "lo"
+      "enp0s13f0u1u3"
     ];
   };
 
