@@ -25,6 +25,7 @@ in
     description = "duckdns update";
     wantedBy = [ "default.target" ];
     after = [ "network-online.target" ];
+    requires = [ "network-online.target" ];
     restartTriggers = [ config.age.secrets.ddtoken.path ];
     path = [ pkgs.bash ];
     serviceConfig = {

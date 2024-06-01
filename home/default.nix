@@ -1,4 +1,5 @@
-{ pkgs, lib, inputs, userConfig, ... }: let
+{ pkgs, lib, inputs, userConfig, ... }:
+let
   nixpkgsUnstable = import inputs.nixpkgsUnstable {
     inherit (pkgs) system;
     config.allowUnfree = true;
@@ -8,7 +9,8 @@
   };
   updateConfig = lib.recursiveUpdate defaultConfig userConfig;
   inherit (updateConfig) userName;
-in {
+in
+{
   nixpkgs.config.allowUnfree = true;
   nix = {
     settings = {
@@ -39,7 +41,7 @@ in {
   # You can update Home Manager without changing this value. See
   # the Home Manager release notes for a list of state version
   # changes in each release.
-  home.stateVersion = "23.11";
+  home.stateVersion = "24.05";
 
   home.sessionVariables = {
     BROWSER = "firefox";
@@ -55,7 +57,12 @@ in {
     enable = true;
     enableCompletion = true;
     shellOptions = [
-       "histappend" "checkwinsize" "extglob" "globstar" "checkjobs" "-cdspell"
+      "histappend"
+      "checkwinsize"
+      "extglob"
+      "globstar"
+      "checkjobs"
+      "-cdspell"
     ];
     shellAliases = {
       ls = "ls --color=auto";
@@ -109,7 +116,7 @@ in {
     musescore
     x-air-edit
     libreoffice
-    onlyoffice-bin_7_5
+    onlyoffice-bin_latest
     spotify
     nix-prefetch-git
     cabal2nix
@@ -124,16 +131,16 @@ in {
     # microsoft-edge
     dmidecode
     libchewing
-    gh 
+    gh
     nixpkgsUnstable.zoom-us
-    nixpkgsUnstable.cabal-install 
-    nixpkgsUnstable.ghcid 
+    nixpkgsUnstable.cabal-install
+    nixpkgsUnstable.ghcid
     nixpkgsUnstable.ghc
     nixpkgsUnstable.ormolu
     nil
     nixpkgs-fmt
     gcc
-    rust-bin.stable.latest.complete 
+    rust-bin.stable.latest.complete
     telegram-desktop
     kdenlive
     nixpkgsUnstable.localsend
@@ -146,7 +153,7 @@ in {
     enable = true;
     defaultApplications = {
       # "inode/directory" = ["pcmanfm.desktop"];
-      "application/pdf"=["firefox.desktop"];
+      "application/pdf" = [ "firefox.desktop" ];
     };
     # defaultApplications = {
     #   "x-scheme-handler/http" = ["firefox.desktop"];

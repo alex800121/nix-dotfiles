@@ -13,11 +13,14 @@ in {
   services.xserver.desktopManager.gnome = {
     enable = true;
   };
-  services.xserver.displayManager = {
+  services.displayManager = {
     autoLogin.enable = autoLogin;
     autoLogin.user = userName;
     defaultSession = "gnome";
+  };
+  services.xserver.displayManager = {
     gdm = {
+      wayland = true;
       enable = true;
     };
   };

@@ -120,10 +120,9 @@ in
     networkmanager = {
       enable = true;
       dns = "systemd-resolved";
-      extraConfig = ''
-        [connection]
-        connection.mdns=1
-      '';
+      connectionConfig = {
+        "connection.mdns" = 1;
+      };
     };
   };
 
@@ -160,9 +159,9 @@ in
   services.xserver.enable = true;
 
   # Configure keymap in X11
-  services.xserver = {
+  services.xserver.xkb = {
     layout = "us";
-    xkbVariant = "";
+    variant = "";
   };
 
   # Enable bluetooth
@@ -192,7 +191,7 @@ in
   };
 
   # Enable touchpad support (enabled default in most desktopManager).
-  services.xserver.libinput = {
+  services.libinput = {
     enable = true;
     mouse.additionalOptions = "Option \"HighResolutionWheelScrolling\" \"false\"\n";
   };
@@ -303,5 +302,5 @@ in
     style = "adwaita-dark";
   };
 
-  system.stateVersion = "23.11"; # Did you read the comment?
+  system.stateVersion = "24.05"; # Did you read the comment?
 }
