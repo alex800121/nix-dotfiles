@@ -77,7 +77,7 @@
     "~/.config/alacritty/themes/gruvbox_dark.yml"
   ]; 
   ipc_socket = true; 
-  key_bindings = [
+  keyboard.bindings = [
     { 
       action = "Paste"; 
       key = "Paste"; 
@@ -518,13 +518,7 @@
   ]; 
   live_config_reload = true; 
   mouse = { 
-    double_click = { 
-      threshold = 300; 
-    }; 
     hide_when_typing = false; 
-    triple_click = { 
-      threshold = 300; 
-    }; 
   }; 
   scrolling = { 
     history = 10000; 
@@ -545,7 +539,7 @@
     decorations = "none"; 
     dynamic_padding = true; 
     dynamic_title = true; 
-    gtk_theme_variant = "None"; 
+    decorations_theme_variant = "None";
     opacity = 0.9; 
     padding = { 
       x = 6; 
