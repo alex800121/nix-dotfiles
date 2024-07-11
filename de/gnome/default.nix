@@ -29,7 +29,7 @@ in {
     profiles.user.databases = [
       {
         settings = {
-          # "org/gnome/mutter".experimental-features = ["scale-monitor-framebuffer"];
+          "org/gnome/mutter".experimental-features = ["scale-monitor-framebuffer"];
           "org/gnome/desktop/peripherals/touchpad" = {
             tap-to-click = true;
             disable-while-typing = true;
