@@ -113,7 +113,6 @@ in
     musescore
     x-air-edit
     libreoffice
-    spotify
     nix-prefetch-git
     cabal2nix
     curl
@@ -147,6 +146,7 @@ in
     onlyoffice-bin_latest
     nixpkgsUnstable.winetricks
     nixpkgsUnstable.wineWowPackages.full
+    spotify
     x42-plugins
     ];
 
