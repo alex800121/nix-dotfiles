@@ -65,7 +65,7 @@
           ];
         }).config.system.build.sdImage;
       };
-      mkNixosConfig = { system, userConfig, extraModules ? [ ], hmModules ? [ ], kernelVersion ? null, ... }: configName: {
+      mkNixosConfig = { system, userConfig, extraModules ? [ ], hmModules ? [ ], kernelVersion, ... }: configName: {
         nixosConfigurations."${configName}" = nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = {
@@ -73,6 +73,7 @@
           };
           modules = [
             {
+	      nixpkgs.config.allowUnsupportedSystem = true;
               nixpkgs.overlays = [
                 (import ./overlays/x-air-edit)
                 (import ./overlays/microsoft-edge)
@@ -215,6 +216,7 @@
       };
       m1-nixos = {
         system = "aarch64-linux";
+        kernelVersion = "6_8";
         userConfig = {
           hostName = "m1-nixos";
           userName = "alex800121";
@@ -233,8 +235,13 @@
 	  })
         ];
         hmModules = [
-          ./home
-          ./programs/nvim
+	  ({...}: {
+	    home.username = "alex800121";
+	    home.homeDirectory = "/home/alex800121";
+	    home.stateVersion = "24.05";
+	  })
+          # ./home
+          # ./programs/nvim
         ];
       };
       asus-nixos = {

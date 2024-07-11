@@ -12,10 +12,10 @@ let
   inherit (pkgs) system;
 in
 {
-  boot.binfmt.emulatedSystems = lib.mkIf (system != "aarch64-linux") [
+  boot.binfmt.emulatedSystems = lib.optionals (system != "aarch64-linux") [
     "aarch64-linux"
-  ];
-  boot.kernelPackages = lib.mkIf (!(builtins.isNull kernelVersion)) (lib.mkDefault pkgs."linuxPackages_${kernelVersion}");
+  ]; 
+  boot.kernelPackages = lib.mkDefault pkgs."linuxPackages_${kernelVersion}";
 
   hardware.enableAllFirmware = true;
   hardware.enableRedistributableFirmware = true;
@@ -47,7 +47,7 @@ in
     loader = {
       systemd-boot = {
         enable = true;
-        consoleMode = "1";
+        consoleMode = lib.mkDefault "1";
       };
       efi = {
         canTouchEfiVariables = true;
@@ -307,4 +307,4 @@ in
   # services.fprintd.tod.driver = pkgs.libfprint-2-tod1-goodix;
 
   system.stateVersion = "24.05"; # Did you read the comment?
-}
+} 

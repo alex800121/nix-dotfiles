@@ -18,7 +18,7 @@ in
       experimental-features = "nix-command flakes repl-flake";
     };
   };
-  xdg.configFile = lib.mkIf (system != "aarch64-linux") {
+  xdg.configFile = {
     nixpkgs = {
       recursive = true;
       source = ../programs/nixpkgs;
@@ -55,7 +55,8 @@ in
   # programs.home-manager.enable = true;
 
   programs.bash = {
-    enable = (system != "aarch64-linux");
+    # enable = true;
+    enable = system != "aarch64-linux";
     enableCompletion = true;
     shellOptions = [
       "histappend"
@@ -91,24 +92,25 @@ in
     '';
   };
   programs.readline = {
-    enable = (system != "aarch64-linux");
+    # enable = true;
+    enable = system != "aarch64-linux";
     extraConfig = "set completion-ignore-case On";
   };
   # targets.genericLinux.enable = true;
 
   programs.direnv = {
-    enable = (system != "aarch64-linux");
+    # enable = true;
+    enable = system != "aarch64-linux";
     enableBashIntegration = true;
     nix-direnv.enable = true;
   };
 
-  fonts.fontconfig.enable = false;
+  fonts.fontconfig = {
+    enable = system != "aarch64-linux";
+  };
 
   home.packages = with pkgs; [
     firefox
-    # google-chrome
-    # microsoft-edge
-  ] ++ lib.optionals (system != "aarch64-linux") [
     nixpkgsUnstable.android-tools
     nixpkgsUnstable.scrcpy
     gnome-network-displays
@@ -144,6 +146,9 @@ in
     nixpkgsUnstable.obs-studio
     gimp
     wireshark
+    # google-chrome
+    # microsoft-edge
+  ] ++ lib.optionals (system != "aarch64-linux") [
     onlyoffice-bin_latest
     nixpkgsUnstable.winetricks
     nixpkgsUnstable.wineWowPackages.full
@@ -152,7 +157,8 @@ in
     ];
 
   xdg.mimeApps = {
-    enable = (system != "aarch64-linux");
+    # enable = true;
+    enable = system != "aarch64-linux";
     defaultApplications = {
       # "inode/directory" = ["pcmanfm.desktop"];
       "application/pdf" = [ "firefox.desktop" ];
@@ -174,33 +180,39 @@ in
   };
 
   programs.git = {
-    enable = (system != "aarch64-linux");
+    # enable = true;
+    enable = system != "aarch64-linux";
     userName = "alex800121";
     userEmail = "alex800121@hotmail.com";
   };
 
   programs.htop = {
-    enable = (system != "aarch64-linux");
+    # enable = true;
+    enable = system != "aarch64-linux";
   };
 
   programs.helix = {
-    enable = (system != "aarch64-linux");
+    # enable = true;
+    enable = system != "aarch64-linux";
     settings = import ../programs/helix/settings.nix;
     languages = import ../programs/helix/languages.nix;
   };
 
   programs.alacritty = {
-    enable = (system != "aarch64-linux");
+    # enable = true;
+    enable = system != "aarch64-linux";
     package = pkgs.alacritty;
     settings = import ../programs/alacritty/alacritty-settings.nix updateConfig;
   };
 
   programs.zellij = {
-    enable = (system != "aarch64-linux");
+    # enable = true;
+    enable = system != "aarch64-linux";
   };
   programs.vscode = {
     # package = pkgs.vscode-fhs;
-    enable = (system != "aarch64-linux");
+    # enable = true;
+    enable = system != "aarch64-linux";
     enableExtensionUpdateCheck = true;
     enableUpdateCheck = true;
     mutableExtensionsDir = true;
