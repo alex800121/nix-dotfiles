@@ -1,6 +1,7 @@
-{ config, lib, pkgs, modulesPath, ... }:
+{ ... }:
 {
-  hardware.amdgpu.loadInInitrd = true;
-  hardware.amdgpu.amdvlk = true;
-  hardware.amdgpu.opencl = true;
+  hardware.amdgpu.legacySupport.enable = true;
+  hardware.amdgpu.amdvlk.enable = true;
+  hardware.amdgpu.opencl.enable = true;
+  hardware.amdgpu.initrd.enable = true;
 }
