@@ -12,6 +12,10 @@
     nixos-hardware = {
       url = "github:NixOS/nixos-hardware/master";
     };
+    apple-silicon-support = {
+      url = "github:tpwrules/nixos-apple-silicon/main";
+      inputs.nixpkgs.follows = "nixpkgsUnstable";
+    };
     musnix = {
       url = "github:musnix/musnix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -57,7 +61,7 @@
           ];
         }).config.system.build.sdImage;
       };
-      mkNixosConfig = { system, userConfig, extraModules ? [ ], hmModules ? [ ], kernelVersion, ... }: configName: {
+      mkNixosConfig = { system, userConfig, extraModules ? [ ], hmModules ? [ ], kernelVersion ? null, ... }: configName: {
         nixosConfigurations."${configName}" = nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = {
@@ -205,6 +209,26 @@
           ./programs/nvim
         ];
       };
+      m1-nixos = {
+        system = "aarch64-linux";
+        userConfig = {
+          hostName = "m1-nixos";
+          userName = "alex800121";
+          fontSize = 11.5;
+          autoLogin = false;
+        };
+        extraModules = [
+          ./configuration
+          ./hardware/m1.nix
+          ./de/gnome
+          ./programs/sshd
+          inputs.apple-silicon-support.nixosModules.default
+        ];
+        hmModules = [
+          ./home
+          ./programs/nvim
+        ];
+      };
       asus-nixos = {
         system = "x86_64-linux";
         kernelVersion = "6_6";
@@ -306,6 +330,7 @@
         "alexrpi4dorm"
         "alexrpi4tp"
         "musnix"
+        "m1-nixos"
       ];
     in
     builtins.foldl' (x: y: nixpkgs.lib.recursiveUpdate x y) { } [

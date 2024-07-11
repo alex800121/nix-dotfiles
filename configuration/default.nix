@@ -15,7 +15,7 @@ in
   boot.binfmt.emulatedSystems = [
     "aarch64-linux"
   ];
-  boot.kernelPackages = lib.mkDefault pkgs."linuxPackages_${kernelVersion}";
+  boot.kernelPackages = lib.mkIf (!(builtins.isNull kernelVersion)) (lib.mkDefault pkgs."linuxPackages_${kernelVersion}");
 
   hardware.enableAllFirmware = true;
   hardware.enableRedistributableFirmware = true;
