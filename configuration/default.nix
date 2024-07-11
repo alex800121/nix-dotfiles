@@ -12,7 +12,7 @@ let
   inherit (pkgs) system;
 in
 {
-  boot.binfmt.emulatedSystems = [
+  boot.binfmt.emulatedSystems = lib.mkIf (system != "aarch64-linux") [
     "aarch64-linux"
   ];
   boot.kernelPackages = lib.mkIf (!(builtins.isNull kernelVersion)) (lib.mkDefault pkgs."linuxPackages_${kernelVersion}");

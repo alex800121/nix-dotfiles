@@ -16,6 +16,10 @@
       url = "github:tpwrules/nixos-apple-silicon/main";
       inputs.nixpkgs.follows = "nixpkgsUnstable";
     };
+    apple-firmware = {
+      url = "git+file:/home/alex800121/nixos/firmware";
+      flake = false;
+    };
     musnix = {
       url = "github:musnix/musnix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -223,6 +227,10 @@
           ./de/gnome
           ./programs/sshd
           inputs.apple-silicon-support.nixosModules.default
+	  ({...}: {
+	    hardware.asahi.peripheralFirmwareDirectory = "${inputs.apple-firmware}";
+	    hardware.asahi.useExperimentalGPUDriver = true;
+	  })
         ];
         hmModules = [
           ./home

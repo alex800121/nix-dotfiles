@@ -104,19 +104,15 @@ in
   # fonts.fontconfig.enable = true;
 
   home.packages = with pkgs; [
-    nixpkgsUnstable.winetricks
-    nixpkgsUnstable.wineWowPackages.full
     nixpkgsUnstable.android-tools
     nixpkgsUnstable.scrcpy
     gnome-network-displays
     libsForQt5.plasma-browser-integration
     ardour
-    x42-plugins
     helvum
     musescore
     x-air-edit
     libreoffice
-    onlyoffice-bin_latest
     spotify
     nix-prefetch-git
     cabal2nix
@@ -147,7 +143,12 @@ in
     nixpkgsUnstable.obs-studio
     gimp
     wireshark
-  ];
+  ] ++ lib.optionals (system != "aarch64-linux") [
+    onlyoffice-bin_latest
+    nixpkgsUnstable.winetricks
+    nixpkgsUnstable.wineWowPackages.full
+    x42-plugins
+    ];
 
   xdg.mimeApps = {
     enable = true;

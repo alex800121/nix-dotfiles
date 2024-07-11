@@ -23,6 +23,22 @@
         "type": "github"
       }
     },
+    "apple-firmware": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1720675347,
+        "narHash": "sha256-EdK8HRIXmjzkKD32Y6k7yIEJUH7w8E8G2ywD1zRibKI=",
+        "ref": "refs/heads/master",
+        "rev": "4ecb8c86769e7873277688e97fec691ddf7c021a",
+        "revCount": 1,
+        "type": "git",
+        "url": "file:/home/alex800121/nixos/firmware"
+      },
+      "original": {
+        "type": "git",
+        "url": "file:/home/alex800121/nixos/firmware"
+      }
+    },
     "apple-silicon-support": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -573,6 +589,7 @@
     "root": {
       "inputs": {
         "agenix": "agenix",
+        "apple-firmware": "apple-firmware",
         "apple-silicon-support": "apple-silicon-support",
         "haskell-snippets": "haskell-snippets",
         "haskell-updates": "haskell-updates",
