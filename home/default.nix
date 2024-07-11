@@ -18,16 +18,16 @@ in
       experimental-features = "nix-command flakes repl-flake";
     };
   };
-  xdg.configFile = {
-    nixpkgs = {
-      recursive = true;
-      source = ../programs/nixpkgs;
-    };
-    fcitx5 = {
-      # recursive = true;
-      source = ../programs/fcitx5;
-    };
-  };
+  # xdg.configFile = {
+  #   nixpkgs = {
+  #     recursive = true;
+  #     source = ../programs/nixpkgs;
+  #   };
+  #   fcitx5 = {
+  #     # recursive = true;
+  #     source = ../programs/fcitx5;
+  #   };
+  # };
 
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
@@ -111,6 +111,9 @@ in
 
   home.packages = with pkgs; [
     firefox
+    # google-chrome
+    # microsoft-edge
+  ] ++ lib.optionals (system != "aarch64-linux") [
     nixpkgsUnstable.android-tools
     nixpkgsUnstable.scrcpy
     gnome-network-displays
@@ -146,9 +149,6 @@ in
     nixpkgsUnstable.obs-studio
     gimp
     wireshark
-    # google-chrome
-    # microsoft-edge
-  ] ++ lib.optionals (system != "aarch64-linux") [
     onlyoffice-bin_latest
     nixpkgsUnstable.winetricks
     nixpkgsUnstable.wineWowPackages.full

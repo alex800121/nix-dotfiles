@@ -235,12 +235,12 @@
 	  })
         ];
         hmModules = [
-	  ({...}: {
-	    home.username = "alex800121";
-	    home.homeDirectory = "/home/alex800121";
-	    home.stateVersion = "24.05";
-	  })
-          # ./home
+	  # ({...}: {
+	  #   home.username = "alex800121";
+	  #   home.homeDirectory = "/home/alex800121";
+	  #   home.stateVersion = "24.05";
+	  # })
+          ./home
           # ./programs/nvim
         ];
       };
