@@ -18,16 +18,16 @@ in
       experimental-features = "nix-command flakes repl-flake";
     };
   };
-  # xdg.configFile = {
-  #   nixpkgs = {
-  #     recursive = true;
-  #     source = ../programs/nixpkgs;
-  #   };
-  #   fcitx5 = {
-  #     # recursive = true;
-  #     source = ../programs/fcitx5;
-  #   };
-  # };
+  xdg.configFile = {
+    nixpkgs = {
+      recursive = true;
+      source = ../programs/nixpkgs;
+    };
+    fcitx5 = {
+      # recursive = true;
+      source = ../programs/fcitx5;
+    };
+  };
 
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
@@ -55,8 +55,8 @@ in
   # programs.home-manager.enable = true;
 
   programs.bash = {
-    # enable = true;
-    enable = system != "aarch64-linux";
+    enable = true;
+    # enable = system != "aarch64-linux";
     enableCompletion = true;
     shellOptions = [
       "histappend"
@@ -92,28 +92,25 @@ in
     '';
   };
   programs.readline = {
-    # enable = true;
-    enable = system != "aarch64-linux";
+    enable = true;
+    # enable = system != "aarch64-linux";
     extraConfig = "set completion-ignore-case On";
   };
   # targets.genericLinux.enable = true;
 
   programs.direnv = {
-    # enable = true;
-    enable = system != "aarch64-linux";
+    enable = true;
+    # enable = system != "aarch64-linux";
     enableBashIntegration = true;
     nix-direnv.enable = true;
   };
 
   fonts.fontconfig = {
-    enable = system != "aarch64-linux";
+    enable = true;
   };
 
   home.packages = with pkgs; [
     firefox
-    # google-chrome
-    # microsoft-edge
-  ] ++ lib.optionals (system != "aarch64-linux") [
     nixpkgsUnstable.android-tools
     nixpkgsUnstable.scrcpy
     gnome-network-displays
@@ -121,7 +118,6 @@ in
     ardour
     helvum
     musescore
-    x-air-edit
     libreoffice
     nix-prefetch-git
     cabal2nix
@@ -134,7 +130,6 @@ in
     dmidecode
     libchewing
     gh
-    nixpkgsUnstable.zoom-us
     nixpkgsUnstable.cabal-install
     nixpkgsUnstable.ghcid
     nixpkgsUnstable.ghc
@@ -149,16 +144,21 @@ in
     nixpkgsUnstable.obs-studio
     gimp
     wireshark
+    # google-chrome
+    # microsoft-edge
+  ] ++ lib.optionals (system != "aarch64-linux") [
     onlyoffice-bin_latest
     nixpkgsUnstable.winetricks
     nixpkgsUnstable.wineWowPackages.full
     spotify
+    nixpkgsUnstable.zoom-us
     x42-plugins
+    x-air-edit
     ];
 
   xdg.mimeApps = {
-    # enable = true;
-    enable = system != "aarch64-linux";
+    enable = true;
+    # enable = system != "aarch64-linux";
     defaultApplications = {
       # "inode/directory" = ["pcmanfm.desktop"];
       "application/pdf" = [ "firefox.desktop" ];
@@ -180,39 +180,39 @@ in
   };
 
   programs.git = {
-    # enable = true;
-    enable = system != "aarch64-linux";
+    enable = true;
+    # enable = system != "aarch64-linux";
     userName = "alex800121";
     userEmail = "alex800121@hotmail.com";
   };
 
   programs.htop = {
-    # enable = true;
-    enable = system != "aarch64-linux";
+    enable = true;
+    # enable = system != "aarch64-linux";
   };
 
   programs.helix = {
-    # enable = true;
-    enable = system != "aarch64-linux";
+    enable = true;
+    # enable = system != "aarch64-linux";
     settings = import ../programs/helix/settings.nix;
     languages = import ../programs/helix/languages.nix;
   };
 
   programs.alacritty = {
-    # enable = true;
-    enable = system != "aarch64-linux";
+    enable = true;
+    # enable = system != "aarch64-linux";
     package = pkgs.alacritty;
     settings = import ../programs/alacritty/alacritty-settings.nix updateConfig;
   };
 
   programs.zellij = {
-    # enable = true;
-    enable = system != "aarch64-linux";
+    enable = true;
+    # enable = system != "aarch64-linux";
   };
   programs.vscode = {
     # package = pkgs.vscode-fhs;
-    # enable = true;
-    enable = system != "aarch64-linux";
+    enable = true;
+    # enable = system != "aarch64-linux";
     enableExtensionUpdateCheck = true;
     enableUpdateCheck = true;
     mutableExtensionsDir = true;

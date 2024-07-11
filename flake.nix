@@ -16,8 +16,12 @@
       url = "github:tpwrules/nixos-apple-silicon/main";
       inputs.nixpkgs.follows = "nixpkgsUnstable";
     };
+    # apple-firmware = {
+    #   url = "git+file:/home/alex800121/nixos/firmware";
+    #   flake = false;
+    # };
     apple-firmware = {
-      url = "git+file:/home/alex800121/nixos/firmware";
+      url = "git+ssh://alex800121@acer-tp/home/alex800121/nixos/firmware";
       flake = false;
     };
     musnix = {
@@ -230,7 +234,7 @@
           ./programs/sshd
           inputs.apple-silicon-support.nixosModules.default
 	  ({...}: {
-	    hardware.asahi.peripheralFirmwareDirectory = "${inputs.apple-firmware}";
+	    hardware.asahi.peripheralFirmwareDirectory = inputs.apple-firmware;
 	    hardware.asahi.useExperimentalGPUDriver = true;
 	  })
         ];
@@ -241,7 +245,7 @@
 	  #   home.stateVersion = "24.05";
 	  # })
           ./home
-          # ./programs/nvim
+          ./programs/nvim
         ];
       };
       asus-nixos = {
@@ -273,6 +277,7 @@
           # ./programs/winvirt
           ./programs/sshd
           ./programs/wireguard/asus-nixos.nix
+          ./programs/tlp
         ];
         hmModules = [
           ./home
