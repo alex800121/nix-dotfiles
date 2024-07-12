@@ -6,11 +6,12 @@ let
   };
 in
 {
-  home.sessionVariables."CODELLDB_PATH" = "${pkgs.vscode-extensions.vadimcn.vscode-lldb}/share/vscode/extensions/vadimcn.vscode-lldb/adapter/codelldb";
-  home.sessionVariables."LIBLLDB_PATH" = "${pkgs.vscode-extensions.vadimcn.vscode-lldb}/share/vscode/extensions/vadimcn.vscode-lldb/lldb/lib/liblldb.so";
+  home.sessionVariables."CODELLDB_PATH" = "${nixpkgsUnstable.vscode-extensions.vadimcn.vscode-lldb}/share/vscode/extensions/vadimcn.vscode-lldb/adapter/codelldb";
+  home.sessionVariables."LIBLLDB_PATH" = "${nixpkgsUnstable.vscode-extensions.vadimcn.vscode-lldb}/share/vscode/extensions/vadimcn.vscode-lldb/lldb/lib/liblldb.so";
   programs.neovim = {
     enable = true;
-    plugins = (with pkgs.vimPlugins; [
+    package = nixpkgsUnstable.neovim-unwrapped;
+    plugins = (with nixpkgsUnstable.vimPlugins; [
       gruvbox-nvim
       which-key-nvim
       bufdelete-nvim
@@ -21,18 +22,21 @@ in
       nvim-web-devicons
       onedark-nvim
       indent-blankline-nvim
-      (nvim-treesitter.withPlugins (p: with p; [
-        tree-sitter-lua
-        tree-sitter-haskell
-        tree-sitter-rust
-        tree-sitter-c
-        tree-sitter-vim
-        tree-sitter-nix
-        tree-sitter-json
-      ]))
-      nvim-treesitter-parsers.kdl
-      nvim-treesitter-parsers.jsonc
-      nvim-treesitter-textobjects
+      # (nvim-treesitter.withPlugins (p: with p; [
+      #   c
+      #   cpp
+      #   lua
+      #   markdown
+      #   query
+      #   haskell
+      #   rust
+      #   nix
+      #   json
+      #   yaml
+      #   toml
+      #   vim
+      #   vimdoc
+      # ]))
       plenary-nvim
       telescope-fzf-native-nvim
       telescope-nvim
@@ -49,7 +53,7 @@ in
       cmp_luasnip
       cmp-nvim-lsp
       cmp-nvim-lua
-      cmp-treesitter
+      # cmp-treesitter
       cmp-path
       cmp-buffer
       cmp-cmdline
@@ -58,27 +62,26 @@ in
       nvim-dap
       nvim-dap-ui
       transparent-nvim
-      nixpkgsUnstable.vimPlugins.haskell-tools-nvim
-      nixpkgsUnstable.vimPlugins.toggleterm-nvim
-      nixpkgsUnstable.vimPlugins.iron-nvim
-      pkgs.haskell-snippets-nvim
+      haskell-tools-nvim
+      toggleterm-nvim
+      iron-nvim
+      haskell-snippets-nvim
       # scrollEOF-nvim
     ]);
     viAlias = true;
     vimAlias = true;
     vimdiffAlias = true;
-    extraPackages = (with pkgs; [
-      tree-sitter
+    extraPackages = (with nixpkgsUnstable; [
       nerdfonts
       ripgrep
       fd
-      nixpkgsUnstable.haskell-language-server
-      nixpkgsUnstable.haskellPackages.hoogle
-      nixpkgsUnstable.haskellPackages.ghci-dap
-      nixpkgsUnstable.haskellPackages.haskell-dap
-      nixpkgsUnstable.haskellPackages.haskell-debug-adapter
-      nixpkgsUnstable.haskellPackages.fast-tags
-      nixpkgsUnstable.ormolu
+      haskell-language-server
+      haskellPackages.hoogle
+      haskellPackages.ghci-dap
+      haskellPackages.haskell-dap
+      haskellPackages.haskell-debug-adapter
+      haskellPackages.fast-tags
+      ormolu
       nil
       lua-language-server
       nixpkgs-fmt

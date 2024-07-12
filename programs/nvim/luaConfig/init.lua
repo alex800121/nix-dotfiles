@@ -8,7 +8,7 @@ require'user.indent'
 require'user.buffer'
 require'user.project'
 require'user.nvimtree'.setup()
-require'user.treesitter'
+-- require'user.treesitter'
 require'user.telescope'
 require'user.undotree'
 require'user.lualine'
