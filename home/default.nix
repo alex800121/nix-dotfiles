@@ -4,6 +4,10 @@ let
     inherit (pkgs) system;
     config.allowUnfree = true;
   };
+  nixpkgs_x86 = import inputs.nixpkgsUnstable {
+    system = "x86_64-linux";
+    config.allowUnfree = true;
+  };
   defaultConfig = {
     fontSize = 11.5;
   };
@@ -133,9 +137,6 @@ in
     nixpkgsUnstable.cabal-install
     nixpkgsUnstable.ghcid
     nixpkgsUnstable.ghc
-    nixpkgsUnstable.ormolu
-    nil
-    nixpkgs-fmt
     gcc
     rust-bin.stable.latest.complete
     telegram-desktop
@@ -146,15 +147,15 @@ in
     wireshark
     # google-chrome
     # microsoft-edge
+    nixpkgs_x86.winetricks
+    nixpkgs_x86.wineWow64Packages.full
   ] ++ lib.optionals (system != "aarch64-linux") [
     onlyoffice-bin_latest
-    nixpkgsUnstable.winetricks
-    nixpkgsUnstable.wineWowPackages.full
     spotify
     nixpkgsUnstable.zoom-us
     x42-plugins
     x-air-edit
-    ];
+  ];
 
   xdg.mimeApps = {
     enable = true;
@@ -191,12 +192,19 @@ in
     # enable = system != "aarch64-linux";
   };
 
-  programs.helix = {
-    enable = true;
-    # enable = system != "aarch64-linux";
-    settings = import ../programs/helix/settings.nix;
-    languages = import ../programs/helix/languages.nix;
-  };
+  # programs.helix = {
+  #   enable = true;
+  #   settings = import ../programs/helix/settings.nix;
+  #   languages = import ../programs/helix/languages.nix;
+  #   extraPackages = with nixpkgsUnstable; [
+  #     haskell-language-server
+  #     ormolu
+  #     haskellPackages.cabal-fmt
+  #     lua-language-server
+  #     nil
+  #     nixpkgs-fmt
+  #   ];
+  # };
 
   programs.alacritty = {
     enable = true;

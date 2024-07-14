@@ -229,18 +229,11 @@
           };
           extraModules = [
             ./configuration
+            ./configuration/m1.nix
             ./hardware/m1.nix
             ./de/gnome
             ./programs/sshd
             inputs.apple-silicon-support.nixosModules.default
-            ({ ... }: {
-              hardware.asahi.peripheralFirmwareDirectory = inputs.apple-firmware;
-              hardware.asahi.useExperimentalGPUDriver = true;
-              swapDevices = [{
-                device = "/var/lib/swapfile";
-                size = 16 * 1024;
-              }];
-            })
           ];
           hmModules = [
             # ({...}: {

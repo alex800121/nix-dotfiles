@@ -119,11 +119,11 @@ in {
 
   programs.htop.enable = true;
 
-  programs.helix = {
-    enable = true;
-    settings = import ../programs/helix/settings.nix;
-    languages = import ../programs/helix/languages.nix;
-  };
+  # programs.helix = {
+  #   enable = true;
+  #   settings = import ../programs/helix/settings.nix;
+  #   languages = import ../programs/helix/languages.nix;
+  # };
 
   programs.alacritty = {
     enable = true;

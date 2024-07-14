@@ -12,8 +12,9 @@ let
   inherit (pkgs) system;
 in
 {
-  boot.binfmt.emulatedSystems = lib.optionals (system != "aarch64-linux") [
+  boot.binfmt.emulatedSystems = builtins.filter (x: x != system) [
     "aarch64-linux"
+    "x86_64-linux"
   ]; 
   boot.kernelPackages = lib.mkDefault pkgs."linuxPackages_${kernelVersion}";
 
@@ -251,7 +252,7 @@ in
     wev
     libimobiledevice
     ifuse
-  ];
+  ] ++ lib.optionals (system == "aarch64-linux") [nixpkgsUnstable.box64];
 
   environment.variables = {
     EDITOR = "nvim";
