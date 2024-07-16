@@ -1,4 +1,5 @@
-{ lib, userConfig, inputs, pkgs, ... }: let
+{ lib, userConfig, inputs, pkgs, ... }:
+let
   nixpkgsUnstable = import inputs.nixpkgsUnstable {
     inherit (pkgs) system;
     allowUnfree = true;
@@ -8,7 +9,8 @@
   };
   updateConfig = lib.recursiveUpdate defaultConfig userConfig;
   inherit (updateConfig) userName autoLogin;
-in {
+in
+{
   # Enable the GNOME Desktop Environment.
   services.xserver.desktopManager.gnome = {
     enable = true;
@@ -29,7 +31,19 @@ in {
     profiles.user.databases = [
       {
         settings = {
-          "org/gnome/mutter".experimental-features = ["scale-monitor-framebuffer"];
+          "org/gnome/mutter" = {
+            experimental-features = [ "scale-monitor-framebuffer" ];
+            dynamic-workspaces = true;
+          };
+          "org/gnome/shell" = {
+            disable-user-extensions = false;
+            enabled-extensions = [
+              "appindicatorsupport@rgcjonas.gmail.com"
+              "kimpanel@kde.org"
+              "drive-menu@gnome-shell-extensions.gcampax.github.com"
+            ];
+          };
+          "org/gnome/shell/extensions/kimpanel".vertical = true;
           "org/gnome/desktop/peripherals/touchpad" = {
             tap-to-click = true;
             disable-while-typing = true;
@@ -39,13 +53,17 @@ in {
           };
           "org/gnome/desktop/peripherals/mouse" = {
             natural-scroll = false;
-            speed=0.24778761061946897;
+            speed = 0.24778761061946897;
           };
-          "org/gnome/settings-daemon/plugins/power".sleep-inactive-ac-type = "nothing";
+          "org/gnome/settings-daemon/plugins/power" = {
+            sleep-inactive-ac-type = "nothing";
+            sleep-inactive-battery-timeout = 900;
+            sleep-inactive-battery-type = "suspend";
+          };
           "org/gnome/desktop/wm/keybindings" = {
-            switch-group= [ "<Super>Above_Tab"];
-            switch-group-backward=["<Shift><Super>Above_Tab"];
-            toggle-fullscreen=["<Super>f"];
+            switch-group = [ "<Super>Above_Tab" ];
+            switch-group-backward = [ "<Shift><Super>Above_Tab" ];
+            toggle-fullscreen = [ "<Super>f" ];
           };
           "org/gnome/settings-daemon/plugins/media-keys".custom-keybindings = [
             "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
@@ -59,6 +77,7 @@ in {
             exec = "alacritty";
             exec-arg = "";
           };
+          "org/gnome/desktop/interface".color-scheme = "prefer-dark";
           "org/gnome/shell".favorite-apps = [
             "firefox.desktop"
             "spotify.desktop"
