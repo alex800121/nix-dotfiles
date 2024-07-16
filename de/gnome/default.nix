@@ -57,7 +57,7 @@ in
           };
           "org/gnome/settings-daemon/plugins/power" = {
             sleep-inactive-ac-type = "nothing";
-            sleep-inactive-battery-timeout = 900;
+            sleep-inactive-battery-timeout = lib.gvariant.mkInt32 900;
             sleep-inactive-battery-type = "suspend";
           };
           "org/gnome/desktop/wm/keybindings" = {
