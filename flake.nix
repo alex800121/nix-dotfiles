@@ -9,6 +9,10 @@
       url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    home-managerUnstable = {
+      url = "github:nix-community/home-manager/master";
+      inputs.nixpkgs.follows = "nixpkgsUnstable";
+    };
     nixos-hardware = {
       url = "github:NixOS/nixos-hardware/master";
     };
@@ -16,10 +20,6 @@
       url = "github:tpwrules/nixos-apple-silicon/main";
       inputs.nixpkgs.follows = "nixpkgsUnstable";
     };
-    # apple-firmware = {
-    #   url = "git+file:/home/alex800121/nixos/firmware";
-    #   flake = false;
-    # };
     apple-firmware = {
       url = "git+ssh://alex800121@acer-tp/home/alex800121/nixos/firmware";
       flake = false;
@@ -36,17 +36,9 @@
       url = "github:oxalica/rust-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    networkmanager-dmenu = {
-      url = "github:firecat53/networkmanager-dmenu";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    haskell-snippets = {
-      url = "github:mrcjkb/haskell-snippets.nvim";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
-  outputs = inputs@{ self, nixpkgs, home-manager, nixos-hardware, agenix, rust-overlay, nixpkgsUnstable, networkmanager-dmenu, ... }:
+  outputs = inputs@{ self, nixpkgs, home-manager, home-managerUnstable, nixos-hardware, agenix, rust-overlay, nixpkgsUnstable, ... }:
     let
       mkSdImage = { inputModule, ... }: {
         image."${inputModule._module.specialArgs.userConfig.hostName}" = (inputModule.extendModules {
@@ -69,53 +61,59 @@
           ];
         }).config.system.build.sdImage;
       };
-      mkNixosConfig = { system, userConfig, extraModules ? [ ], hmModules ? [ ], kernelVersion, ... }: configName: {
-        nixosConfigurations."${configName}" = nixpkgs.lib.nixosSystem {
-          inherit system;
-          specialArgs = {
-            inherit kernelVersion userConfig inputs extraModules hmModules;
+      mkNixosConfig = { system, userConfig, extraModules ? [ ], hmModules ? [ ], kernelVersion, overlays ? [ ], ... }: configName:
+        let
+          nixpkgs-unstable = import inputs.nixpkgsUnstable {
+            inherit system overlays;
+            config.allowUnfree = true;
           };
-          modules = [
-            {
-              nixpkgs.config.allowUnsupportedSystem = true;
-              nixpkgs.overlays = [
-                (import ./overlays/x-air-edit)
-                (import ./overlays/microsoft-edge)
-                (import ./overlays/transparent-nvim)
-                (import ./overlays/scrollEOF-nvim)
-                # (import ./overlays/libfprint-2-tod1-goodix)
-                rust-overlay.overlays.default
-                (self: super: {
-                  networkmanager_dmenu = networkmanager-dmenu.packages."${system}".default;
-                })
-                (self: super:
-                  let
-                    pkgs = import nixpkgsUnstable { inherit system; };
-                  in
-                  {
-                    libsForQt5 = super.libsForQt5 // {
-                      sddm = pkgs.libsForQt5.sddm;
-                    };
-                  })
-                inputs.haskell-snippets.overlays.default
-              ];
-            }
-            agenix.nixosModules.default
-            home-manager.nixosModules.home-manager
-            {
-              home-manager = {
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                users."${userConfig.userName}".imports = hmModules;
-                extraSpecialArgs = {
-                  inherit inputs userConfig system;
+          nixpkgs_x86 = import inputs.nixpkgsUnstable {
+            system = "x86_64-linux";
+            config.allowUnfree = true;
+          };
+          home-manager-stable = home-manager.nixosModules.home-manager;
+          home-manager-unstable = home-managerUnstable.nixosModules.home-manager;
+          p = if system == "aarch64-linux" then nixpkgsUnstable else nixpkgs;
+        in
+        {
+          nixosConfigurations."${configName}" = p.lib.nixosSystem {
+            inherit system;
+            specialArgs = {
+              inherit kernelVersion userConfig inputs extraModules hmModules;
+              inherit nixpkgs_x86;
+              nixpkgsUnstable = nixpkgs-unstable;
+            };
+            modules = [
+              {
+                nixpkgs.config.allowUnsupportedSystem = true;
+                nixpkgs.overlays = [
+                  (import ./overlays/x-air-edit)
+                  (import ./overlays/scrollEOF-nvim)
+                  # (import ./overlays/libfprint-2-tod1-goodix)
+                  rust-overlay.overlays.default
+                ];
+              }
+              agenix.nixosModules.default
+              {
+                home-manager = {
+                  useGlobalPkgs = true;
+                  useUserPackages = true;
+                  users."${userConfig.userName}".imports = hmModules;
+                  extraSpecialArgs = {
+                    inherit inputs userConfig system;
+                    inherit nixpkgs_x86;
+                    nixpkgsUnstable = nixpkgs-unstable;
+                  };
+                  backupFileExtension = "bak";
                 };
-                backupFileExtension = "bak";
-              };
-            }
-          ] ++ extraModules;
+              }
+
+            ]
+            ++ [ (if system == "aarch64-linux" then home-manager-unstable else home-manager-stable) ]
+            # ++ [ home-manager-stable ]
+            ++ extraModules;
+          };
         };
-      };
       configs = {
         rpi4 = {
           system = "aarch64-linux";
@@ -227,6 +225,9 @@
             fontSize = 11.5;
             autoLogin = false;
           };
+          overlays = [
+            inputs.apple-silicon-support.overlays.default
+          ];
           extraModules = [
             ./configuration
             ./configuration/m1.nix
@@ -236,11 +237,6 @@
             inputs.apple-silicon-support.nixosModules.default
           ];
           hmModules = [
-            # ({...}: {
-            #   home.username = "alex800121";
-            #   home.homeDirectory = "/home/alex800121";
-            #   home.stateVersion = "24.05";
-            # })
             ./home
             ./programs/nvim
           ];
@@ -264,14 +260,8 @@
             nixos-hardware.nixosModules.common-pc-laptop
             nixos-hardware.nixosModules.common-pc-laptop-acpi_call
             nixos-hardware.nixosModules.common-pc-laptop-ssd
-            # inputs.musnix.nixosModules.musnix
-            # (import ./programs/musnix)
             ./programs/virt
             ./de/gnome
-            # ./de/plasma
-            # ./de/hyprland
-            # ./hardware/asus/single-partition-passthrough.nix
-            # ./programs/winvirt
             ./programs/sshd
             ./programs/wireguard/asus-nixos.nix
             ./programs/tlp

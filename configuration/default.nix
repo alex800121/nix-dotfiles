@@ -1,9 +1,8 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-{ pkgs, lib, userConfig, inputs, kernelVersion, ... }:
+{ pkgs, lib, userConfig, inputs, kernelVersion, nixpkgsUnstable, ... }:
 let
-  nixpkgsUnstable = import inputs.nixpkgsUnstable { inherit system; config.allowUnfree = true; };
   defaultConfig = {
     autoLogin = false;
   };
@@ -12,10 +11,11 @@ let
   inherit (pkgs) system;
 in
 {
+  system.stateVersion = "24.05";
   boot.binfmt.emulatedSystems = builtins.filter (x: x != system) [
     "aarch64-linux"
     "x86_64-linux"
-  ]; 
+  ];
   boot.kernelPackages = lib.mkDefault pkgs."linuxPackages_${kernelVersion}";
 
   hardware.enableAllFirmware = true;
@@ -157,10 +157,6 @@ in
   };
   services.blueman.enable = true;
 
-  # Enable sound with pipewire.
-  sound.enable = true;
-  hardware.pulseaudio.enable = false;
-
   security.rtkit.enable = true;
 
   services.pipewire = {
@@ -252,7 +248,7 @@ in
     wev
     libimobiledevice
     ifuse
-  ] ++ lib.optionals (system == "aarch64-linux") [nixpkgsUnstable.box64];
+  ] ++ lib.optionals (system == "aarch64-linux") [ nixpkgsUnstable.box64 ];
 
   environment.variables = {
     EDITOR = "nvim";
@@ -288,5 +284,4 @@ in
   # services.fprintd.tod.enable = true;
   # services.fprintd.tod.driver = pkgs.libfprint-2-tod1-goodix;
 
-  system.stateVersion = "24.05"; # Did you read the comment?
 } 

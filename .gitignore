@@ -1,3 +1,4 @@
 .luarc.json
 firmware
 tags
+qemu-*

@@ -57,5 +57,6 @@ in {
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINaSD3qsWtMBdadX2256X+2xBl4O3//d/vGUKBxgCTyR root@acer-tp"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICF22WQW3bhm7MpPR9Ye3SFDudNJ6XdXgEqSIrE7Cv33 root@alexrpi4tp"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIYMmkDdjmPFYFSPLLWWwoRD6cChs/zFozaHWfiaDsAA root@alexrpi4dorm"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFte0h3WjujSOGEUOiD/ruFXMatUobyFJmmpD0iXD8Jy root@m1-nixos"
   ];
 }

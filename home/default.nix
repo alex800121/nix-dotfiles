@@ -1,13 +1,5 @@
-{ pkgs, lib, inputs, userConfig, ... }:
+{ pkgs, lib, inputs, userConfig, nixpkgsUnstable, nixpkgs_x86, ... }:
 let
-  nixpkgsUnstable = import inputs.nixpkgsUnstable {
-    inherit (pkgs) system;
-    config.allowUnfree = true;
-  };
-  nixpkgs_x86 = import inputs.nixpkgsUnstable {
-    system = "x86_64-linux";
-    config.allowUnfree = true;
-  };
   defaultConfig = {
     fontSize = 11.5;
   };
@@ -60,7 +52,6 @@ in
 
   programs.bash = {
     enable = true;
-    # enable = system != "aarch64-linux";
     enableCompletion = true;
     shellOptions = [
       "histappend"
@@ -97,14 +88,12 @@ in
   };
   programs.readline = {
     enable = true;
-    # enable = system != "aarch64-linux";
     extraConfig = "set completion-ignore-case On";
   };
   # targets.genericLinux.enable = true;
 
   programs.direnv = {
     enable = true;
-    # enable = system != "aarch64-linux";
     enableBashIntegration = true;
     nix-direnv.enable = true;
   };
@@ -114,15 +103,15 @@ in
   };
 
   home.packages = with pkgs; [
-    firefox
+    nixpkgsUnstable.firefox
     nixpkgsUnstable.android-tools
     nixpkgsUnstable.scrcpy
     gnome-network-displays
     libsForQt5.plasma-browser-integration
-    ardour
+    nixpkgsUnstable.ardour
     helvum
     musescore
-    libreoffice
+    nixpkgsUnstable.libreoffice
     nix-prefetch-git
     cabal2nix
     curl
@@ -140,7 +129,6 @@ in
     gcc
     rust-bin.stable.latest.complete
     telegram-desktop
-    kdenlive
     nixpkgsUnstable.localsend
     nixpkgsUnstable.obs-studio
     gimp
@@ -151,6 +139,7 @@ in
     nixpkgs_x86.wineWow64Packages.full
   ] ++ lib.optionals (system != "aarch64-linux") [
     onlyoffice-bin_latest
+    kdenlive
     spotify
     nixpkgsUnstable.zoom-us
     x42-plugins
@@ -159,7 +148,6 @@ in
 
   xdg.mimeApps = {
     enable = true;
-    # enable = system != "aarch64-linux";
     defaultApplications = {
       # "inode/directory" = ["pcmanfm.desktop"];
       "application/pdf" = [ "firefox.desktop" ];
@@ -182,14 +170,12 @@ in
 
   programs.git = {
     enable = true;
-    # enable = system != "aarch64-linux";
     userName = "alex800121";
     userEmail = "alex800121@hotmail.com";
   };
 
   programs.htop = {
     enable = true;
-    # enable = system != "aarch64-linux";
   };
 
   # programs.helix = {
@@ -208,19 +194,16 @@ in
 
   programs.alacritty = {
     enable = true;
-    # enable = system != "aarch64-linux";
     package = pkgs.alacritty;
     settings = import ../programs/alacritty/alacritty-settings.nix updateConfig;
   };
 
   programs.zellij = {
     enable = true;
-    # enable = system != "aarch64-linux";
   };
   programs.vscode = {
     # package = pkgs.vscode-fhs;
     enable = true;
-    # enable = system != "aarch64-linux";
     enableExtensionUpdateCheck = true;
     enableUpdateCheck = true;
     mutableExtensionsDir = true;
