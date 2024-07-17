@@ -20,6 +20,18 @@ in {
   };
 
   # Enable the OpenSSH daemon.
+  networking.firewall.allowedTCPPorts = [
+    30000
+    31000
+    50000
+    51000
+  ];
+  networking.firewall.allowedUDPPorts = [
+    30000
+    31000
+    50000
+    51000
+  ];
   services.openssh = {
     enable = true;
     ports = [ 22 ];
