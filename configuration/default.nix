@@ -11,7 +11,7 @@ let
   inherit (pkgs) system;
 in
 {
-  system.stateVersion = "24.05";
+  system.stateVersion = lib.mkDefault "24.05";
   boot.binfmt.emulatedSystems = builtins.filter (x: x != system) [
     "aarch64-linux"
     "x86_64-linux"

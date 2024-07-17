@@ -1,4 +1,4 @@
-{ inputs, ... }: {
+{ inputs, lib, ... }: {
   hardware.asahi.setupAsahiSound = true;
   hardware.asahi.peripheralFirmwareDirectory = inputs.apple-firmware;
   hardware.asahi.useExperimentalGPUDriver = true;
@@ -9,4 +9,5 @@
   }];
   nix.settings.cores = 4;
   nix.settings.max-jobs = 4;
+  system.stateVersion = "24.11";
 }

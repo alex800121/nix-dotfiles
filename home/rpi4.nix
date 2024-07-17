@@ -1,8 +1,4 @@
 { pkgs, lib, inputs, userConfig, ... }: let
-  nixpkgsUnstable = import inputs.nixpkgsUnstable {
-    inherit (pkgs) system;
-    config.allowUnfree = true;
-  };
   defaultConfig = {
     fontSize = 11.5;
   };
@@ -127,7 +123,7 @@ in {
 
   programs.alacritty = {
     enable = true;
-    package = nixpkgsUnstable.alacritty;
+    package = pkgs.alacritty;
     settings = import ../programs/alacritty/alacritty-settings.nix updateConfig;
   };
 

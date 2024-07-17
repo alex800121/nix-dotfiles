@@ -73,10 +73,11 @@
           };
           home-manager-stable = home-manager.nixosModules.home-manager;
           home-manager-unstable = home-managerUnstable.nixosModules.home-manager;
-          p = if system == "aarch64-linux" then nixpkgsUnstable else nixpkgs;
+          nixpkgsFinal = if userConfig.hostName == "m1-nixos" then nixpkgsUnstable else nixpkgs;
+          home-managerFinal = if userConfig.hostName == "m1-nixos" then home-manager-unstable else home-manager-stable;
         in
         {
-          nixosConfigurations."${configName}" = p.lib.nixosSystem {
+          nixosConfigurations."${configName}" = nixpkgsFinal.lib.nixosSystem {
             inherit system;
             specialArgs = {
               inherit kernelVersion userConfig inputs extraModules hmModules;
@@ -93,7 +94,9 @@
                   rust-overlay.overlays.default
                 ];
               }
+
               agenix.nixosModules.default
+              home-managerFinal
               {
                 home-manager = {
                   useGlobalPkgs = true;
@@ -107,10 +110,7 @@
                   backupFileExtension = "bak";
                 };
               }
-
             ]
-            ++ [ (if system == "aarch64-linux" then home-manager-unstable else home-manager-stable) ]
-            # ++ [ home-manager-stable ]
             ++ extraModules;
           };
         };
@@ -239,6 +239,7 @@
           hmModules = [
             ./home
             ./programs/nvim
+            ./home/m1.nix
           ];
         };
         asus-nixos = {

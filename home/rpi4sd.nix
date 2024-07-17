@@ -1,8 +1,4 @@
 { pkgs, lib, inputs, userConfig, ... }: let
-  nixpkgsUnstable = import inputs.nixpkgsUnstable {
-    inherit (pkgs) system;
-    config.allowUnfree = true;
-  };
   defaultConfig = {
     fontSize = 11.5;
   };
@@ -83,12 +79,6 @@ in {
     extraConfig = "set completion-ignore-case On";
   };
   # targets.genericLinux.enable = true;
-
-  programs.direnv = {
-    enable = true;
-    enableBashIntegration = true;
-    nix-direnv.enable = true;
-  };
 
   # fonts.fontconfig.enable = true;
 

@@ -1,17 +1,11 @@
 { config, pkgs, lib, userConfig, inputs, system, ... }:
-let
-  nixpkgsUnstable = import inputs.nixpkgsUnstable {
-    inherit (pkgs) system;
-    config.allowUnfree = true;
-  };
-in
 {
-  home.sessionVariables."CODELLDB_PATH" = "${nixpkgsUnstable.vscode-extensions.vadimcn.vscode-lldb}/share/vscode/extensions/vadimcn.vscode-lldb/adapter/codelldb";
-  home.sessionVariables."LIBLLDB_PATH" = "${nixpkgsUnstable.vscode-extensions.vadimcn.vscode-lldb}/share/vscode/extensions/vadimcn.vscode-lldb/lldb/lib/liblldb.so";
+  home.sessionVariables."CODELLDB_PATH" = "${pkgs.vscode-extensions.vadimcn.vscode-lldb}/share/vscode/extensions/vadimcn.vscode-lldb/adapter/codelldb";
+  home.sessionVariables."LIBLLDB_PATH" = "${pkgs.vscode-extensions.vadimcn.vscode-lldb}/share/vscode/extensions/vadimcn.vscode-lldb/lldb/lib/liblldb.so";
   programs.neovim = {
     enable = true;
-    package = nixpkgsUnstable.neovim-unwrapped;
-    plugins = (with nixpkgsUnstable.vimPlugins; [
+    package = pkgs.neovim-unwrapped;
+    plugins = (with pkgs.vimPlugins; [
       gruvbox-nvim
       which-key-nvim
       bufdelete-nvim
@@ -71,7 +65,7 @@ in
     viAlias = true;
     vimAlias = true;
     vimdiffAlias = true;
-    extraPackages = (with nixpkgsUnstable; [
+    extraPackages = with pkgs; [
       nerdfonts
       ripgrep
       fd
@@ -86,7 +80,7 @@ in
       lua-language-server
       nixpkgs-fmt
       vscode-extensions.vadimcn.vscode-lldb
-    ]);
+    ];
   };
   xdg.configFile.nvim = {
     source = ./luaConfig;

@@ -3,7 +3,6 @@
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
 { pkgs, lib, userConfig, inputs, kernelVersion, ... }: let
-  nixpkgsUnstable = import inputs.nixpkgsUnstable { inherit system; config.allowUnfree = true; };
   defaultConfig = {
     autoLogin = false;
   };

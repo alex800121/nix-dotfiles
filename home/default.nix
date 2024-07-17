@@ -1,4 +1,4 @@
-{ pkgs, lib, inputs, userConfig, nixpkgsUnstable, nixpkgs_x86, ... }:
+{ pkgs, lib, userConfig, nixpkgsUnstable, nixpkgs_x86, ... }:
 let
   defaultConfig = {
     fontSize = 11.5;
@@ -38,7 +38,7 @@ in
   # You can update Home Manager without changing this value. See
   # the Home Manager release notes for a list of state version
   # changes in each release.
-  home.stateVersion = "24.05";
+  home.stateVersion = lib.mkDefault "24.05";
 
   home.sessionVariables = {
     BROWSER = "firefox";
@@ -108,10 +108,10 @@ in
     nixpkgsUnstable.scrcpy
     gnome-network-displays
     libsForQt5.plasma-browser-integration
-    nixpkgsUnstable.ardour
+    ardour
     helvum
     musescore
-    nixpkgsUnstable.libreoffice
+    libreoffice
     nix-prefetch-git
     cabal2nix
     curl
@@ -123,9 +123,9 @@ in
     dmidecode
     libchewing
     gh
-    nixpkgsUnstable.cabal-install
-    nixpkgsUnstable.ghcid
-    nixpkgsUnstable.ghc
+    cabal-install
+    ghcid
+    ghc
     gcc
     rust-bin.stable.latest.complete
     telegram-desktop
@@ -133,15 +133,14 @@ in
     nixpkgsUnstable.obs-studio
     gimp
     wireshark
-    # google-chrome
-    # microsoft-edge
+    # nixpkgsUnstable.google-chrome
     nixpkgs_x86.winetricks
     nixpkgs_x86.wineWow64Packages.full
   ] ++ lib.optionals (system != "aarch64-linux") [
     onlyoffice-bin_latest
-    kdenlive
-    spotify
+    nixpkgsUnstable.spotify
     nixpkgsUnstable.zoom-us
+    kdenlive
     x42-plugins
     x-air-edit
   ];

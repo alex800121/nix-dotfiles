@@ -4,7 +4,6 @@
 
 { pkgs, lib, userConfig, inputs, kernelVersion, config, ... }:
 let
-  nixpkgsUnstable = import inputs.nixpkgsUnstable { inherit system; config.allowUnfree = true; };
   defaultConfig = {
     autoLogin = false;
   };

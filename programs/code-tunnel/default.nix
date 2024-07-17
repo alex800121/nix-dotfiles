@@ -1,6 +1,4 @@
-{ pkgs, userConfig, inputs, ... }: let
-  nixpkgsUnstable = import inputs.nixpkgsUnstable { inherit (pkgs) system; config.allowUnfree = true; };
-in {
+{ pkgs, nixpkgsUnstable, userConfig, inputs, ... }: {
   systemd.user.services.code-tunnel = {
     enable = true;
     description = "Visual Studio Code Tunnel";
