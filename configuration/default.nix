@@ -124,9 +124,10 @@ in
   i18n.defaultLocale = "en_US.utf8";
 
   i18n.inputMethod = {
-    enabled = "fcitx5";
+    enable = true;
+    type = "fcitx5";
     fcitx5 = {
-      # enableRimeData = true;
+      waylandFrontend = true;
       addons = with pkgs; [
         fcitx5-chewing
         fcitx5-chinese-addons
@@ -219,7 +220,7 @@ in
     };
   };
 
-  hardware.opengl.enable = true;
+  hardware.graphics.enable = true;
 
   services.usbmuxd.enable = true;
 
@@ -235,7 +236,7 @@ in
     xorg.xrdb
     xsettingsd
     parted
-    gnome.adwaita-icon-theme
+    adwaita-icon-theme
     qjackctl
     pavucontrol
     helix
