@@ -1,4 +1,4 @@
-{ pkgs, lib, inputs, userConfig, ... }: let
+{ pkgs, lib, userConfig, ... }: let
   defaultConfig = {
     fontSize = 11.5;
   };
@@ -97,10 +97,10 @@ in {
     nodejs
     dmidecode
     gh 
-    nixpkgsUnstable.cabal-install 
-    nixpkgsUnstable.ghcid 
-    nixpkgsUnstable.ghc
-    nixpkgsUnstable.ormolu
+    cabal-install 
+    ghcid 
+    ghc
+    ormolu
     nil
     nixpkgs-fmt
     gcc
