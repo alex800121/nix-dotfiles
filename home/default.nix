@@ -133,9 +133,6 @@ in
     nixpkgsUnstable.obs-studio
     gimp
     wireshark
-    # nixpkgsUnstable.google-chrome
-    nixpkgs_x86.winetricks
-    nixpkgs_x86.wineWow64Packages.full
   ] ++ lib.optionals (system != "aarch64-linux") [
     onlyoffice-bin_latest
     nixpkgsUnstable.spotify

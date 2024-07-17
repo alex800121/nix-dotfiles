@@ -1,7 +1,7 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-{ pkgs, lib, userConfig, inputs, kernelVersion, nixpkgsUnstable, ... }:
+{ pkgs, lib, userConfig, inputs, kernelVersion, nixpkgsUnstable, nixpkgs_x86, ... }:
 let
   defaultConfig = {
     autoLogin = false;
@@ -31,7 +31,7 @@ in
   };
 
   services.kmscon.enable = true;
-  services.kmscon.autologinUser = userName;
+  # services.kmscon.autologinUser = userName;
   services.kmscon.hwRender = true;
   services.kmscon.extraConfig = ''
     font-size=14
@@ -253,6 +253,8 @@ in
     wev
     libimobiledevice
     ifuse
+    nixpkgs_x86.winetricks
+    nixpkgs_x86.wineWow64Packages.full
   ] ++ lib.optionals (system == "aarch64-linux") [ nixpkgsUnstable.box64 ];
 
   environment.variables = {

@@ -67,7 +67,7 @@
             inherit system overlays;
             config.allowUnfree = true;
           };
-          nixpkgs_x86 = import inputs.nixpkgsUnstable {
+          nixpkgs_x86 = import inputs.nixpkgs {
             system = "x86_64-linux";
             config.allowUnfree = true;
           };
