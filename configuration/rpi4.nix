@@ -86,6 +86,7 @@ in
 
   services.kmscon.enable = true;
   services.kmscon.hwRender = true;
+  services.kmscon.autologinUser = userName;
   services.kmscon.extraConfig = ''
     font-size=14
   '';
