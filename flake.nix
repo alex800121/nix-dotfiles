@@ -85,6 +85,7 @@
               nixpkgsUnstable = nixpkgs-unstable;
             };
             modules = [
+              ./configuration/distributed-builds.nix
               {
                 nixpkgs.config.allowUnsupportedSystem = true;
                 nixpkgs.overlays = [
@@ -94,7 +95,6 @@
                   rust-overlay.overlays.default
                 ];
               }
-
               agenix.nixosModules.default
               home-managerFinal
               {

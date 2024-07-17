@@ -72,6 +72,7 @@ in
     };
     extraOptions = ''
       experimental-features = nix-command flakes repl-flake
+      builders-use-substitutes = true
     '';
     settings.trusted-users = [ "alex800121" "@wheel" ];
   };
