@@ -235,6 +235,7 @@
             ./de/gnome
             ./programs/sshd
             inputs.apple-silicon-support.nixosModules.default
+            ./programs/wireguard/m1-nixos.nix
           ];
           hmModules = [
             ./home

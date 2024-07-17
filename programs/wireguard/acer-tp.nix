@@ -60,6 +60,12 @@ in
               AllowedIPs = [ "10.100.0.3/32" "fcdd::3/128" ];
             };
           }
+          {
+            wireguardPeerConfig = {
+              PublicKey = "kpsQ33+DHOSVggtxSnTm98jtsZxpiM0VWKmzoktTtGE=";
+              AllowedIPs = [ "10.100.0.4/32" "fcdd::4/128" ];
+            };
+          }
         ];
       };
     };
