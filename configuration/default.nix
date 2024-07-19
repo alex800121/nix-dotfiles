@@ -74,7 +74,7 @@ in
       experimental-features = nix-command flakes repl-flake
       builders-use-substitutes = true
     '';
-    settings.trusted-users = [ "alex800121" "@wheel" ];
+    settings.trusted-users = [ "nix-ssh" "alex800121" "@wheel" ];
   };
 
   services.power-profiles-daemon.enable = false;
