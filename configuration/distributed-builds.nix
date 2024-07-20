@@ -24,6 +24,9 @@ in
   nix.settings.trusted-users = [ "nix-ssh" "alex800121" "@wheel" ];
   nix.settings.trusted-public-keys = [
     "m1-nixos:UYbRubX2k1CyDWAf5zXCgF3asc3DVm1qMSjhuadvmik="
+    "nix-alexrpi4dorm:LO/WEW67OLrdBE8lh5ycuaEiprSz9rPYFoyhdkAajKM="
+    "nix-alexrpi4tp:XZMMtcMyPm9a8/hV7Dp8Z27hlUYp+jPg7uSBDTY+X4Y="
+    "nix-acer-tp:POOYVdWQp5avm9ZWd65SVcLdYiMNNx7Pfq/GtHr5WUc="
   ];
   age.secrets."nix-${hostName}" = {
     file = ../secrets/nix-${hostName}.age;
