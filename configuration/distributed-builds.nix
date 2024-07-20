@@ -1,4 +1,8 @@
-{ ... }: {
+{ userConfig, config, ... }:
+let
+  inherit (userConfig) hostName;
+in
+{
   nix.sshServe.enable = true;
   nix.sshServe.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINZLAWYLkwEtjlj2e65MwoDOLWUKJBBrjeDf4K0CcuIz alex800121@DaddyAlexAsus"
@@ -17,6 +21,19 @@
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFte0h3WjujSOGEUOiD/ruFXMatUobyFJmmpD0iXD8Jy root@m1-nixos"
   ];
   nix.distributedBuilds = true;
+  nix.settings.trusted-users = [ "nix-ssh" "alex800121" "@wheel" ];
+  nix.settings.trusted-public-keys = [
+    "m1-nixos:UYbRubX2k1CyDWAf5zXCgF3asc3DVm1qMSjhuadvmik="
+  ];
+  age.secrets."nix-${hostName}" = {
+    file = ../secrets/nix-${hostName}.age;
+    owner = "nix-ssh";
+    group = "nix-ssh";
+    mode = "600";
+  };
+  nix.extraOptions = ''
+    secret-key-files = ${config.age.secrets."nix-${hostName}".path}
+  '';
   nix.buildMachines = [
     {
       hostName = "alexrpi4tp";
