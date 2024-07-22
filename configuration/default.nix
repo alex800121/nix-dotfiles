@@ -1,7 +1,7 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-{ pkgs, lib, userConfig, inputs, kernelVersion, nixpkgsUnstable, nixpkgs_x86, ... }:
+{ pkgs, config, lib, userConfig, inputs, kernelVersion, nixpkgsUnstable, nixpkgs_x86, ... }:
 let
   defaultConfig = {
     autoLogin = false;
@@ -30,6 +30,7 @@ in
     font = "${pkgs.terminus_font}/share/consolefonts/ter-v32n.psf.gz";
   };
 
+  services.gpm.enable = true;
   services.kmscon.enable = true;
   # services.kmscon.autologinUser = userName;
   services.kmscon.hwRender = true;
@@ -124,7 +125,7 @@ in
   i18n.defaultLocale = "en_US.utf8";
 
   i18n.inputMethod = {
-    enabled =  "fcitx5";
+    enabled = "fcitx5";
     # type = "fcitx5";
     fcitx5 = {
       waylandFrontend = true;
@@ -229,6 +230,9 @@ in
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    fbterm
+    yaft
+    kmscon
     coreutils
     socat
     jq
@@ -252,6 +256,7 @@ in
     wev
     libimobiledevice
     ifuse
+    chromium
     nixpkgs_x86.winetricks
     nixpkgs_x86.wineWow64Packages.full
   ] ++ lib.optionals (system == "aarch64-linux") [ nixpkgsUnstable.box64 ];
