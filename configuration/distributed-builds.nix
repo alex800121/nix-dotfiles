@@ -27,6 +27,7 @@ in
     "nix-alexrpi4dorm:LO/WEW67OLrdBE8lh5ycuaEiprSz9rPYFoyhdkAajKM="
     "nix-alexrpi4tp:XZMMtcMyPm9a8/hV7Dp8Z27hlUYp+jPg7uSBDTY+X4Y="
     "nix-acer-tp:POOYVdWQp5avm9ZWd65SVcLdYiMNNx7Pfq/GtHr5WUc="
+    "nix-acer-nixos:DQf/Phaz1/VFIJc5MWM/Zd+qrY2lilHTD5pTMhwXoH4="
   ];
   age.secrets."nix-${hostName}" = {
     file = ../secrets/nix-${hostName}.age;
