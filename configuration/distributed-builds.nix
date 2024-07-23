@@ -1,4 +1,4 @@
-{ userConfig, config, ... }:
+{ lib, userConfig, config, ... }:
 let
   inherit (userConfig) hostName;
 in
@@ -38,7 +38,7 @@ in
   nix.extraOptions = ''
     secret-key-files = ${config.age.secrets."nix-${hostName}".path}
   '';
-  nix.buildMachines = [
+  nix.buildMachines = lib.filter (x: x.hostName != hostName) [
     {
       hostName = "alexrpi4tp";
       sshUser = "alex800121";
