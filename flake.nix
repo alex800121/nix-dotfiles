@@ -36,10 +36,10 @@
       url = "github:oxalica/rust-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixos-aarch64-widevine = {
-      url = "github:epetousis/nixos-aarch64-widevine";
-      inputs.nixpkgs.follows = "nixpkgsUnstable";
-    };
+    # nixos-aarch64-widevine = {
+    #   url = "github:epetousis/nixos-aarch64-widevine";
+    #   inputs.nixpkgs.follows = "nixpkgsUnstable";
+    # };
   };
 
   outputs =
@@ -50,7 +50,7 @@
     , nixos-hardware
     , agenix
     , rust-overlay
-    , nixos-aarch64-widevine
+    # , nixos-aarch64-widevine
     , nixpkgsUnstable
     , ...
     }:
@@ -104,7 +104,7 @@
               {
                 nixpkgs.config.allowUnsupportedSystem = true;
                 nixpkgs.overlays = [
-                  nixos-aarch64-widevine.overlays.default
+                  # nixos-aarch64-widevine.overlays.default
                   (import ./overlays/x-air-edit)
                   (import ./overlays/scrollEOF-nvim)
                   # (import ./overlays/libfprint-2-tod1-goodix)

@@ -44,6 +44,7 @@ in
     BROWSER = "firefox";
     EDITOR = "nvim";
     VISUAL = "nvim";
+    # MOZ_GMP_PATH = "${pkgs.widevine-cdm-lacros}/gmp-widevinecdm/system-installed";
     SUDO_EDITOR = "nvim";
   };
 
@@ -103,7 +104,8 @@ in
   };
 
   home.packages = with pkgs; [
-    nixpkgsUnstable.firefox
+    vlc
+    firefox
     nixpkgsUnstable.android-tools
     nixpkgsUnstable.scrcpy
     gnome-network-displays

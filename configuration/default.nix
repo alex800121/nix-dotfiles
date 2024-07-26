@@ -230,6 +230,8 @@ in
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    chromium
+    firefox
     fbterm
     yaft
     kmscon
@@ -256,7 +258,6 @@ in
     wev
     libimobiledevice
     ifuse
-    chromium
     nixpkgs_x86.winetricks
     nixpkgs_x86.wineWow64Packages.full
   ] ++ lib.optionals (system == "aarch64-linux") [ nixpkgsUnstable.box64 ];
@@ -271,6 +272,7 @@ in
     NIXOS_OZONE_WL = "1";
     XCURSOR_THEME = "Adwaita";
   };
+  # environment.sessionVariables.MOZ_GMP_PATH = [ "${pkgs.widevine-cdm-lacros}/gmp-widevinecdm/system-installed" ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
