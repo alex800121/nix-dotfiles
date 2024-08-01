@@ -1,16 +1,4 @@
-{ pkgs, inputs, nixpkgsUnstable, ... }:
-let
-  inherit (pkgs) system;
-in
-{
-  # services.dnsmasq = {
-  #   enable = true;
-  #   settings = {
-  #     interface = "virbr0";
-  #   };
-  #   alwaysKeepRunning = true;
-  #   resolveLocalQueries = true;
-  # };
+{ pkgs, ... }: {
   virtualisation = {
     libvirtd = {
       enable = true;
@@ -28,7 +16,7 @@ in
   virtualisation.lxd.enable = true;
 
   services.spice-vdagentd.enable = true;
-  environment.systemPackages = with nixpkgsUnstable; [
+  environment.systemPackages = with pkgs; [
     virt-manager
     virt-viewer
     spice

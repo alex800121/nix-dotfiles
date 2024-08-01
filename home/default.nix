@@ -20,7 +20,6 @@ in
       source = ../programs/nixpkgs;
     };
     fcitx5 = {
-      # recursive = true;
       source = ../programs/fcitx5;
     };
   };
@@ -106,32 +105,24 @@ in
   home.packages = with pkgs; [
     vlc
     firefox
-    nixpkgsUnstable.android-tools
-    nixpkgsUnstable.scrcpy
-    gnome-network-displays
+    android-tools
+    scrcpy
     libsForQt5.plasma-browser-integration
+    gnome-network-displays
     ardour
     helvum
     musescore
     libreoffice
     nix-prefetch-git
     cabal2nix
-    curl
-    fastfetch
-    ripgrep
-    wget
-    wl-clipboard
     nodejs
-    dmidecode
-    libchewing
     gh
     cabal-install
     ghcid
     ghc
-    gcc
     rust-bin.stable.latest.complete
     telegram-desktop
-    nixpkgsUnstable.localsend
+    localsend
     obs-studio
     gimp
     wireshark
@@ -140,6 +131,8 @@ in
     zoom-us
     kdenlive
     x42-plugins
+    winetricks
+    wineWowPackages.unstableFull
   ];
 
   xdg.mimeApps = {
@@ -173,20 +166,6 @@ in
   programs.htop = {
     enable = true;
   };
-
-  # programs.helix = {
-  #   enable = true;
-  #   settings = import ../programs/helix/settings.nix;
-  #   languages = import ../programs/helix/languages.nix;
-  #   extraPackages = with nixpkgsUnstable; [
-  #     haskell-language-server
-  #     ormolu
-  #     haskellPackages.cabal-fmt
-  #     lua-language-server
-  #     nil
-  #     nixpkgs-fmt
-  #   ];
-  # };
 
   programs.alacritty = {
     enable = true;

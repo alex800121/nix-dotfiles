@@ -1,9 +1,5 @@
-{ lib, userConfig, inputs, pkgs, ... }:
+{ lib, userConfig, pkgs, ... }:
 let
-  nixpkgsUnstable = import inputs.nixpkgsUnstable {
-    inherit (pkgs) system;
-    allowUnfree = true;
-  };
   defaultConfig = {
     autoLogin = false;
   };

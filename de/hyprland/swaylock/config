@@ -1,9 +1,0 @@
-daemonize
-fade-in=2
-clock
-timestr=%H:%M
-datestr=%Y/%m/%d, %a
-indicator-caps-lock
-scaling=fill
-screenshots
-effect-blur=8x2

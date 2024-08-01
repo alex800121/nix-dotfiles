@@ -26,7 +26,7 @@ in
     secret-key-files = ${config.age.secrets."nix-${hostName}".path}
     builders-use-substitutes = true
   '';
-  nix.buildMachines = 
+  nix.buildMachines = lib.filter (x: x.hostName != hostName)
     [
       {
         hostName = "alexrpi4tp";
