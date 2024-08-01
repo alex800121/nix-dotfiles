@@ -1,7 +1,7 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-{ pkgs, config, lib, userConfig, inputs, kernelVersion, nixpkgsUnstable, nixpkgs_x86, ... }:
+{ pkgs, config, lib, userConfig, inputs, kernelVersion, nixpkgsUnstable, ... }:
 let
   defaultConfig = {
     autoLogin = false;
@@ -76,6 +76,7 @@ in
       builders-use-substitutes = true
     '';
   };
+  nix.settings.max-jobs = lib.mkDefault "auto";
 
   services.power-profiles-daemon.enable = false;
   powerManagement = {
@@ -232,9 +233,6 @@ in
   environment.systemPackages = with pkgs; [
     chromium
     firefox
-    fbterm
-    yaft
-    kmscon
     coreutils
     socat
     jq
@@ -258,9 +256,9 @@ in
     wev
     libimobiledevice
     ifuse
-    nixpkgs_x86.winetricks
-    nixpkgs_x86.wineWow64Packages.full
-  ] ++ lib.optionals (system == "aarch64-linux") [ nixpkgsUnstable.box64 ];
+    nixpkgsUnstable.winetricks
+    nixpkgsUnstable.wineWow64Packages.full
+  ];
 
   environment.variables = {
     EDITOR = "nvim";
@@ -292,9 +290,4 @@ in
     enable = true;
     style = "adwaita-dark";
   };
-
-  # services.fprintd.enable = true;
-  # services.fprintd.tod.enable = true;
-  # services.fprintd.tod.driver = pkgs.libfprint-2-tod1-goodix;
-
 } 

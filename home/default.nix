@@ -1,4 +1,4 @@
-{ pkgs, lib, userConfig, nixpkgsUnstable, nixpkgs_x86, ... }:
+{ pkgs, lib, userConfig, nixpkgsUnstable, ... }:
 let
   defaultConfig = {
     fontSize = 11.5;
@@ -132,16 +132,14 @@ in
     rust-bin.stable.latest.complete
     telegram-desktop
     nixpkgsUnstable.localsend
-    nixpkgsUnstable.obs-studio
+    obs-studio
     gimp
     wireshark
-  ] ++ lib.optionals (system != "aarch64-linux") [
     onlyoffice-bin_latest
-    nixpkgsUnstable.spotify
-    nixpkgsUnstable.zoom-us
+    spotify
+    zoom-us
     kdenlive
     x42-plugins
-    x-air-edit
   ];
 
   xdg.mimeApps = {

@@ -54,18 +54,6 @@ in
               AllowedIPs = [ "10.100.0.2/32" "fcdd::2/128" ];
             };
           }
-          {
-            wireguardPeerConfig = {
-              PublicKey = "FtEhq103TNi0evV2VWQuZ3n6/62rXZuZI9zpaysboX0=";
-              AllowedIPs = [ "10.100.0.3/32" "fcdd::3/128" ];
-            };
-          }
-          {
-            wireguardPeerConfig = {
-              PublicKey = "kpsQ33+DHOSVggtxSnTm98jtsZxpiM0VWKmzoktTtGE=";
-              AllowedIPs = [ "10.100.0.4/32" "fcdd::4/128" ];
-            };
-          }
         ];
       };
     };
