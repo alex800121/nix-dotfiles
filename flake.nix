@@ -1,6 +1,5 @@
 {
   description = "NixOS configuration";
-
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
     nixpkgsUnstable.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -169,10 +168,35 @@
             ./programs/nvim
           ];
         };
+        fw13 = {
+          system = "x86_64-linux";
+          kernelVersion = "6_10";
+          userConfig = {
+            hostName = "fw13";
+            userName = "alex800121";
+            fontSize = 16;
+          };
+          extraModules = [
+            nixos-hardware.nixosModules.framework-13-7040-amd
+            ./configuration
+            ./hardware/amd.nix
+            ./hardware/fw13.nix
+            ./hardware/laptop.nix
+            ./de/gnome
+            ./programs/wireguard/fw13.nix
+            ./programs/sshd
+            ./programs/virt
+          ];
+          hmModules = [
+            ./home
+            ./programs/nvim
+          ];
+        };
       };
       outputConfigs = builtins.foldl' (x: y: nixpkgs.lib.recursiveUpdate x (mkNixosConfig configs."${y}" y)) { } [
         "acer-tp"
         "alexrpi4tp"
+        "fw13"
       ];
     in
     builtins.foldl' (x: y: nixpkgs.lib.recursiveUpdate x y) { } [

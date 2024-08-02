@@ -50,7 +50,7 @@ in
         wireguardPeers = [
           {
             wireguardPeerConfig = {
-              PublicKey = "upKxh1DAailH/sUJTfa0QDj6ZLoqNJx8z4qFEHPXmCI=";
+              PublicKey = "fw13_pub_key";
               AllowedIPs = [ "10.100.0.2/32" "fcdd::2/128" ];
             };
           }

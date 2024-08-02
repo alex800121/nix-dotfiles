@@ -31,6 +31,7 @@ in
   };
 
   services.gpm.enable = true;
+
   services.kmscon.enable = true;
   # services.kmscon.autologinUser = userName;
   services.kmscon.hwRender = true;
@@ -78,7 +79,8 @@ in
   };
   nix.settings.max-jobs = lib.mkDefault "auto";
 
-  services.power-profiles-daemon.enable = false;
+  services.power-profiles-daemon.enable = lib.mkDefault true;
+
   powerManagement = {
     enable = true;
   };
@@ -224,6 +226,8 @@ in
 
   # hardware.graphics.enable = true;
   hardware.opengl.enable = true;
+  hardware.opengl.driSupport = true;
+  hardware.opengl.driSupport32Bit = true;
 
   services.usbmuxd.enable = true;
 
@@ -271,7 +275,6 @@ in
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   programs.mtr.enable = true;
-
 
   # Enable the Locate
   services.locate = {
