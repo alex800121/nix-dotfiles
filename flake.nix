@@ -242,6 +242,9 @@
             ./programs/wireguard/fw13.nix
             ./programs/sshd
             ./programs/virt
+            # ({ lib, ... }: {
+            #   time.hardwareClockInLocalTime = false;
+            # })
           ];
           hmModules = [
             ./home

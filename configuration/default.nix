@@ -118,11 +118,11 @@ in
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Set your time zone.
-  time.hardwareClockInLocalTime = true;
-  services.automatic-timezoned.enable = true;
+  time.hardwareClockInLocalTime = lib.mkDefault true;
+  services.automatic-timezoned.enable = lib.mkDefault true;
   services.geoclue2.enableDemoAgent = lib.mkForce true;
   # services.localtimed.enable = true;
-  # time.timeZone = "Asia/Taipei";
+  time.timeZone = lib.mkDefault "Asia/Taipei";
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.utf8";
