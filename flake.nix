@@ -182,6 +182,7 @@
             port = "30000";
           };
           extraModules = [
+            # ./configuration/distributed-builds.nix
             ./configuration/rpi4.nix
             ./hardware/rpi4.nix
             nixos-hardware.nixosModules.raspberry-pi-4
@@ -205,6 +206,7 @@
             port = "31000";
           };
           extraModules = [
+            # ./configuration/distributed-builds.nix
             ./configuration
             ./hardware/acer-tp.nix
             ./hardware/desktop.nix
