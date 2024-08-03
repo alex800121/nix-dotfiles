@@ -97,7 +97,6 @@
                   neovim
                   curl
                   wget
-                  wpa_supplicant_gui
                   git
                 ];
                 environment.variables = {
@@ -105,6 +104,7 @@
                   VISUAL = "nvim";
                   SUDO_EDITOR = "nvim";
                 };
+                networking.wireless.iwd.enable = true;
               })
               "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal-new-kernel-no-zfs.nix"
             ];

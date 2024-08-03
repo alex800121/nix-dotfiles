@@ -110,6 +110,7 @@ in
       connectionConfig = {
         "connection.mdns" = 1;
       };
+      wifi.backend = "iwd";
     };
   };
 
