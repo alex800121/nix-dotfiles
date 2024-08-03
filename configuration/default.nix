@@ -24,6 +24,7 @@ in
   hardware.acpilight.enable = true;
 
   services.fwupd.enable = true;
+  services.fwupd.extraRemotes = [ "lvfs-testing" ];
 
   console = {
     earlySetup = true;

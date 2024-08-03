@@ -229,7 +229,7 @@
           userConfig = {
             hostName = "fw13";
             userName = "alex800121";
-            fontSize = 16;
+            fontSize = 12;
             autoLogin = false;
           };
           extraModules = [
