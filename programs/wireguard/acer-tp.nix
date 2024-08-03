@@ -1,14 +1,14 @@
 { pkgs, config, userConfig, ... }:
 let
   port = 50541;
-  hostName = userConfig.hostName;
+  inherit (userConfig) hostName;
 in
 {
   age.secrets."wg-${hostName}" = {
     file = ../../secrets/wg-${hostName}.age;
-    owner = "systemd-network";
+    owner = "root";
     group = "systemd-network";
-    mode = "600";
+    mode = "640";
   };
   environment.systemPackages = with pkgs; [
     qrencode
@@ -34,6 +34,7 @@ in
       port
     ];
   };
+  systemd.services."systemd-networkd".environment.SYSTEMD_LOG_LEVEL = "debug";
   systemd.network = {
     enable = true;
     netdevs = {
@@ -49,9 +50,17 @@ in
         };
         wireguardPeers = [
           {
+            # pixel
             wireguardPeerConfig = {
-              PublicKey = "fw13_pub_key";
+              PublicKey = "fzF9NfUt8/0zEOdHZZMIyPVOidP5343fb+daAA3LiDg=";
               AllowedIPs = [ "10.100.0.2/32" "fcdd::2/128" ];
+            };
+          }
+          {
+            # fw13
+            wireguardPeerConfig = {
+              PublicKey = "";
+              AllowedIPs = [ "10.100.0.3/32" "fcdd::3/128" ];
             };
           }
         ];
@@ -70,5 +79,4 @@ in
       };
     };
   };
-  systemd.services."systemd-networkd".environment.SYSTEMD_LOG_LEVEL = "debug";
 }

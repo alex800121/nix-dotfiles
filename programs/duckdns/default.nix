@@ -1,12 +1,4 @@
-{ config, pkgs, userConfig, ... }:
-let
-  inherit (userConfig) hostName url;
-  duckscript = pkgs.writeShellScript "duck.sh" ''
-    ${pkgs.curl}/bin/curl -k "https://www.duckdns.org/update?domains=${url}&token=$(systemd-creds cat ddtoken)&ip=" 
-  '';
-  RuntimeDirectory = "duckdns";
-in
-{
+{ config, pkgs, userConfig, ... }: {
   users.extraGroups.duckdns = { };
   users.extraUsers.duckdns = {
     name = "duckdns";
@@ -14,7 +6,7 @@ in
     isSystemUser = true;
   };
   age.secrets.ddtoken = {
-    file = ../../secrets/ddtoken-${hostName}.age;
+    file = ../../secrets/ddtoken-${userConfig.hostName}.age;
     owner = "duckdns";
     group = "duckdns";
     mode = "0600";
@@ -32,9 +24,11 @@ in
       Type = "oneshot";
       DynamicUser = true;
       RuntimeDirectoryMode = "0700";
-      inherit RuntimeDirectory;
+      RuntimeDirectory = "duckdns";
       LoadCredentialEncrypted = ''ddtoken:${config.age.secrets.ddtoken.path}'';
-      ExecStart = duckscript;
+      ExecStart = pkgs.writeShellScript "duck.sh" ''
+        ${pkgs.curl}/bin/curl -k "https://www.duckdns.org/update?domains=${userConfig.url}&token=$(cat $CREDENTIALS_DIRECTORY/ddtoken)&ip=" 
+      '';
     };
   };
   systemd.timers.duckdns = {

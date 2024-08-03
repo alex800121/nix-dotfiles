@@ -57,6 +57,59 @@
           ];
         }).config.system.build.sdImage;
       };
+      mkNixosIso = { system, kernelVersion, ... }: configName: {
+        nixosConfigurations."${configName}-iso" = nixpkgs.lib.nixosSystem
+          {
+            inherit system;
+            modules = [
+              ({ pkgs, ... }: {
+                hardware.enableAllFirmware = true;
+                hardware.enableRedistributableFirmware = true;
+                console = {
+                  earlySetup = true;
+                  font = "${pkgs.terminus_font}/share/consolefonts/ter-v32n.psf.gz";
+                };
+
+                services.kmscon.enable = true;
+                services.kmscon.hwRender = true;
+                services.kmscon.extraConfig = ''
+                  font-size=14
+                '';
+                services.kmscon.fonts = [
+                  {
+                    name = "Hack Nerd Font Mono";
+                    package = pkgs.nerdfonts;
+                  }
+                ];
+                nix = {
+                  extraOptions = ''
+                    experimental-features = nix-command flakes repl-flake
+                  '';
+                };
+                nixpkgs = {
+                  config = {
+                    allowBroken = true;
+                    allowUnfree = true;
+                  };
+                };
+                environment.systemPackages = with pkgs; [
+                  ripgrep
+                  neovim
+                  curl
+                  wget
+                  wpa_supplicant_gui
+                  git
+                ];
+                environment.variables = {
+                  EDITOR = "nvim";
+                  VISUAL = "nvim";
+                  SUDO_EDITOR = "nvim";
+                };
+              })
+              "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal-new-kernel-no-zfs.nix"
+            ];
+          };
+      };
       mkNixosConfig = { system, userConfig, extraModules ? [ ], hmModules ? [ ], kernelVersion, overlays ? [ ], ... }: configName:
         let
           nixpkgs-unstable = import inputs.nixpkgsUnstable {
@@ -175,6 +228,7 @@
             hostName = "fw13";
             userName = "alex800121";
             fontSize = 16;
+            autoLogin = false;
           };
           extraModules = [
             nixos-hardware.nixosModules.framework-13-7040-amd
@@ -198,10 +252,14 @@
         "alexrpi4tp"
         "fw13"
       ];
+      outputIso = builtins.foldl' (x: y: nixpkgs.lib.recursiveUpdate x (mkNixosIso configs."${y}" y)) { } [
+        "fw13"
+      ];
     in
     builtins.foldl' (x: y: nixpkgs.lib.recursiveUpdate x y) { } [
       (mkSdImage { inputModule = (mkNixosConfig configs.rpi4 "rpi4").nixosConfigurations.rpi4; })
       (mkSdImage { inputModule = outputConfigs.nixosConfigurations.alexrpi4tp; })
+      outputIso
       outputConfigs
     ];
 }
