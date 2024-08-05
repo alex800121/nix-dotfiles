@@ -82,9 +82,7 @@ in
 
   services.power-profiles-daemon.enable = lib.mkDefault true;
 
-  powerManagement = {
-    enable = true;
-  };
+  powerManagement.enable = true;
 
   networking.firewall = {
     enable = true;
@@ -122,9 +120,22 @@ in
   # Set your time zone.
   time.hardwareClockInLocalTime = lib.mkDefault true;
   services.automatic-timezoned.enable = lib.mkDefault true;
+  age.secrets."google-geoloc-${hostName}" = {
+    file = ../secrets/google-geoloc-${hostName}.age;
+    owner = "geoclue";
+    group = "geoclue";
+    mode = "0600";
+  };
+  services.geoclue2.enable = lib.mkDefault true;
   services.geoclue2.enableDemoAgent = lib.mkForce true;
-  # services.localtimed.enable = true;
-  time.timeZone = lib.mkDefault "Asia/Taipei";
+  environment.etc."geoclue/conf.d/90-url.conf" = {
+    enable = true;
+    source = config.age.secrets."google-geoloc-${hostName}".path;
+    user = "geoclue";
+    group = "geoclue";
+    mode = "0600";
+  };
+  # time.timeZone = lib.mkDefault "Asia/Taipei";
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.utf8";

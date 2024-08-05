@@ -69,7 +69,6 @@
                   earlySetup = true;
                   font = "${pkgs.terminus_font}/share/consolefonts/ter-v32n.psf.gz";
                 };
-
                 services.kmscon.enable = true;
                 services.kmscon.hwRender = true;
                 services.kmscon.extraConfig = ''
@@ -105,6 +104,7 @@
                   SUDO_EDITOR = "nvim";
                 };
                 networking.wireless.iwd.enable = true;
+                networking.wireless.enable = false;
               })
               "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal-new-kernel-no-zfs.nix"
             ];
@@ -239,12 +239,10 @@
             ./hardware/fw13.nix
             ./hardware/laptop.nix
             ./de/gnome
+            ./de/gnome/fw13
             ./programs/wireguard/fw13.nix
             ./programs/sshd
             ./programs/virt
-            # ({ lib, ... }: {
-            #   time.hardwareClockInLocalTime = false;
-            # })
           ];
           hmModules = [
             ./home

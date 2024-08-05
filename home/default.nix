@@ -105,13 +105,14 @@ in
   home.packages = with pkgs; [
     vlc
     firefox
+    google-chrome
     android-tools
     scrcpy
     libsForQt5.plasma-browser-integration
     gnome-network-displays
     ardour
     helvum
-    musescore
+    nixpkgsUnstable.musescore
     libreoffice
     nix-prefetch-git
     cabal2nix

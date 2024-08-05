@@ -7,21 +7,25 @@ let
   inherit (updateConfig) userName autoLogin;
 in
 {
-  # Enable the GNOME Desktop Environment.
-  services.xserver.desktopManager.gnome = {
-    enable = true;
-  };
-  services.displayManager = {
-    autoLogin.enable = autoLogin;
-    autoLogin.user = userName;
-    defaultSession = "gnome";
-  };
+
   services.xserver.displayManager = {
     gdm = {
       wayland = true;
       enable = true;
     };
   };
+
+  services.displayManager = {
+    autoLogin.enable = autoLogin;
+    autoLogin.user = userName;
+    defaultSession = "gnome";
+  };
+
+  # Enable the GNOME Desktop Environment.
+  services.xserver.desktopManager.gnome = {
+    enable = true;
+  };
+
   programs.dconf = {
     enable = true;
     profiles.user.databases = [
@@ -92,7 +96,9 @@ in
       }
     ];
   };
+
   services.gnome.gnome-settings-daemon.enable = true;
+
   environment.systemPackages = with pkgs; [
     gnomeExtensions.kimpanel
     gnomeExtensions.appindicator
