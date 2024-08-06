@@ -193,6 +193,7 @@
           extraModules = [
             nixos-hardware.nixosModules.framework-13-7040-amd
             ./configuration
+            ./configuration/fw13.nix
             ./hardware/amd.nix
             ./hardware/fw13.nix
             ./hardware/laptop.nix
