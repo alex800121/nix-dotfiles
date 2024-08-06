@@ -24,6 +24,11 @@ in
   # Enable the GNOME Desktop Environment.
   services.xserver.desktopManager.gnome = {
     enable = true;
+    extraGSettingsOverrides = ''
+      [org.gnome.desktop.default-applications.terminal]
+      exec='alacritty'
+      exec-arg='-e'
+    '';
   };
 
   programs.dconf = {
@@ -84,7 +89,7 @@ in
           "org/gnome/desktop/notifications" = {
             show-in-lock-screen = true;
           };
-          
+
           "org/gnome/desktop/session" = {
             idle-delay = lib.gvariant.mkUint32 900;
           };
@@ -105,10 +110,8 @@ in
             name = "Terminal";
           };
 
-          "org/gnome/desktop/default-applications/terminal" = {
-            exec = "alacritty";
-            exec-arg = "";
-          };
+          # "org/gnome/desktop/default-applications/terminal".exec = "alacritty";
+          # "org/gnome/desktop/default-applications/terminal".exec-arg = "-e";
 
           "org/gnome/desktop/interface".color-scheme = "prefer-dark";
 
@@ -121,7 +124,7 @@ in
             "org.gnome.Nautilus.desktop"
             "writer.desktop"
           ];
-          
+
           "org/gnome/desktop/background" = {
             color-shading-type = "solid";
             picture-options = "none";

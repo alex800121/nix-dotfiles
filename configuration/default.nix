@@ -118,26 +118,8 @@ in
 
   # Set your time zone.
   time.hardwareClockInLocalTime = lib.mkDefault true;
-  services.automatic-timezoned.enable = lib.mkDefault true;
-  location.provider = "geoclue2";
-  age.secrets."google-geoloc-${hostName}" = {
-    file = ../secrets/google-geoloc-${hostName}.age;
-    owner = "geoclue";
-    group = "geoclue";
-    mode = "0600";
-  };
-  services.geoclue2.enable = lib.mkDefault true;
-  services.geoclue2.enableDemoAgent = lib.mkForce true;
-  services.geoclue2.submissionUrl = "https://beacondb.net/v2/geosubmit";
-  services.geoclue2.submitData = true;
-  environment.etc."geoclue/conf.d/90-provider.conf" = {
-    enable = true;
-    source = config.age.secrets."google-geoloc-${hostName}".path;
-    user = "geoclue";
-    group = "geoclue";
-    mode = "0600";
-  };
-  # time.timeZone = lib.mkDefault "Asia/Taipei";
+  services.automatic-timezoned.enable = lib.mkDefault false;
+  time.timeZone = lib.mkDefault "Asia/Taipei";
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.utf8";

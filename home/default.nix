@@ -14,6 +14,7 @@ in
       experimental-features = "nix-command flakes repl-flake";
     };
   };
+
   xdg.configFile = {
     nixpkgs = {
       recursive = true;
@@ -44,7 +45,6 @@ in
     BROWSER = "google-chrome-stable";
     EDITOR = "nvim";
     VISUAL = "nvim";
-    # MOZ_GMP_PATH = "${pkgs.widevine-cdm-lacros}/gmp-widevinecdm/system-installed";
     SUDO_EDITOR = "nvim";
   };
 
@@ -137,25 +137,20 @@ in
     wineWowPackages.unstableFull
   ];
 
-  xdg.mimeApps = {
-    enable = true;
-    # defaultApplications = {
-    #   "application/pdf" = [ "firefox.desktop" ];
-    # };
-    # defaultApplications = {
-    #   "x-scheme-handler/http" = ["firefox.desktop"];
-    #   "application/xhtml+xml" = ["firefox.desktop"];
-    #   "text/html" = ["firefox.desktop"];
-    #   "x-scheme-handler/https" = ["firefox.desktop"];
-    #   "x-scheme-handler/about" = ["firefox.desktop"];
-    #   "x-scheme-handler/unknown" = ["firefox.desktop"];
-    # };
-    # associations.added = {
-    #   "x-scheme-handler/http"  =  ["firefox.desktop"];
-    #   "application/xhtml+xml" = ["firefox.desktop"];
-    #   "text/html" = ["firefox.desktop"];
-    #   "x-scheme-handler/https" = ["firefox.desktop"];
-    # };
+  xdg.mime.enable = true;
+  xdg.mimeApps.enable = true;
+  xdg.mimeApps.defaultApplications = {
+    "default-web-browser" = [ "google-chrome.desktop" ];
+    "x-scheme-handler/http" = [ "google-chrome.desktop" ];
+    "application/xhtml+xml" = [ "google-chrome.desktop" ];
+    "text/html" = [ "google-chrome.desktop" ];
+    "x-scheme-handler/https" = [ "google-chrome.desktop" ];
+  };
+  xdg.mimeApps.associations.added = {
+    "x-scheme-handler/http" = [ "google-chrome.desktop" ];
+    "application/xhtml+xml" = [ "google-chrome.desktop" ];
+    "text/html" = [ "google-chrome.desktop" ];
+    "x-scheme-handler/https" = [ "google-chrome.desktop" ];
   };
 
   programs.git = {

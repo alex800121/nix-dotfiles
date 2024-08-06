@@ -166,6 +166,7 @@
           extraModules = [
             # ./configuration/distributed-builds.nix
             ./configuration
+            ./configuration/timezoned.nix
             ./hardware/acer-tp.nix
             ./hardware/desktop.nix
             ./de/gnome
@@ -194,6 +195,7 @@
             nixos-hardware.nixosModules.framework-13-7040-amd
             ./configuration
             ./configuration/fw13.nix
+            ./configuration/timezoned.nix
             ./hardware/amd.nix
             ./hardware/fw13.nix
             ./hardware/laptop.nix
