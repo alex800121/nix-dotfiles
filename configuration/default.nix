@@ -52,7 +52,7 @@ in
     loader = {
       systemd-boot = {
         enable = true;
-        consoleMode = lib.mkDefault "1";
+        consoleMode = lib.mkDefault "auto";
       };
       efi = {
         canTouchEfiVariables = true;
@@ -112,7 +112,6 @@ in
       wifi.backend = "iwd";
     };
   };
-
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
@@ -120,6 +119,7 @@ in
   # Set your time zone.
   time.hardwareClockInLocalTime = lib.mkDefault true;
   services.automatic-timezoned.enable = lib.mkDefault true;
+  location.provider = "geoclue2";
   age.secrets."google-geoloc-${hostName}" = {
     file = ../secrets/google-geoloc-${hostName}.age;
     owner = "geoclue";
@@ -128,7 +128,9 @@ in
   };
   services.geoclue2.enable = lib.mkDefault true;
   services.geoclue2.enableDemoAgent = lib.mkForce true;
-  environment.etc."geoclue/conf.d/90-url.conf" = {
+  services.geoclue2.submissionUrl = "https://beacondb.net/v2/geosubmit";
+  services.geoclue2.submitData = true;
+  environment.etc."geoclue/conf.d/90-provider.conf" = {
     enable = true;
     source = config.age.secrets."google-geoloc-${hostName}".path;
     user = "geoclue";
@@ -139,7 +141,6 @@ in
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.utf8";
-
   i18n.inputMethod = {
     enabled = "fcitx5";
     # type = "fcitx5";
@@ -177,6 +178,11 @@ in
   services.blueman.enable = true;
 
   security.rtkit.enable = true;
+
+  security.tpm2.enable = true;
+  security.tpm2.abrmd.enable = true;
+  security.tpm2.pkcs11.enable = true;
+  security.tpm2.tctiEnvironment.enable = true;
 
   hardware.pulseaudio.enable = false;
   services.pipewire = {
@@ -219,12 +225,13 @@ in
       };
     };
   };
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.mutableUsers = true;
   users.users."${userName}" = {
     isNormalUser = true;
     description = "${userName}";
-    extraGroups = [ "storage" "disk" "libvirtd" "audio" "networkmanager" "sudo" "wheel" "code-server" "input" ];
+    extraGroups = [ "tss" "storage" "disk" "libvirtd" "audio" "networkmanager" "sudo" "wheel" "code-server" "input" ];
   };
 
   security.sudo.wheelNeedsPassword = false;
@@ -252,24 +259,16 @@ in
     coreutils
     socat
     jq
-    gparted
-    xorg.xhost
-    xorg.xrdb
-    xsettingsd
     wl-clipboard
     ripgrep
+    gparted
     parted
     gnome.adwaita-icon-theme
     neovim
     curl
     wget
-    wpa_supplicant_gui
     git
     inputs.agenix.packages."${system}".default
-    showmethekey
-    wev
-    libimobiledevice
-    ifuse
     fastfetch
     gcc
   ];
@@ -294,8 +293,8 @@ in
     enable = true;
     package = pkgs.plocate;
     localuser = null;
-    # prunePaths = [ "/media/alex800121" ];
     interval = "hourly";
+    # prunePaths = [ "/media/alex800121" ];
   };
 
   qt = {

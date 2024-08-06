@@ -35,6 +35,7 @@ in
             experimental-features = [ "scale-monitor-framebuffer" ];
             dynamic-workspaces = true;
           };
+
           "org/gnome/shell" = {
             disable-user-extensions = false;
             enabled-extensions = [
@@ -43,7 +44,9 @@ in
               "drive-menu@gnome-shell-extensions.gcampax.github.com"
             ];
           };
+
           "org/gnome/shell/extensions/kimpanel".vertical = true;
+
           "org/gnome/desktop/peripherals/touchpad" = {
             tap-to-click = true;
             disable-while-typing = true;
@@ -51,46 +54,83 @@ in
             speed = 0.19999999999999996;
             two-finger-scrolling-enabled = true;
           };
+
           "org/gnome/desktop/peripherals/mouse" = {
             natural-scroll = false;
             speed = 0.24778761061946897;
           };
+
           "org/gnome/settings-daemon/plugins/power" = {
+            ambient-enabled = true;
             sleep-inactive-ac-type = "nothing";
-            sleep-inactive-battery-timeout = lib.gvariant.mkInt32 900;
+            sleep-inactive-ac-timeout = lib.gvariant.mkInt32 900;
             sleep-inactive-battery-type = "suspend";
+            sleep-inactive-battery-timeout = lib.gvariant.mkInt32 900;
+            power-button-action = "suspend";
+            power-saver-profile-on-low-battery = true;
+            idle-brightness = lib.gvariant.mkInt32 30;
+            idle-dim = true;
           };
+
+          "org/gnome/desktop/screensaver" = {
+            lock-delay = lib.gvariant.mkUint32 0;
+            lock-enabled = true;
+            idle-activation-enabled = true;
+            logout-command = "";
+            logout-delay = lib.gvariant.mkUint32 7200;
+            logout-enabled = false;
+          };
+
+          "org/gnome/desktop/notifications" = {
+            show-in-lock-screen = true;
+          };
+          
+          "org/gnome/desktop/session" = {
+            idle-delay = lib.gvariant.mkUint32 900;
+          };
+
           "org/gnome/desktop/wm/keybindings" = {
             switch-group = [ "<Super>Above_Tab" ];
             switch-group-backward = [ "<Shift><Super>Above_Tab" ];
             toggle-fullscreen = [ "<Super>f" ];
           };
+
           "org/gnome/settings-daemon/plugins/media-keys".custom-keybindings = [
             "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
           ];
+
           "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
             binding = "<Super>t";
             command = "alacritty";
             name = "Terminal";
           };
+
           "org/gnome/desktop/default-applications/terminal" = {
             exec = "alacritty";
             exec-arg = "";
           };
+
           "org/gnome/desktop/interface".color-scheme = "prefer-dark";
+
           "org/gnome/shell".favorite-apps = [
-            "firefox.desktop"
+            # "firefox.desktop"
+            "google-chrome.desktop"
             "spotify.desktop"
             "code.desktop"
             "Alacritty.desktop"
             "org.gnome.Nautilus.desktop"
             "writer.desktop"
           ];
+          
           "org/gnome/desktop/background" = {
             color-shading-type = "solid";
             picture-options = "none";
             primary-color = "#000000";
             secondary-color = "#f0f0f0";
+          };
+
+          "org/gnome/system/location" = {
+            enabled = true;
           };
         };
       }

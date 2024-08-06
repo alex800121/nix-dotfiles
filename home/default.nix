@@ -40,7 +40,8 @@ in
   home.stateVersion = lib.mkDefault "24.05";
 
   home.sessionVariables = {
-    BROWSER = "firefox";
+    # BROWSER = "firefox";
+    BROWSER = "google-chrome-stable";
     EDITOR = "nvim";
     VISUAL = "nvim";
     # MOZ_GMP_PATH = "${pkgs.widevine-cdm-lacros}/gmp-widevinecdm/system-installed";
@@ -138,10 +139,9 @@ in
 
   xdg.mimeApps = {
     enable = true;
-    defaultApplications = {
-      # "inode/directory" = ["pcmanfm.desktop"];
-      "application/pdf" = [ "firefox.desktop" ];
-    };
+    # defaultApplications = {
+    #   "application/pdf" = [ "firefox.desktop" ];
+    # };
     # defaultApplications = {
     #   "x-scheme-handler/http" = ["firefox.desktop"];
     #   "application/xhtml+xml" = ["firefox.desktop"];
@@ -177,6 +177,7 @@ in
   programs.zellij = {
     enable = true;
   };
+
   programs.vscode = {
     # package = pkgs.vscode-fhs;
     enable = true;
