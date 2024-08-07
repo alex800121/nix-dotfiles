@@ -47,19 +47,10 @@ in
   ];
 
   # Bootloader.
-  boot = {
-    supportedFilesystems = [ "ntfs" ];
-    loader = {
-      systemd-boot = {
-        enable = true;
-        consoleMode = lib.mkDefault "auto";
-      };
-      efi = {
-        canTouchEfiVariables = true;
-        # efiSysMountPoint = "/boot";
-      };
-    };
-  };
+  boot.supportedFilesystems = [ "ntfs" ];
+  boot.loader.systemd-boot.enable = lib.mkDefault true;
+  boot.loader.systemd-boot.consoleMode = lib.mkDefault "auto";
+  boot.loader.efi.canTouchEfiVariables = lib.mkDefault true;
 
   nix = {
     gc = {

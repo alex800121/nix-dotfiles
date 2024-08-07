@@ -11,6 +11,10 @@
     nixos-hardware = {
       url = "github:NixOS/nixos-hardware/master";
     };
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v0.4.1";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     musnix = {
       url = "github:musnix/musnix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -33,6 +37,7 @@
     , agenix
     , rust-overlay
     , nixpkgsUnstable
+    , lanzaboote
     , ...
     }:
     let
@@ -140,7 +145,7 @@
             port = "30000";
           };
           extraModules = [
-            # ./configuration/distributed-builds.nix
+            ./configuration/distributed-builds.nix
             ./configuration/rpi4.nix
             ./hardware/rpi4.nix
             nixos-hardware.nixosModules.raspberry-pi-4
@@ -164,7 +169,7 @@
             port = "31000";
           };
           extraModules = [
-            # ./configuration/distributed-builds.nix
+            ./configuration/distributed-builds.nix
             ./configuration
             ./configuration/timezoned.nix
             ./hardware/acer-tp.nix
@@ -193,6 +198,8 @@
           };
           extraModules = [
             nixos-hardware.nixosModules.framework-13-7040-amd
+            lanzaboote.nixosModules.lanzaboote
+            ./configuration/secure-boot.nix
             ./configuration
             ./configuration/fw13.nix
             ./configuration/timezoned.nix
