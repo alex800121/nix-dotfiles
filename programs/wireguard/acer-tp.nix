@@ -10,10 +10,12 @@ in
     group = "systemd-network";
     mode = "640";
   };
+
   environment.systemPackages = with pkgs; [
     qrencode
     wireguard-tools
     nftables
+
   ];
   services.avahi = {
     allowPointToPoint = true;
@@ -34,9 +36,16 @@ in
       port
     ];
   };
+
   systemd.services."systemd-networkd".environment.SYSTEMD_LOG_LEVEL = "debug";
+
+  networking.networkmanager.unmanaged = [
+    "interface-name:wg0"
+  ];
+
   systemd.network = {
     enable = true;
+
     netdevs = {
       "50-wg0" = {
         netdevConfig = {
@@ -66,6 +75,7 @@ in
         ];
       };
     };
+
     networks.wg0 = {
       matchConfig.Name = "wg0";
       address = [ "10.100.0.1/24" "fcdd::1/64" ];

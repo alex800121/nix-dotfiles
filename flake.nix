@@ -169,6 +169,7 @@
             port = "31000";
           };
           extraModules = [
+            ./configuration/acer-tp.nix
             ./configuration/distributed-builds.nix
             ./configuration
             ./configuration/timezoned.nix

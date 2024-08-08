@@ -10,7 +10,6 @@ let
   fw13 = [fw13-user fw13-system];
 in
 {
-  "ddtoken-acer-tp.age".publicKeys = acer-tp;
   "ddtoken-alexrpi4tp.age".publicKeys = alexrpi4tp;
   "nix-acer-tp.age".publicKeys = acer-tp;
   "nix-alexrpi4tp.age".publicKeys = alexrpi4tp;
