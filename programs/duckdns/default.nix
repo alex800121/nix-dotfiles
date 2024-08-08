@@ -26,7 +26,7 @@
       RuntimeDirectoryMode = "0700";
       RuntimeDirectory = "duckdns";
       # LoadCredentialEncrypted = ''ddtoken:${config.age.secrets.ddtoken.path}'';
-      SetCredentialEncrypted = builtins.readFile ../../secrets/ddtoken-acer-tp;
+      SetCredentialEncrypted = builtins.readFile ../../secrets/ddtoken-${userConfig.hostName};
       ExecStart = pkgs.writeShellScript "duck.sh" ''
         ${pkgs.curl}/bin/curl -k "https://www.duckdns.org/update?domains=${userConfig.url}&token=$(cat $CREDENTIALS_DIRECTORY/ddtoken)&ip=" 
       '';
