@@ -71,6 +71,12 @@
               ./programs/sshd
               "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal-new-kernel-no-zfs.nix"
             ];
+            specialArgs = {
+              userConfig = {
+                userName = "root";
+                port = 22;
+              };
+            };
           };
       };
       mkNixosConfig = { system, userConfig, extraModules ? [ ], hmModules ? [ ], kernelVersion, overlays ? [ ], ... }: configName:

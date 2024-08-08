@@ -1,4 +1,4 @@
-{ userConfig, ... }: let
+{ userConfig, lib, ... }: let
   inherit (userConfig) userName port;
 in {
   programs.ssh = {
@@ -25,7 +25,7 @@ in {
     ports = [ 22 ];
     settings = {
       UseDns = true;
-      PermitRootLogin = "prohibit-password";
+      PermitRootLogin = lib.mkDefault "prohibit-password";
       PasswordAuthentication = false;
       # GatewayPorts = "yes";
       GatewayPorts = "clientspecified";
