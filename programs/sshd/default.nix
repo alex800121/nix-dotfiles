@@ -1,5 +1,5 @@
-{ pkgs, lib, userConfig, inputs, kernelVersion, ... }: let
-  inherit (userConfig) userName hostName;
+{ userConfig, ... }: let
+  inherit (userConfig) userName port;
 in {
   programs.ssh = {
     startAgent = true;
@@ -15,12 +15,10 @@ in {
 
   # Enable the OpenSSH daemon.
   networking.firewall.allowedTCPPorts = [
-    30000
-    31000
+    port
   ];
   networking.firewall.allowedUDPPorts = [
-    30000
-    31000
+    port
   ];
   services.openssh = {
     enable = true;

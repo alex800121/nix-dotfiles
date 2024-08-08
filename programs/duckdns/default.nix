@@ -1,4 +1,4 @@
-{ config, lib, pkgs, userConfig, ... }:
+{ lib, pkgs, userConfig, ... }:
 let
   setCred = "ddtoken:" + lib.strings.concatStrings
     (lib.strings.splitString

@@ -68,6 +68,7 @@
             inherit system;
             modules = [
               ./configuration/minimal.nix
+              ./programs/sshd
               "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal-new-kernel-no-zfs.nix"
             ];
           };
@@ -142,7 +143,7 @@
             fontSize = 11.5;
             autoLogin = true;
             url = "alexrpi4gate";
-            port = "30000";
+            port = 30000;
           };
           extraModules = [
             ./configuration/distributed-builds.nix
@@ -166,7 +167,7 @@
             fontSize = 16;
             autoLogin = true;
             url = "alexacer-tp";
-            port = "31000";
+            port = 31000;
           };
           extraModules = [
             ./configuration/acer-tp.nix
@@ -196,6 +197,7 @@
             userName = "alex800121";
             fontSize = 12;
             autoLogin = false;
+            port = 32000;
           };
           extraModules = [
             nixos-hardware.nixosModules.framework-13-7040-amd
