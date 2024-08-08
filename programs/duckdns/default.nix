@@ -1,4 +1,11 @@
-{ config, pkgs, userConfig, ... }: {
+{ config, lib, pkgs, userConfig, ... }:
+let
+  setCred = "ddtoken:" + lib.strings.concatStrings
+    (lib.strings.splitString
+      "\n"
+      (builtins.readFile ../../secrets/ddtoken-${userConfig.hostName}));
+in
+{
   # users.extraGroups.duckdns = { };
   # users.extraUsers.duckdns = {
   #   name = "duckdns";
@@ -26,7 +33,7 @@
       RuntimeDirectoryMode = "0700";
       RuntimeDirectory = "duckdns";
       # LoadCredentialEncrypted = ''ddtoken:${config.age.secrets.ddtoken.path}'';
-      SetCredentialEncrypted = builtins.readFile ../../secrets/ddtoken-${userConfig.hostName};
+      SetCredentialEncrypted = setCred;
       ExecStart = pkgs.writeShellScript "duck.sh" ''
         ${pkgs.curl}/bin/curl -k "https://www.duckdns.org/update?domains=${userConfig.url}&token=$(cat $CREDENTIALS_DIRECTORY/ddtoken)&ip=" 
       '';
