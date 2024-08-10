@@ -193,7 +193,7 @@ in
     wget
     curl
     coreutils
-    inputs.agenix.packages."${system}".default
+    # inputs.agenix.packages."${system}".default
     raspberrypi-eeprom
     libraspberrypi
     raspberrypifw

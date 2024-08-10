@@ -241,7 +241,7 @@ in
     curl
     wget
     git
-    inputs.agenix.packages."${system}".default
+    # inputs.agenix.packages."${system}".default
     fastfetch
     gcc
   ];

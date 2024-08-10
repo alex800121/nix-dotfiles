@@ -19,10 +19,10 @@
       url = "github:musnix/musnix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    agenix = {
-      url = "github:ryantm/agenix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # agenix = {
+    #   url = "github:ryantm/agenix";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -34,7 +34,7 @@
     , nixpkgs
     , home-manager
     , nixos-hardware
-    , agenix
+    # , agenix
     , rust-overlay
     , nixpkgsUnstable
     , lanzaboote
@@ -102,7 +102,7 @@
                   (import overlay/google-chrome.nix)
                 ];
               }
-              agenix.nixosModules.default
+              # agenix.nixosModules.default
               home-manager.nixosModules.home-manager
               {
                 home-manager = {

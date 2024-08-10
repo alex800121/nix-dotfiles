@@ -7,8 +7,6 @@ let
   alexrpi4tp = [ alexrpi4tp-user alexrpi4tp-system ];
   fw13-user = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMraRiOlQzoow7HBhsDh+HQKrh5tddB1wB8MIMaw0kf";
   fw13-system = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ0Vv4anN/LjTy5lwcUTXXW7v2Xm9x1jzKU+c6S0ewxA";
-  fw13 = [fw13-user fw13-system];
+  fw13 = [ fw13-user fw13-system ];
 in
-{
-  "nix-alexrpi4tp.age".publicKeys = alexrpi4tp;
-}
+{ }
