@@ -176,10 +176,10 @@
             port = 31000;
           };
           extraModules = [
-            ./configuration/acer-tp.nix
-            ./configuration/distributed-builds.nix
             ./configuration
+            ./configuration/distributed-builds.nix
             ./configuration/timezoned.nix
+            ./configuration/initrd-network.nix
             ./hardware/acer-tp.nix
             ./hardware/desktop.nix
             ./de/gnome

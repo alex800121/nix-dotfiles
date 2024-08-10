@@ -10,12 +10,10 @@ let
   fw13 = [fw13-user fw13-system];
 in
 {
-  "ddtoken-alexrpi4tp.age".publicKeys = alexrpi4tp;
   "nix-acer-tp.age".publicKeys = acer-tp;
   "nix-alexrpi4tp.age".publicKeys = alexrpi4tp;
   "nix-fw13.age".publicKeys = fw13;
   "wg-acer-tp.age".publicKeys = acer-tp;
   "wg-fw13.age".publicKeys = fw13;
-  "google-geoloc-acer-tp.age".publicKeys = acer-tp;
   "google-geoloc-fw13.age".publicKeys = fw13;
 }

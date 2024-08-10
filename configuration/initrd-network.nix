@@ -1,22 +1,19 @@
-{config, userConfig, ...}: {
-  boot.initrd.systemd = {
-    enable = true;
-    enableTpm2 = true;
-  };
+{ config, userConfig, ... }: {
 
   boot.initrd.network = {
     enable = true;
     ssh = {
       enable = true;
       hostKeys = [ /etc/secrets/initrd_ssh_host_ed25519_key ];
-      authorizedKeys = config.users.users."${userConfig.userName}".openssh.authorizedKeys.keys;
       port = 2222;
     };
+    ssh.authorizedKeys = config.users.users."${userConfig.userName}".openssh.authorizedKeys.keys;
   };
 
   boot.kernelParams = [
     "ip=dhcp"
   ];
+
   boot.initrd.availableKernelModules = [
     "mt7921e"
     "iwlwifi"
@@ -24,4 +21,9 @@
     "xhci_hcd"
     "xhci_pci"
   ];
+
+  boot.initrd.systemd = {
+    enable = true;
+  };
+
 }

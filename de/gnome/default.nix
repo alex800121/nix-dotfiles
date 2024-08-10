@@ -132,9 +132,9 @@ in
             secondary-color = "#f0f0f0";
           };
 
-          "org/gnome/system/location" = {
-            enabled = true;
-          };
+          # "org/gnome/system/location" = {
+          #   enabled = true;
+          # };
         };
       }
     ];
