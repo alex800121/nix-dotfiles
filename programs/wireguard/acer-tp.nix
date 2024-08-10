@@ -1,7 +1,11 @@
-{ pkgs, config, userConfig, ... }:
+{ pkgs, config, userConfig, lib, ... }:
 let
   port = 50541;
   inherit (userConfig) hostName;
+  setCred = "wg.key:" + lib.strings.concatStrings
+    (lib.strings.splitString
+      "\n"
+      (builtins.readFile ../../secrets/wg-${userConfig.hostName}));
 in
 {
   age.secrets."wg-${hostName}" = {
@@ -17,6 +21,7 @@ in
     nftables
 
   ];
+
   services.avahi = {
     allowPointToPoint = true;
     reflector = true;
@@ -37,7 +42,8 @@ in
     ];
   };
 
-  systemd.services."systemd-networkd".environment.SYSTEMD_LOG_LEVEL = "debug";
+  systemd.services.systemd-networkd.environment.SYSTEMD_LOG_LEVEL = "debug";
+  systemd.services.systemd-networkd.serviceConfig.SetCredentialEncrypted = setCred;
 
   networking.networkmanager.unmanaged = [
     "interface-name:wg0"
@@ -54,7 +60,8 @@ in
           MTUBytes = "1500";
         };
         wireguardConfig = {
-          PrivateKeyFile = config.age.secrets."wg-${hostName}".path;
+          # PrivateKeyFile = config.age.secrets."wg-${hostName}".path;
+          PrivateKeyFile = /run/credentials/systemd-networkd.service/wg.key;
           ListenPort = port;
         };
         wireguardPeers = [

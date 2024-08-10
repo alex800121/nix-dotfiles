@@ -13,6 +13,5 @@ in
   "nix-acer-tp.age".publicKeys = acer-tp;
   "nix-alexrpi4tp.age".publicKeys = alexrpi4tp;
   "nix-fw13.age".publicKeys = fw13;
-  "wg-acer-tp.age".publicKeys = acer-tp;
   "wg-fw13.age".publicKeys = fw13;
 }
