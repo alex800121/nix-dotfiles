@@ -39,6 +39,7 @@ in
       '';
     };
   };
+
   systemd.timers.duckdns = {
     wantedBy = [ "timers.target" ];
     timerConfig = {

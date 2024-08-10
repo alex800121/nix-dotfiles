@@ -8,12 +8,12 @@ let
       (builtins.readFile ../../secrets/wg-${userConfig.hostName}));
 in
 {
-  age.secrets."wg-${hostName}" = {
-    file = ../../secrets/wg-${hostName}.age;
-    owner = "root";
-    group = "systemd-network";
-    mode = "640";
-  };
+  # age.secrets."wg-${hostName}" = {
+  #   file = ../../secrets/wg-${hostName}.age;
+  #   owner = "root";
+  #   group = "systemd-network";
+  #   mode = "640";
+  # };
 
   environment.systemPackages = with pkgs; [
     qrencode
