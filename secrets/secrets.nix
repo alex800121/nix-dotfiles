@@ -15,5 +15,4 @@ in
   "nix-fw13.age".publicKeys = fw13;
   "wg-acer-tp.age".publicKeys = acer-tp;
   "wg-fw13.age".publicKeys = fw13;
-  "google-geoloc-fw13.age".publicKeys = fw13;
 }

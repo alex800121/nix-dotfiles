@@ -16,12 +16,12 @@ in
 
   location.provider = "geoclue2";
 
-  age.secrets."google-geoloc-${hostName}" = {
-    file = ../secrets/google-geoloc-${hostName}.age;
-    owner = "geoclue";
-    group = "geoclue";
-    mode = "0600";
-  };
+  # age.secrets."google-geoloc-${hostName}" = {
+  #   file = ../secrets/google-geoloc-${hostName}.age;
+  #   owner = "geoclue";
+  #   group = "geoclue";
+  #   mode = "0600";
+  # };
 
   services.geoclue2.enable = lib.mkForce true;
   services.geoclue2.enableDemoAgent = lib.mkForce true;
