@@ -95,7 +95,7 @@ in
   networking = {
     inherit hostName; # Define your hostname.
     networkmanager = {
-      enable = true;
+      enable = lib.mkDefault true;
       dns = "systemd-resolved";
       connectionConfig = {
         "connection.mdns" = 1;
