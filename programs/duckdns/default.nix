@@ -25,8 +25,13 @@ in
     wantedBy = [ "default.target" ];
     after = [ "network-online.target" ];
     requires = [ "network-online.target" ];
-    # restartTriggers = [ config.age.secrets.ddtoken.path ];
+    # restartTriggers = [
+    #   "$CREDENTIALS_DIRECTORY/ddtoken"
+    # ];
     path = [ pkgs.bash ];
+    script = ''
+      ${pkgs.curl}/bin/curl -k "https://www.duckdns.org/update?domains=${userConfig.url}&token=$(cat $CREDENTIALS_DIRECTORY/ddtoken)&ip=" 
+    '';
     serviceConfig = {
       Type = "oneshot";
       DynamicUser = true;
@@ -34,9 +39,9 @@ in
       RuntimeDirectory = "duckdns";
       # LoadCredentialEncrypted = ''ddtoken:${config.age.secrets.ddtoken.path}'';
       SetCredentialEncrypted = setCred;
-      ExecStart = pkgs.writeShellScript "duck.sh" ''
-        ${pkgs.curl}/bin/curl -k "https://www.duckdns.org/update?domains=${userConfig.url}&token=$(cat $CREDENTIALS_DIRECTORY/ddtoken)&ip=" 
-      '';
+      # ExecStart = pkgs.writeShellScript "duck.sh" ''
+      #   ${pkgs.curl}/bin/curl -k "https://www.duckdns.org/update?domains=${userConfig.url}&token=$(cat $CREDENTIALS_DIRECTORY/ddtoken)&ip=" 
+      # '';
     };
   };
 

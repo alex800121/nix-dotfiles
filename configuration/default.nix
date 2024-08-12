@@ -81,9 +81,9 @@ in
       5353
     ];
   };
-  services.resolved.enable = true;
+  services.resolved.enable = lib.mkDefault true;
   services.avahi = {
-    enable = true;
+    enable = lib.mkDefault true;
     publish = {
       enable = true;
       domain = true;

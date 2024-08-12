@@ -177,6 +177,7 @@
           };
           extraModules = [
             ./configuration
+            ./configuration/acer-tp.nix
             ./configuration/distributed-builds.nix
             ./configuration/timezoned.nix
             ./configuration/initrd-network.nix

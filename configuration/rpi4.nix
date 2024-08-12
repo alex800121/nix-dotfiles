@@ -114,27 +114,31 @@ in
       experimental-features = nix-command flakes repl-flake
     '';
   };
-  services.resolved.enable = true;
-  services.avahi = {
+
+  networking.hostName = hostName;
+  networking.firewall.enable = false;
+  networking.useNetworkd = true;
+  systemd.network.enable = true;
+  services.resolved = {
     enable = true;
-    publish  = {
-      enable = true;
-      domain = true;
-      addresses = true;
-    };
+    llmnr = "true";
+    extraConfig = ''
+      MulticastDNS=true
+    '';
   };
-  networking = {
-    inherit hostName; # Define your hostname.
-    firewall.enable = false;
-    networkmanager = {
-      enable = true;
-      # dhcp = "dhcpcd";
-      dns = "systemd-resolved";
-      # dns = "dnsmasq";
-      # dns = "default";
-      connectionConfig = {
-        "connection.mdns" = 1;
-      };
+  services.avahi.enable = false;
+  systemd.network.networks."10-end0" = {
+    matchConfig = {
+      Name = "end0";
+    };
+    networkConfig = {
+      DHCP = true;
+      MulticastDNS = true;
+      LLMNR = true;
+    };
+    linkConfig = {
+      Multicast = true;
+      AllMulticast = true;
     };
   };
 

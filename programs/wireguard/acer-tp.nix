@@ -22,22 +22,24 @@ in
 
   ];
 
-  services.avahi = {
-    allowPointToPoint = true;
-    reflector = true;
-    allowInterfaces = [
-      "wg0"
-      "lo"
-      "enp0s13f0u1u3"
-    ];
-  };
+  # services.avahi = {
+  #   allowPointToPoint = true;
+  #   reflector = true;
+  #   allowInterfaces = [
+  #     "wg0"
+  #     "lo"
+  #     "enp0s13f0u1u3"
+  #   ];
+  # };
 
   networking.firewall = {
     allowedTCPPorts = [
       53
+      5353
     ];
     allowedUDPPorts = [
       53
+      5353
       port
     ];
   };
@@ -89,10 +91,11 @@ in
       networkConfig = {
         IPMasquerade = "both";
         IPForward = "yes";
-        MulticastDNS = "resolve";
+        MulticastDNS = true;
       };
       linkConfig = {
         Multicast = true;
+        AllMulticast = true;
       };
     };
   };
