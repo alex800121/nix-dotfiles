@@ -24,7 +24,7 @@ in
     description = "duckdns update";
     wantedBy = [ "default.target" ];
     after = [ "network-online.target" ];
-    requires = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
     # restartTriggers = [
     #   "$CREDENTIALS_DIRECTORY/ddtoken"
     # ];

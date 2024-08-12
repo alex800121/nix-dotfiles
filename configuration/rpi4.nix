@@ -119,14 +119,7 @@ in
   networking.firewall.enable = false;
   networking.useNetworkd = true;
   systemd.network.enable = true;
-  services.resolved = {
-    enable = true;
-    llmnr = "true";
-    extraConfig = ''
-      MulticastDNS=true
-    '';
-  };
-  services.avahi.enable = false;
+
   systemd.network.networks."10-end0" = {
     matchConfig = {
       Name = "end0";
