@@ -22,6 +22,8 @@ in
   networking.useNetworkd = true;
   systemd.network.enable = true;
 
+  systemd.network.wait-online.anyInterface = false;
+
   systemd.network.networks."10-enp0s20f0u1u4" = cfg;
   boot.initrd.systemd.network.networks."10-enp0s20f0u1u4" = cfg;
 }

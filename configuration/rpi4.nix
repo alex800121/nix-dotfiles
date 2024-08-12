@@ -119,6 +119,7 @@ in
   networking.firewall.enable = false;
   networking.networkmanager.enable = false;
   networking.useNetworkd = true;
+
   systemd.network.enable = true;
   systemd.network.networks."10-end0" = {
     matchConfig = {
@@ -130,8 +131,6 @@ in
       LLMNR = true;
     };
     linkConfig = {
-      RequiredForOnline = true;
-      RequiredFamilyForOnline = "any";
       Multicast = true;
       AllMulticast = true;
     };

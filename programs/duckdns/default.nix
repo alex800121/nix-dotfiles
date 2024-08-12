@@ -7,14 +7,12 @@ let
 in
 {
 
-  systemd.network.wait-online.anyInterface = false;
-
   systemd.services.duckdns = {
     enable = true;
     description = "duckdns update";
     wantedBy = [ "default.target" ];
     after = [ "systemd-networkd-wait-online.service" "network-online.target" ];
-    requires = [ "systemd-networkd-wait-online.service" "network-online.target" ];
+    wants = [ "systemd-networkd-wait-online.service" "network-online.target" ];
     path = [ pkgs.bash ];
     script = ''
       ${pkgs.curl}/bin/curl -k "https://www.duckdns.org/update?domains=${userConfig.url}&token=$(cat $CREDENTIALS_DIRECTORY/ddtoken)&ip=" 
@@ -34,7 +32,7 @@ in
   systemd.timers.duckdns = {
     wantedBy = [ "timers.target" ];
     after = [ "systemd-networkd-wait-online.service" "network-online.target" ];
-    requires = [ "systemd-networkd-wait-online.service" "network-online.target" ];
+    wants = [ "systemd-networkd-wait-online.service" "network-online.target" ];
     timerConfig = {
       OnUnitActiveSec = "5min";
       OnBootSec = "5min";
