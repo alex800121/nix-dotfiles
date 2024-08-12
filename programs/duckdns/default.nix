@@ -6,28 +6,15 @@ let
       (builtins.readFile ../../secrets/ddtoken-${userConfig.hostName}));
 in
 {
-  # users.extraGroups.duckdns = { };
-  # users.extraUsers.duckdns = {
-  #   name = "duckdns";
-  #   group = "duckdns";
-  #   isSystemUser = true;
-  # };
-  # age.secrets.ddtoken = {
-  #   file = ../../secrets/ddtoken-${userConfig.hostName}.age;
-  #   owner = "duckdns";
-  #   group = "duckdns";
-  #   mode = "0600";
-  # };
+
+  systemd.network.wait-online.anyInterface = false;
 
   systemd.services.duckdns = {
     enable = true;
     description = "duckdns update";
     wantedBy = [ "default.target" ];
-    after = [ "network-online.target" ];
-    requires = [ "network-online.target" ];
-    # restartTriggers = [
-    #   "$CREDENTIALS_DIRECTORY/ddtoken"
-    # ];
+    after = [ "systemd-networkd-wait-online.service" "network-online.target" ];
+    requires = [ "systemd-networkd-wait-online.service" "network-online.target" ];
     path = [ pkgs.bash ];
     script = ''
       ${pkgs.curl}/bin/curl -k "https://www.duckdns.org/update?domains=${userConfig.url}&token=$(cat $CREDENTIALS_DIRECTORY/ddtoken)&ip=" 
@@ -37,16 +24,17 @@ in
       DynamicUser = true;
       RuntimeDirectoryMode = "0700";
       RuntimeDirectory = "duckdns";
-      # LoadCredentialEncrypted = ''ddtoken:${config.age.secrets.ddtoken.path}'';
       SetCredentialEncrypted = setCred;
-      # ExecStart = pkgs.writeShellScript "duck.sh" ''
-      #   ${pkgs.curl}/bin/curl -k "https://www.duckdns.org/update?domains=${userConfig.url}&token=$(cat $CREDENTIALS_DIRECTORY/ddtoken)&ip=" 
-      # '';
+      Restart = "on-failure";
+      RestartSec = "5s";
     };
+    environment.SYSTEMD_LOG_LEVEL = "debug";
   };
 
   systemd.timers.duckdns = {
     wantedBy = [ "timers.target" ];
+    after = [ "systemd-networkd-wait-online.service" "network-online.target" ];
+    requires = [ "systemd-networkd-wait-online.service" "network-online.target" ];
     timerConfig = {
       OnUnitActiveSec = "5min";
       OnBootSec = "5min";

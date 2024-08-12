@@ -78,27 +78,27 @@ in
   networking.firewall = {
     enable = true;
     allowedUDPPorts = [
+      53
       5353
     ];
   };
-  services.resolved.enable = lib.mkDefault true;
-  services.avahi = {
-    enable = lib.mkDefault true;
-    publish = {
-      enable = true;
-      domain = true;
-      addresses = true;
-      workstation = true;
-    };
+  services.resolved = {
+    enable = true;
+    llmnr = "true";
+    extraConfig = ''
+      MulticastDNS=true
+    '';
   };
+  services.avahi.enable = lib.mkDefault false;
   # networking.nftables.enable = true;
+
   networking = {
     inherit hostName; # Define your hostname.
     networkmanager = {
       enable = lib.mkDefault true;
       dns = "systemd-resolved";
       connectionConfig = {
-        "connection.mdns" = 1;
+        "connection.mdns" = 2;
       };
       wifi.backend = "iwd";
     };

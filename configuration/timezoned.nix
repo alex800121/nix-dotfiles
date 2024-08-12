@@ -22,6 +22,7 @@ in
   #   group = "geoclue";
   #   mode = "0600";
   # };
+  services.avahi.enable = true;
 
   services.geoclue2.enable = lib.mkForce true;
   services.geoclue2.enableDemoAgent = lib.mkForce true;

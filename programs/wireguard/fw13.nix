@@ -7,15 +7,7 @@ in
     wireguard-tools
     nftables
   ];
-  services.avahi = {
-    allowPointToPoint = true;
-    reflector = true;
-    allowInterfaces = [
-      "lo"
-      "wlp1s0"
-      userConfig.hostName
-    ];
-  };
+
   networking.firewall = {
     allowedTCPPorts = [
       53
