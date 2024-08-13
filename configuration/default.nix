@@ -86,10 +86,18 @@ in
     enable = true;
     llmnr = "true";
     extraConfig = ''
-      MulticastDNS=true
+      MulticastDNS=resolve
     '';
   };
-  services.avahi.enable = lib.mkDefault false;
+  services.avahi = {
+    enable = lib.mkDefault false;
+    publish.enable = true;
+    publish.hinfo = true;
+    publish.addresses = true;
+    publish.domain = true;
+    publish.workstation = true;
+    publish.userServices = true;
+  };
   # networking.nftables.enable = true;
 
   networking = {
@@ -98,7 +106,7 @@ in
       enable = lib.mkDefault true;
       dns = "systemd-resolved";
       connectionConfig = {
-        "connection.mdns" = 2;
+        "connection.mdns" = 1;
       };
       wifi.backend = "iwd";
     };
