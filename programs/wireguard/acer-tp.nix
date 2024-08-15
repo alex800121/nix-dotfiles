@@ -1,7 +1,6 @@
-{ pkgs, config, userConfig, lib, ... }:
+{ pkgs, userConfig, lib, ... }:
 let
   port = 50541;
-  inherit (userConfig) hostName;
   setCred = "wg.key:" + lib.strings.concatStrings
     (lib.strings.splitString
       "\n"
@@ -19,7 +18,6 @@ in
     qrencode
     wireguard-tools
     nftables
-
   ];
 
   # services.avahi = {
@@ -59,7 +57,7 @@ in
         netdevConfig = {
           Kind = "wireguard";
           Name = "wg0";
-          MTUBytes = "1500";
+          MTUBytes = "1400";
         };
         wireguardConfig = {
           # PrivateKeyFile = config.age.secrets."wg-${hostName}".path;

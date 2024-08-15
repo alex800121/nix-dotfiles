@@ -76,7 +76,7 @@ in
   powerManagement.enable = true;
 
   networking.firewall = {
-    enable = true;
+    enable = lib.mkDefault true;
     allowedUDPPorts = [
       53
       5353
