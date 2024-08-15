@@ -1,7 +1,6 @@
-{ pkgs, config, userConfig, lib, ... }:
+{ pkgs, userConfig, lib, ... }:
 let
   port = 50541;
-  inherit (userConfig) hostName;
   setCred = "wg.key:" + lib.strings.concatStrings
     (lib.strings.splitString
       "\n"
@@ -19,7 +18,6 @@ in
     qrencode
     wireguard-tools
     nftables
-
   ];
 
   # services.avahi = {
