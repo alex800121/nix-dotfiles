@@ -72,6 +72,13 @@ in
       ActivationPolicy = "manual";
     };
     address = [ "10.100.0.3/24" "fcdd::3/64" ];
+    dns = [
+      "10.100.0.1"
+      "fcdd::1"
+    ];
+    domains = [
+      "~."
+    ];
     networkConfig = {
       IPForward = "yes";
       MulticastDNS = true;

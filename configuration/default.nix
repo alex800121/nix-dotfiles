@@ -212,7 +212,7 @@ in
   users.users."${userName}" = {
     isNormalUser = true;
     description = "${userName}";
-    extraGroups = [ "tss" "storage" "disk" "libvirtd" "audio" "networkmanager" "sudo" "wheel" "code-server" "input" ];
+    extraGroups = [ "tss" "storage" "disk" "libvirtd" "audio" "systemd-network" "sudo" "wheel" "code-server" "input" ];
   };
 
   security.sudo.wheelNeedsPassword = false;
