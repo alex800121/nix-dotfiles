@@ -5,7 +5,7 @@ let
       Name = "wlan0";
     };
     domains = [
-      "duckdns.org"
+      "~duckdns.org"
     ];
     networkConfig = {
       DHCP = true;

@@ -14,15 +14,6 @@ in
   ];
 
   networking.firewall = {
-    allowedTCPPorts = [
-      53
-      5353
-    ];
-    allowedUDPPorts = [
-      53
-      5353
-      port
-    ];
     # if packets are still dropped, they will show up in dmesg
     logReversePathDrops = true;
     # wireguard trips rpfilter up
