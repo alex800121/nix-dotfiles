@@ -75,13 +75,8 @@ in
 
   powerManagement.enable = true;
 
-  networking.firewall = {
-    enable = lib.mkDefault true;
-    allowedUDPPorts = [
-      53
-      5353
-    ];
-  };
+  networking.firewall.enable = lib.mkDefault true;
+
   services.resolved = {
     enable = true;
     llmnr = "true";

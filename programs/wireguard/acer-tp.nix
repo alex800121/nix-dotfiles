@@ -7,28 +7,12 @@ let
       (builtins.readFile ../../secrets/wg-${userConfig.hostName}));
 in
 {
-  # age.secrets."wg-${hostName}" = {
-  #   file = ../../secrets/wg-${hostName}.age;
-  #   owner = "root";
-  #   group = "systemd-network";
-  #   mode = "640";
-  # };
 
   environment.systemPackages = with pkgs; [
     qrencode
     wireguard-tools
     nftables
   ];
-
-  # services.avahi = {
-  #   allowPointToPoint = true;
-  #   reflector = true;
-  #   allowInterfaces = [
-  #     "wg0"
-  #     "lo"
-  #     "enp0s13f0u1u3"
-  #   ];
-  # };
 
   networking.firewall = {
     allowedTCPPorts = [
@@ -70,7 +54,6 @@ in
           MTUBytes = "1400";
         };
         wireguardConfig = {
-          # PrivateKeyFile = config.age.secrets."wg-${hostName}".path;
           PrivateKeyFile = /run/credentials/systemd-networkd.service/wg.key;
           ListenPort = port;
           FirewallMark = 8888;
@@ -109,8 +92,8 @@ in
     };
   };
 
-  boot.kernel.sysctl = {
-    "net.ipv4.ip_forward" = 1;
-    "net.ipv6.conf.all.forwarding" = 1;
-  };
+  # boot.kernel.sysctl = {
+  #   "net.ipv4.ip_forward" = 1;
+  #   "net.ipv6.conf.all.forwarding" = 1;
+  # };
 }
