@@ -51,9 +51,9 @@ in
 
   services.dnsmasq.enable = true;
   services.dnsmasq.resolveLocalQueries = true;
-  services.dnsmasq.extraConfig = ''
-    interface=wg0
-  '';
+  services.dnsmasq.settings = {
+    interface = "wg0";
+  };
 
   services.resolved.extraConfig = ''
     DNSStubListener=no
