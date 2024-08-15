@@ -48,6 +48,7 @@ in
               "kimpanel@kde.org"
               "drive-menu@gnome-shell-extensions.gcampax.github.com"
             ];
+            welcome-dialog-last-shown-version = "46.4";
           };
 
           "org/gnome/shell/extensions/kimpanel".vertical = true;

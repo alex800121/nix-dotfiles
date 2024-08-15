@@ -69,7 +69,7 @@ in
     linkConfig = {
       Multicast = true;
       AllMulticast = true;
-      ActivationPolicy = "manual";
+      ActivationPolicy = "up";
     };
     address = [ "10.100.0.3/24" "fcdd::3/64" ];
     dns = [
