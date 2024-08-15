@@ -51,6 +51,16 @@ in
     "interface-name:wg0"
   ];
 
+  services.dnsmasq.enable = true;
+  services.dnsmasq.resolveLocalQueries = true;
+  services.dnsmasq.extraConfig = ''
+    interface=wg0
+  '';
+
+  services.resolved.extraConfig = ''
+    DNSStubListener=no
+  '';
+
   systemd.network = {
     enable = true;
 
@@ -59,12 +69,13 @@ in
         netdevConfig = {
           Kind = "wireguard";
           Name = "wg0";
-          MTUBytes = "1500";
+          MTUBytes = "1400";
         };
         wireguardConfig = {
           # PrivateKeyFile = config.age.secrets."wg-${hostName}".path;
           PrivateKeyFile = /run/credentials/systemd-networkd.service/wg.key;
           ListenPort = port;
+          FirewallMark = 8888;
         };
         wireguardPeers = [
           {
@@ -98,5 +109,10 @@ in
         AllMulticast = true;
       };
     };
+  };
+
+  boot.kernel.sysctl = {
+    "net.ipv4.ip_forward" = 1;
+    "net.ipv6.conf.all.forwarding" = 1;
   };
 }
