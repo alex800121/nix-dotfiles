@@ -250,7 +250,7 @@ in
     localsend
   ];
 
-  # networking.firewall.allowedTCPPorts = [ 53317 ];
+  networking.firewall.allowedTCPPorts = [ 53317 ];
 
   environment.variables = {
     EDITOR = "nvim";
