@@ -247,7 +247,10 @@ in
     # inputs.agenix.packages."${system}".default
     fastfetch
     gcc
+    localsend
   ];
+
+  # networking.firewall.allowedTCPPorts = [ 53317 ];
 
   environment.variables = {
     EDITOR = "nvim";

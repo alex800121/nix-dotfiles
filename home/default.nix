@@ -124,7 +124,6 @@ in
     ghc
     rust-bin.stable.latest.complete
     telegram-desktop
-    localsend
     obs-studio
     gimp
     wireshark

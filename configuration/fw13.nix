@@ -1,12 +1,9 @@
-{ pkgs, ... }:
+{ pkgs, nixpkgsUnstable, ... }:
 let
   cfg = {
     matchConfig = {
       Name = "wlan0";
     };
-    domains = [
-      "~duckdns.org"
-    ];
     networkConfig = {
       DHCP = true;
       MulticastDNS = true;
@@ -41,4 +38,7 @@ in
   networking.wireless.enable = false;
   networking.wireless.iwd.enable = true;
 
+  environment.systemPackages = with nixpkgsUnstable.gnomeExtensions; [
+    xwayland-indicator
+  ];
 }
