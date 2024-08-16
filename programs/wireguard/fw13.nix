@@ -26,8 +26,8 @@ in
       ip46tables -t mangle -D nixos-fw-rpfilter -p udp -m udp --dport ${toString port} -j RETURN || true
     '';
 
-    allowedTCPPorts = [ 53 port ];
-    allowedUDPPorts = [ 53 port ];
+    # allowedTCPPorts = [ 53 port ];
+    # allowedUDPPorts = [ 53 port ];
   };
 
   systemd.services.systemd-networkd.environment.SYSTEMD_LOG_LEVEL = "debug";
@@ -59,7 +59,7 @@ in
   };
 
   systemd.network.networks."wlan0".domains = [
-    "duckdns.org"
+    "~duckdns.org"
   ];
 
   systemd.network.networks."wg0" = {
