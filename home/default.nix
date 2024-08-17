@@ -144,12 +144,16 @@ in
     "application/xhtml+xml" = [ "google-chrome.desktop" ];
     "text/html" = [ "google-chrome.desktop" ];
     "x-scheme-handler/https" = [ "google-chrome.desktop" ];
+    "application/octet-stream" = [ "org.musescore.MuseScore.desktop" ];
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document" = [ "writer.desktop" ];
   };
   xdg.mimeApps.associations.added = {
     "x-scheme-handler/http" = [ "google-chrome.desktop" ];
     "application/xhtml+xml" = [ "google-chrome.desktop" ];
     "text/html" = [ "google-chrome.desktop" ];
     "x-scheme-handler/https" = [ "google-chrome.desktop" ];
+    "application/octet-stream" = [ "org.musescore.MuseScore.desktop" ];
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document" = [ "writer.desktop" ];
   };
 
   programs.git = {

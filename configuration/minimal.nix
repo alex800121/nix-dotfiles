@@ -39,6 +39,7 @@
     curl
     wget
     git
+    btrfs-progs
   ];
 
   environment.variables = {
