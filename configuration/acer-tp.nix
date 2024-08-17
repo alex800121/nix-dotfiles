@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 let
   cfg = {
     matchConfig = {
@@ -16,6 +16,10 @@ let
       AllMulticast = true;
     };
   };
+
+  resolvedConf = ''
+    [Resolve]
+  '';
 in
 {
   networking.networkmanager.enable = false;
@@ -26,4 +30,19 @@ in
 
   systemd.network.networks."10-enp0s20f0u1u4" = cfg;
   boot.initrd.systemd.network.networks."10-enp0s20f0u1u4" = cfg;
+
+  boot.initrd.systemd.contents = {
+    "/etc/tmpfiles.d/resolv.conf".text =
+      "L /etc/resolv.conf - - - - /run/systemd/resolve/stub-resolv.conf";
+    "/etc/systemd/resolved.conf".text = resolvedConf;
+  };
+
+  boot.initrd.systemd.additionalUpstreamUnits = [ "systemd-resolved.service" ];
+  boot.initrd.systemd.users.systemd-resolve = { };
+  boot.initrd.systemd.groups.systemd-resolve = { };
+  boot.initrd.systemd.storePaths = [ "${pkgs.systemd}/lib/systemd/systemd-resolved" ];
+  boot.initrd.systemd.services.systemd-resolved = {
+    wantedBy = [ "sysinit.target" ];
+    aliases = [ "dbus-org.freedesktop.resolve1.service" ];
+  };
 }

@@ -186,6 +186,7 @@
             ./de/gnome
             ./programs/nix-ld
             ./programs/duckdns
+            ./programs/duckdns/initrd.nix
             ./programs/code-tunnel
             ./programs/wireguard/acer-tp.nix
             ./programs/sshd
