@@ -30,6 +30,7 @@ in
   systemd.network.networks."10-wlan0" = cfg;
   boot.initrd.systemd.network.networks."10-wlan0" = cfg;
 
+  networking.networkmanager.enable = false;
   networking.networkmanager.unmanaged = [
     "*"
   ];

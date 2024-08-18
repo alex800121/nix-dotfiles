@@ -85,7 +85,6 @@ in
     '';
   };
   services.avahi = {
-    enable = lib.mkDefault true;
     publish.enable = true;
     publish.hinfo = true;
     publish.addresses = true;
