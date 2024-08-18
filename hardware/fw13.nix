@@ -21,16 +21,16 @@
 
   boot.initrd.luks.devices."enc".device = "/dev/disk/by-uuid/1d7b8f4f-c0cb-4d98-b5c0-d6094c06a4ab";
 
-  fileSystems."/home" =
-    { device = "/dev/disk/by-uuid/421453c5-334d-4f81-a0ad-74891b60e942";
-      fsType = "btrfs";
-      options = [ "subvol=home" ];
-    };
-
   fileSystems."/nix" =
     { device = "/dev/disk/by-uuid/421453c5-334d-4f81-a0ad-74891b60e942";
       fsType = "btrfs";
       options = [ "subvol=nix" ];
+    };
+
+  fileSystems."/home" =
+    { device = "/dev/disk/by-uuid/421453c5-334d-4f81-a0ad-74891b60e942";
+      fsType = "btrfs";
+      options = [ "subvol=home" ];
     };
 
   fileSystems."/swap" =
@@ -40,7 +40,7 @@
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/FA24-EFBA";
+    { device = "/dev/disk/by-uuid/561C-A775";
       fsType = "vfat";
       options = [ "fmask=0077" "dmask=0077" ];
     };
