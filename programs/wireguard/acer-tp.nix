@@ -69,7 +69,7 @@ in
           {
             # fw13
             wireguardPeerConfig = {
-              PublicKey = "TKL4K+fXJqkOFQpz5p7C62QPudAZxkGdlFMi1Xv0ngA=";
+              PublicKey = "JMNHOKwrWF+8hFboj+lMwoP2B8lVunrsk4qrlVc3L1A=";
               AllowedIPs = [ "10.100.0.3/32" "fcdd::3/128" ];
             };
           }
@@ -80,8 +80,7 @@ in
     networks.wg0 = {
       matchConfig.Name = "wg0";
       address = [ "10.100.0.1/24" "fcdd::1/64" ];
-      networkConfig = {
-        IPMasquerade = "both";
+      networkConfig = { IPMasquerade = "both";
         IPForward = "yes";
         MulticastDNS = true;
       };

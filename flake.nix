@@ -94,7 +94,6 @@
               nixpkgsUnstable = nixpkgs-unstable;
             };
             modules = [
-              ./configuration/distributed-builds.nix
               {
                 nixpkgs.config.allowUnsupportedSystem = true;
                 nixpkgs.overlays = [
@@ -209,8 +208,9 @@
           };
           extraModules = [
             nixos-hardware.nixosModules.framework-13-7040-amd
-            lanzaboote.nixosModules.lanzaboote
-            ./configuration/secure-boot.nix
+            # lanzaboote.nixosModules.lanzaboote
+            # ./configuration/secure-boot.nix
+            ./configuration/distributed-builds.nix
             ./configuration
             ./configuration/fw13.nix
             ./configuration/timezoned.nix

@@ -18,14 +18,14 @@ let
   };
 in
 {
-  boot.initrd.luks.devices = {
-    ENCRYPTED = {
-      device = "/dev/disk/by-uuid/aebaf441-09a4-410f-9f23-22858f02ab3f";
-      preLVM = true;
-      allowDiscards = true;
-      bypassWorkqueues = true;
-    };
-  };
+  boot.initrd.luks.devices."enc".preLVM = true;
+  boot.initrd.luks.devices."enc".allowDiscards = true;
+  boot.initrd.luks.devices."enc".bypassWorkqueues = true;
+  fileSystems."/".options = [ "compress=zstd" ];
+  fileSystems."/home".options = [ "compress=zstd" ];
+  fileSystems."/nix".options = [ "noatime" "compress=zstd" ];
+  fileSystems."/swap".options = [ "noatime" ];
+  swapDevices = [ { device = "/swap/swapfile"; } ];
 
   systemd.network.networks."10-wlan0" = cfg;
   boot.initrd.systemd.network.networks."10-wlan0" = cfg;
