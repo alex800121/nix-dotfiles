@@ -208,8 +208,8 @@
           };
           extraModules = [
             nixos-hardware.nixosModules.framework-13-7040-amd
-            # lanzaboote.nixosModules.lanzaboote
-            # ./configuration/secure-boot.nix
+            lanzaboote.nixosModules.lanzaboote
+            ./configuration/secure-boot.nix
             ./configuration/distributed-builds.nix
             ./configuration
             ./configuration/fw13.nix

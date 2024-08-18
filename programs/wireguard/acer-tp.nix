@@ -69,7 +69,7 @@ in
           {
             # fw13
             wireguardPeerConfig = {
-              PublicKey = "JMNHOKwrWF+8hFboj+lMwoP2B8lVunrsk4qrlVc3L1A=";
+              PublicKey = "1dM4ifJxT3+aWDln1RX3JmB3jJJuyMOEzob1Kt5odQ4=";
               AllowedIPs = [ "10.100.0.3/32" "fcdd::3/128" ];
             };
           }

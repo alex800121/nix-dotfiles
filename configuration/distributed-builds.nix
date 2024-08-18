@@ -23,7 +23,7 @@ in
   nix.settings.trusted-public-keys = [
     "nix-alexrpi4tp:XZMMtcMyPm9a8/hV7Dp8Z27hlUYp+jPg7uSBDTY+X4Y="
     "nix-acer-tp:POOYVdWQp5avm9ZWd65SVcLdYiMNNx7Pfq/GtHr5WUc="
-    "nix-fw13:tf+JHvBtLgXNpSWs1jI7IuGwQRRJqIMNOo892KC/Ubw="
+    "nix-fw13:yQd04YEg7RVa2KMfA8HtgYvTmki5BU0dVbJrRCLuEoU="
   ];
 
   # age.secrets."nix-${hostName}" = {
