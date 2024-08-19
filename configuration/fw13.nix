@@ -30,14 +30,14 @@ in
   systemd.network.networks."10-wlan0" = cfg;
   boot.initrd.systemd.network.networks."10-wlan0" = cfg;
 
-  networking.networkmanager.enable = false;
-  networking.networkmanager.unmanaged = [
-    "*"
-  ];
-
-  networking.useNetworkd = true;
-  networking.wireless.enable = false;
-  networking.wireless.iwd.enable = true;
+  # networking.networkmanager.enable = false;
+  # networking.networkmanager.unmanaged = [
+  #   "*"
+  # ];
+  #
+  # networking.useNetworkd = true;
+  # networking.wireless.enable = false;
+  # networking.wireless.iwd.enable = true;
 
   environment.systemPackages = with nixpkgsUnstable.gnomeExtensions; [
     xwayland-indicator
