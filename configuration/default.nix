@@ -248,6 +248,7 @@ in
     fastfetch
     gcc
     localsend
+    conntrack-tools
   ];
 
   networking.firewall.allowedTCPPorts = [ 53317 ];
