@@ -29,12 +29,13 @@ in
 
   systemd.network.networks."10-wlan0" = cfg;
   boot.initrd.systemd.network.networks."10-wlan0" = cfg;
+  boot.initrd.systemd.enable = true;
+  boot.initrd.systemd.enableTpm2 = true;
 
   # networking.networkmanager.enable = false;
   # networking.networkmanager.unmanaged = [
   #   "*"
   # ];
-  #
   # networking.useNetworkd = true;
   # networking.wireless.enable = false;
   # networking.wireless.iwd.enable = true;
