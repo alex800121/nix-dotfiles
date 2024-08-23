@@ -45,4 +45,16 @@ in
     wantedBy = [ "sysinit.target" ];
     aliases = [ "dbus-org.freedesktop.resolve1.service" ];
   };
+
+  boot.initrd.systemd.enable = true;
+  boot.initrd.systemd.enableTpm2 = true;
+
+  boot.initrd.luks.devices."enc".preLVM = true;
+  boot.initrd.luks.devices."enc".allowDiscards = true;
+  boot.initrd.luks.devices."enc".bypassWorkqueues = true;
+  fileSystems."/".options = [ "noatime" "compress=zstd" ];
+  fileSystems."/home".options = [ "noatime" "compress=zstd" ];
+  fileSystems."/nix".options = [ "noatime" "compress=zstd" ];
+  fileSystems."/swap".options = [ "noatime" ];
+  swapDevices = [ { device = "/swap/swapfile"; } ];
 }
