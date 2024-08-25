@@ -175,21 +175,23 @@
             port = 31000;
           };
           extraModules = [
+            lanzaboote.nixosModules.lanzaboote
+            ./configuration/secure-boot.nix
             ./configuration
             ./configuration/acer-tp.nix
-            ./configuration/distributed-builds.nix
-            ./configuration/timezoned.nix
-            ./configuration/initrd-network.nix
             ./hardware/acer-tp.nix
             ./hardware/desktop.nix
             ./de/gnome
             ./programs/nix-ld
-            ./programs/duckdns
-            ./programs/duckdns/initrd.nix
             ./programs/code-tunnel
-            ./programs/wireguard/acer-tp.nix
             ./programs/sshd
             ./programs/virt
+            ./configuration/distributed-builds.nix
+            ./configuration/timezoned.nix
+            ./configuration/initrd-network.nix
+            ./programs/duckdns
+            ./programs/duckdns/initrd.nix
+            ./programs/wireguard/acer-tp.nix
           ];
           hmModules = [
             ./home

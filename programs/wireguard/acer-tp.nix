@@ -51,7 +51,7 @@ in
         netdevConfig = {
           Kind = "wireguard";
           Name = "wg0";
-          MTUBytes = "1420";
+          MTUBytes = "1500";
         };
         wireguardConfig = {
           PrivateKeyFile = /run/credentials/systemd-networkd.service/wg.key;
