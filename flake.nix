@@ -11,6 +11,10 @@
     nixos-hardware = {
       url = "github:NixOS/nixos-hardware/master";
     };
+    raspberry-pi-nix = {
+      url = "github:nix-community/raspberry-pi-nix";
+      # inputs.nixpkgs.follows = "nixpkgs";
+    };
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v0.4.1";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -34,10 +38,11 @@
     , nixpkgs
     , home-manager
     , nixos-hardware
-    # , agenix
+      # , agenix
     , rust-overlay
     , nixpkgsUnstable
     , lanzaboote
+    , raspberry-pi-nix
     , ...
     }:
     let
@@ -154,7 +159,8 @@
             ./configuration/distributed-builds.nix
             ./configuration/rpi4.nix
             ./hardware/rpi4.nix
-            nixos-hardware.nixosModules.raspberry-pi-4
+            # nixos-hardware.nixosModules.raspberry-pi-4
+            raspberry-pi-nix.nixosModules.raspberry-pi
             ./programs/sshd
             ./programs/duckdns
           ];

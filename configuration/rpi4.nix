@@ -13,88 +13,93 @@ let
 in
 {
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "usbhid" "usb_storage" ];
-  boot.kernelPackages = pkgs."linuxPackages_${kernelVersion}";
+  # boot.initrd.availableKernelModules = [ "xhci_pci" "usbhid" "usb_storage" ];
+  # boot.kernelPackages = pkgs."linuxPackages_${kernelVersion}";
+
+  raspberry-pi-nix.board = "bcm2711";
 
   hardware.enableAllFirmware = true;
   hardware.enableRedistributableFirmware = true;
   # Use the extlinux boot loader. (NixOS wants to enable GRUB by default)
   boot.loader.grub.enable = false;
   # Enables the generation of /boot/extlinux/extlinux.conf
-  boot.loader.generic-extlinux-compatible.enable = true;
+  # boot.loader.generic-extlinux-compatible.enable = lib.mkDefault true;
   console = {
     earlySetup = true;
     font = "${pkgs.terminus_font}/share/consolefonts/ter-v32n.psf.gz";
   };
 
-  hardware.raspberry-pi."4" = {
-    apply-overlays-dtmerge.enable = true;
-    fkms-3d.enable = true;
-    pwm0.enable = true;
-  };
-  hardware.deviceTree.overlays = [
-    {
-      name = "gpio-fan";
-      dtsText = ''
-        /dts-v1/;
-        /plugin/;
-
-        / {
-                compatible = "brcm,bcm2711";
-
-                fragment@0 {
-                        target-path = "/";
-                        __overlay__ {
-                                fan0: gpio-fan@0 {
-                                        compatible = "gpio-fan";
-                                        gpios = <&gpio 14 0>;
-                                        gpio-fan,speed-map = <0    0>,
-                                                                                 <5000 1>;
-                                        #cooling-cells = <2>;
-                                };
-                        };
-                };
-
-                fragment@1 {
-                        target = <&cpu_thermal>;
-                        polling-delay = <2000>;	/* milliseconds */
-                        __overlay__ {
-                                trips {
-                                        cpu_hot: trip-point@0 {
-                                                temperature = <65000>;	/* (millicelsius) Fan started at 55°C */
-                                                hysteresis = <10000>;	/* (millicelsius) Fan stopped at 45°C */
-                                                type = "active";
-                                        };
-                                };
-                                cooling-maps {
-                                        map0 {
-                                                trip = <&cpu_hot>;
-                                                cooling-device = <&fan0 1 1>;
-                                        };
-                                };
-                        };
-                };
-                __overrides__ {
-                        gpiopin = <&fan0>,"gpios:4", <&fan0>,"brcm,pins:0";
-                        temp = <&cpu_hot>,"temperature:0";
-                };
-        };
-      '';
-    }
-  ];
-
-  services.kmscon.enable = true;
-  services.kmscon.hwRender = true;
-  services.kmscon.autologinUser = userName;
-  services.kmscon.extraConfig = ''
-    font-size=14
-  '';
-  services.kmscon.fonts = [
-    {
-      name = "Hack Nerd Font Mono";
-      package = pkgs.nerdfonts;
-    }
-  ];
+  # hardware.raspberry-pi = {
+  #
+  # };
+  # hardware.raspberry-pi."4" = {
+  #   apply-overlays-dtmerge.enable = true;
+  #   fkms-3d.enable = true;
+  #   pwm0.enable = true;
+  # };
+  # hardware.deviceTree.overlays = [
+  #   {
+  #     name = "gpio-fan";
+  #     dtsText = ''
+  #       /dts-v1/;
+  #       /plugin/;
+  #
+  #       / {
+  #               compatible = "brcm,bcm2711";
+  #
+  #               fragment@0 {
+  #                       target-path = "/";
+  #                       __overlay__ {
+  #                               fan0: gpio-fan@0 {
+  #                                       compatible = "gpio-fan";
+  #                                       gpios = <&gpio 14 0>;
+  #                                       gpio-fan,speed-map = <0    0>,
+  #                                                                                <5000 1>;
+  #                                       #cooling-cells = <2>;
+  #                               };
+  #                       };
+  #               };
+  #
+  #               fragment@1 {
+  #                       target = <&cpu_thermal>;
+  #                       polling-delay = <2000>;	/* milliseconds */
+  #                       __overlay__ {
+  #                               trips {
+  #                                       cpu_hot: trip-point@0 {
+  #                                               temperature = <65000>;	/* (millicelsius) Fan started at 55°C */
+  #                                               hysteresis = <10000>;	/* (millicelsius) Fan stopped at 45°C */
+  #                                               type = "active";
+  #                                       };
+  #                               };
+  #                               cooling-maps {
+  #                                       map0 {
+  #                                               trip = <&cpu_hot>;
+  #                                               cooling-device = <&fan0 1 1>;
+  #                                       };
+  #                               };
+  #                       };
+  #               };
+  #               __overrides__ {
+  #                       gpiopin = <&fan0>,"gpios:4", <&fan0>,"brcm,pins:0";
+  #                       temp = <&cpu_hot>,"temperature:0";
+  #               };
+  #       };
+  #     '';
+  #   }
+  # ];
+  #
+  # services.kmscon.enable = true;
+  # services.kmscon.hwRender = true;
+  # services.kmscon.autologinUser = userName;
+  # services.kmscon.extraConfig = ''
+  #   font-size=14
+  # '';
+  # services.kmscon.fonts = [
+  #   {
+  #     name = "Hack Nerd Font Mono";
+  #     package = pkgs.nerdfonts;
+  #   }
+  # ];
 
   powerManagement.enable = false;
 
@@ -148,9 +153,6 @@ in
 
   # Enable the X11 windowing system.
   # services.xserver.enable = true;
-
-
-
 
   # Configure keymap in X11
   # services.xserver.xkb.layout = "us";
