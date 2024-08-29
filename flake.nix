@@ -46,27 +46,6 @@
     , ...
     }:
     let
-      mkSdImage = { inputModule, ... }: {
-        image."${inputModule._module.specialArgs.userConfig.hostName}" = (inputModule.extendModules {
-          modules = [
-            "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
-            ({ ... }: {
-              config = {
-                sdImage.compressImage = false;
-                users.users."root".initialPassword = "root";
-              };
-            })
-            {
-              nixpkgs.overlays = [
-                (final: super: {
-                  makeModulesClosure = x:
-                    super.makeModulesClosure (x // { allowMissing = true; });
-                })
-              ];
-            }
-          ];
-        }).config.system.build.sdImage;
-      };
       mkNixosIso = { system, kernelVersion, ... }: configName: {
         nixosConfigurations."${configName}-iso" = nixpkgs.lib.nixosSystem
           {
@@ -125,19 +104,19 @@
           };
         };
       configs = {
-        rpi4 = {
+        alexrpi4tpmin = {
           system = "aarch64-linux";
           kernelVersion = "rpi4";
           userConfig = {
-            hostName = "rpi4";
+            hostName = "alexrpi4tp";
             userName = "alex800121";
             fontSize = 11.5;
             autoLogin = true;
           };
           extraModules = [
-            ./configuration/rpi4sd.nix
+            ./configuration/rpi4.nix
             ./hardware/rpi4.nix
-            nixos-hardware.nixosModules.raspberry-pi-4
+            raspberry-pi-nix.nixosModules.raspberry-pi
             ./programs/sshd
           ];
           hmModules = [
@@ -159,7 +138,6 @@
             ./configuration/distributed-builds.nix
             ./configuration/rpi4.nix
             ./hardware/rpi4.nix
-            # nixos-hardware.nixosModules.raspberry-pi-4
             raspberry-pi-nix.nixosModules.raspberry-pi
             ./programs/sshd
             ./programs/duckdns
@@ -241,14 +219,13 @@
         "acer-tp"
         "alexrpi4tp"
         "fw13"
+        "alexrpi4tpmin"
       ];
       outputIso = builtins.foldl' (x: y: nixpkgs.lib.recursiveUpdate x (mkNixosIso configs."${y}" y)) { } [
         "fw13"
       ];
     in
     builtins.foldl' (x: y: nixpkgs.lib.recursiveUpdate x y) { } [
-      (mkSdImage { inputModule = (mkNixosConfig configs.rpi4 "rpi4").nixosConfigurations.rpi4; })
-      (mkSdImage { inputModule = outputConfigs.nixosConfigurations.alexrpi4tp; })
       outputIso
       outputConfigs
     ];

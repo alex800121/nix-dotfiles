@@ -35,9 +35,9 @@ in {
 
   home.sessionVariables = {
     BROWSER = "firefox";
-    EDITOR = "hx";
-    VISUAL = "hx";
-    SUDO_EDITOR = "hx";
+    EDITOR = "nvim";
+    VISUAL = "nvim";
+    SUDO_EDITOR = "nvim";
   };
 
   # Let Home Manager install and manage itself.
@@ -59,16 +59,7 @@ in {
     # historyControl = [ "ignoredups" "ignorespace" ];
     historyFileSize = 100000;
     historySize = 10000;
-    /* bashrcExtra = ''
-      PS1='\[\033[01;34m\]\W \[\033[00m\]\$ '
-      set -o vi
-      HISTCONTROL=ignoreboth
-    ''; */
     bashrcExtra = ''
-      if [ -z "''${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
-        debian_chroot=$(cat /etc/debian_chroot)
-      fi
-
       PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w \$\[\033[00m\] '
       set -o vi
       HISTCONTROL=ignoreboth
@@ -78,16 +69,11 @@ in {
     enable = true;
     extraConfig = "set completion-ignore-case On";
   };
-  # targets.genericLinux.enable = true;
-
-  # fonts.fontconfig.enable = true;
 
   home.packages = with pkgs; [
     nix-prefetch-git
     neofetch
     ripgrep
-    wl-clipboard
-    nodejs
     dmidecode
     gh 
     nil
@@ -102,30 +88,8 @@ in {
 
   programs.htop.enable = true;
 
-  # programs.helix = {
-  #   enable = true;
-  #   settings = import ../programs/helix/settings.nix;
-  #   languages = import ../programs/helix/languages.nix;
-  # };
-
-  # programs.alacritty = {
-  #   enable = true;
-  #   package = nixpkgsUnstable.alacritty;
-  #   settings = import ../programs/alacritty/alacritty-settings.nix updateConfig;
-  # };
-
   programs.zellij = {
     enable = true;
   };
 
-  # programs.vscode = {
-  #   # package = pkgs.vscode-fhs;
-  #   enable = true;
-  #   enableExtensionUpdateCheck = true;
-  #   enableUpdateCheck = true;
-  #   mutableExtensionsDir = true;
-  #   # extensions = [
-  #   #   pkgs.vscode-extensions.vadimcn.vscode-lldb
-  #   # ];
-  # };
 }

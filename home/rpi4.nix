@@ -80,31 +80,31 @@ in {
   };
   # targets.genericLinux.enable = true;
 
-  programs.direnv = {
-    enable = true;
-    enableBashIntegration = true;
-    nix-direnv.enable = true;
-  };
+  # programs.direnv = {
+  #   enable = true;
+  #   enableBashIntegration = true;
+  #   nix-direnv.enable = true;
+  # };
 
   # fonts.fontconfig.enable = true;
 
   home.packages = with pkgs; [
     nix-prefetch-git
-    cabal2nix
+    # cabal2nix
     fastfetch
     ripgrep
-    wl-clipboard
-    nodejs
+    # wl-clipboard
+    # nodejs
     dmidecode
     gh 
-    cabal-install 
-    ghcid 
-    ghc
-    ormolu
+    # cabal-install 
+    # ghcid 
+    # ghc
+    # ormolu
     nil
     nixpkgs-fmt
-    gcc
-    rust-bin.stable.latest.complete 
+    # gcc
+    # rust-bin.stable.latest.complete 
   ];
 
   programs.git = {
@@ -115,30 +115,24 @@ in {
 
   programs.htop.enable = true;
 
-  # programs.helix = {
+  # programs.alacritty = {
   #   enable = true;
-  #   settings = import ../programs/helix/settings.nix;
-  #   languages = import ../programs/helix/languages.nix;
+  #   package = pkgs.alacritty;
+  #   settings = import ../programs/alacritty/alacritty-settings.nix updateConfig;
   # };
-
-  programs.alacritty = {
-    enable = true;
-    package = pkgs.alacritty;
-    settings = import ../programs/alacritty/alacritty-settings.nix updateConfig;
-  };
 
   programs.zellij = {
     enable = true;
   };
 
-  programs.vscode = {
-    # package = pkgs.vscode-fhs;
-    enable = true;
-    enableExtensionUpdateCheck = true;
-    enableUpdateCheck = true;
-    mutableExtensionsDir = true;
-    # extensions = [
-    #   pkgs.vscode-extensions.vadimcn.vscode-lldb
-    # ];
-  };
+  # programs.vscode = {
+  #   # package = pkgs.vscode-fhs;
+  #   enable = true;
+  #   enableExtensionUpdateCheck = true;
+  #   enableUpdateCheck = true;
+  #   mutableExtensionsDir = true;
+  #   # extensions = [
+  #   #   pkgs.vscode-extensions.vadimcn.vscode-lldb
+  #   # ];
+  # };
 }

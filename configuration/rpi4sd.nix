@@ -11,31 +11,21 @@
   inherit (pkgs) system;
 in {
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "usbhid" "usb_storage" ];
-  boot.kernelPackages = pkgs."linuxPackages_${kernelVersion}";
+  # boot.initrd.availableKernelModules = [ "xhci_pci" "usbhid" "usb_storage" ];
+  # boot.kernelPackages = pkgs."linuxPackages_${kernelVersion}";
 
   hardware.enableAllFirmware = true; 
   hardware.enableRedistributableFirmware = true;
   # Use the extlinux boot loader. (NixOS wants to enable GRUB by default)
   boot.loader.grub.enable = false;
   # Enables the generation of /boot/extlinux/extlinux.conf
-  boot.loader.generic-extlinux-compatible.enable = true;
+  # boot.loader.generic-extlinux-compatible.enable = true;
   console = {
     earlySetup = true;
     font = "${pkgs.terminus_font}/share/consolefonts/ter-v32n.psf.gz";
   };
 
-  services.kmscon.enable = true;
-  services.kmscon.hwRender = true;
-  services.kmscon.extraConfig = ''
-    font-size=14
-  '';
-  services.kmscon.fonts = [
-    {
-      name = "Hack Nerd Font Mono";
-      package = pkgs.nerdfonts;
-    }
-  ];
+  raspberry-pi-nix.board = "bcm2711";
 
   nix = {
     gc = {
@@ -53,18 +43,27 @@ in {
       experimental-features = nix-command flakes repl-flake
     '';
   };
-  networking = {
-    inherit hostName; # Define your hostname.
-    firewall.enable = false;
-    networkmanager = {
-      enable = true;
-      # dhcp = "dhcpcd";
-      # dns = "systemd-resolved";
-      # dns = "dnsmasq";
-      # dns = "default";
+
+  networking.hostName = hostName;
+  networking.firewall.enable = false;
+  networking.networkmanager.enable = false;
+  networking.useNetworkd = true;
+
+  systemd.network.enable = true;
+  systemd.network.networks."10-end0" = {
+    matchConfig = {
+      Name = "end0";
+    };
+    networkConfig = {
+      DHCP = true;
+      MulticastDNS = true;
+      LLMNR = true;
+    };
+    linkConfig = {
+      Multicast = true;
+      AllMulticast = true;
     };
   };
-
   # Set your time zone.
   time.timeZone = "Asia/Taipei";
 
@@ -109,15 +108,12 @@ in {
     config = {
       allowBroken = true;
       allowUnfree = true;
-      pulseaudio = true;
     };
   };
   # List packages installed in system profile. To search, run:
   environment.systemPackages = with pkgs; [
-    helix
     neovim
     git
-    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
     curl
     coreutils
