@@ -21,7 +21,7 @@ in
   hardware.enableAllFirmware = true;
   hardware.enableRedistributableFirmware = true;
   # Use the extlinux boot loader. (NixOS wants to enable GRUB by default)
-  boot.loader.grub.enable = false;
+  # boot.loader.grub.enable = true;
   # Enables the generation of /boot/extlinux/extlinux.conf
   # boot.loader.generic-extlinux-compatible.enable = lib.mkDefault true;
   console = {
@@ -29,9 +29,7 @@ in
     font = "${pkgs.terminus_font}/share/consolefonts/ter-v32n.psf.gz";
   };
 
-  # hardware.raspberry-pi = {
-  #
-  # };
+  # boot.loader.systemd-boot.enable = true;
   # hardware.raspberry-pi."4" = {
   #   apply-overlays-dtmerge.enable = true;
   #   fkms-3d.enable = true;
