@@ -118,6 +118,13 @@
             ./hardware/rpi4.nix
             raspberry-pi-nix.nixosModules.raspberry-pi
             ./programs/sshd
+            ({ userConfig, ... }: {
+              sdImage.compressImage = false;
+              sdImage.expandOnBoot = true;
+
+              users.users.root.initialPassword = "root";
+              users.users."${userConfig.userName}".initialPassword = "${userConfig.userName}";
+            })
           ];
           hmModules = [
             ./home/rpi4.nix

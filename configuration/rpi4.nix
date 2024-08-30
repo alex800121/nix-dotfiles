@@ -17,9 +17,7 @@ in
   # boot.kernelPackages = pkgs."linuxPackages_${kernelVersion}";
 
   raspberry-pi-nix.board = "bcm2711";
-
-  sdImage.compressImage = false;
-  sdImage.expandOnBoot = true;
+  # raspberry-pi-nix.uboot.enable = true;
 
   hardware.enableAllFirmware = true;
   hardware.enableRedistributableFirmware = true;
@@ -27,6 +25,7 @@ in
   # boot.loader.grub.enable = true;
   # Enables the generation of /boot/extlinux/extlinux.conf
   # boot.loader.generic-extlinux-compatible.enable = lib.mkDefault true;
+
   console = {
     earlySetup = true;
     font = "${pkgs.terminus_font}/share/consolefonts/ter-v32n.psf.gz";
@@ -113,14 +112,12 @@ in
   # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.root.initialPassword = "root";
 
   users.mutableUsers = true;
   users.users."${userName}" = {
     isNormalUser = true;
     description = "${userName}";
     extraGroups = [ "storage" "disk" "libvirtd" "audio" "networkmanager" "sudo" "wheel" "code-server" "input" ];
-    initialPassword = "${userName}";
   };
 
   security.sudo.wheelNeedsPassword = false;
