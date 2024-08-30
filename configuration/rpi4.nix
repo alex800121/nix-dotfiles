@@ -18,6 +18,9 @@ in
 
   raspberry-pi-nix.board = "bcm2711";
 
+  sdImage.compressImage = false;
+  sdImage.expandOnBoot = true;
+
   hardware.enableAllFirmware = true;
   hardware.enableRedistributableFirmware = true;
   # Use the extlinux boot loader. (NixOS wants to enable GRUB by default)
