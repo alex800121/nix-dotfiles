@@ -120,7 +120,7 @@
             ./programs/sshd
           ];
           hmModules = [
-            ./home/rpi4sd.nix
+            ./home/rpi4.nix
           ];
         };
         alexrpi4tp = {

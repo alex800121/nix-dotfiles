@@ -110,11 +110,14 @@ in
   # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
+  users.users.root.initialPassword = "root";
+
   users.mutableUsers = true;
   users.users."${userName}" = {
     isNormalUser = true;
     description = "${userName}";
     extraGroups = [ "storage" "disk" "libvirtd" "audio" "networkmanager" "sudo" "wheel" "code-server" "input" ];
+    initialPassword = "${userName}";
   };
 
   security.sudo.wheelNeedsPassword = false;

@@ -56,14 +56,8 @@ in {
       l = "ls -CF";
       nv = "nvim";
     };
-    # historyControl = [ "ignoredups" "ignorespace" ];
     historyFileSize = 100000;
     historySize = 10000;
-    /* bashrcExtra = ''
-      PS1='\[\033[01;34m\]\W \[\033[00m\]\$ '
-      set -o vi
-      HISTCONTROL=ignoreboth
-    ''; */
     bashrcExtra = ''
       if [ -z "''${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
         debian_chroot=$(cat /etc/debian_chroot)
@@ -78,33 +72,15 @@ in {
     enable = true;
     extraConfig = "set completion-ignore-case On";
   };
-  # targets.genericLinux.enable = true;
-
-  # programs.direnv = {
-  #   enable = true;
-  #   enableBashIntegration = true;
-  #   nix-direnv.enable = true;
-  # };
-
-  # fonts.fontconfig.enable = true;
 
   home.packages = with pkgs; [
     nix-prefetch-git
-    # cabal2nix
     fastfetch
     ripgrep
-    # wl-clipboard
-    # nodejs
     dmidecode
     gh 
-    # cabal-install 
-    # ghcid 
-    # ghc
-    # ormolu
     nil
     nixpkgs-fmt
-    # gcc
-    # rust-bin.stable.latest.complete 
   ];
 
   programs.git = {
@@ -115,24 +91,9 @@ in {
 
   programs.htop.enable = true;
 
-  # programs.alacritty = {
-  #   enable = true;
-  #   package = pkgs.alacritty;
-  #   settings = import ../programs/alacritty/alacritty-settings.nix updateConfig;
-  # };
 
   programs.zellij = {
     enable = true;
   };
 
-  # programs.vscode = {
-  #   # package = pkgs.vscode-fhs;
-  #   enable = true;
-  #   enableExtensionUpdateCheck = true;
-  #   enableUpdateCheck = true;
-  #   mutableExtensionsDir = true;
-  #   # extensions = [
-  #   #   pkgs.vscode-extensions.vadimcn.vscode-lldb
-  #   # ];
-  # };
 }
