@@ -53,7 +53,7 @@
             modules = [
               ./configuration/minimal.nix
               ./programs/sshd
-              "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal-new-kernel-no-zfs.nix"
+              "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
             ];
             specialArgs = {
               userConfig = {
@@ -229,6 +229,7 @@
         "alexrpi4tpmin"
       ];
       outputIso = builtins.foldl' (x: y: nixpkgs.lib.recursiveUpdate x (mkNixosIso configs."${y}" y)) { } [
+        "alexrpi4tpmin"
         "fw13"
       ];
     in
