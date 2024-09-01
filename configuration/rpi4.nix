@@ -18,6 +18,23 @@ in
 
   raspberry-pi-nix.board = "bcm2711";
   # raspberry-pi-nix.uboot.enable = true;
+  hardware.raspberry-pi.config.rpi4.dt-overlays.gpio-fan = {
+    enable = true;
+    params = {
+      gpiopin = {
+        enable = true;
+        value = 14;
+      };
+      temp = {
+        enable = true;
+        value = 55000;
+      };
+      hyst = {
+        enable = true;
+        value = 5000;
+      };
+    };
+  };
 
   hardware.enableAllFirmware = true;
   hardware.enableRedistributableFirmware = true;
