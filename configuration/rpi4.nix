@@ -2,7 +2,7 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ pkgs, lib, userConfig, inputs, kernelVersion, config, ... }:
+{ nixpkgsUnstable, pkgs, lib, userConfig, inputs, kernelVersion, config, ... }:
 let
   defaultConfig = {
     autoLogin = false;
@@ -14,27 +14,27 @@ in
 {
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "usbhid" "usb_storage" ];
-  # boot.kernelPackages = pkgs."linuxPackages_${kernelVersion}";
+  boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_rpi4;
 
-  raspberry-pi-nix.board = "bcm2711";
+  # raspberry-pi-nix.board = "bcm2711";
   # raspberry-pi-nix.uboot.enable = true;
-  hardware.raspberry-pi.config.rpi4.dt-overlays.gpio-fan = {
-    enable = true;
-    params = {
-      gpiopin = {
-        enable = true;
-        value = 14;
-      };
-      temp = {
-        enable = true;
-        value = 55000;
-      };
-      hyst = {
-        enable = true;
-        value = 5000;
-      };
-    };
-  };
+  # hardware.raspberry-pi.config.rpi4.dt-overlays.gpio-fan = {
+  #   enable = true;
+  #   params = {
+  #     gpiopin = {
+  #       enable = true;
+  #       value = 14;
+  #     };
+  #     temp = {
+  #       enable = true;
+  #       value = 55000;
+  #     };
+  #     hyst = {
+  #       enable = true;
+  #       value = 5000;
+  #     };
+  #   };
+  # };
 
   hardware.enableAllFirmware = true;
   hardware.enableRedistributableFirmware = true;

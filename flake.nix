@@ -114,16 +114,22 @@
             autoLogin = true;
           };
           extraModules = [
+            "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64-new-kernel-no-zfs-installer.nix"
             ./configuration/rpi4.nix
             ./hardware/rpi4.nix
-            raspberry-pi-nix.nixosModules.raspberry-pi
+            # raspberry-pi-nix.nixosModules.raspberry-pi
             ./programs/sshd
-            ({ userConfig, ... }: {
+            ({ userConfig, nixpkgsUnstable, ... }: {
               sdImage.compressImage = false;
-              sdImage.expandOnBoot = true;
-
-              users.users.root.initialPassword = "root";
-              users.users."${userConfig.userName}".initialPassword = "${userConfig.userName}";
+              # sdImage.expandOnBoot = true;
+              # users.users.root.initialPassword = "root";
+              # users.users."${userConfig.userName}".initialPassword = "${userConfig.userName}";
+              nixpkgs.overlays = [
+                (final: super: {
+                  makeModulesClosure = x:
+                    super.makeModulesClosure (x // { allowMissing = true; });
+                })
+              ];
             })
           ];
           hmModules = [
@@ -229,7 +235,6 @@
         "alexrpi4tpmin"
       ];
       outputIso = builtins.foldl' (x: y: nixpkgs.lib.recursiveUpdate x (mkNixosIso configs."${y}" y)) { } [
-        "alexrpi4tpmin"
         "fw13"
       ];
     in
