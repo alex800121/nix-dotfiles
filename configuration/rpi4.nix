@@ -13,7 +13,14 @@ let
 in
 {
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "usbhid" "usb_storage" ];
+  boot.initrd.availableKernelModules = [
+    "xhci_pci"
+    "usbhid"
+    "usb_storage"
+    "vc4"
+    "pcie_brcmstb" # required for the pcie bus to work
+    "reset-raspberrypi" # required for vl805 firmware to load
+  ];
   boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_rpi4;
 
   # raspberry-pi-nix.board = "bcm2711";
@@ -84,7 +91,6 @@ in
   networking.firewall.enable = false;
   networking.networkmanager.enable = false;
   networking.useNetworkd = true;
-
   systemd.network.enable = true;
   systemd.network.networks."10-end0" = {
     matchConfig = {
