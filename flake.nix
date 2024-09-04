@@ -150,8 +150,9 @@
           extraModules = [
             ./configuration/distributed-builds.nix
             ./configuration/rpi4.nix
-            ./hardware/rpi4.nix
-            raspberry-pi-nix.nixosModules.raspberry-pi
+            ./hardware/alexrpi4tp.nix
+            # raspberry-pi-nix.nixosModules.raspberry-pi
+            # nixos-hardware.nixosModules.raspberry-pi-4
             ./programs/sshd
             ./programs/duckdns
           ];
