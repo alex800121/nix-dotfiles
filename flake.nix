@@ -188,7 +188,7 @@
             ./configuration/initrd-network.nix
             # ./programs/duckdns
             ./programs/duckdns/initrd.nix
-            ./programs/tailscale
+            ./programs/tailscale/server.nix
             # ./programs/wireguard/acer-tp.nix
           ];
           hmModules = [
@@ -222,7 +222,7 @@
             ./programs/wireguard/fw13.nix
             ./programs/sshd
             ./programs/virt
-            ./programs/tailscale
+            ./programs/tailscale/client.nix
           ];
           hmModules = [
             ./home
