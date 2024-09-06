@@ -152,8 +152,8 @@
             ./configuration/rpi4.nix
             ./hardware/alexrpi4tp.nix
             ./programs/sshd
-            # ./programs/duckdns
-            ./programs/tailscale
+            ./programs/duckdns
+            # ./programs/tailscale
           ];
           hmModules = [
             ./home/rpi4.nix
@@ -186,10 +186,10 @@
             ./configuration/distributed-builds.nix
             ./configuration/timezoned.nix
             ./configuration/initrd-network.nix
-            # ./programs/duckdns
+            ./programs/duckdns
             ./programs/duckdns/initrd.nix
-            ./programs/tailscale/server.nix
-            # ./programs/wireguard/acer-tp.nix
+            # ./programs/tailscale/server.nix
+            ./programs/wireguard/acer-tp.nix
           ];
           hmModules = [
             ./home
@@ -222,7 +222,7 @@
             ./programs/wireguard/fw13.nix
             ./programs/sshd
             ./programs/virt
-            ./programs/tailscale/client.nix
+            # ./programs/tailscale/client.nix
           ];
           hmModules = [
             ./home
