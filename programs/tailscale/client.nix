@@ -5,5 +5,6 @@
   services.tailscale.extraSetFlags = [
     "--exit-node=acer-tp"
     "--exit-node-allow-lan-access=true"
+    "--accept-routes=true"
   ];
 }
