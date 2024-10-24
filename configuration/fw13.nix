@@ -43,4 +43,7 @@ in
   environment.systemPackages = with nixpkgsUnstable.gnomeExtensions; [
     xwayland-indicator
   ];
+  services.ollama.enable = true;
+  services.ollama.package = nixpkgsUnstable.ollama;
+  services.ollama.acceleration = "rocm";
 }
