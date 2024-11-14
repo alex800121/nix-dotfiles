@@ -114,7 +114,7 @@ in
     ardour
     helvum
     nixpkgsUnstable.musescore
-    libreoffice
+    nixpkgsUnstable.libreoffice
     nix-prefetch-git
     cabal2nix
     nodejs

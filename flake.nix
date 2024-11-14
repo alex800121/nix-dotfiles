@@ -46,63 +46,8 @@
     , ...
     }:
     let
-      mkNixosIso = { system, kernelVersion, ... }: configName: {
-        nixosConfigurations."${configName}-iso" = nixpkgs.lib.nixosSystem
-          {
-            inherit system;
-            modules = [
-              ./configuration/minimal.nix
-              ./programs/sshd
-              "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
-            ];
-            specialArgs = {
-              userConfig = {
-                userName = "root";
-                port = 22;
-              };
-            };
-          };
-      };
-      mkNixosConfig = { system, userConfig, extraModules ? [ ], hmModules ? [ ], kernelVersion, overlays ? [ ], ... }: configName:
-        let
-          nixpkgs-unstable = import inputs.nixpkgsUnstable {
-            inherit system overlays;
-            config.allowUnfree = true;
-          };
-        in
-        {
-          nixosConfigurations."${configName}" = nixpkgs.lib.nixosSystem {
-            inherit system;
-            specialArgs = {
-              inherit kernelVersion userConfig inputs extraModules hmModules;
-              nixpkgsUnstable = nixpkgs-unstable;
-            };
-            modules = [
-              {
-                nixpkgs.config.allowUnsupportedSystem = true;
-                nixpkgs.overlays = [
-                  rust-overlay.overlays.default
-                  (import overlay/google-chrome.nix)
-                ];
-              }
-              # agenix.nixosModules.default
-              home-manager.nixosModules.home-manager
-              {
-                home-manager = {
-                  useGlobalPkgs = true;
-                  useUserPackages = true;
-                  users."${userConfig.userName}".imports = hmModules;
-                  extraSpecialArgs = {
-                    inherit inputs userConfig system;
-                    nixpkgsUnstable = nixpkgs-unstable;
-                  };
-                  backupFileExtension = "bak";
-                };
-              }
-            ]
-            ++ extraModules;
-          };
-        };
+      mkNixosIso = (import ./utils/func.nix).mkNixosIso inputs;
+      mkNixosConfig = (import ./utils/func.nix).mkNixosConfig inputs;
       configs = {
         alexrpi4tpmin = {
           system = "aarch64-linux";
