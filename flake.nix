@@ -143,7 +143,7 @@
         };
         fw13 = {
           system = "x86_64-linux";
-          kernelVersion = "6_10";
+          kernelVersion = "6_11";
           userConfig = {
             hostName = "fw13";
             userName = "alex800121";

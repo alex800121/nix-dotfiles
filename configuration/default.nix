@@ -1,7 +1,7 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-{ pkgs, config, lib, userConfig, inputs, kernelVersion, nixpkgsUnstable, ... }:
+{ pkgs, config, lib, userConfig, inputs, nixpkgsUnstable, conf, ... }:
 let
   defaultConfig = {
     autoLogin = false;
@@ -16,7 +16,9 @@ in
     "aarch64-linux"
     "x86_64-linux"
   ];
-  boot.kernelPackages = lib.mkDefault pkgs."linuxPackages_${kernelVersion}";
+  boot.kernelPackages =
+    let k = if builtins.hasAttr "kernelVersion" conf then pkgs."linuxPackages_${conf.kernelVersion}" else pkgs.linuxPackages;
+    in lib.mkDefault k;
 
   hardware.enableAllFirmware = true;
   hardware.enableRedistributableFirmware = true;

@@ -18,7 +18,7 @@
   };
   mkNixosConfig =
     inputs:
-    { system, userConfig, extraModules ? [ ], hmModules ? [ ], kernelVersion, overlays ? [ ], ... }:
+    conf@{ system, userConfig, extraModules ? [ ], hmModules ? [ ], overlays ? [ ], ... }:
     configName:
     let
       nixpkgs-unstable = import inputs.nixpkgsUnstable {
@@ -30,7 +30,7 @@
       nixosConfigurations."${configName}" = inputs.nixpkgs.lib.nixosSystem {
         inherit system;
         specialArgs = {
-          inherit kernelVersion userConfig inputs extraModules hmModules;
+          inherit conf userConfig inputs extraModules hmModules;
           nixpkgsUnstable = nixpkgs-unstable;
         };
         modules = [
