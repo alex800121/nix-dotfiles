@@ -107,7 +107,7 @@
         };
         acer-tp = {
           system = "x86_64-linux";
-          kernelVersion = "6_10";
+          kernelVersion = "6_11";
           userConfig = {
             hostName = "acer-tp";
             userName = "alex800121";

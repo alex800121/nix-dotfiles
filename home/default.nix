@@ -155,6 +155,7 @@ in
     "application/octet-stream" = [ "org.musescore.MuseScore.desktop" ];
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document" = [ "writer.desktop" ];
   };
+  xdg.configFile."mimeapps.list".force = true;
 
   programs.git = {
     enable = true;
