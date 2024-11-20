@@ -131,7 +131,7 @@
             ./configuration/distributed-builds.nix
             ./configuration/timezoned.nix
             ./configuration/initrd-network.nix
-            # ./programs/duckdns
+            ./programs/duckdns
             ./programs/duckdns/initrd.nix
             ./programs/tailscale/server.nix
             # ./programs/wireguard/acer-tp.nix
