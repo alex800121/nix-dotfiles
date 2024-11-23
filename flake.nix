@@ -35,13 +35,16 @@
     , ...
     }:
     let
+      foldlAttrs = nixpkgs.lib.attrsets.foldlAttrs;
+      recursiveUpdate = nixpkgs.lib.recursiveUpdate;
+      buildConfigWith = f: foldlAttrs (acc: name: conf: recursiveUpdate acc (f conf name)) {};
       mkNixosIso = (import ./utils/func.nix).mkNixosIso inputs;
       mkNixosConfig = (import ./utils/func.nix).mkNixosConfig inputs;
       config = import ./configuration/config.nix;
-      outputConfigs = nixpkgs.lib.attrsets.foldlAttrs (acc: name: conf: nixpkgs.lib.recursiveUpdate acc (mkNixosConfig conf name)) { } config;
-      outputIso = nixpkgs.lib.attrsets.foldlAttrs (acc: name: conf: nixpkgs.lib.recursiveUpdate acc (mkNixosIso conf name)) { } config;
+      outputConfigs = buildConfigWith mkNixosConfig config;
+      outputIso = buildConfigWith mkNixosIso config;
     in
-    builtins.foldl' (x: y: nixpkgs.lib.recursiveUpdate x y) { } [
+    builtins.foldl' (x: y: recursiveUpdate x y) { } [
       outputIso
       outputConfigs
     ];

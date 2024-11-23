@@ -20,8 +20,6 @@ in
 {
   imports = [
     inputs.nixos-hardware.nixosModules.framework-13-7040-amd
-    ./musnix.nix
-    ./linux-rt.nix
     ./timezoned.nix
     ./secure-boot.nix
     ./distributed-builds.nix
