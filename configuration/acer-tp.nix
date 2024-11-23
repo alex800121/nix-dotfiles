@@ -22,6 +22,24 @@ let
   '';
 in
 {
+  imports = [
+    ./default.nix
+    ./secure-boot.nix
+    ./distributed-builds.nix
+    ./timezoned.nix
+    ./initrd-network.nix
+    ../hardware/acer-tp.nix
+    ../hardware/desktop.nix
+    ../de/gnome
+    ../programs/nix-ld
+    ../programs/code-tunnel
+    ../programs/sshd
+    ../programs/virt
+    ../programs/duckdns
+    ../programs/duckdns/initrd.nix
+    ../programs/tailscale/server.nix
+  ];
+
   networking.networkmanager.enable = false;
   networking.useNetworkd = true;
   systemd.network.enable = true;
@@ -47,7 +65,7 @@ in
   };
 
   boot.initrd.systemd.enable = true;
-  boot.initrd.systemd.enableTpm2 = true;
+  boot.initrd.systemd.tpm2.enable = true;
 
   boot.initrd.luks.devices."enc".preLVM = true;
   boot.initrd.luks.devices."enc".allowDiscards = true;
@@ -56,5 +74,5 @@ in
   fileSystems."/home".options = [ "noatime" "compress=zstd" ];
   fileSystems."/nix".options = [ "noatime" "compress=zstd" ];
   fileSystems."/swap".options = [ "noatime" ];
-  swapDevices = [ { device = "/swap/swapfile"; } ];
+  swapDevices = [{ device = "/swap/swapfile"; }];
 }

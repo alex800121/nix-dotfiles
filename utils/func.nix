@@ -9,6 +9,7 @@
           "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
         ];
         specialArgs = {
+          inherit inputs;
           userConfig = {
             userName = "root";
             port = 22;

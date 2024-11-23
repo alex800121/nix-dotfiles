@@ -47,8 +47,9 @@ in
               "appindicatorsupport@rgcjonas.gmail.com"
               "kimpanel@kde.org"
               "drive-menu@gnome-shell-extensions.gcampax.github.com"
+              "auto-power-profile@dmy3k.github.io"
             ];
-            welcome-dialog-last-shown-version = "46.4";
+            welcome-dialog-last-shown-version = "47.0";
           };
 
           "org/gnome/shell/extensions/kimpanel".vertical = true;
@@ -146,5 +147,7 @@ in
   environment.systemPackages = with pkgs; [
     gnomeExtensions.kimpanel
     gnomeExtensions.appindicator
+    gnomeExtensions.xwayland-indicator
+    gnomeExtensions.auto-power-profile
   ];
 }

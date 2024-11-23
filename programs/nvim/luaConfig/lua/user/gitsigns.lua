@@ -65,13 +65,13 @@ gitsigns.setup({
     map('n', '<leader>gdD', function() gitsigns.diffthis('~') end, 'Vimdiff?')
     map('n', '<leader>gD', gitsigns.toggle_deleted, 'Toggle Deleted')
 
-    whichkey.register({
-      ['<leader>g'] = { name = "+Gitsigns..." },
-      ['<leader>gh'] = { name = "+Gitsigns: Hunk..." },
-      ['<leader>gH'] = { name = "+Gitsigns: Buffer..." },
-      ['<leader>gb'] = { name = "+Gitsigns: Blame..." },
-      ['<leader>gd'] = { name = "+Gitsigns: Vimdiff..." },
-      ['<leader>gD'] = { name = "+Gitsigns: Toggle Deleted..." },
+    whichkey.add({
+      {'<leader>g', group = "+Gitsigns..." },
+      {'<leader>gh', group = "+Gitsigns: Hunk..." },
+      {'<leader>gH', group = "+Gitsigns: Buffer..." },
+      {'<leader>gb', group = "+Gitsigns: Blame..." },
+      {'<leader>gd', group = "+Gitsigns: Vimdiff..." },
+      {'<leader>gD', group = "+Gitsigns: Toggle Deleted..." },
     })
     -- Text object
     map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>', 'Hunk: Select')

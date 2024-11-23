@@ -1,7 +1,7 @@
 { config, userConfig, lib, ... }: {
 
   boot.initrd.systemd.enable = true;
-  boot.initrd.systemd.enableTpm2 = true;
+  boot.initrd.systemd.tpm2.enable = true;
 
   boot.initrd.network = {
     enable = true;

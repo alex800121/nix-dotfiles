@@ -1,5 +1,6 @@
-{ pkgs, ... }: {
-  # virtualisation.vmware.host.enable = true;
+{ pkgs, nixpkgsUnstable, ... }: {
+  virtualisation.vmware.host.enable = true;
+  virtualisation.vmware.host.package = nixpkgsUnstable.vmware-workstation;
   virtualisation = {
     libvirtd = {
       enable = true;

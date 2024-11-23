@@ -1,19 +1,15 @@
 {
   description = "NixOS configuration";
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
     nixpkgsUnstable.url = "github:nixos/nixpkgs/nixos-unstable";
     haskell-updates.url = "github:nixos/nixpkgs/haskell-updates";
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.05";
+      url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixos-hardware = {
       url = "github:NixOS/nixos-hardware/master";
-    };
-    raspberry-pi-nix = {
-      url = "github:nix-community/raspberry-pi-nix";
-      # inputs.nixpkgs.follows = "nixpkgs";
     };
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v0.4.1";
@@ -38,11 +34,10 @@
     , nixpkgs
     , home-manager
     , nixos-hardware
-      # , agenix
+    , musnix
     , rust-overlay
     , nixpkgsUnstable
     , lanzaboote
-    , raspberry-pi-nix
     , ...
     }:
     let
@@ -59,23 +54,7 @@
             autoLogin = true;
           };
           extraModules = [
-            "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64-new-kernel-no-zfs-installer.nix"
-            ./configuration/rpi4.nix
-            ./hardware/rpi4.nix
-            # raspberry-pi-nix.nixosModules.raspberry-pi
-            ./programs/sshd
-            ({ userConfig, nixpkgsUnstable, ... }: {
-              sdImage.compressImage = false;
-              # sdImage.expandOnBoot = true;
-              # users.users.root.initialPassword = "root";
-              # users.users."${userConfig.userName}".initialPassword = "${userConfig.userName}";
-              nixpkgs.overlays = [
-                (final: super: {
-                  makeModulesClosure = x:
-                    super.makeModulesClosure (x // { allowMissing = true; });
-                })
-              ];
-            })
+            ./configuration/alexrpi4tpmin.nix
           ];
           hmModules = [
             ./home/rpi4.nix
@@ -93,12 +72,7 @@
             port = 30000;
           };
           extraModules = [
-            ./configuration/distributed-builds.nix
-            ./configuration/rpi4.nix
-            ./hardware/alexrpi4tp.nix
-            ./programs/sshd
-            # ./programs/duckdns
-            ./programs/tailscale
+            ./configuration/alexrpi4tp.nix
           ];
           hmModules = [
             ./home/rpi4.nix
@@ -117,24 +91,7 @@
             port = 31000;
           };
           extraModules = [
-            lanzaboote.nixosModules.lanzaboote
-            ./configuration/secure-boot.nix
-            ./configuration
             ./configuration/acer-tp.nix
-            ./hardware/acer-tp.nix
-            ./hardware/desktop.nix
-            ./de/gnome
-            ./programs/nix-ld
-            ./programs/code-tunnel
-            ./programs/sshd
-            ./programs/virt
-            ./configuration/distributed-builds.nix
-            ./configuration/timezoned.nix
-            ./configuration/initrd-network.nix
-            ./programs/duckdns
-            ./programs/duckdns/initrd.nix
-            ./programs/tailscale/server.nix
-            # ./programs/wireguard/acer-tp.nix
           ];
           hmModules = [
             ./home
@@ -143,31 +100,17 @@
         };
         fw13 = {
           system = "x86_64-linux";
-          kernelVersion = "6_11";
+          kernelVersion = "6_12";
           userConfig = {
             hostName = "fw13";
             userName = "alex800121";
             fontSize = 12;
             autoLogin = false;
             port = 32000;
+            soundcardPciId = "c1:00.6";
           };
           extraModules = [
-            nixos-hardware.nixosModules.framework-13-7040-amd
-            lanzaboote.nixosModules.lanzaboote
-            ./configuration/secure-boot.nix
-            ./configuration/distributed-builds.nix
-            ./configuration
             ./configuration/fw13.nix
-            ./configuration/timezoned.nix
-            ./hardware/amd.nix
-            ./hardware/fw13.nix
-            ./hardware/laptop.nix
-            ./de/gnome
-            ./de/gnome/fw13
-            # ./programs/wireguard/fw13.nix
-            ./programs/sshd
-            ./programs/virt
-            ./programs/tailscale/client.nix
           ];
           hmModules = [
             ./home

@@ -4,10 +4,8 @@
     lidSwitchDocked = "ignore";
     lidSwitchExternalPower = "suspend";
     killUserProcesses = false;
-    extraConfig = ''
-      HandlePowerKey=suspend
-      HandlePowerKeyLongPress=poweroff
-    '';
+    powerKey = "suspend";
+    powerKeyLongPress = "poweroff";
   };
   # services.fprintd.enable = true;
   # services.fprintd.tod.enable = true;

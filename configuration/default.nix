@@ -11,13 +11,13 @@ let
   inherit (pkgs) system;
 in
 {
-  system.stateVersion = lib.mkDefault "24.05";
+  system.stateVersion = lib.mkDefault "24.11";
   boot.binfmt.emulatedSystems = builtins.filter (x: x != system) [
     "aarch64-linux"
     "x86_64-linux"
   ];
   boot.kernelPackages =
-    let k = if builtins.hasAttr "kernelVersion" conf then pkgs."linuxPackages_${conf.kernelVersion}" else pkgs.linuxPackages;
+    let k = if builtins.hasAttr "kernelVersion" conf then nixpkgsUnstable."linuxPackages_${conf.kernelVersion}" else nixpkgsUnstable.linuxPackages;
     in lib.mkDefault k;
 
   hardware.enableAllFirmware = true;
@@ -67,7 +67,7 @@ in
       dates = [ "weekly" ];
     };
     extraOptions = ''
-      experimental-features = nix-command flakes repl-flake
+      experimental-features = nix-command flakes
       builders-use-substitutes = true
     '';
   };
@@ -119,8 +119,8 @@ in
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.utf8";
   i18n.inputMethod = {
-    enabled = "fcitx5";
-    # type = "fcitx5";
+    type = "fcitx5";
+    enable = true;
     fcitx5 = {
       waylandFrontend = true;
       addons = with pkgs; [
@@ -162,8 +162,11 @@ in
   # security.tpm2.tctiEnvironment.enable = true;
 
   hardware.pulseaudio.enable = false;
+  # services.pipewire.socketActivation = true;
+  # services.pipewire.systemWide = true;
   services.pipewire = {
     enable = true;
+    audio.enable = true;
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
@@ -221,11 +224,6 @@ in
     };
   };
 
-  # hardware.graphics.enable = true;
-  hardware.opengl.enable = true;
-  hardware.opengl.driSupport = true;
-  hardware.opengl.driSupport32Bit = true;
-
   services.usbmuxd.enable = true;
 
   # Allow unfree packages
@@ -241,7 +239,7 @@ in
     ripgrep
     gparted
     parted
-    gnome.adwaita-icon-theme
+    adwaita-icon-theme
     neovim
     curl
     wget

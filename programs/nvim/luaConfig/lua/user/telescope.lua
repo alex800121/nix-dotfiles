@@ -7,8 +7,8 @@ telescope.load_extension('fzf')
 telescope.load_extension('projects')
 telescope.load_extension('ht')
 
-whichkey.register({
-  ['<leader>f'] = { name = "+Fuzzy Find..." }
+whichkey.add({
+  {'<leader>f', group = "+Fuzzy Find..." },
 })
 
 vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = "Fuzzy find files", noremap = true, buffer = false })

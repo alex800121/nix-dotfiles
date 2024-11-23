@@ -20,10 +20,10 @@ vim.g.haskell_tools = {
       local bufopts = function(def) return { noremap = true, silent = true, buffer = bufnr, desc = 'LSP: ' .. def } end
       -- Mappings.
       -- See `:help vim.lsp.*` for documentation on any of the below functions
-      whichkey.register({
-        ['<leader>w'] = { name = "+Workspace Folder..." },
-        ['<leader>s'] = { name = "+Set ... List" },
-        ['<leader>r'] = { name = "+GHC REPL ..." },
+      whichkey.add({
+        {'<leader>w', group = "+Workspace Folder..." },
+        {'<leader>s', group = "+Set ... List" },
+        {'<leader>r', group = "+GHC REPL ..." },
       })
       vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts('declaration'))
       vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts('definition'))

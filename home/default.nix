@@ -11,7 +11,7 @@ in
   nixpkgs.config.allowUnfree = true;
   nix = {
     settings = {
-      experimental-features = "nix-command flakes repl-flake";
+      experimental-features = "nix-command flakes";
     };
   };
 
@@ -38,7 +38,7 @@ in
   # You can update Home Manager without changing this value. See
   # the Home Manager release notes for a list of state version
   # changes in each release.
-  home.stateVersion = lib.mkDefault "24.05";
+  home.stateVersion = lib.mkDefault "24.11";
 
   home.sessionVariables = {
     # BROWSER = "firefox";
@@ -163,6 +163,9 @@ in
     userEmail = "alex800121@hotmail.com";
   };
 
+  programs.btop = {
+    enable = true;
+  };
   programs.htop = {
     enable = true;
   };

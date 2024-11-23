@@ -6,6 +6,7 @@
     enable = true;
     package = pkgs.neovim-unwrapped;
     plugins = (with pkgs.vimPlugins; [
+      mini-icons
       gruvbox-nvim
       which-key-nvim
       bufdelete-nvim
@@ -16,7 +17,9 @@
       nvim-web-devicons
       onedark-nvim
       indent-blankline-nvim
-      # (nvim-treesitter.withPlugins (p: with p; [
+      (nvim-treesitter.withPlugins (p: with p; [
+        haskell
+      ]))
       #   c
       #   cpp
       #   lua
@@ -66,6 +69,7 @@
     vimAlias = true;
     vimdiffAlias = true;
     extraPackages = with pkgs; [
+      tree-sitter
       nerdfonts
       ripgrep
       fd
