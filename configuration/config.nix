@@ -1,6 +1,5 @@
-[
-  {
-    configName = "alexrpi4tpmin";
+{
+    alexrpi4tpmin = {
     system = "aarch64-linux";
     kernelVersion = "rpi4";
     userConfig = {
@@ -15,9 +14,8 @@
     hmModules = [
       ../home/rpi4.nix
     ];
-  }
-  {
-    configName = "alexrpi4tp";
+  };
+  alexrpi4tp = {
     system = "aarch64-linux";
     kernelVersion = "rpi4";
     userConfig = {
@@ -35,9 +33,8 @@
       ../home/rpi4.nix
       ../programs/nvim
     ];
-  }
-  {
-    configName = "acer-tp";
+  };
+  acer-tp = {
     system = "x86_64-linux";
     kernelVersion = "6_11";
     userConfig = {
@@ -55,9 +52,8 @@
       ../home
       ../programs/nvim
     ];
-  }
-  {
-    configName = "fw13";
+  };
+  fw13 = {
     system = "x86_64-linux";
     kernelVersion = "6_12";
     userConfig = {
@@ -75,5 +71,5 @@
       ../home
       ../programs/nvim
     ];
-  }
-]
+  };
+}

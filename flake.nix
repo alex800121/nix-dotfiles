@@ -38,8 +38,8 @@
       mkNixosIso = (import ./utils/func.nix).mkNixosIso inputs;
       mkNixosConfig = (import ./utils/func.nix).mkNixosConfig inputs;
       config = import ./configuration/config.nix;
-      outputConfigs = builtins.foldl' (x: y: nixpkgs.lib.recursiveUpdate x (mkNixosConfig y y.configName)) { } config;
-      outputIso = builtins.foldl' (x: y: nixpkgs.lib.recursiveUpdate x (mkNixosIso y y.configName)) { } config;
+      outputConfigs = nixpkgs.lib.attrsets.foldlAttrs (acc: name: conf: nixpkgs.lib.recursiveUpdate acc (mkNixosConfig conf name)) { } config;
+      outputIso = nixpkgs.lib.attrsets.foldlAttrs (acc: name: conf: nixpkgs.lib.recursiveUpdate acc (mkNixosIso conf name)) { } config;
     in
     builtins.foldl' (x: y: nixpkgs.lib.recursiveUpdate x y) { } [
       outputIso
