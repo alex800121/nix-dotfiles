@@ -22,7 +22,7 @@
     conf@{ system, userConfig, extraModules ? [ ], hmModules ? [ ], overlays ? [ ], ... }:
     configName:
     let
-      nixpkgs-unstable = import inputs.nixpkgsUnstable {
+      nixpkgsUnstable = import inputs.nixpkgsUnstable {
         inherit system overlays;
         config.allowUnfree = true;
       };
@@ -31,8 +31,7 @@
       nixosConfigurations."${configName}" = inputs.nixpkgs.lib.nixosSystem {
         inherit system;
         specialArgs = {
-          inherit conf userConfig inputs extraModules hmModules;
-          nixpkgsUnstable = nixpkgs-unstable;
+          inherit nixpkgsUnstable conf userConfig inputs extraModules hmModules;
         };
         modules = [
           {
@@ -50,8 +49,7 @@
               useUserPackages = true;
               users."${userConfig.userName}".imports = hmModules;
               extraSpecialArgs = {
-                inherit inputs userConfig system;
-                nixpkgsUnstable = nixpkgs-unstable;
+                inherit nixpkgsUnstable inputs userConfig system;
               };
               backupFileExtension = "bak";
             };
