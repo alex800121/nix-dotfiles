@@ -39,7 +39,7 @@
       mkNixosConfig = (import ./utils/func.nix).mkNixosConfig inputs;
       config = import ./configuration/config.nix;
       outputConfigs = builtins.foldl' (x: y: nixpkgs.lib.recursiveUpdate x (mkNixosConfig y y.configName)) { } config;
-      outputIso = builtins.foldl' (x: y: nixpkgs.lib.recursiveUpdate x (mkNixosConfig y y.configName)) { } config;
+      outputIso = builtins.foldl' (x: y: nixpkgs.lib.recursiveUpdate x (mkNixosIso y y.configName)) { } config;
     in
     builtins.foldl' (x: y: nixpkgs.lib.recursiveUpdate x y) { } [
       outputIso
