@@ -22,7 +22,7 @@ in
     "reset-raspberrypi" # required for vl805 firmware to load
   ];
   # boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_rpi4;
-  boot.kernelPackages = nixpkgsUnstable.linuxPackages_rpi4;
+  boot.kernelPackages = pkgs.linuxPackages_rpi4;
 
   fileSystems."/".options = [ "noatime" "compress=zstd" ];
   fileSystems."/".neededForBoot = true;

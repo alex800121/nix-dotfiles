@@ -37,7 +37,7 @@
     let
       foldlAttrs = nixpkgs.lib.attrsets.foldlAttrs;
       recursiveUpdate = nixpkgs.lib.recursiveUpdate;
-      buildConfigWith = f: foldlAttrs (acc: name: conf: recursiveUpdate acc (f conf name)) {};
+      buildConfigWith = f: foldlAttrs (acc: name: conf: recursiveUpdate acc (f conf name)) { };
       mkNixosIso = (import ./utils/func.nix).mkNixosIso inputs;
       mkNixosConfig = (import ./utils/func.nix).mkNixosConfig inputs;
       config = import ./configuration/config.nix;

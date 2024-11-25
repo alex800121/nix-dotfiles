@@ -53,44 +53,52 @@
       ../programs/nvim
     ];
   };
-  fw13-musnix = {
-    system = "x86_64-linux";
-    kernelVersion = "6_12";
-    userConfig = {
-      hostName = "fw13";
-      userName = "alex800121";
-      fontSize = 12;
-      autoLogin = false;
-      port = 32000;
-      soundcardPciId = "c1:00.6";
+  fw13-musnix =
+    let
+      kernelVersion = "6_12";
+    in
+    {
+      system = "x86_64-linux";
+      inherit kernelVersion;
+      userConfig = {
+        hostName = "fw13";
+        userName = "alex800121";
+        fontSize = 12;
+        autoLogin = false;
+        port = 32000;
+        soundcardPciId = "c1:00.6";
+      };
+      extraModules = [
+        ./fw13.nix
+        ./musnix.nix
+        ./linux-rt.nix
+      ];
+      hmModules = [
+        ../home
+        ../programs/nvim
+      ];
     };
-    extraModules = [
-      ./fw13.nix
-      ../configuration/musnix.nix
-      ../configuration/linux-rt.nix
-    ];
-    hmModules = [
-      ../home
-      ../programs/nvim
-    ];
-  };
-  fw13 = {
-    system = "x86_64-linux";
-    kernelVersion = "6_12";
-    userConfig = {
-      hostName = "fw13";
-      userName = "alex800121";
-      fontSize = 12;
-      autoLogin = false;
-      port = 32000;
-      soundcardPciId = "c1:00.6";
+  fw13 =
+    let
+      kernelVersion = "6_12";
+    in
+    {
+      system = "x86_64-linux";
+      inherit kernelVersion;
+      userConfig = {
+        hostName = "fw13";
+        userName = "alex800121";
+        fontSize = 12;
+        autoLogin = false;
+        port = 32000;
+        soundcardPciId = "c1:00.6";
+      };
+      extraModules = [
+        ./fw13.nix
+      ];
+      hmModules = [
+        ../home
+        ../programs/nvim
+      ];
     };
-    extraModules = [
-      ./fw13.nix
-    ];
-    hmModules = [
-      ../home
-      ../programs/nvim
-    ];
-  };
 }

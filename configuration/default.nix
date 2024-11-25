@@ -16,9 +16,10 @@ in
     "aarch64-linux"
     "x86_64-linux"
   ];
-  boot.kernelPackages =
-    let k = if builtins.hasAttr "kernelVersion" conf then nixpkgsUnstable."linuxPackages_${conf.kernelVersion}" else nixpkgsUnstable.linuxPackages;
-    in lib.mkDefault k;
+  boot.kernelPackages = lib.mkDefault
+    (if builtins.hasAttr "kernelVersion" conf
+    then pkgs."linuxPackages_${conf.kernelVersion}"
+    else pkgs.linuxPackages);
 
   hardware.enableAllFirmware = true;
   hardware.enableRedistributableFirmware = true;

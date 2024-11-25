@@ -113,8 +113,8 @@ in
     gnome-network-displays
     ardour
     helvum
-    nixpkgsUnstable.musescore
-    nixpkgsUnstable.libreoffice
+    musescore
+    libreoffice
     nix-prefetch-git
     cabal2nix
     nodejs

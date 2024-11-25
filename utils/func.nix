@@ -19,11 +19,12 @@
   };
   mkNixosConfig =
     inputs:
-    conf@{ system, userConfig, extraModules ? [ ], hmModules ? [ ], overlays ? [ ], ... }:
+    conf@{ system, userConfig, extraModules ? [ ], hmModules ? [ ], overlays ? [ ], overlaysUnstable ? [], ... }:
     configName:
     let
       nixpkgsUnstable = import inputs.nixpkgsUnstable {
-        inherit system overlays;
+        inherit system;
+        overlays = overlaysUnstable;
         config.allowUnfree = true;
       };
     in
@@ -39,7 +40,7 @@
             nixpkgs.overlays = [
               inputs.rust-overlay.overlays.default
               (import ../overlay/google-chrome.nix)
-            ];
+            ] ++ overlays;
           }
           # agenix.nixosModules.default
           inputs.home-manager.nixosModules.home-manager

@@ -1,4 +1,6 @@
 { inputs, userConfig, lib, ... }: {
+
+  system.nixos.tags = ["musnix"];
   imports = [
     inputs.musnix.nixosModules.musnix
   ];

@@ -1,5 +1,6 @@
 { lib, pkgs, ... }: {
 
+  system.nixos.tags = ["rt"];
   environment.systemPackages = [
     pkgs.real_time_config_quick_scan
   ];
@@ -16,8 +17,8 @@
         PREEMPT_VOLUNTARY = lib.mkForce no; # PREEMPT_RT deselects it.
         # Fix error: unused option: RT_GROUP_SCHED.
         RT_GROUP_SCHED = lib.mkForce (option no); # Removed by sched-disable-rt-group-sched-on-rt.patch.
-        DRM_I915_GVT = lib.mkForce (option yes);
-        DRM_I915_GVT_KVMGT = lib.mkForce (option module);
+        DRM_I915_GVT = lib.mkForce unset;
+        DRM_I915_GVT_KVMGT = lib.mkForce unset;
       };
     }
   ];
