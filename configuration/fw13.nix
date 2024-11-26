@@ -22,7 +22,7 @@ in
     inputs.nixos-hardware.nixosModules.framework-13-7040-amd
     ./default.nix
     ./timezoned.nix
-    ./secure-boot.nix
+    # ./secure-boot.nix
     ./distributed-builds.nix
     ../hardware/amd.nix
     ../hardware/fw13.nix

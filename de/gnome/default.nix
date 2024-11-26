@@ -48,8 +48,12 @@ in
               "kimpanel@kde.org"
               "drive-menu@gnome-shell-extensions.gcampax.github.com"
               "auto-power-profile@dmy3k.github.io"
+              "gtk4-ding@smedius.gitlab.com"
             ];
             welcome-dialog-last-shown-version = "47.0";
+          };
+          "org/gnome/shell/extensions/gtk4-ding" = {
+            show-network-volumes = true;
           };
 
           "org/gnome/shell/extensions/kimpanel".vertical = true;
@@ -144,10 +148,13 @@ in
 
   services.gnome.gnome-settings-daemon.enable = true;
 
-  environment.systemPackages = with pkgs; [
-    gnomeExtensions.kimpanel
-    gnomeExtensions.appindicator
-    gnomeExtensions.xwayland-indicator
-    gnomeExtensions.auto-power-profile
+  environment.systemPackages = with pkgs.gnomeExtensions; [
+    kimpanel
+    appindicator
+    xwayland-indicator
+    auto-power-profile
+    gtk4-desktop-icons-ng-ding
   ];
+
+  environment.variables.GSK_RENDERER = "gl";
 }

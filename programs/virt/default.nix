@@ -17,7 +17,6 @@
   };
   virtualisation.lxd.enable = true;
 
-  services.spice-vdagentd.enable = true;
   environment.systemPackages = with pkgs; [
     virt-manager
     virt-viewer
