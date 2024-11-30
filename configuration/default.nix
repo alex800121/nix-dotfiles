@@ -248,11 +248,11 @@ in
     # inputs.agenix.packages."${system}".default
     fastfetch
     gcc
-    localsend
     conntrack-tools
   ];
 
-  networking.firewall.allowedTCPPorts = [ 53317 ];
+  programs.localsend.enable = true;
+  programs.localsend.openFirewall = true;
 
   environment.variables = {
     EDITOR = "nvim";
