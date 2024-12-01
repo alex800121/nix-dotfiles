@@ -27,7 +27,7 @@ in
     ./secure-boot.nix
     ./distributed-builds.nix
     ./timezoned.nix
-    ./initrd-network.nix
+    # ./initrd-network.nix
     ../hardware/acer-tp.nix
     ../hardware/desktop.nix
     ../de/gnome
@@ -36,7 +36,7 @@ in
     ../programs/sshd
     ../programs/virt
     ../programs/duckdns
-    ../programs/duckdns/initrd.nix
+    # ../programs/duckdns/initrd.nix
     ../programs/tailscale/server.nix
   ];
 

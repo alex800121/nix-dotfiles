@@ -36,7 +36,7 @@
   };
   acer-tp = {
     system = "x86_64-linux";
-    kernelVersion = "6_11";
+    kernelVersion = "6_12";
     userConfig = {
       hostName = "acer-tp";
       userName = "alex800121";
@@ -54,12 +54,9 @@
     ];
   };
   fw13-musnix =
-    let
-      kernelVersion = "6_12";
-    in
     {
       system = "x86_64-linux";
-      inherit kernelVersion;
+      kernelVersion = "6_12";
       userConfig = {
         hostName = "fw13";
         userName = "alex800121";
@@ -79,12 +76,9 @@
       ];
     };
   fw13 =
-    let
-      kernelVersion = "6_12";
-    in
     {
       system = "x86_64-linux";
-      inherit kernelVersion;
+      kernelVersion = "6_12";
       userConfig = {
         hostName = "fw13";
         userName = "alex800121";
