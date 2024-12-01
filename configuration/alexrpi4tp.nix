@@ -6,5 +6,7 @@
     ../hardware/alexrpi4tp.nix
     ../programs/sshd
     ../programs/tailscale
+    ../programs/nix-ld
+    ../programs/code-tunnel
   ];
 }
