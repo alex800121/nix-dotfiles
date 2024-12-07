@@ -5,7 +5,7 @@
     ./distributed-builds.nix
     ../hardware/alexrpi4tp.nix
     ../programs/sshd
-    ../programs/tailscale
+    ../programs/tailscale/server.nix
     ../programs/nix-ld
     ../programs/code-tunnel
   ];
