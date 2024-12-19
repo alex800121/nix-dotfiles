@@ -8,5 +8,6 @@
     ../programs/tailscale/server.nix
     ../programs/nix-ld
     ../programs/code-tunnel
+    ../programs/duckdns
   ];
 }

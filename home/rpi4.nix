@@ -81,6 +81,9 @@ in {
     gh 
     nil
     nixpkgs-fmt
+    cabal-install
+    ghcid
+    ghc
   ];
 
   programs.git = {
