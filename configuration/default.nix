@@ -245,6 +245,7 @@ in
     curl
     wget
     git
+    git-filter-repo
     # inputs.agenix.packages."${system}".default
     fastfetch
     gcc
