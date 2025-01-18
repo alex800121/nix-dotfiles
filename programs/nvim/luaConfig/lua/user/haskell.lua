@@ -8,6 +8,7 @@ vim.g.haskell_tools = {
     log = {
       level = vim.log.levels.DEBUG,
     },
+    hoogle = { mode = 'auto' },
   },
   hls = {
     default_settings = {
@@ -21,9 +22,9 @@ vim.g.haskell_tools = {
       -- Mappings.
       -- See `:help vim.lsp.*` for documentation on any of the below functions
       whichkey.add({
-        {'<leader>w', group = "+Workspace Folder..." },
-        {'<leader>s', group = "+Set ... List" },
-        {'<leader>r', group = "+GHC REPL ..." },
+        { '<leader>w', group = "+Workspace Folder..." },
+        { '<leader>s', group = "+Set ... List" },
+        { '<leader>r', group = "+GHC REPL ..." },
       })
       vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts('declaration'))
       vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts('definition'))

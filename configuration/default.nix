@@ -79,6 +79,11 @@ in
   powerManagement.enable = true;
 
   networking.firewall.enable = lib.mkDefault true;
+  networking.firewall = {
+    allowedUDPPorts = [ 5353 7236]; # For device discovery
+    allowedTCPPortRanges = [{ from = 32768; to = 61000; }]; # For Streaming
+    allowedTCPPorts = [ 8010 7236 7250]; # For gnomecast server
+  };
 
   services.resolved = {
     enable = true;

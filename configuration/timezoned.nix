@@ -37,18 +37,20 @@ in
   services.geoclue2.submissionUrl = "https://beacondb.net/v2/geosubmit";
   services.geoclue2.submitData = true;
   # services.geoclue2.geoProviderUrl = "https://beacondb.net/v1/geolocate";
+  services.geoclue2.geoProviderUrl = "https://api.beacondb.net/v1/geolocate?key=geoclue_nixos";
+  
 
-  systemd.services.geoclue.serviceConfig.SetCredentialEncrypted =
-    "google.api.key:" + google-api-key;
-  systemd.services.geoclue.serviceConfig.ConfigurationDirectory = "geoclue/conf.d";
-  systemd.services.geoclue.serviceConfig.RuntimeDirectory = "geoclue";
-  systemd.services.geoclue.preStart = ''
-    cp ${geoclue-url} $RUNTIME_DIRECTORY/50-url.conf
-    chmod 600 $RUNTIME_DIRECTORY/50-url.conf
-    ${pkgs.replace-secret}/bin/replace-secret @GOOGLE_API_KEY@ $CREDENTIALS_DIRECTORY/google.api.key $RUNTIME_DIRECTORY/50-url.conf
-    ln -s --backup=simple $RUNTIME_DIRECTORY/50-url.conf $CONFIGURATION_DIRECTORY/
-  '';
-  systemd.services.geoclue.postStop = ''
-    unlink $CONFIGURATION_DIRECTORY/50-url.conf
-  '';
+  # systemd.services.geoclue.serviceConfig.SetCredentialEncrypted =
+  #   "google.api.key:" + google-api-key;
+  # systemd.services.geoclue.serviceConfig.ConfigurationDirectory = "geoclue/conf.d";
+  # systemd.services.geoclue.serviceConfig.RuntimeDirectory = "geoclue";
+  # systemd.services.geoclue.preStart = ''
+  #   cp ${geoclue-url} $RUNTIME_DIRECTORY/50-url.conf
+  #   chmod 600 $RUNTIME_DIRECTORY/50-url.conf
+  #   ${pkgs.replace-secret}/bin/replace-secret @GOOGLE_API_KEY@ $CREDENTIALS_DIRECTORY/google.api.key $RUNTIME_DIRECTORY/50-url.conf
+  #   ln -s --backup=simple $RUNTIME_DIRECTORY/50-url.conf $CONFIGURATION_DIRECTORY/
+  # '';
+  # systemd.services.geoclue.postStop = ''
+  #   unlink $CONFIGURATION_DIRECTORY/50-url.conf
+  # '';
 }
