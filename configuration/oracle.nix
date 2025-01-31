@@ -1,4 +1,4 @@
-{ pkgs, userConfig, lib, inputs, nixpkgsUnstable, ... }:
+{ pkgs, config, userConfig, lib, inputs, nixpkgsUnstable, ... }:
 let
   defaultConfig = {
     autoLogin = false;
@@ -25,7 +25,8 @@ let
 in
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
+      # Include the results of the hardware scan.
       ../hardware/oracle.nix
       ../programs/sshd
       ../programs/tailscale/server.nix
@@ -60,7 +61,7 @@ in
   powerManagement.enable = false;
   networking.firewall.enable = lib.mkDefault true;
   networking.firewall = {
-    allowedUDPPorts = [ 5353 7236]; # For device discovery
+    allowedUDPPorts = [ 5353 7236 ]; # For device discovery
   };
   services.resolved = {
     enable = true;
@@ -99,7 +100,7 @@ in
     extraGroups = [ "networkmanager" "tss" "storage" "disk" "libvirtd" "audio" "systemd-network" "sudo" "wheel" "code-server" "input" ];
   };
 
-  boot.kernelParams = [ "ip=dhcp"  "net.ifnames=0" ];
+  boot.kernelParams = [ "ip=dhcp" "net.ifnames=0" ];
   boot.initrd = {
     availableKernelModules = [ "virtio-pci" ];
     systemd.users.root.shell = "/bin/cryptsetup-askpass";
@@ -108,7 +109,7 @@ in
       ssh = {
         enable = true;
         port = 2222;
-        authorizedKeys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG885XYlPfi2h6hiokfhvZgHF1y2f3JnL11j+ARJkrXE alex800121@fw13" ];
+        ssh.authorizedKeys = config.users.users."${userConfig.userName}".openssh.authorizedKeys.keys;
         hostKeys = [ "/etc/secrets/initrd/ssh_host_ed25519_key" ];
       };
     };
@@ -125,7 +126,6 @@ in
   boot.initrd.systemd.network.networks."10-eth0" = cfg;
   boot.initrd.systemd.enable = true;
   boot.initrd.systemd.tpm2.enable = true;
-
 
   environment.systemPackages = with pkgs; [
     neovim
