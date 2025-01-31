@@ -49,6 +49,7 @@ in
               "drive-menu@gnome-shell-extensions.gcampax.github.com"
               "auto-power-profile@dmy3k.github.io"
               "gtk4-ding@smedius.gitlab.com"
+              "tailscale-status@maxgallup.github.com"
             ];
             welcome-dialog-last-shown-version = "47.0";
           };
@@ -154,6 +155,7 @@ in
     xwayland-indicator
     auto-power-profile
     gtk4-desktop-icons-ng-ding
+    tailscale-status
   ];
 
   environment.variables.GSK_RENDERER = "gl";

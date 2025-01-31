@@ -1,4 +1,20 @@
 {
+  oracle = {
+    system = "aarch64-linux";
+    kernelVersion = "6_12";
+    userConfig = {
+      hostName = "oracle";
+      userName = "alex800121";
+      fontSize = 11.5;
+      autoLogin = true;
+    };
+    extraModules = [
+      ./oracle.nix
+    ];
+    hmModules = [
+      ../home/rpi4.nix
+    ];
+  };
   alexrpi4tpmin = {
     system = "aarch64-linux";
     kernelVersion = "rpi4";

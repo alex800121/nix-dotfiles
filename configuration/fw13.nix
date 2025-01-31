@@ -55,8 +55,7 @@ in
   # networking.useNetworkd = true;
   # networking.wireless.enable = false;
   # networking.wireless.iwd.enable = true;
-
-  services.ollama.enable = true;
-  services.ollama.package = nixpkgsUnstable.ollama;
-  services.ollama.acceleration = "rocm";
+  # services.ollama.enable = true;
+  # services.ollama.package = nixpkgsUnstable.ollama;
+  # services.ollama.acceleration = "rocm";
 }

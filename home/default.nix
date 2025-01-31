@@ -132,8 +132,8 @@ in
     zoom-us
     kdenlive
     x42-plugins
-    winetricks
-    wineWowPackages.unstableFull
+    nixpkgsUnstable.winetricks
+    nixpkgsUnstable.wineWowPackages.full
   ];
 
   xdg.mime.enable = true;
