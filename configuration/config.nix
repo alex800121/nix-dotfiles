@@ -12,7 +12,8 @@
       ./oracle.nix
     ];
     hmModules = [
-      ../home/rpi4.nix
+      ../home/minimal.nix
+      ../programs/nvim
     ];
   };
   alexrpi4tpmin = {
