@@ -109,7 +109,7 @@ in
       ssh = {
         enable = true;
         port = 2222;
-        ssh.authorizedKeys = config.users.users."${userConfig.userName}".openssh.authorizedKeys.keys;
+        authorizedKeys = config.users.users."${userConfig.userName}".openssh.authorizedKeys.keys;
         hostKeys = [ "/etc/secrets/initrd/ssh_host_ed25519_key" ];
       };
     };
