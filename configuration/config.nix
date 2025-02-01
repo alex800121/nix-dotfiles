@@ -13,7 +13,7 @@
     ];
     hmModules = [
       ../home/minimal.nix
-      ../programs/nvim
+      ../programs/nvim/minimal.nix
     ];
   };
   alexrpi4tpmin = {

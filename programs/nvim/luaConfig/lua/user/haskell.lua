@@ -1,5 +1,8 @@
 -- local haskell_tools = require 'haskell-tools'
 local whichkey = require 'which-key'
+local luasnip = require 'luasnip'
+local haskell_snippets = require('haskell-snippets').all
+luasnip.add_snippets('haskell', haskell_snippets, { key = 'haskell' })
 
 local opts = function(def) return { noremap = true, silent = true, desc = def } end
 

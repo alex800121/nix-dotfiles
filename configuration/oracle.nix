@@ -114,6 +114,7 @@ in
       };
     };
   };
+
   boot.initrd.luks.devices."enc".preLVM = true;
   boot.initrd.luks.devices."enc".allowDiscards = true;
   boot.initrd.luks.devices."enc".bypassWorkqueues = true;
@@ -122,10 +123,10 @@ in
   fileSystems."/nix".options = [ "noatime" "compress=zstd" ];
   fileSystems."/swap".options = [ "noatime" ];
   swapDevices = [{ device = "/swap/swapfile"; }];
-  systemd.network.networks."10-eth0" = cfg;
-  boot.initrd.systemd.network.networks."10-eth0" = cfg;
+  # systemd.network.networks."10-eth0" = cfg;
+  # boot.initrd.systemd.network.networks."10-eth0" = cfg;
   boot.initrd.systemd.enable = true;
-  boot.initrd.systemd.tpm2.enable = true;
+  # boot.initrd.systemd.tpm2.enable = true;
 
   environment.systemPackages = with pkgs; [
     neovim
