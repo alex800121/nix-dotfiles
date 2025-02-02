@@ -1,4 +1,4 @@
-{ pkgs, config, userConfig, lib, inputs, nixpkgsUnstable, ... }:
+{ conf, pkgs, config, userConfig, lib, inputs, nixpkgsUnstable, ... }:
 let
   defaultConfig = {
     autoLogin = false;
@@ -24,6 +24,10 @@ let
   };
 in
 {
+  boot.kernelPackages = lib.mkDefault
+    (if builtins.hasAttr "kernelVersion" conf
+    then pkgs."linuxPackages_${conf.kernelVersion}"
+    else pkgs.linuxPackages);
   imports =
     [
       # Include the results of the hardware scan.
@@ -108,7 +112,7 @@ in
       enable = true;
       ssh = {
         enable = true;
-        port = 2222;
+        port = 22;
         authorizedKeys = config.users.users."${userConfig.userName}".openssh.authorizedKeys.keys;
         hostKeys = [ "/etc/secrets/initrd/ssh_host_ed25519_key" ];
       };
@@ -123,10 +127,10 @@ in
   fileSystems."/nix".options = [ "noatime" "compress=zstd" ];
   fileSystems."/swap".options = [ "noatime" ];
   swapDevices = [{ device = "/swap/swapfile"; }];
-  # systemd.network.networks."10-eth0" = cfg;
-  # boot.initrd.systemd.network.networks."10-eth0" = cfg;
+  systemd.network.networks."10-eth0" = cfg;
+  boot.initrd.systemd.network.networks."10-eth0" = cfg;
   boot.initrd.systemd.enable = true;
-  # boot.initrd.systemd.tpm2.enable = true;
+  boot.initrd.systemd.tpm2.enable = true;
 
   environment.systemPackages = with pkgs; [
     neovim
