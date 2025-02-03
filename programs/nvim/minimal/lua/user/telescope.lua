@@ -5,7 +5,7 @@ local whichkey = require'which-key'
 telescope.setup()
 telescope.load_extension('fzf')
 telescope.load_extension('projects')
-telescope.load_extension('ht')
+-- telescope.load_extension('ht')
 
 whichkey.add({
   {'<leader>f', group = "+Fuzzy Find..." },

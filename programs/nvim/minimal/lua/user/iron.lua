@@ -1,5 +1,5 @@
 local iron = require("iron.core")
-local ht = require("haskell-tools")
+-- local ht = require("haskell-tools")
 
 iron.setup {
   config = {
