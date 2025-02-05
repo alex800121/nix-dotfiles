@@ -1,4 +1,21 @@
 {
+  oracle2 = {
+    system = "aarch64-linux";
+    kernelVersion = "6_12";
+    userConfig = {
+      hostName = "oracle2";
+      userName = "alex800121";
+      fontSize = 11.5;
+      autoLogin = true;
+    };
+    extraModules = [
+      ./oracle2.nix
+    ];
+    hmModules = [
+      ../home/minimal.nix
+      ../programs/nvim/minimal.nix
+    ];
+  };
   oracle = {
     system = "aarch64-linux";
     kernelVersion = "6_12";

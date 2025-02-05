@@ -93,7 +93,7 @@ in
       wifi.backend = "iwd";
     };
   };
-  time.timeZone = lib.mkDefault "Asia/Taipei";
+  time.timeZone = lib.mkDefault "Asia/Singapore";
   i18n.defaultLocale = "en_US.utf8";
 
 
@@ -118,7 +118,6 @@ in
   #     };
   #   };
   # };
-
   # boot.initrd.luks.devices."enc".preLVM = true;
   # boot.initrd.luks.devices."enc".allowDiscards = true;
   # boot.initrd.luks.devices."enc".bypassWorkqueues = true;
