@@ -31,7 +31,7 @@ in
   imports =
     [
       # Include the results of the hardware scan.
-      ../hardware/oracle.nix
+      ../hardware/oracle2.nix
       ../programs/sshd
       ../programs/tailscale/server.nix
     ];
@@ -103,6 +103,7 @@ in
     extraGroups = [ "networkmanager" "tss" "storage" "disk" "libvirtd" "audio" "systemd-network" "sudo" "wheel" "code-server" "input" ];
   };
 
+  boot.supportedFilesystems = [ "btrfs" "vfat" ];
   boot.kernelParams = [ "ip=dhcp" "net.ifnames=0" ];
   boot.initrd = {
     availableKernelModules = [ "virtio-pci" ];
@@ -127,7 +128,6 @@ in
   swapDevices = [{ device = "/swap/swapfile"; }];
   systemd.network.networks."10-eth0" = cfg;
   boot.initrd.systemd.network.networks."10-eth0" = cfg;
-  boot.initrd.network.udhcpc.enable = true;
   boot.initrd.network.flushBeforeStage2 = true;
   boot.initrd.systemd.enable = true;
   boot.initrd.systemd.tpm2.enable = true;
