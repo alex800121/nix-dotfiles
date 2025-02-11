@@ -126,8 +126,8 @@ in
   fileSystems."/nix".options = [ "noatime" "compress=zstd" ];
   fileSystems."/swap".options = [ "noatime" ];
   swapDevices = [{ device = "/swap/swapfile"; }];
-  # systemd.network.networks."00-eth0" = cfg;
-  # boot.initrd.systemd.network.networks."00-eth0" = cfg;
+  systemd.network.networks."00-eth0" = cfg;
+  boot.initrd.systemd.network.networks."00-eth0" = cfg;
   boot.initrd.network.flushBeforeStage2 = true;
   boot.initrd.systemd.enable = true;
   # boot.initrd.systemd.tpm2.enable = true;
