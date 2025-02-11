@@ -12,15 +12,15 @@ let
     };
     networkConfig = {
       DHCP = true;
-      MulticastDNS = true;
-      LLMNR = true;
+      # MulticastDNS = true;
+      # LLMNR = true;
     };
-    linkConfig = {
-      RequiredForOnline = true;
-      RequiredFamilyForOnline = "any";
-      Multicast = true;
-      AllMulticast = true;
-    };
+    # linkConfig = {
+    #   RequiredForOnline = true;
+    #   RequiredFamilyForOnline = "any";
+    #   Multicast = true;
+    #   AllMulticast = true;
+    # };
   };
 in
 {
@@ -103,8 +103,8 @@ in
     extraGroups = [ "networkmanager" "tss" "storage" "disk" "libvirtd" "audio" "systemd-network" "sudo" "wheel" "code-server" "input" ];
   };
 
-  boot.supportedFilesystems = [ "btrfs" "vfat" ];
-  boot.kernelParams = [ "ip=dhcp" "net.ifnames=0" ];
+  # boot.supportedFilesystems = [ "btrfs" "vfat" ];
+  boot.kernelParams = [ "net.ifnames=0" ];
   boot.initrd = {
     availableKernelModules = [ "virtio-pci" ];
     systemd.users.root.shell = "/bin/cryptsetup-askpass";
@@ -126,11 +126,11 @@ in
   fileSystems."/nix".options = [ "noatime" "compress=zstd" ];
   fileSystems."/swap".options = [ "noatime" ];
   swapDevices = [{ device = "/swap/swapfile"; }];
-  systemd.network.networks."10-eth0" = cfg;
-  boot.initrd.systemd.network.networks."10-eth0" = cfg;
+  # systemd.network.networks."00-eth0" = cfg;
+  # boot.initrd.systemd.network.networks."00-eth0" = cfg;
   boot.initrd.network.flushBeforeStage2 = true;
   boot.initrd.systemd.enable = true;
-  boot.initrd.systemd.tpm2.enable = true;
+  # boot.initrd.systemd.tpm2.enable = true;
 
   environment.systemPackages = with pkgs; [
     neovim
