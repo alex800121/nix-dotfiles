@@ -107,7 +107,7 @@ in
   boot.kernelParams = [ "net.ifnames=0" ];
   boot.initrd = {
     availableKernelModules = [ "virtio-pci" ];
-    systemd.users.root.shell = "systemctl default";
+    systemd.users.root.shell = "/bin/sh";
     network = {
       enable = true;
       ssh = {
