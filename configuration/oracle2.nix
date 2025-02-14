@@ -107,7 +107,7 @@ in
   boot.kernelParams = [ "net.ifnames=0" ];
   boot.initrd = {
     availableKernelModules = [ "virtio-pci" ];
-    systemd.users.root.shell = "/bin/cryptsetup-askpass";
+    systemd.users.root.shell = "systemctl default";
     network = {
       enable = true;
       ssh = {
