@@ -9,7 +9,8 @@
       autoLogin = true;
     };
     extraModules = [
-      ./oracle2.nix
+      ./oracle.nix
+      ../hardware/oracle2.nix
     ];
     hmModules = [
       ../home/minimal.nix
@@ -27,6 +28,7 @@
     };
     extraModules = [
       ./oracle.nix
+      ../hardware/oracle.nix
     ];
     hmModules = [
       ../home/minimal.nix

@@ -12,15 +12,15 @@ let
     };
     networkConfig = {
       DHCP = true;
-      MulticastDNS = true;
-      LLMNR = true;
+      # MulticastDNS = true;
+      # LLMNR = true;
     };
-    linkConfig = {
-      RequiredForOnline = true;
-      RequiredFamilyForOnline = "any";
-      Multicast = true;
-      AllMulticast = true;
-    };
+    # linkConfig = {
+    #   RequiredForOnline = true;
+    #   RequiredFamilyForOnline = "any";
+    #   Multicast = true;
+    #   AllMulticast = true;
+    # };
   };
 in
 {
@@ -31,7 +31,7 @@ in
   imports =
     [
       # Include the results of the hardware scan.
-      ../hardware/oracle.nix
+      # ../hardware/oracle2.nix
       ../programs/sshd
       ../programs/tailscale/server.nix
     ];
@@ -96,7 +96,6 @@ in
   time.timeZone = lib.mkDefault "Asia/Singapore";
   i18n.defaultLocale = "en_US.utf8";
 
-
   users.mutableUsers = true;
   users.users."${userName}" = {
     isNormalUser = true;
@@ -104,31 +103,33 @@ in
     extraGroups = [ "networkmanager" "tss" "storage" "disk" "libvirtd" "audio" "systemd-network" "sudo" "wheel" "code-server" "input" ];
   };
 
-  # boot.kernelParams = [ "ip=dhcp" "net.ifnames=0" ];
-  # boot.initrd = {
-  #   availableKernelModules = [ "virtio-pci" ];
-  #   systemd.users.root.shell = "/bin/cryptsetup-askpass";
-  #   network = {
-  #     enable = true;
-  #     ssh = {
-  #       enable = true;
-  #       port = 22;
-  #       authorizedKeys = config.users.users."${userConfig.userName}".openssh.authorizedKeys.keys;
-  #       hostKeys = [ "/etc/secrets/initrd/ssh_host_ed25519_key" ];
-  #     };
-  #   };
-  # };
-  # boot.initrd.luks.devices."enc".preLVM = true;
-  # boot.initrd.luks.devices."enc".allowDiscards = true;
-  # boot.initrd.luks.devices."enc".bypassWorkqueues = true;
-  # fileSystems."/".options = [ "noatime" "compress=zstd" ];
-  # fileSystems."/home".options = [ "noatime" "compress=zstd" ];
-  # fileSystems."/nix".options = [ "noatime" "compress=zstd" ];
-  # fileSystems."/swap".options = [ "noatime" ];
-  # swapDevices = [{ device = "/swap/swapfile"; }];
-  # systemd.network.networks."10-eth0" = cfg;
-  # boot.initrd.systemd.network.networks."10-eth0" = cfg;
-  # boot.initrd.systemd.enable = true;
+  # boot.supportedFilesystems = [ "btrfs" "vfat" ];
+  boot.kernelParams = [ "net.ifnames=0" ];
+  boot.initrd = {
+    availableKernelModules = [ "virtio-pci" ];
+    systemd.users.root.shell = "/bin/sh";
+    network = {
+      enable = true;
+      ssh = {
+        enable = true;
+        port = 2222;
+        authorizedKeys = config.users.users."${userConfig.userName}".openssh.authorizedKeys.keys;
+        hostKeys = [ "/etc/secrets/initrd/ssh_host_ed25519_key" ];
+      };
+    };
+  };
+  boot.initrd.luks.devices."enc".preLVM = true;
+  boot.initrd.luks.devices."enc".allowDiscards = true;
+  boot.initrd.luks.devices."enc".bypassWorkqueues = true;
+  fileSystems."/".options = [ "noatime" "compress=zstd" ];
+  fileSystems."/home".options = [ "noatime" "compress=zstd" ];
+  fileSystems."/nix".options = [ "noatime" "compress=zstd" ];
+  fileSystems."/swap".options = [ "noatime" ];
+  swapDevices = [{ device = "/swap/swapfile"; }];
+  systemd.network.networks."00-eth0" = cfg;
+  boot.initrd.systemd.network.networks."00-eth0" = cfg;
+  boot.initrd.network.flushBeforeStage2 = true;
+  boot.initrd.systemd.enable = true;
   # boot.initrd.systemd.tpm2.enable = true;
 
   environment.systemPackages = with pkgs; [
