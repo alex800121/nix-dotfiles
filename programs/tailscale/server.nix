@@ -1,6 +1,5 @@
 { userConfit, pkgs, lib, ... }: {
-  services.tailscale.enable = true;
-  services.tailscale.openFirewall = true;
+  imports = [./default.nix];
   services.tailscale.useRoutingFeatures = "server";
   services.tailscale.extraSetFlags = [
     "--advertise-exit-node"

@@ -1,6 +1,5 @@
 { userConfit, pkgs, lib, ... }: {
-  services.tailscale.enable = true;
-  services.tailscale.openFirewall = true;
+  imports = [./default.nix];
   services.tailscale.useRoutingFeatures = "client";
   services.tailscale.extraSetFlags = [
     "--exit-node=alexrpi4tp"

@@ -131,7 +131,7 @@ in
   };
 
   networking.hostName = hostName;
-  networking.firewall.enable = false;
+  # networking.firewall.enable = false;
   networking.networkmanager.enable = false;
   networking.useNetworkd = true;
   systemd.network.enable = true;

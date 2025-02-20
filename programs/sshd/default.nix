@@ -35,6 +35,7 @@ in
       UsePAM no
     '';
     allowSFTP = true;
+    openFirewall = true;
   };
   users.users."${userName}".openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOGQp50KA0IvbD5PORg8wprMbjzY6AdBwAWbLoBlsFAw alexanderlee800121@cs-458534110940-default"

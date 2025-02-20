@@ -65,7 +65,10 @@ in
   powerManagement.enable = false;
   networking.firewall.enable = lib.mkDefault true;
   networking.firewall = {
-    allowedUDPPorts = [ 5353 7236 ]; # For device discovery
+    allowedUDPPorts = [
+      # 5353
+      # 7236
+    ]; # For device discovery
   };
   services.resolved = {
     enable = true;
