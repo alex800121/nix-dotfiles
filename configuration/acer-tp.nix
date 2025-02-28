@@ -10,7 +10,7 @@ let
       LLMNR = true;
     };
     linkConfig = {
-      RequiredForOnline = true;
+      # RequiredForOnline = true;
       RequiredFamilyForOnline = "any";
       Multicast = true;
       AllMulticast = true;
@@ -27,7 +27,7 @@ in
     ./secure-boot.nix
     ./distributed-builds.nix
     ./timezoned.nix
-    # ./initrd-network.nix
+    ./initrd-network.nix
     ../hardware/acer-tp.nix
     ../hardware/desktop.nix
     ../de/gnome
@@ -35,7 +35,7 @@ in
     ../programs/code-tunnel
     ../programs/sshd
     ../programs/virt
-    ../programs/duckdns
+    # ../programs/duckdns
     # ../programs/duckdns/initrd.nix
     ../programs/tailscale/server.nix
   ];
@@ -45,27 +45,10 @@ in
   systemd.network.enable = true;
 
   systemd.network.wait-online.anyInterface = false;
+  systemd.network.wait-online.ignoredInterfaces = [ "wlp0s20f3" ];
 
   systemd.network.networks."10-enp0s20f0u1u4" = cfg;
   boot.initrd.systemd.network.networks."10-enp0s20f0u1u4" = cfg;
-
-  boot.initrd.systemd.contents = {
-    "/etc/tmpfiles.d/resolv.conf".text =
-      "L /etc/resolv.conf - - - - /run/systemd/resolve/stub-resolv.conf";
-    "/etc/systemd/resolved.conf".text = resolvedConf;
-  };
-
-  boot.initrd.systemd.additionalUpstreamUnits = [ "systemd-resolved.service" ];
-  boot.initrd.systemd.users.systemd-resolve = { };
-  boot.initrd.systemd.groups.systemd-resolve = { };
-  boot.initrd.systemd.storePaths = [ "${pkgs.systemd}/lib/systemd/systemd-resolved" ];
-  boot.initrd.systemd.services.systemd-resolved = {
-    wantedBy = [ "sysinit.target" ];
-    aliases = [ "dbus-org.freedesktop.resolve1.service" ];
-  };
-
-  boot.initrd.systemd.enable = true;
-  boot.initrd.systemd.tpm2.enable = true;
 
   boot.initrd.luks.devices."enc".preLVM = true;
   boot.initrd.luks.devices."enc".allowDiscards = true;

@@ -134,6 +134,7 @@ in
     x42-plugins
     nixpkgsUnstable.winetricks
     nixpkgsUnstable.wineWowPackages.full
+    bitwarden-desktop
   ];
 
   xdg.mime.enable = true;
