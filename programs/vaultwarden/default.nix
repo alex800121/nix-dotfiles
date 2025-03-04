@@ -17,6 +17,7 @@
     '';
   };
   services.vaultwarden.enable = true;
+  services.vaultwarden.backupDir = "/var/backup/vaultwarden";
   services.vaultwarden.config = {
     # DISABLE_ADMIN_TOKEN = false;
     # ADMIN_TOKEN = "ZnM+TUjtFDXs+LVXsmz+XSLknTTkIAmi92pR0f6iQ0r8cvFKSnfgQ+OtcTuQJiNm";
