@@ -38,6 +38,7 @@ in
     # ../programs/duckdns
     # ../programs/duckdns/initrd.nix
     ../programs/tailscale/server.nix
+    ../programs/borgbackup/server.nix
   ];
 
   networking.networkmanager.enable = false;
