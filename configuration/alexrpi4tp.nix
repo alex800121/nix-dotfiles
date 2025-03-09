@@ -1,4 +1,4 @@
-{ ... }: {
+{ inputs, ... }: {
 
   imports = [
     ./rpi4.nix
@@ -10,5 +10,7 @@
     ../programs/code-tunnel
     # ../programs/duckdns
     ../programs/vaultwarden
+    # ../programs/borgbackup/vaultwarden.nix
+    inputs.agenix.nixosModules.default
   ];
 }
