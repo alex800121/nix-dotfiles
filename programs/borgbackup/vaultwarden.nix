@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+serverName: { config, lib, ... }:
 let
   inherit (config.networking) hostName;
   # setCred = "ssh_host_borgbackup_vaultwarden:" + lib.strings.concatStrings
@@ -6,38 +6,35 @@ let
   #     "\n"
   #     (builtins.readFile ../../secrets/ssh_host_borgbackup_vaultwarden-${hostName}));
   jobName = "vaultwarden";
+  passphrase = "passphrase_borgbackup_vaultwarden_${hostName}";
+  sshHostKey = "ssh_host_borgbackup_${serverName}_vaultwarden_${hostName}";
 in
 {
   # systemd.services."borgbackup-job-${jobName}".serviceConfig.SetCredentialEncrypted = setCred;
-  users.extraUsers."borg" = {
-    isSystemUser = true;
-    group = "borg";
-  };
-  users.extraGroups."borg" = { };
-  age.secrets.passphrase_borgbackup_vaultwarden = {
-    file = ../../secrets/passphrase_borgbackup_vaultwarden_${hostName}.age;
-    owner = "borg";
-    group = "borg";
+  age.secrets.${passphrase} = {
+    file = ../../secrets/${passphrase}.age;
+    owner = "root";
+    group = "root";
     mode = "600";
   };
-  age.secrets.ssh_host_borgbackup_vaultwarden = {
-    file = ../../secrets/ssh_host_borgbackup_vaultwarden_${hostName}.age;
-    owner = "borg";
-    group = "borg";
+  age.secrets."${sshHostKey}" = {
+    file = ../../secrets/${sshHostKey}.age;
+    owner = "root";
+    group = "root";
     mode = "600";
   };
-  services.borgbackup.jobs."${jobName}" = {
+  services.borgbackup.jobs."${jobName}-${serverName}" = {
     user = "root";
     group = "root";
-    repo = "borg@acer-tp:.";
+    repo = "borg@${serverName}:.";
     paths = [ "/var/lib/vaultwarden" ];
     doInit = true;
     encryption = {
       mode = "repokey";
-      passCommand = "cat ${config.age.secrets.passphrase_borgbackup_vaultwarden.path}";
+      passCommand = "cat ${config.age.secrets.${passphrase}.path}";
     };
     environment = {
-      BORG_RSH = "ssh -i ${config.age.secrets.ssh_host_borgbackup_vaultwarden.path}";
+      BORG_RSH = "ssh -i ${config.age.secrets.${sshHostKey}.path}";
     };
     startAt = "daily";
     prune.keep = {

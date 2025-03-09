@@ -3,7 +3,6 @@ let
   inherit (config.networking) hostName;
 in
 {
-  imports = [ ../borgbackup/vaultwarden.nix ];
   users.extraUsers."vaultwarden" = {
     isSystemUser = true;
     group = "vaultwarden";

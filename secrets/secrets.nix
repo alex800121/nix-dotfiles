@@ -10,7 +10,8 @@ let
   fw13 = [ fw13-user fw13-system ];
 in
 { 
-  "ssh_host_borgbackup_vaultwarden_alexrpi4tp.age".publicKeys = alexrpi4tp;
+  "ssh_host_borgbackup_acer-tp_vaultwarden_alexrpi4tp.age".publicKeys = alexrpi4tp;
+  "ssh_host_borgbackup_oracle_vaultwarden_alexrpi4tp.age".publicKeys = alexrpi4tp;
   "passphrase_borgbackup_vaultwarden_alexrpi4tp.age".publicKeys = alexrpi4tp;
   "env_vaultwarden_alexrpi4tp.age".publicKeys = alexrpi4tp;
 }

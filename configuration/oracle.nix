@@ -34,6 +34,7 @@ in
       # ../hardware/oracle2.nix
       ../programs/sshd
       ../programs/tailscale/server.nix
+      ../programs/borgbackup/server.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
