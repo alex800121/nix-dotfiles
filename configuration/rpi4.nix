@@ -197,6 +197,7 @@ in
   };
   # List packages installed in system profile. To search, run:
   environment.systemPackages = with pkgs; [
+    inputs.agenix.packages.${system}.default
     neovim
     git
     wget
