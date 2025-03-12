@@ -8,10 +8,14 @@ let
   fw13-user = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMraRiOlQzoow7HBhsDh+HQKrh5tddB1wB8MIMaw0kf";
   fw13-system = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ0Vv4anN/LjTy5lwcUTXXW7v2Xm9x1jzKU+c6S0ewxA";
   fw13 = [ fw13-user fw13-system ];
+  oracle-user = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHv15uz9Ndk+y0SZ2L64OgjLXBV8JwTDHbYca9a/oYHx";
+  oracle-system = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHAmj2g3azH1O+1a1p8CK6csf1vSILXrLoHS5srPvFA2";
+  oracle = [ oracle-user oracle-system ];
 in
-{ 
+{
   "ssh_host_borgbackup_acer-tp_vaultwarden_alexrpi4tp.age".publicKeys = alexrpi4tp;
   "ssh_host_borgbackup_oracle_vaultwarden_alexrpi4tp.age".publicKeys = alexrpi4tp;
   "passphrase_borgbackup_vaultwarden_alexrpi4tp.age".publicKeys = alexrpi4tp;
+  "env_vaultwarden_oracle.age".publicKeys = oracle;
   "env_vaultwarden_alexrpi4tp.age".publicKeys = alexrpi4tp;
 }

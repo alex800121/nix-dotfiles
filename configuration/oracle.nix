@@ -35,6 +35,8 @@ in
       ../programs/sshd
       ../programs/tailscale/server.nix
       ../programs/borgbackup/server.nix
+      ../programs/vaultwarden
+      inputs.agenix.nixosModules.default
     ];
 
   # Use the systemd-boot EFI boot loader.
