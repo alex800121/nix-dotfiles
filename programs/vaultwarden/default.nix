@@ -1,11 +1,14 @@
 { pkgs, userConfig, config, ... }:
 let
   inherit (config.networking) hostName;
+  domainName = "alex${hostName}.duckdns.org";
+  ddtokenName = "ddtoken_${hostName}";
 in
 {
   users.extraUsers."vaultwarden" = {
     isSystemUser = true;
     group = "vaultwarden";
+    extraGroups = ["acme"];
   };
   users.extraGroups."vaultwarden" = { };
   age.secrets."vaultwarden.env" = {
@@ -14,16 +17,36 @@ in
     group = "vaultwarden";
     mode = "600";
   };
+  age.secrets."${ddtokenName}" = {
+    file = ../../secrets/${ddtokenName}.age;
+    owner = "acme";
+    group = "acme";
+    mode = "600";
+  };
   environment.systemPackages = with pkgs; [
     vaultwarden
   ];
   services.tailscale.permitCertUid = config.services.caddy.user;
+  security.acme = {
+    acceptTerms = true;
+    defaults.email = "alexlee800121@gmail.com";
+  };
+  security.acme.certs."${domainName}" = {
+    dnsProvider = "duckdns";
+    # dnsResolver = "100.100.100.100:53";
+    # dnsPropagationCheck = false;
+    dnsPropagationCheck = true;
+    domain = domainName;
+    extraDomainNames = [ "*.${domainName}"];
+    credentialFiles."DUCKDNS_TOKEN_FILE" = config.age.secrets."${ddtokenName}".path;
+  };
   services.caddy.enable = true;
-  services.caddy.virtualHosts."${hostName}.taildaa926.ts.net:8001" = {
+  services.caddy.virtualHosts."vaultwarden.${domainName}" = {
+    useACMEHost = domainName;
     extraConfig = ''
-      tls {
-        get_certificate tailscale
-      }
+      # tls {
+      #   get_certificate tailscale
+      # }
       # redir /vaultwarden /vaultwarden/
       # handle_path /vaultwarden/* {
       #   reverse_proxy /* http://localhost:${config.services.vaultwarden.config.ROCKET_PORT}

@@ -14,4 +14,5 @@ in
   "ssh_host_borgbackup_oracle_vaultwarden_alexrpi4tp.age".publicKeys = alexrpi4tp;
   "passphrase_borgbackup_vaultwarden_alexrpi4tp.age".publicKeys = alexrpi4tp;
   "env_vaultwarden_alexrpi4tp.age".publicKeys = alexrpi4tp;
+  "ddtoken_alexrpi4tp.age".publicKeys = alexrpi4tp;
 }
