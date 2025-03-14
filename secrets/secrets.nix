@@ -1,6 +1,6 @@
 let
-  acer-tp-user = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID9ecjWEa+jhCOrW4+RkxY0sW7AtsCmTNvdMbdbV/WjG";
-  acer-tp-system = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM8QIkayntlJgarKb0rt5fy+413SfARjxszlE8tut4HB";
+  acer-tp-user = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMYRhvHSun0BXMV1oBi93FncWVFEma5pv6fKeruccOuW";
+  acer-tp-system = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDzMKvJj6q/7kBnBwmVbihs23csYbDS27kFOvtZDLYzB";
   acer-tp = [ acer-tp-user acer-tp-system ];
   alexrpi4tp-user = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBN61RwZQS17DGsNh0qV6OpZBQ2569cCyXY38G4T2Vc+";
   alexrpi4tp-system = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHt5Lm+fw93lILN2r82qTb/XieIrVrD/fbLio2G4tHqy";
@@ -18,6 +18,8 @@ in
   "passphrase_borgbackup_vaultwarden_alexrpi4tp.age".publicKeys = alexrpi4tp;
   "env_vaultwarden_oracle.age".publicKeys = oracle;
   "env_vaultwarden_alexrpi4tp.age".publicKeys = alexrpi4tp;
+  "env_vaultwarden_acer-tp.age".publicKeys = acer-tp;
   "ddtoken_alexrpi4tp.age".publicKeys = alexrpi4tp;
   "ddtoken_oracle.age".publicKeys = oracle;
+  "ddtoken_acer-tp.age".publicKeys = acer-tp;
 }

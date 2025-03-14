@@ -254,7 +254,7 @@ in
     wget
     git
     git-filter-repo
-    # inputs.agenix.packages."${system}".default
+    inputs.agenix.packages."${system}".default
     fastfetch
     gcc
     conntrack-tools

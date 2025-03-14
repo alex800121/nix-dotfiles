@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ inputs, pkgs, ... }:
 let
   cfg = {
     matchConfig = {
@@ -39,6 +39,8 @@ in
     # ../programs/duckdns/initrd.nix
     ../programs/tailscale/server.nix
     ../programs/borgbackup/server.nix
+    inputs.agenix.nixosModules.default
+    ../programs/vaultwarden
   ];
 
   networking.networkmanager.enable = false;
