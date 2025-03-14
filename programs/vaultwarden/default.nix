@@ -1,4 +1,4 @@
-{ pkgs, userConfig, config, ... }:
+{ pkgs, userConfig, config, lib, ... }:
 let
   inherit (config.networking) hostName;
   domainName = "alex${hostName}.duckdns.org";
@@ -39,6 +39,7 @@ in
     domain = domainName;
     extraDomainNames = [ "*.${domainName}"];
     credentialFiles."DUCKDNS_TOKEN_FILE" = config.age.secrets."${ddtokenName}".path;
+    credentialFiles."DUCKDNS_PROPAGATION_TIMEOUT_FILE" = pkgs.writeText "dd_prop_timeout" "600";
   };
   services.caddy.enable = true;
   services.caddy.virtualHosts."vaultwarden.${domainName}" = {

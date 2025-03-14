@@ -19,4 +19,5 @@ in
   "env_vaultwarden_oracle.age".publicKeys = oracle;
   "env_vaultwarden_alexrpi4tp.age".publicKeys = alexrpi4tp;
   "ddtoken_alexrpi4tp.age".publicKeys = alexrpi4tp;
+  "ddtoken_oracle.age".publicKeys = oracle;
 }

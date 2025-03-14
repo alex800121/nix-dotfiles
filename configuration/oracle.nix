@@ -148,6 +148,7 @@ in
     curl
     fastfetch
     git
+    inputs.agenix.packages.${system}.default
   ];
   environment.variables = {
     EDITOR = "nvim";
