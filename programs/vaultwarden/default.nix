@@ -8,7 +8,7 @@ in
   users.extraUsers."vaultwarden" = {
     isSystemUser = true;
     group = "vaultwarden";
-    extraGroups = ["acme"];
+    extraGroups = [ "acme" ];
   };
   users.extraGroups."vaultwarden" = { };
   age.secrets."vaultwarden.env" = {
@@ -26,7 +26,26 @@ in
   environment.systemPackages = with pkgs; [
     vaultwarden
   ];
-  services.tailscale.permitCertUid = config.services.caddy.user;
+
+  # services.tailscale.permitCertUid = config.services.caddy.user;
+
+  # networking.firewall.allowedTCPPorts = [4567 3306];
+  # networking.firewall.allowedUDPPorts = [3306];
+  services.mysql = {
+    enable = true;
+    package = pkgs.mariadb;
+    settings.galera = {
+      wsrep_provider = "${pkgs.mariadb-galera}/lib/galera/libgalera_smm.so";
+      wsrep_cluster_address = "gcomm://acer-tp,alexrpi4tp,oracle";
+      binlog_format = "ROW";
+      wsrep_on = "ON";
+      default_storage_engine = "InnoDB";
+      innodb_doublewrite = 1;
+      wsrep_cluster_name = "galera";
+      wsrep_node_address = hostName;
+    };
+  };
+
   security.acme = {
     acceptTerms = true;
     defaults.email = "alexlee800121@gmail.com";
@@ -37,7 +56,7 @@ in
     # dnsPropagationCheck = false;
     dnsPropagationCheck = true;
     domain = domainName;
-    extraDomainNames = [ "*.${domainName}"];
+    extraDomainNames = [ "*.${domainName}" ];
     credentialFiles."DUCKDNS_TOKEN_FILE" = config.age.secrets."${ddtokenName}".path;
     credentialFiles."DUCKDNS_PROPAGATION_TIMEOUT_FILE" = pkgs.writeText "dd_prop_timeout" "600";
   };
