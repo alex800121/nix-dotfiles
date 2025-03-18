@@ -31,20 +31,20 @@ in
 
   # networking.firewall.allowedTCPPorts = [4567 3306];
   # networking.firewall.allowedUDPPorts = [3306];
-  services.mysql = {
-    enable = true;
-    package = pkgs.mariadb;
-    settings.galera = {
-      wsrep_provider = "${pkgs.mariadb-galera}/lib/galera/libgalera_smm.so";
-      wsrep_cluster_address = "gcomm://acer-tp,alexrpi4tp,oracle";
-      binlog_format = "ROW";
-      wsrep_on = "ON";
-      default_storage_engine = "InnoDB";
-      innodb_doublewrite = 1;
-      wsrep_cluster_name = "galera";
-      wsrep_node_address = hostName;
-    };
-  };
+  # services.mysql = {
+  #   enable = true;
+  #   package = pkgs.mariadb;
+  #   settings.galera = {
+  #     wsrep_provider = "${pkgs.mariadb-galera}/lib/galera/libgalera_smm.so";
+  #     wsrep_cluster_address = "gcomm://acer-tp,alexrpi4tp,oracle";
+  #     binlog_format = "ROW";
+  #     wsrep_on = "ON";
+  #     default_storage_engine = "InnoDB";
+  #     innodb_doublewrite = 1;
+  #     wsrep_cluster_name = "galera";
+  #     wsrep_node_address = hostName;
+  #   };
+  # };
 
   security.acme = {
     acceptTerms = true;
