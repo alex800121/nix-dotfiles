@@ -25,6 +25,7 @@
       userName = "alex800121";
       fontSize = 11.5;
       autoLogin = true;
+      tsAddress = "100.112.159.45";
     };
     extraModules = [
       ./oracle.nix
@@ -43,6 +44,7 @@
       userName = "alex800121";
       fontSize = 11.5;
       autoLogin = true;
+      tsAddress = "100.99.202.117";
     };
     extraModules = [
       ./alexrpi4tpmin.nix
@@ -61,6 +63,7 @@
       autoLogin = true;
       url = "alexrpi4gate";
       port = 30000;
+      tsAddress = "100.99.202.117";
     };
     extraModules = [
       ./alexrpi4tp.nix
@@ -80,6 +83,7 @@
       autoLogin = true;
       url = "alexacer-tp";
       port = 31000;
+      tsAddress = "100.111.136.66";
     };
     extraModules = [
       ./acer-tp.nix
@@ -100,6 +104,7 @@
         autoLogin = false;
         port = 32000;
         soundcardPciId = "c1:00.6";
+        tsAddress = "100.77.194.104";
       };
       extraModules = [
         ./fw13.nix
@@ -122,6 +127,7 @@
         autoLogin = false;
         port = 32000;
         soundcardPciId = "c1:00.6";
+        tsAddress = "100.77.194.104";
       };
       extraModules = [
         ./fw13.nix

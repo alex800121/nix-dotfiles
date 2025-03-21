@@ -29,22 +29,37 @@ in
 
   # services.tailscale.permitCertUid = config.services.caddy.user;
 
-  # networking.firewall.allowedTCPPorts = [4567 3306];
-  # networking.firewall.allowedUDPPorts = [3306];
-  # services.mysql = {
-  #   enable = true;
-  #   package = pkgs.mariadb;
-  #   settings.galera = {
-  #     wsrep_provider = "${pkgs.mariadb-galera}/lib/galera/libgalera_smm.so";
-  #     wsrep_cluster_address = "gcomm://acer-tp,alexrpi4tp,oracle";
-  #     binlog_format = "ROW";
-  #     wsrep_on = "ON";
-  #     default_storage_engine = "InnoDB";
-  #     innodb_doublewrite = 1;
-  #     wsrep_cluster_name = "galera";
-  #     wsrep_node_address = hostName;
-  #   };
-  # };
+  services.mysql = {
+    enable = true;
+    package = pkgs.mariadb;
+    settings.galera = {
+      wsrep_provider = "${pkgs.mariadb-galera}/lib/galera/libgalera_smm.so";
+      wsrep_cluster_address = "gcomm://acer-tp,alexrpi4tp,oracle";
+      binlog_format = "ROW";
+      wsrep_on = "ON";
+      default_storage_engine = "InnoDB";
+      innodb_doublewrite = 1;
+      wsrep_cluster_name = "galera";
+      wsrep_node_address = userConfig.tsAddress;
+      wsrep_sst_method = "rsync";
+    };
+  };
+  systemd.services.mysql.path = with pkgs; [
+    mariadb
+    bash
+    gawk
+    gnutar
+    gzip
+    inetutils
+    iproute2
+    netcat
+    procps
+    pv
+    rsync
+    socat
+    stunnel
+    which
+  ];
 
   security.acme = {
     acceptTerms = true;
@@ -52,8 +67,6 @@ in
   };
   security.acme.certs."${domainName}" = {
     dnsProvider = "duckdns";
-    # dnsResolver = "100.100.100.100:53";
-    # dnsPropagationCheck = false;
     dnsPropagationCheck = true;
     domain = domainName;
     extraDomainNames = [ "*.${domainName}" ];
@@ -64,13 +77,6 @@ in
   services.caddy.virtualHosts."vaultwarden.${domainName}" = {
     useACMEHost = domainName;
     extraConfig = ''
-      # tls {
-      #   get_certificate tailscale
-      # }
-      # redir /vaultwarden /vaultwarden/
-      # handle_path /vaultwarden/* {
-      #   reverse_proxy /* http://localhost:${config.services.vaultwarden.config.ROCKET_PORT}
-      # }
       reverse_proxy http://localhost:${config.services.vaultwarden.config.ROCKET_PORT}
     '';
   };
@@ -78,7 +84,6 @@ in
   services.vaultwarden.environmentFile = config.age.secrets."vaultwarden.env".path;
   services.vaultwarden.backupDir = "/var/backup/vaultwarden";
   services.vaultwarden.config = {
-    # DISABLE_ADMIN_TOKEN = false;
     ROCKET_ADDRESS = "127.0.0.1";
     ROCKET_PORT = "8000";
   };
