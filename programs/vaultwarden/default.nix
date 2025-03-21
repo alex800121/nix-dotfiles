@@ -1,26 +1,39 @@
-{ pkgs, userConfig, config, lib, ... }:
+{ pkgs, config, lib, ... }:
 let
   inherit (config.networking) hostName;
   domainName = "alex${hostName}.duckdns.org";
-  ddtokenName = "ddtoken_${hostName}";
+  myCnfPath = "/var/lib/my.cnf";
+  myCnfFile = pkgs.writeText "my.cnf" ''
+    [galera]
+    binlog_format=ROW
+    default_storage_engine=InnoDB
+    innodb_doublewrite=1
+    wsrep_cluster_address=gcomm://acer-tp,alexrpi4tp,oracle
+    wsrep_cluster_name=galera
+    wsrep_node_address=@TAILSCALE_IP@
+    wsrep_on=ON
+    wsrep_provider=${pkgs.mariadb-galera}/lib/galera/libgalera_smm.so
+    wsrep_sst_method=rsync
+
+    [mysqld]
+    datadir=${config.services.mysql.settings.mysqld.datadir}
+    port=${builtins.toString config.services.mysql.settings.mysqld.port}
+  '';
 in
 {
+  imports = [ ../acme ];
+
   users.extraUsers."vaultwarden" = {
     isSystemUser = true;
     group = "vaultwarden";
-    extraGroups = [ "acme" ];
+    extraGroups = [ config.security.acme.certs."${domainName}".group ];
   };
+
   users.extraGroups."vaultwarden" = { };
   age.secrets."vaultwarden.env" = {
     file = ../../secrets/env_vaultwarden_${hostName}.age;
     owner = "vaultwarden";
     group = "vaultwarden";
-    mode = "600";
-  };
-  age.secrets."${ddtokenName}" = {
-    file = ../../secrets/${ddtokenName}.age;
-    owner = "acme";
-    group = "acme";
     mode = "600";
   };
   environment.systemPackages = with pkgs; [
@@ -32,18 +45,32 @@ in
   services.mysql = {
     enable = true;
     package = pkgs.mariadb;
-    settings.galera = {
-      wsrep_provider = "${pkgs.mariadb-galera}/lib/galera/libgalera_smm.so";
-      wsrep_cluster_address = "gcomm://acer-tp,alexrpi4tp,oracle";
-      binlog_format = "ROW";
-      wsrep_on = "ON";
-      default_storage_engine = "InnoDB";
-      innodb_doublewrite = 1;
-      wsrep_cluster_name = "galera";
-      wsrep_node_address = userConfig.tsAddress;
-      wsrep_sst_method = "rsync";
-    };
+    configFile = myCnfPath;
+    # settings.galera = {
+    #   wsrep_provider = "${pkgs.mariadb-galera}/lib/galera/libgalera_smm.so";
+    #   wsrep_cluster_address = "gcomm://acer-tp,alexrpi4tp,oracle";
+    #   binlog_format = "ROW";
+    #   wsrep_on = "ON";
+    #   default_storage_engine = "InnoDB";
+    #   innodb_doublewrite = 1;
+    #   wsrep_cluster_name = "galera";
+    #   wsrep_node_address = userConfig.tsAddress;
+    #   wsrep_sst_method = "rsync";
+    # };
   };
+  systemd.services.mysql-ip-set = {
+    serviceConfig.type = "oneshot";
+    requiredBy = [ "mysql.service" ];
+    before = [ "mysql.service" ];
+    requires = [ "tailscaled.service" ];
+    path = with pkgs; [ tailscale gnused coreutils ];
+    script = ''
+      cp ${myCnfFile} ${myCnfPath}
+      sed -i "s/@TAILSCALE_IP@/$(tailscale ip | head -1)/" ${myCnfPath}
+    '';
+  };
+  systemd.services.mysql.requires = [ "mysql-ip-set.service" ];
+  systemd.services.mysql.after = [ "mysql-ip-set.service" ];
   systemd.services.mysql.path = with pkgs; [
     mariadb
     bash
@@ -61,18 +88,6 @@ in
     which
   ];
 
-  security.acme = {
-    acceptTerms = true;
-    defaults.email = "alexlee800121@gmail.com";
-  };
-  security.acme.certs."${domainName}" = {
-    dnsProvider = "duckdns";
-    dnsPropagationCheck = true;
-    domain = domainName;
-    extraDomainNames = [ "*.${domainName}" ];
-    credentialFiles."DUCKDNS_TOKEN_FILE" = config.age.secrets."${ddtokenName}".path;
-    credentialFiles."DUCKDNS_PROPAGATION_TIMEOUT_FILE" = pkgs.writeText "dd_prop_timeout" "600";
-  };
   services.caddy.enable = true;
   services.caddy.virtualHosts."vaultwarden.${domainName}" = {
     useACMEHost = domainName;
