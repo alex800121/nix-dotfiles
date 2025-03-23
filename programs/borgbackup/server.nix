@@ -1,8 +1,8 @@
 { config, ... }:
 let inherit (config.networking) hostName; in {
   services.borgbackup.repos."vaultwarden".path = "/var/lib/borgbackup/vaultwarden";
-  services.borgbackup.repos."vaultwarden".user = "vaultwarden";
-  services.borgbackup.repos."vaultwarden".group = "vaultwarden";
+  # services.borgbackup.repos."vaultwarden".user = "vaultwarden";
+  # services.borgbackup.repos."vaultwarden".group = "vaultwarden";
   services.borgbackup.repos."vaultwarden".quota = "50G";
   services.borgbackup.repos."vaultwarden".authorizedKeys = [
     (builtins.readFile ../../secrets/ssh_host_borgbackup_vaultwarden_${hostName}.pub)
