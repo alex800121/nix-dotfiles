@@ -109,11 +109,16 @@ in
     '';
   };
 
+  systemd.services.vaultwarden.requires = ["mysql.service"];
+  systemd.services.vaultwarden.after = ["mysql.service"];
   services.vaultwarden.enable = true;
+  services.vaultwarden.dbBackend = "mysql";
   services.vaultwarden.environmentFile = config.age.secrets."vaultwarden.env".path;
-  services.vaultwarden.backupDir = "/var/backup/vaultwarden";
+  # services.vaultwarden.backupDir = "/var/backup/vaultwarden";
   services.vaultwarden.config = {
     ROCKET_ADDRESS = "127.0.0.1";
     ROCKET_PORT = "8000";
+    DATABASE_URL = "mysql://vaultwarden@localhost:${builtins.toString port}/vaultwarden";
   };
 }
+
