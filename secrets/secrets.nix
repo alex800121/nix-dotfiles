@@ -13,6 +13,8 @@ let
   oracle = [ oracle-user oracle-system ];
 in
 {
+  "ssh_host_borgbackup_acer-tp_vaultwarden_db_alexrpi4tp.age".publicKeys = alexrpi4tp;
+  "ssh_host_borgbackup_oracle_vaultwarden_db_alexrpi4tp.age".publicKeys = alexrpi4tp;
   "ssh_host_borgbackup_acer-tp_vaultwarden_alexrpi4tp.age".publicKeys = alexrpi4tp;
   "ssh_host_borgbackup_oracle_vaultwarden_alexrpi4tp.age".publicKeys = alexrpi4tp;
   "passphrase_borgbackup_vaultwarden_alexrpi4tp.age".publicKeys = alexrpi4tp;
