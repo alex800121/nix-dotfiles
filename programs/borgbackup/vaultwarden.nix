@@ -1,14 +1,12 @@
 serverName: { config, lib, ... }:
 let
   inherit (config.networking) hostName;
-  jobName = "vaultwarden";
   passphrase = "passphrase_borgbackup_vaultwarden_${hostName}";
   sshHostKey = "ssh_host_borgbackup_${serverName}_vaultwarden_${hostName}";
   userName = config.users.users.vaultwarden.name;
   groupName = config.users.groups.vaultwarden.name;
 in
 {
-  # systemd.services."borgbackup-job-${jobName}".serviceConfig.SetCredentialEncrypted = setCred;
   users.users.vaultwarden.createHome = true;
   users.users.vaultwarden.home = "/home/vaultwarden";
   age.secrets.${passphrase} = {
@@ -23,7 +21,7 @@ in
     group = groupName;
     mode = "600";
   };
-  services.borgbackup.jobs."${jobName}-${serverName}" = {
+  services.borgbackup.jobs."vaultwarden-${serverName}" = {
     user = userName;
     group = groupName;
     repo = "borg@${serverName}:.";
