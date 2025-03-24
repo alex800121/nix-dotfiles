@@ -29,7 +29,8 @@ let
         group = dbGroupName;
         repo = "borg@${serverName}:.";
         doInit = true;
-        dumpCommand = pkgs.writeText "dbbackup.sh" ''
+        dumpCommand = pkgs.writeScript "dbbackup.sh" ''
+          ${pkgs.mariadb}/bin/mariadb-backup --user=mysql --backup --stream=xbstream
         '';
         encryption = {
           mode = "repokey";
@@ -47,8 +48,8 @@ let
         };
       };
       services.borgbackup.jobs."vaultwarden-${serverName}" = {
-        user = "vaultwarden";
-        group = "vaultwarden";
+        user = userName;
+        group = groupName;
         repo = "borg@${serverName}:.";
         paths = [ "/var/lib/vaultwarden" ];
         doInit = true;
@@ -75,6 +76,7 @@ lib.foldl'
   users.extraUsers."${dbUserName}" = {
     createHome = true;
     home = "/home/${dbUserName}";
+    extraGroups = [ groupName ];
   };
   users.extraUsers."${userName}" = {
     createHome = true;
@@ -84,7 +86,7 @@ lib.foldl'
     file = ../../secrets/${passphrase}.age;
     owner = userName;
     group = groupName;
-    mode = "600";
+    mode = "660";
   };
 }
   servers
