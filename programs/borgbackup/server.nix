@@ -8,12 +8,11 @@ let
         quota = "50G";
         authorizedKeys =
           lib.concatMap
-            (map (clientName:
+            (clientName:
               [
                 (builtins.readFile ../../secrets/ssh_host_borgbackup_${hostName}_vaultwarden_${clientName}.pub)
                 (builtins.readFile ../../secrets/ssh_host_borgbackup_${hostName}_vaultwarden_db_${clientName}.pub)
               ]
-            )
             )
             clients;
         allowSubRepos = false;
