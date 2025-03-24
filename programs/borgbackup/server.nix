@@ -7,9 +7,13 @@ let
         path = "/var/lib/borgbackup/${repoName}";
         quota = "50G";
         authorizedKeys =
-          lib.map
-            (clientName:
-              (builtins.readFile ../../secrets/ssh_host_borgbackup_${hostName}_vaultwarden_${clientName}.pub)
+          lib.concatMap
+            (map (clientName:
+              [
+                (builtins.readFile ../../secrets/ssh_host_borgbackup_${hostName}_vaultwarden_${clientName}.pub)
+                (builtins.readFile ../../secrets/ssh_host_borgbackup_${hostName}_vaultwarden_db_${clientName}.pub)
+              ]
+            )
             )
             clients;
         allowSubRepos = false;
