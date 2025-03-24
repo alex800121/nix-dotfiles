@@ -2,7 +2,7 @@ servers: { config, lib, pkgs, ... }:
 let
   inherit (config.networking) hostName;
   passphrase = "passphrase_borgbackup_vaultwarden_${hostName}";
-  userName = "vaultwarden-backup";
+  userName = "vaultwarden";
   groupName = "vaultwarden";
   mergeServers = serverName:
     let
@@ -64,10 +64,8 @@ lib.foldl'
   (acc: serverName: lib.recursiveUpdate acc (mergeServers serverName))
 {
   users.extraUsers."${userName}" = {
-    isSystemUser = true;
     createHome = true;
     home = "/home/${userName}";
-    group = groupName;
   };
   age.secrets."${passphrase}" = {
     file = ../../secrets/${passphrase}.age;
