@@ -49,7 +49,25 @@ in
     enable = true;
     package = pkgs.mariadb;
     configFile = myCnfPath;
+    ensureUsers = [
+      {
+        name = "vaultwarden";
+        ensurePermissions = {
+          "vaultwarden.*" = "ALL PRIVILEGES";
+        };
+      }
+    ];
+    ensureDatabases = [ "vaultwarden" ];
+    initialDatabases = [
+      {
+        name = "vaultwarden";
+        schema = pkgs.writeText "vaultwarden.sql" ''
+          ALTER DATABASE vaultwarden CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+        '';
+      }
+    ];
   };
+
   systemd.services.mysql-ip-set = {
     serviceConfig.type = "oneshot";
     requiredBy = [ "mysql.service" ];
