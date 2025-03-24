@@ -12,7 +12,7 @@ let
               (builtins.readFile ../../secrets/ssh_host_borgbackup_${hostName}_vaultwarden_${clientName}.pub)
             )
             clients;
-        allowSubRepos = subRepo;
+        allowSubRepos = false;
       };
     };
 in

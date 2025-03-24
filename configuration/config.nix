@@ -28,7 +28,6 @@
       borgbackupRepo = [
         {
           repoName = "vaultwarden";
-          subRepo = true;
           clients = [ "alexrpi4tp" ];
         }
       ];
@@ -90,7 +89,6 @@
       borgbackupRepo = [
         {
           repoName = "vaultwarden";
-          subRepo = true;
           clients = [ "alexrpi4tp" ];
         }
       ];
