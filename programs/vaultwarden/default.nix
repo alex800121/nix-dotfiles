@@ -26,11 +26,8 @@ in
 {
   imports = [ ../acme ];
 
-  users.extraUsers."vaultwarden" = {
-    isSystemUser = true;
-    group = "vaultwarden";
-    # extraGroups = [ config.security.acme.certs."${domainName}".group ];
-  };
+  users.extraUsers."vaultwarden".isSystemUser = true;
+  users.extraUsers."vaultwarden".group = "vaultwarden";
 
   users.extraGroups."vaultwarden" = { };
   age.secrets."vaultwarden.env" = {
