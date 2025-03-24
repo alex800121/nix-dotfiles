@@ -1,12 +1,19 @@
-{ config, ... }:
-let inherit (config.networking) hostName; in {
-  services.borgbackup.repos."vaultwarden".path = "/var/lib/borgbackup/vaultwarden";
-  # services.borgbackup.repos."vaultwarden".user = "vaultwarden";
-  # services.borgbackup.repos."vaultwarden".group = "vaultwarden";
-  services.borgbackup.repos."vaultwarden".quota = "50G";
-  services.borgbackup.repos."vaultwarden".authorizedKeys = [
-    (builtins.readFile ../../secrets/ssh_host_borgbackup_vaultwarden_${hostName}.pub)
-  ];
-  services.borgbackup.repos."vaultwarden".allowSubRepos = false;
-  # services.borgbackup.repos."vaultwarden".allowSubRepos = true;
-}
+{ lib, userConfig, config, ... }:
+let
+  inherit (config.networking) hostName;
+  setRepo = { repoName, subRepo, clients }:
+    {
+      services.borgbackup.repos."${repoName}" = {
+        path = "/var/lib/borgbackup/${repoName}";
+        quota = "50G";
+        authorizedKeys =
+          lib.map
+            (clientName:
+              (builtins.readFile ../../secrets/ssh_host_borgbackup_${hostName}_vaultwarden_${clientName}.pub)
+            )
+            clients;
+        allowSubRepos = subRepo;
+      };
+    };
+in
+lib.attrsets.mergeAttrsList (lib.map setRepo userConfig.borgbackupRepo)

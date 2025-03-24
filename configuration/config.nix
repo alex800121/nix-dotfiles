@@ -25,6 +25,13 @@
       userName = "alex800121";
       fontSize = 11.5;
       autoLogin = true;
+      borgbackupRepo = [
+        {
+          repoName = "vaultwarden";
+          subRepo = true;
+          clients = [ "alexrpi4tp" ];
+        }
+      ];
     };
     extraModules = [
       ./oracle.nix
@@ -80,6 +87,13 @@
       autoLogin = true;
       url = "alexacer-tp";
       port = 31000;
+      borgbackupRepo = [
+        {
+          repoName = "vaultwarden";
+          subRepo = true;
+          clients = [ "alexrpi4tp" ];
+        }
+      ];
     };
     extraModules = [
       ./acer-tp.nix

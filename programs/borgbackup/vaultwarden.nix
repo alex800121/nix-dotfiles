@@ -1,10 +1,6 @@
 serverName: { config, lib, ... }:
 let
   inherit (config.networking) hostName;
-  # setCred = "ssh_host_borgbackup_vaultwarden:" + lib.strings.concatStrings
-  #   (lib.strings.splitString
-  #     "\n"
-  #     (builtins.readFile ../../secrets/ssh_host_borgbackup_vaultwarden-${hostName}));
   jobName = "vaultwarden";
   passphrase = "passphrase_borgbackup_vaultwarden_${hostName}";
   sshHostKey = "ssh_host_borgbackup_${serverName}_vaultwarden_${hostName}";
