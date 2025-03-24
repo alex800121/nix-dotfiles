@@ -1,7 +1,7 @@
 { lib, userConfig, config, ... }:
 let
   inherit (config.networking) hostName;
-  setRepo = { repoName, subRepo, clients }:
+  setRepo = { repoName, clients }:
     {
       services.borgbackup.repos."${repoName}" = {
         path = "/var/lib/borgbackup/${repoName}";
