@@ -1,8 +1,8 @@
 { inputs, pkgs, ... }:
 let
-  cfg = {
+  cfg0 = {
     matchConfig = {
-      Name = "enp0s20f0u1u4";
+      Name = "eth0";
     };
     networkConfig = {
       DHCP = true;
@@ -16,7 +16,6 @@ let
       AllMulticast = true;
     };
   };
-
   resolvedConf = ''
     [Resolve]
   '';
@@ -47,11 +46,13 @@ in
   networking.useNetworkd = true;
   systemd.network.enable = true;
 
-  systemd.network.wait-online.anyInterface = false;
+  systemd.network.wait-online.anyInterface = true;
+  boot.initrd.systemd.network.wait-online.anyInterface = true;
   systemd.network.wait-online.ignoredInterfaces = [ "wlp0s20f3" ];
 
-  systemd.network.networks."10-enp0s20f0u1u4" = cfg;
-  boot.initrd.systemd.network.networks."10-enp0s20f0u1u4" = cfg;
+  boot.kernelParams = [ "net.ifnames=0" ];
+  systemd.network.networks."10-eth0" = cfg0;
+  boot.initrd.systemd.network.networks."10-eth0" = cfg0;
 
   boot.initrd.luks.devices."enc".preLVM = true;
   boot.initrd.luks.devices."enc".allowDiscards = true;
