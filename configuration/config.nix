@@ -31,6 +31,11 @@
           clients = [ "alexrpi4tp" ];
         }
       ];
+      keepalived = {
+        priority = 100;
+        isMaster = true;
+        interface = "eth0";
+      };
     };
     extraModules = [
       ./oracle.nix

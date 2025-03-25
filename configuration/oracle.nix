@@ -37,6 +37,7 @@ in
       ../programs/borgbackup/server.nix
       ../programs/vaultwarden
       inputs.agenix.nixosModules.default
+      ../programs/keepalived
     ];
 
   # Use the systemd-boot EFI boot loader.
