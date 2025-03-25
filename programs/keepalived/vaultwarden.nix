@@ -1,0 +1,38 @@
+{ config, lib, userConfig, ... }:
+let
+  inherit (userConfig.keepalived) routerIds;
+  initPrio = 100;
+  buildInstance = n: id:
+    let ids = builtins.toString id; in {
+      services.keepalived.vrrpInstances."VW_${ids}" = {
+        priority = initPrio + n;
+        state = if n == 0 then "MASTER" else "BACKUP";
+        interface = "eth0";
+        virtualIps = [
+          {
+            addr = "192.168.50.${ids}/24";
+            label = "eth0:vw${ids}";
+          }
+        ];
+        virtualRouterId = id;
+      };
+      services.keepalived.vrrpInstances."VW_DB_${ids}" = {
+        priority = initPrio + n;
+        state = if n == 0 then "MASTER" else "BACKUP";
+        interface = "eth0";
+        virtualIps = [
+          {
+            addr = "192.168.51.${ids}/24";
+            label = "eth0:db${ids}";
+          }
+        ];
+        virtualRouterId = id + 100;
+      };
+    };
+in
+lib.foldl'
+  lib.recursiveUpdate
+{
+  services.keepalived.enable = true;
+}
+  (lib.imap0 buildInstance routerIds)

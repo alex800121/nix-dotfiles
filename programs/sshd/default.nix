@@ -1,18 +1,18 @@
 { userConfig, lib, ... }:
 let
-  inherit (userConfig) userName port;
+  inherit (userConfig) userName;
 in
 {
   programs.ssh = {
     startAgent = true;
-    extraConfig = ''
-      Host acer-tp-dd
-          Hostname alexacer-tp.duckdns.org
-          Port 31000
-      Host alexrpi4tp-dd
-          Hostname alexrpi4gate.duckdns.org
-          Port 30000
-    '';
+    # extraConfig = ''
+    #   Host acer-tp-dd
+    #       Hostname alexacer-tp.duckdns.org
+    #       Port 31000
+    #   Host alexrpi4tp-dd
+    #       Hostname alexrpi4gate.duckdns.org
+    #       Port 30000
+    # '';
   };
 
   # Enable the OpenSSH daemon.

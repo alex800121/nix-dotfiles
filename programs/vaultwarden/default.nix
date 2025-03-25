@@ -1,6 +1,7 @@
-{ pkgs, config, lib, ... }:
+{ pkgs, config, userConfig, lib, ... }:
 let
   inherit (config.networking) hostName;
+  masterDbIp = "192.168.51.${builtins.toString (lib.head userConfig.keepalived.routerIds)}";
   domainName = "alex${hostName}.duckdns.org";
   port = config.services.mysql.settings.mysqld.port;
   dataDir = config.services.mysql.settings.mysqld.datadir;
@@ -24,7 +25,10 @@ let
   '';
 in
 {
-  imports = [ ../acme ];
+  imports = [
+    ../acme
+    ../keepalived/vaultwarden.nix
+  ];
 
   users.extraUsers."vaultwarden".isSystemUser = true;
   users.extraUsers."vaultwarden".group = "vaultwarden";
@@ -115,7 +119,7 @@ in
   services.vaultwarden.config = {
     ROCKET_ADDRESS = "127.0.0.1";
     ROCKET_PORT = "8000";
-    DATABASE_URL = "mysql://vaultwarden@localhost:${builtins.toString port}/vaultwarden";
+    DATABASE_URL = "mysql://vaultwarden@${masterDbIp}:${builtins.toString port}/vaultwarden";
     ENABLE_WEBSOCKET = true;
     PUSH_ENABLED = true;
     PUSH_RELAY_URI = "https://api.bitwarden.com";

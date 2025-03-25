@@ -1,22 +1,4 @@
 {
-  oracle2 = {
-    system = "aarch64-linux";
-    kernelVersion = "6_12";
-    userConfig = {
-      hostName = "oracle2";
-      userName = "alex800121";
-      fontSize = 11.5;
-      autoLogin = true;
-    };
-    extraModules = [
-      ./oracle.nix
-      ../hardware/oracle2.nix
-    ];
-    hmModules = [
-      ../home/minimal.nix
-      ../programs/nvim/minimal.nix
-    ];
-  };
   oracle = {
     system = "aarch64-linux";
     kernelVersion = "6_12";
@@ -31,11 +13,7 @@
           clients = [ "alexrpi4tp" ];
         }
       ];
-      keepalived = {
-        priority = 100;
-        isMaster = true;
-        interface = "eth0";
-      };
+      keepalived.routerIds = [1 2 3];
     };
     extraModules = [
       ./oracle.nix
@@ -71,7 +49,7 @@
       fontSize = 11.5;
       autoLogin = true;
       url = "alexrpi4gate";
-      port = 30000;
+      keepalived.routerIds = [2 3 1];
     };
     extraModules = [
       ./alexrpi4tp.nix
@@ -90,13 +68,13 @@
       fontSize = 16;
       autoLogin = true;
       url = "alexacer-tp";
-      port = 31000;
       borgbackupRepo = [
         {
           repoName = "vaultwarden";
           clients = [ "alexrpi4tp" ];
         }
       ];
+      keepalived.routerIds = [3 2 1];
     };
     extraModules = [
       ./acer-tp.nix
@@ -115,7 +93,6 @@
         userName = "alex800121";
         fontSize = 12;
         autoLogin = false;
-        port = 32000;
         soundcardPciId = "c1:00.6";
       };
       extraModules = [
@@ -137,7 +114,6 @@
         userName = "alex800121";
         fontSize = 12;
         autoLogin = false;
-        port = 32000;
         soundcardPciId = "c1:00.6";
       };
       extraModules = [
