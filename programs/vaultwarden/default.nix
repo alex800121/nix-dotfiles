@@ -22,6 +22,7 @@ let
     [mysqld]
     datadir=${dataDir}
     port=${builtins.toString port}
+    bind_address=127.0.0.1
   '';
 in
 {
@@ -46,10 +47,17 @@ in
 
   # services.tailscale.permitCertUid = config.services.caddy.user;
 
+  networking.firewall.allowedTCPPorts = [ port ];
+
   services.mysql = {
     enable = true;
     package = pkgs.mariadb;
     configFile = myCnfPath;
+    # initialScript = pkgs.writeText "init.sql" ''
+    #   CREATE USER IF NOT EXISTS 'vaultwarden'@'192.168.51.%' IDENTIFIED WITH unix_socket;
+    #   GRANT ALL PRIVILEGES ON vaultwarden.* TO 'vaultwarden'@'192.168.51.%';
+    #   FLUSH PRIVILEGES;
+    # '';
     ensureUsers = [
       {
         name = "vaultwarden";
@@ -119,7 +127,7 @@ in
   services.vaultwarden.config = {
     ROCKET_ADDRESS = "127.0.0.1";
     ROCKET_PORT = "8000";
-    DATABASE_URL = "mysql://vaultwarden@${masterDbIp}:${builtins.toString port}/vaultwarden";
+    DATABASE_URL = "mysql://vaultwarden@localhost:${builtins.toString port}/vaultwarden";
     ENABLE_WEBSOCKET = true;
     PUSH_ENABLED = true;
     PUSH_RELAY_URI = "https://api.bitwarden.com";
