@@ -133,11 +133,14 @@ in
   networking.hostName = hostName;
   # networking.firewall.enable = false;
   networking.networkmanager.enable = false;
+
+
+  boot.kernelParams = [ "net.ifnames=0" ];
   networking.useNetworkd = true;
   systemd.network.enable = true;
-  systemd.network.networks."10-end0" = {
+  systemd.network.networks."10-eth0" = {
     matchConfig = {
-      Name = "end0";
+      Name = "eth0";
     };
     networkConfig = {
       DHCP = true;
