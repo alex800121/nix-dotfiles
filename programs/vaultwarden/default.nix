@@ -2,6 +2,7 @@
 let
   inherit (config.networking) hostName;
   masterDbIp = "192.168.51.${builtins.toString (lib.head userConfig.keepalived.routerIds)}";
+  masterIp = "192.168.50.${builtins.toString (lib.head userConfig.keepalived.routerIds)}";
   domainName = "alex${hostName}.duckdns.org";
   port = config.services.mysql.settings.mysqld.port;
   dataDir = config.services.mysql.settings.mysqld.datadir;
@@ -114,7 +115,8 @@ in
     # useACMEHost = domainName;
     extraConfig = ''
       tls ${sslDir}/cert.pem ${sslDir}/key.pem
-      reverse_proxy http://localhost:${config.services.vaultwarden.config.ROCKET_PORT}
+      reverse_proxy http://${masterIp}:${config.services.vaultwarden.config.ROCKET_PORT}
+      # reverse_proxy http://localhost:${config.services.vaultwarden.config.ROCKET_PORT}
     '';
   };
 
@@ -125,7 +127,8 @@ in
   services.vaultwarden.environmentFile = config.age.secrets."vaultwarden.env".path;
   # services.vaultwarden.backupDir = "/var/backup/vaultwarden";
   services.vaultwarden.config = {
-    ROCKET_ADDRESS = "127.0.0.1";
+    ROCKET_ADDRESS = masterIp;
+    # ROCKET_ADDRESS = "127.0.0.1";
     ROCKET_PORT = "8000";
     DATABASE_URL = "mysql://vaultwarden@localhost:${builtins.toString port}/vaultwarden";
     ENABLE_WEBSOCKET = true;
