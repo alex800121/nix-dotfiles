@@ -1,11 +1,13 @@
 { config, lib, userConfig, ... }:
 let
   inherit (userConfig.keepalived) routerIds;
+  master = "192.168.53.${builtins.toString (lib.head routerIds)}";
+  peers = lib.map (x: "192.168.53.${builtins.toString x}") (lib.tail routerIds);
   initPrio = 100;
   buildInstance = n: id:
     let ids = builtins.toString id; in {
       services.keepalived.vrrpInstances."VW_${ids}" = {
-        priority = initPrio + n;
+        priority = initPrio - n;
         state = if n == 0 then "MASTER" else "BACKUP";
         interface = "vbr1";
         virtualIps = [
@@ -15,9 +17,11 @@ let
           }
         ];
         virtualRouterId = id;
+        unicastSrcIp = master;
+        unicastPeers = peers;
       };
       services.keepalived.vrrpInstances."VW_DB_${ids}" = {
-        priority = initPrio + n;
+        priority = initPrio - n;
         state = if n == 0 then "MASTER" else "BACKUP";
         interface = "vbr1";
         virtualIps = [
@@ -27,11 +31,8 @@ let
           }
         ];
         virtualRouterId = id + 100;
-        # unicastPeers = [
-        #   "100.99.202.117"
-        #   "100.112.159.45"
-        #   "100.111.136.66"
-        # ];
+        unicastSrcIp = master;
+        unicastPeers = peers;
       };
     };
 in

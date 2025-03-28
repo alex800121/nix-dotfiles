@@ -73,6 +73,24 @@ in
       # 7236
     ]; # For device discovery
   };
+  networking.networkmanager.enable = false;
+  boot.kernelParams = [ "net.ifnames=0" ];
+  networking.useNetworkd = true;
+  systemd.network.enable = true;
+  systemd.network.networks."10-eth0" = {
+    matchConfig = {
+      Name = "eth0";
+    };
+    networkConfig = {
+      DHCP = true;
+      MulticastDNS = true;
+      LLMNR = true;
+    };
+    linkConfig = {
+      Multicast = true;
+      AllMulticast = true;
+    };
+  };
   services.resolved = {
     enable = true;
     llmnr = "true";
@@ -91,7 +109,7 @@ in
   networking = {
     inherit hostName; # Define your hostname.
     networkmanager = {
-      enable = lib.mkDefault true;
+      # enable = lib.mkDefault true;
       dns = "systemd-resolved";
       connectionConfig = {
         "connection.mdns" = 1;
@@ -110,7 +128,6 @@ in
   };
 
   # boot.supportedFilesystems = [ "btrfs" "vfat" ];
-  boot.kernelParams = [ "net.ifnames=0" ];
   boot.initrd = {
     availableKernelModules = [ "virtio-pci" ];
     systemd.users.root.shell = "/bin/sh";
