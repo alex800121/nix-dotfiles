@@ -7,11 +7,11 @@ let
       services.keepalived.vrrpInstances."VW_${ids}" = {
         priority = initPrio + n;
         state = if n == 0 then "MASTER" else "BACKUP";
-        interface = "eth0";
+        interface = "vxlan1";
         virtualIps = [
           {
             addr = "192.168.50.${ids}/24";
-            label = "eth0:vw${ids}";
+            label = "vxlan1:vw${ids}";
           }
         ];
         virtualRouterId = id;
@@ -19,19 +19,19 @@ let
       services.keepalived.vrrpInstances."VW_DB_${ids}" = {
         priority = initPrio + n;
         state = if n == 0 then "MASTER" else "BACKUP";
-        interface = "eth0";
+        interface = "vxlan1";
         virtualIps = [
           {
             addr = "192.168.51.${ids}/24";
-            label = "eth0:db${ids}";
+            label = "vxlan1:db${ids}";
           }
         ];
         virtualRouterId = id + 100;
-        unicastPeers = [
-          "100.99.202.117"
-          "100.112.159.45"
-          "100.111.136.66"
-        ];
+        # unicastPeers = [
+        #   "100.99.202.117"
+        #   "100.112.159.45"
+        #   "100.111.136.66"
+        # ];
       };
     };
 in
