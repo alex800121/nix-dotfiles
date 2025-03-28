@@ -110,14 +110,14 @@ in
     config.security.acme.certs."${domainName}".group
     config.security.acme.certs."${gateName}".group
   ];
-  services.caddy.virtualHosts."vw.${gateName}" = {
-    useACMEHost = gateName;
+  services.caddy.virtualHosts."vaultwarden.${domainName}" = {
+    useACMEHost = domainName;
     extraConfig = ''
       reverse_proxy http://${config.services.vaultwarden.config.ROCKET_ADDRESS}:${config.services.vaultwarden.config.ROCKET_PORT}
     '';
   };
-  services.caddy.virtualHosts."vaultwarden.${domainName}" = {
-    useACMEHost = domainName;
+  services.caddy.virtualHosts."vw.${gateName}" = {
+    useACMEHost = gateName;
     extraConfig = ''
       reverse_proxy http://${config.services.vaultwarden.config.ROCKET_ADDRESS}:${config.services.vaultwarden.config.ROCKET_PORT}
     '';
