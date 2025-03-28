@@ -1,12 +1,12 @@
 { pkgs, config, userConfig, lib, ... }:
 let
   inherit (config.networking) hostName;
-  masterDbIp = "192.168.51.${builtins.toString (lib.head userConfig.keepalived.routerIds)}";
-  masterIp = "192.168.50.${builtins.toString (lib.head userConfig.keepalived.routerIds)}";
+  # masterDbIp = "192.168.51.${builtins.toString (lib.head userConfig.keepalived.routerIds)}";
+  # masterIp = "192.168.50.${builtins.toString (lib.head userConfig.keepalived.routerIds)}";
   domainName = "alex${hostName}.duckdns.org";
+  gateName = "alexgate.duckdns.org";
   port = config.services.mysql.settings.mysqld.port;
   dataDir = config.services.mysql.settings.mysqld.datadir;
-  sslDir = config.security.acme.certs."${domainName}".directory;
   myCnfPath = "/var/lib/my.cnf";
   myCnfFile = pkgs.writeText "my.cnf" ''
     [galera]
@@ -29,6 +29,7 @@ in
 {
   imports = [
     ../acme
+    ../acme/gate.nix
     ../keepalived/vaultwarden.nix
   ];
 
@@ -54,11 +55,6 @@ in
     enable = true;
     package = pkgs.mariadb;
     configFile = myCnfPath;
-    # initialScript = pkgs.writeText "init.sql" ''
-    #   CREATE USER IF NOT EXISTS 'vaultwarden'@'192.168.51.%' IDENTIFIED WITH unix_socket;
-    #   GRANT ALL PRIVILEGES ON vaultwarden.* TO 'vaultwarden'@'192.168.51.%';
-    #   FLUSH PRIVILEGES;
-    # '';
     ensureUsers = [
       {
         name = "vaultwarden";
@@ -110,13 +106,20 @@ in
   ];
 
   services.caddy.enable = true;
-  users.users."${config.services.caddy.user}".extraGroups = [ config.security.acme.certs."${domainName}".group ];
-  services.caddy.virtualHosts."vaultwarden.${domainName}" = {
-    # useACMEHost = domainName;
+  users.users."${config.services.caddy.user}".extraGroups = [
+    config.security.acme.certs."${domainName}".group
+    config.security.acme.certs."${gateName}".group
+  ];
+  services.caddy.virtualHosts."vw.${gateName}" = {
+    useACMEHost = gateName;
     extraConfig = ''
-      tls ${sslDir}/cert.pem ${sslDir}/key.pem
-      reverse_proxy http://${masterIp}:${config.services.vaultwarden.config.ROCKET_PORT}
-      # reverse_proxy http://localhost:${config.services.vaultwarden.config.ROCKET_PORT}
+      reverse_proxy http://${config.services.vaultwarden.config.ROCKET_ADDRESS}:${config.services.vaultwarden.config.ROCKET_PORT}
+    '';
+  };
+  services.caddy.virtualHosts."vaultwarden.${domainName}" = {
+    useACMEHost = domainName;
+    extraConfig = ''
+      reverse_proxy http://${config.services.vaultwarden.config.ROCKET_ADDRESS}:${config.services.vaultwarden.config.ROCKET_PORT}
     '';
   };
 
@@ -125,17 +128,15 @@ in
   services.vaultwarden.enable = true;
   services.vaultwarden.dbBackend = "mysql";
   services.vaultwarden.environmentFile = config.age.secrets."vaultwarden.env".path;
-  # services.vaultwarden.backupDir = "/var/backup/vaultwarden";
   services.vaultwarden.config = {
-    ROCKET_ADDRESS = masterIp;
-    # ROCKET_ADDRESS = "127.0.0.1";
+    ROCKET_ADDRESS = "127.0.0.1";
     ROCKET_PORT = "8000";
     DATABASE_URL = "mysql://vaultwarden@localhost:${builtins.toString port}/vaultwarden";
     ENABLE_WEBSOCKET = true;
     PUSH_ENABLED = true;
     PUSH_RELAY_URI = "https://api.bitwarden.com";
     PUSH_IDENTITY_URI = "https://identity.bitwarden.com";
-    DOMAIN = "https://vaultwarden.${domainName}";
+    DOMAIN = "https://vw.${gateName}";
   };
 }
 

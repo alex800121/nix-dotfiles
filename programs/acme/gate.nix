@@ -1,7 +1,7 @@
 { pkgs, config, ... }:
 let
   inherit (config.networking) hostName;
-  domainName = "alex${hostName}.duckdns.org";
+  gateName = "alexgate.duckdns.org";
   ddtokenName = "ddtoken_${hostName}";
 in
 {
@@ -15,12 +15,12 @@ in
     acceptTerms = true;
     defaults.email = "alexlee800121@gmail.com";
   };
-  security.acme.certs."${domainName}" = {
+  security.acme.certs."${gateName}" = {
     dnsProvider = "duckdns";
     dnsResolver = "8.8.8.8:53";
     dnsPropagationCheck = true;
-    domain = domainName;
-    extraDomainNames = [ "*.${domainName}" ];
+    domain = gateName;
+    extraDomainNames = [ "*.${gateName}" ];
     credentialFiles."DUCKDNS_TOKEN_FILE" = config.age.secrets."${ddtokenName}".path;
     credentialFiles."DUCKDNS_PROPAGATION_TIMEOUT_FILE" = pkgs.writeText "dd_prop_timeout" "600";
   };
