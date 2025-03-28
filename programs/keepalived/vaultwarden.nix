@@ -39,5 +39,6 @@ lib.foldl'
   lib.recursiveUpdate
 {
   services.keepalived.enable = true;
+  services.keepalived.openFirewall = true;
 }
   (lib.imap0 buildInstance routerIds)
