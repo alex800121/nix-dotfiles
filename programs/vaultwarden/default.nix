@@ -7,7 +7,6 @@ let
   domainName = "alex${hostName}.duckdns.org";
   gateName = "alexgate.duckdns.org";
   port = config.services.mysql.settings.mysqld.port;
-  dataDir = config.services.mysql.settings.mysqld.datadir;
 in
 {
   imports = [
@@ -31,8 +30,7 @@ in
   ];
 
   # services.tailscale.permitCertUid = config.services.caddy.user;
-
-  networking.firewall.allowedTCPPorts = [ port ];
+  # networking.firewall.allowedTCPPorts = [ port ];
 
   services.mysql = {
     enable = true;
@@ -120,7 +118,7 @@ in
   services.vaultwarden.config = {
     ROCKET_ADDRESS = "127.0.0.1";
     ROCKET_PORT = "8000";
-    DATABASE_URL = "mysql://vaultwarden@localhost:${builtins.toString port}/vaultwarden";
+    DATABASE_URL = "mysql://vaultwarden@localhost:${toString port}/vaultwarden";
     ENABLE_WEBSOCKET = true;
     PUSH_ENABLED = true;
     PUSH_RELAY_URI = "https://api.bitwarden.com";
