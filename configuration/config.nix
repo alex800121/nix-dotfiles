@@ -13,7 +13,7 @@
           clients = [ "alexrpi4tp" ];
         }
       ];
-      keepalived.routerId = 1;
+      keepalived.routerIds = [ 1 2 3 ];
     };
     extraModules = [
       ./oracle.nix
@@ -49,7 +49,7 @@
       fontSize = 11.5;
       autoLogin = true;
       url = "alexrpi4gate";
-      keepalived.routerId = 2;
+      keepalived.routerIds = [ 2 3 1 ];
     };
     extraModules = [
       ./alexrpi4tp.nix
@@ -74,7 +74,7 @@
           clients = [ "alexrpi4tp" ];
         }
       ];
-      keepalived.routerId = 3;
+      keepalived.routerIds = [ 3 2 1 ];
     };
     extraModules = [
       ./acer-tp.nix

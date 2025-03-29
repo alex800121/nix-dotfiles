@@ -1,13 +1,16 @@
 { config, lib, userConfig, ... }:
 let
   inherit (userConfig.keepalived) routerIds;
+  inherit (builtins) toString;
   master = lib.head routerIds;
   peers = lib.tail routerIds;
-  masterIp = "192.168.53.${builtins.toString master}";
-  peersIp = lib.map (x: "192.168.53.${builtins.toString x}") peers;
+  masterIp = "192.168.60.${toString master}";
+  peersIp = lib.map (x: "192.168.60.${toString x}") peers;
+  masterTsIp = "100.64.0.${toString master}";
+  peersTsIp = lib.map (x: "100.64.0.${toString x}") peers;
   initPrio = 100;
   buildInstance = n: id:
-    let ids = builtins.toString id; in {
+    let ids = toString id; in {
       services.keepalived.vrrpInstances."VW_${ids}" = {
         priority = initPrio - n;
         state = if n == 0 then "MASTER" else "BACKUP";
@@ -33,14 +36,14 @@ let
           }
         ];
         virtualRouterId = id + 100;
-        unicastSrcIp = masterIp;
-        unicastPeers = peersIp;
+        # unicastSrcIp = masterIp;
+        # unicastPeers = peersIp;
       };
     };
   buildVxlan = peer:
     let
       networkId = lib.foldl' (acc: x: acc + (x * 2)) 0 (lib.sort [ peer master ]);
-      name = "vxlan${builtins.toString networkId}";
+      name = "vxlan${toString networkId}";
     in
     {
       systemd.network.netdevs."20-${name}" = { 
@@ -50,8 +53,8 @@ let
         };
         vxlanConfig = {
           VNI = networkId;
-          # Remote = "192.168.53.${peer}";
-          # Local = "192.168.53.${master}";
+          Remote = peersTsIp;
+          Local = masterTsIp;
           Group = "224.0.0.1";
           MacLearning = true;
           DestinationPort = 4789;
@@ -73,7 +76,7 @@ lib.foldl'
   systemd.network.networks."10-bridge1" = {
     matchConfig.Name = "bridge1";
     networkConfig = {
-      Address = ""
+      Address = masterIp;
     };
   };
 }
