@@ -1,30 +1,13 @@
 { pkgs, config, userConfig, lib, ... }:
 let
   inherit (config.networking) hostName;
-  # masterDbIp = "192.168.51.${builtins.toString (lib.head userConfig.keepalived.routerIds)}";
-  # masterIp = "192.168.50.${builtins.toString (lib.head userConfig.keepalived.routerIds)}";
+  inherit (builtins) toString;
+  master = lib.head userConfig.keepalived.routerIds;
+  masterTsIp = "100.64.0.${toString master}";
   domainName = "alex${hostName}.duckdns.org";
   gateName = "alexgate.duckdns.org";
   port = config.services.mysql.settings.mysqld.port;
   dataDir = config.services.mysql.settings.mysqld.datadir;
-  myCnfPath = "/var/lib/my.cnf";
-  myCnfFile = pkgs.writeText "my.cnf" ''
-    [galera]
-    binlog_format=ROW
-    default_storage_engine=InnoDB
-    innodb_doublewrite=1
-    wsrep_cluster_address=gcomm://acer-tp,alexrpi4tp,oracle
-    wsrep_cluster_name=galera
-    wsrep_node_address=@TAILSCALE_IP@
-    wsrep_on=ON
-    wsrep_provider=${pkgs.mariadb-galera}/lib/galera/libgalera_smm.so
-    wsrep_sst_method=rsync
-
-    [mysqld]
-    datadir=${dataDir}
-    port=${builtins.toString port}
-    bind_address=127.0.0.1
-  '';
 in
 {
   imports = [
@@ -54,7 +37,6 @@ in
   services.mysql = {
     enable = true;
     package = pkgs.mariadb;
-    configFile = myCnfPath;
     ensureUsers = [
       {
         name = "vaultwarden";
@@ -72,24 +54,26 @@ in
         '';
       }
     ];
+    settings = {
+      galera = {
+        binlog_format = "ROW";
+        default_storage_engine = "InnoDB";
+        innodb_doublewrite = 1;
+        wsrep_cluster_address = "gcomm://acer-tp,alexrpi4tp,oracle";
+        wsrep_cluster_name = "galera";
+        wsrep_node_address = masterTsIp;
+        wsrep_on = "ON";
+        wsrep_provider = "${pkgs.mariadb-galera}/lib/galera/libgalera_smm.so";
+        wsrep_sst_method = "rsync";
+      };
+      mysqld = {
+        bind_address = "127.0.0.1";
+      };
+    };
   };
-
-  systemd.services.mysql-ip-set = {
-    serviceConfig.type = "oneshot";
-    requiredBy = [ "mysql.service" ];
-    before = [ "mysql.service" ];
-    wantedBy = [ "mysql.service" ];
-    requires = [ "tailscaled.service" ];
-    wants = [ "tailscaled.service" ];
-    after = [ "tailscaled.service" ];
-    path = with pkgs; [ tailscale gnused coreutils ];
-    script = ''
-      cp ${myCnfFile} ${myCnfPath}
-      sed -i "s/@TAILSCALE_IP@/$(tailscale ip | head -1)/" ${myCnfPath}
-    '';
-  };
-  systemd.services.mysql.requires = [ "mysql-ip-set.service" ];
-  systemd.services.mysql.after = [ "mysql-ip-set.service" ];
+  systemd.services.mysql.wants = ["network-online.target" "tailscaled.service"];
+  systemd.services.mysql.after = ["network-online.target" "tailscaled.service"];
+  systemd.services.mysql.serviceConfig.Restart = lib.mkForce "on-failure";
   systemd.services.mysql.path = with pkgs; [
     mariadb
     bash
@@ -125,8 +109,11 @@ in
     '';
   };
 
+  systemd.services.vaultwarden.wantedBy = [ "mysql.service" ];
   systemd.services.vaultwarden.requires = [ "mysql.service" ];
   systemd.services.vaultwarden.after = [ "mysql.service" ];
+  systemd.services.vaultwarden.bindsTo = [ "mysql.service" ];
+  systemd.services.vaultwarden.serviceConfig.RestartSec = "10s";
   services.vaultwarden.enable = true;
   services.vaultwarden.dbBackend = "mysql";
   services.vaultwarden.environmentFile = config.age.secrets."vaultwarden.env".path;
