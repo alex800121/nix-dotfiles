@@ -69,8 +69,8 @@ in
       };
     };
   };
-  systemd.services.mysql.wants = ["network-online.target" "tailscaled.service"];
-  systemd.services.mysql.after = ["network-online.target" "tailscaled.service"];
+  systemd.services.mysql.wants = [ "network-online.target" "tailscaled.service" ];
+  systemd.services.mysql.after = [ "network-online.target" "tailscaled.service" ];
   systemd.services.mysql.serviceConfig.Restart = lib.mkForce "on-failure";
   systemd.services.mysql.path = with pkgs; [
     mariadb
@@ -125,6 +125,10 @@ in
     PUSH_IDENTITY_URI = "https://identity.bitwarden.com";
     DOMAIN = "https://vw.${gateName}";
   };
+
+  services.tailscale.extraSetFlags = [
+    "--advertise-routes=192.168.50.0/24"
+  ];
 }
 
 
