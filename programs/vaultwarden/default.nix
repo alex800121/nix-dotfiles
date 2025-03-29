@@ -127,7 +127,7 @@ in
   };
 
   services.tailscale.extraSetFlags = [
-    "--advertise-routes=192.168.50.0/24"
+    "--advertise-routes=192.168.101.0/24"
   ];
 }
 

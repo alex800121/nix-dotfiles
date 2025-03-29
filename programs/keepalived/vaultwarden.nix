@@ -2,6 +2,7 @@
 let
   inherit (userConfig.keepalived) routerIds;
   inherit (builtins) toString;
+  bridgeName = "bridge${toString master}";
   pow = x: y: if y <= 0 then 1 else (x * (pow x (y - 1)));
   master = lib.head routerIds;
   peers = lib.tail routerIds;
@@ -14,11 +15,11 @@ let
       services.keepalived.vrrpInstances."VW_${ids}" = {
         priority = initPrio - n;
         state = if n == 0 then "MASTER" else "BACKUP";
-        interface = "bridge1";
+        interface = bridgeName;
         virtualIps = [
           {
-            addr = "192.168.50.${ids}/24";
-            label = "bridge1:vw${ids}";
+            addr = "192.168.101.${ids}/24";
+            label = "${bridgeName}:vw${ids}";
           }
         ];
         virtualRouterId = id;
@@ -28,11 +29,11 @@ let
       # services.keepalived.vrrpInstances."VW_DB_${ids}" = {
       #   priority = initPrio - n;
       #   state = if n == 0 then "MASTER" else "BACKUP";
-      #   interface = "bridge1";
+      #   interface = "${bridgeName}";
       #   virtualIps = [
       #     {
       #       addr = "192.168.51.${ids}/24";
-      #       label = "bridge1:db${ids}";
+      #       label = "${bridgeName}:db${ids}";
       #     }
       #   ];
       #   virtualRouterId = id + 100;
@@ -64,7 +65,7 @@ let
         matchConfig = {
           Name = name;
         };
-        bridge = [ "bridge1" ];
+        bridge = [ bridgeName ];
       };
     };
 in
@@ -75,14 +76,14 @@ lib.foldl'
   {
     services.keepalived.enable = true;
     services.keepalived.openFirewall = true;
-    systemd.network.netdevs."10-bridge1" = {
+    systemd.network.netdevs."10-${bridgeName}" = {
       netdevConfig = {
-        Name = "bridge1";
+        Name = bridgeName;
         Kind = "bridge";
       };
     };
-    systemd.network.networks."10-bridge1" = {
-      matchConfig.Name = "bridge1";
+    systemd.network.networks."10-${bridgeName}" = {
+      matchConfig.Name = bridgeName;
       networkConfig = {
         Address = "${masterIp}/24";
         DHCP = "no";
