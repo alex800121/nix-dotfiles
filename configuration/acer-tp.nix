@@ -33,7 +33,7 @@ in
     ../programs/nix-ld
     ../programs/code-tunnel
     ../programs/sshd
-    ../programs/virt
+    # ../programs/virt
     # ../programs/duckdns
     # ../programs/duckdns/initrd.nix
     ../programs/tailscale/server.nix
