@@ -78,7 +78,9 @@ in
     serviceConfig.type = "oneshot";
     requiredBy = [ "mysql.service" ];
     before = [ "mysql.service" ];
+    wantedBy = [ "mysql.service" ];
     requires = [ "tailscaled.service" ];
+    wants = [ "tailscaled.service" ];
     after = [ "tailscaled.service" ];
     path = with pkgs; [ tailscale gnused coreutils ];
     script = ''
