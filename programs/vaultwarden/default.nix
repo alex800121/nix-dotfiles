@@ -123,7 +123,7 @@ in
     PUSH_ENABLED = true;
     PUSH_RELAY_URI = "https://api.bitwarden.com";
     PUSH_IDENTITY_URI = "https://identity.bitwarden.com";
-    DOMAIN = "https://vw.${gateName}";
+    DOMAIN = "https://vaultwarden.${domainName}";
   };
 
   services.tailscale.extraSetFlags = [

@@ -86,6 +86,7 @@ lib.foldl'
       networkConfig = {
         Address = "${masterIp}/24";
         DHCP = "no";
+        LinkLocalAddressing = false;
       };
     };
   }
