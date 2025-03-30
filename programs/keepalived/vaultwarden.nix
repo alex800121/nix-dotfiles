@@ -76,6 +76,31 @@ lib.foldl'
   {
     services.keepalived.enable = true;
     services.keepalived.openFirewall = true;
+    services.keepalived.extraGlobalDefs = ''
+       # delay for second set of gratuitous ARPs after transition to MASTER
+      vrrp_garp_master_delay 10    # seconds, default 5, 0 for no second set
+
+      # number of gratuitous ARP messages to send at a time after transition to MASTER
+      vrrp_garp_master_repeat 1    # default 5
+
+      # delay for second set of gratuitous ARPs after lower priority advert received when MASTER
+      vrrp_garp_lower_prio_delay 10
+
+      # number of gratuitous ARP messages to send at a time after lower priority advert received when MASTER
+      vrrp_garp_lower_prio_repeat 1
+
+      # minimum time interval for refreshing gratuitous ARPs while MASTER
+      vrrp_garp_master_refresh 60  # secs, default 0 (no refreshing)
+
+      # number of gratuitous ARP messages to send at a time while MASTER
+      vrrp_garp_master_refresh_repeat 2 # default 1
+
+      # Delay in ms between gratuitous ARP messages sent on an interface
+      vrrp_garp_interval 0.001          # decimal, seconds (resolution usecs). Default 0.
+
+      # Delay in ms between unsolicited NA messages sent on an interface
+      vrrp_gna_interval 0.000001
+    '';
     systemd.network.netdevs."10-${bridgeName}" = {
       netdevConfig = {
         Name = bridgeName;
