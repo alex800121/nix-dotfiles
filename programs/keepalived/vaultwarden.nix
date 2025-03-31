@@ -67,14 +67,14 @@ in
       Name = name;
     };
     address = [
-      masterIp
+      "${masterIp}/24"
     ];
     bridgeFDBs = map
       (x: {
         Destination = peerTsIp x;
         VNI = networkId;
         MACAddress = "00:00:00:00:00:00";
-        # OutgoingInterface = "tailscale0";
+        # OutgoingInterface = "eth0";
       })
       peers;
     # bridge = [ bridgeName ];
