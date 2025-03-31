@@ -22,7 +22,7 @@ let
         interface = name;
         virtualIps = [
           {
-            addr = "192.168.101.${ids}/24";
+            addr = "192.168.101.${ids}/32";
             label = "${name}:vw${ids}";
           }
         ];

@@ -1,8 +1,9 @@
 { pkgs, config, userConfig, lib, ... }:
 let
   inherit (config.networking) hostName;
+  inherit (userConfig.keepalived) routerIds;
   inherit (builtins) toString;
-  master = lib.head userConfig.keepalived.routerIds;
+  master = lib.head routerIds;
   masterTsIp = "100.64.0.${toString master}";
   domainName = "alex${hostName}.duckdns.org";
   port = config.services.mysql.settings.mysqld.port;
@@ -106,7 +107,7 @@ let
     };
 
     services.tailscale.extraSetFlags = [
-      "--advertise-routes=192.168.101.0/24"
+      "--advertise-routes=${lib.concatMapStringsSep "," (x: "192.168.101.${toString x}/32") routerIds}"
     ];
   };
 
