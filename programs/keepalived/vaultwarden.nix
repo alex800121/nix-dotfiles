@@ -30,6 +30,7 @@ let
       };
     };
   init = {
+    systemd.network.enable = true;
     systemd.network.netdevs."20-${name}" = {
       netdevConfig = {
         Name = name;

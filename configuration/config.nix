@@ -13,7 +13,7 @@
           clients = [ "alexrpi4tp" ];
         }
       ];
-      keepalived.routerIds = [ 4 2 3 ];
+      keepalived.routerIds = [ 4 5 2 3 ];
     };
     extraModules = [
       ./oracle.nix
@@ -49,7 +49,7 @@
       fontSize = 11.5;
       autoLogin = true;
       url = "alexrpi4gate";
-      keepalived.routerIds = [ 2 3 4 ];
+      keepalived.routerIds = [ 2 3 4 5 ];
     };
     extraModules = [
       ./alexrpi4tp.nix
@@ -74,7 +74,7 @@
           clients = [ "alexrpi4tp" ];
         }
       ];
-      keepalived.routerIds = [ 3 4 2 ];
+      keepalived.routerIds = [ 3 4 5 2 ];
     };
     extraModules = [
       ./acer-tp.nix
@@ -115,6 +115,7 @@
         fontSize = 12;
         autoLogin = false;
         soundcardPciId = "c1:00.6";
+        keepalived.routerIds = [ 5 2 3 4 ];
       };
       extraModules = [
         ./fw13.nix

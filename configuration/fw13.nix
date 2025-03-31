@@ -32,6 +32,8 @@ in
     ../programs/sshd
     ../programs/virt
     ../programs/tailscale/client.nix
+    inputs.agenix.nixosModules.default
+    ../programs/vaultwarden
   ];
 
   boot.initrd.luks.devices."enc".preLVM = true;

@@ -33,4 +33,4 @@ lib.foldl'
       credentialFiles."DUCKDNS_TTL_FILE" = pkgs.writeText "dd_ttl" "200";
     };
   })
-  init [ "acer-tp" "alexrpi4tp" "oracle" "gate" ]
+  init [ "acer-tp" "alexrpi4tp" "oracle" "fw13" ]

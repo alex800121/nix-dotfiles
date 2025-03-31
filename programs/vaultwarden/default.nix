@@ -10,7 +10,6 @@ let
   init = {
     imports = [
       ../acme
-      # ../acme/gate.nix
       ../keepalived/vaultwarden.nix
     ];
 
@@ -109,6 +108,10 @@ let
     services.tailscale.extraSetFlags = [
       "--advertise-routes=${lib.concatMapStringsSep "," (x: "192.168.101.${toString x}/32") routerIds}"
     ];
+    boot.kernel.sysctl = {
+      "net.ipv4.ip_forward" = 1;
+      "net.ipv6.conf.all.forwarding" = 1;
+    };
   };
 
   mkVHost = acc: hostName:
@@ -122,4 +125,4 @@ let
       };
     };
 in
-lib.foldl' mkVHost init [ "acer-tp" "alexrpi4tp" "oracle" "gate" ]
+lib.foldl' mkVHost init [ "acer-tp" "alexrpi4tp" "oracle" "fw13" ]
