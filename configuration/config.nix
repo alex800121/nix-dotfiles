@@ -74,7 +74,7 @@
           clients = [ "alexrpi4tp" ];
         }
       ];
-      keepalived.routerIds = [ 3 2 4 ];
+      keepalived.routerIds = [ 3 4 2 ];
     };
     extraModules = [
       ./acer-tp.nix
