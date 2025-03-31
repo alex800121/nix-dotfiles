@@ -59,7 +59,7 @@ in
       Local = masterTsIp;
       MacLearning = true;
       DestinationPort = 4789;
-      # Independent = true;
+      Independent = true;
     };
   };
   systemd.network.networks."20-${name}" = {
