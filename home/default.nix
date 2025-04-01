@@ -135,6 +135,8 @@ in
     nixpkgsUnstable.winetricks
     nixpkgsUnstable.wineWowPackages.full
     bitwarden-desktop
+    tldr
+    keepalived
   ];
 
   xdg.mime.enable = true;
