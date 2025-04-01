@@ -8,6 +8,7 @@ let
   inherit (pkgs) system;
 in
 {
+
   nixpkgs.config.allowUnfree = true;
   nix = {
     settings = {
@@ -136,7 +137,6 @@ in
     nixpkgsUnstable.wineWowPackages.full
     bitwarden-desktop
     tldr
-    keepalived
   ];
 
   xdg.mime.enable = true;

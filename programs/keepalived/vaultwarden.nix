@@ -1,4 +1,4 @@
-{ config, lib, userConfig, ... }:
+{ pkgs, config, lib, userConfig, ... }:
 let
   inherit (userConfig.keepalived) routerIds;
   inherit (builtins) toString;
@@ -30,6 +30,9 @@ let
       };
     };
   init = {
+    environment.systemPackages = with pkgs; [
+      keepalived
+    ];
     systemd.network.enable = true;
     systemd.network.netdevs."20-${name}" = {
       netdevConfig = {
