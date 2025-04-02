@@ -29,7 +29,7 @@ let
     curl --request POST \
          --url https://api.tailscale.com/api/v2/device/$TS_NODE_ID/routes -u "$TS_API_TOKEN:"  \
          --header 'Content-Type: application/json'  \
-         --data '$NEW_VXLAN1_IP'
+         --data "$NEW_VXLAN1_IP"
     unset TS_API_TOKEN
   '';
   build = n: id:
