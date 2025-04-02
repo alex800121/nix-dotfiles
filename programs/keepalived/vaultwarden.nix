@@ -13,20 +13,17 @@ let
   networkId = 1;
   name = "vxlan${toString networkId}";
   renewIp = pkgs.writeScript "renew_ip.sh" ''
-    TS_API_TOKEN=$(cat ${config.age.secrets.tsApi.path})
-    TS_NODE_ID=$(curl --request GET  \
+    TS_API_TOKEN=$(${pkgs.coreutils}/bin/cat ${config.age.secrets.tsApi.path})
+    TS_NODE_ID=$(${pkgs.curl}/bin/curl --request GET  \
                       --url https://api.tailscale.com/api/v2/tailnet/alex800121.github/devices -u "$TS_API_TOKEN:"  \
                         | ${pkgs.jq}/bin/jq -r '.[].[] | select(.hostname=="${userConfig.hostName}").nodeId')
-    echo $TS_NODE_ID
-    OLD_VXLAN1_IP=$(curl --request GET  \
+    OLD_VXLAN1_IP=$(${pkgs.curl}/bin/curl --request GET  \
                          --url https://api.tailscale.com/api/v2/device/$TS_NODE_ID/routes -u "$TS_API_TOKEN:"  \
                            | ${pkgs.jq}/bin/jq '.enabledRoutes | map(select((test("192\\.168\\.101") | not)))')
-    echo $OLD_VXLAN1_IP
-    NEW_VXLAN1_IP=$(ip addr show dev vxlan1 \
-                      | awk '/192\.168\.101/{printf "\"" $2 "\""}'  \
+    NEW_VXLAN1_IP=$(${pkgs.iproute2}/bin/ip addr show dev vxlan1 \
+                      | ${pkgs.gawk}/bin/awk '/192\.168\.101/{printf "\"" $2 "\""}'  \
                       | ${pkgs.jq}/bin/jq -n --argjson data "$OLD_VXLAN1_IP" '{routes: ([inputs] + $data)}')
-    echo $NEW_VXLAN1_IP
-    curl --request POST \
+    ${pkgs.curl}/bin/curl --request POST \
          --url https://api.tailscale.com/api/v2/device/$TS_NODE_ID/routes -u "$TS_API_TOKEN:"  \
          --header 'Content-Type: application/json'  \
          --data "$NEW_VXLAN1_IP"
