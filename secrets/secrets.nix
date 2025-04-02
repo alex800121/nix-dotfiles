@@ -26,5 +26,6 @@ in
   "ddtoken_oracle.age".publicKeys = oracle;
   "ddtoken_acer-tp.age".publicKeys = acer-tp;
   "ddtoken_fw13.age".publicKeys = fw13;
+  "tsapi_acer-tp.age".publicKeys = acer-tp;
   "tsapi_fw13.age".publicKeys = fw13;
 }
