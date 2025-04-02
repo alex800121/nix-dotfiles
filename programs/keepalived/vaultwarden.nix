@@ -1,6 +1,7 @@
 { pkgs, config, lib, userConfig, ... }:
 let
   inherit (userConfig.keepalived) routerIds;
+  inherit (userConfig) hostName;
   inherit (builtins) toString;
   inherit (lib) recursiveUpdate head tail map imap0 foldl';
   master = head routerIds;
@@ -11,6 +12,26 @@ let
   initPrio = 100;
   networkId = 1;
   name = "vxlan${toString networkId}";
+  renewIp = pkgs.writeScript "renew_ip.sh" ''
+    TS_API_TOKEN=$(cat ${config.age.secrets.tsApi.path})
+    TS_NODE_ID=$(curl --request GET  \
+                      --url https://api.tailscale.com/api/v2/tailnet/alex800121.github/devices -u "$TS_API_TOKEN:"  \
+                        | ${pkgs.jq}/bin/jq -r '.[].[] | select(.hostname=="${userConfig.hostName}").nodeId')
+    echo $TS_NODE_ID
+    OLD_VXLAN1_IP=$(curl --request GET  \
+                         --url https://api.tailscale.com/api/v2/device/$TS_NODE_ID/routes -u "$TS_API_TOKEN:"  \
+                           | ${pkgs.jq}/bin/jq '.enabledRoutes | map(select((test("192\\.168\\.101") | not)))')
+    echo $OLD_VXLAN1_IP
+    NEW_VXLAN1_IP=$(ip addr show dev vxlan1 \
+                      | awk '/192\.168\.101/{printf "\"" $2 "\""}'  \
+                      | ${pkgs.jq}/bin/jq -n --argjson data "$OLD_VXLAN1_IP" '{routes: ([inputs] + $data)}')
+    echo $NEW_VXLAN1_IP
+    curl --request POST \
+         --url https://api.tailscale.com/api/v2/device/$TS_NODE_ID/routes -u "$TS_API_TOKEN:"  \
+         --header 'Content-Type: application/json'  \
+         --data '$NEW_VXLAN1_IP'
+    unset TS_API_TOKEN
+  '';
   build = n: id:
     let
       ids = toString id;
@@ -27,9 +48,20 @@ let
           }
         ];
         virtualRouterId = id;
+        extraConfig = ''
+          notify_master ${renewIp}
+          notify_backup ${renewIp}
+        '';
       };
     };
   init = {
+
+    age.secrets.tsApi = {
+      file = ../../secrets/tsapi_${hostName}.age;
+      owner = "root";
+      group = "root";
+      mode = "600";
+    };
     environment.systemPackages = with pkgs; [
       keepalived
     ];
