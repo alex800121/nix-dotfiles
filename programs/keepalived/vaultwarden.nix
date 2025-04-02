@@ -12,7 +12,7 @@ let
   initPrio = 100;
   networkId = 1;
   name = "vxlan${toString networkId}";
-  renewIp = pkgs.writeScript "renew_ip.sh" ''
+  script = ''
     TS_API_TOKEN=$(${pkgs.coreutils}/bin/cat ${config.age.secrets.tsApi.path})
     TS_NODE_ID=$(${pkgs.curl}/bin/curl --request GET  \
                       --url https://api.tailscale.com/api/v2/tailnet/alex800121.github/devices -u "$TS_API_TOKEN:"  \
@@ -29,6 +29,7 @@ let
          --data "$NEW_VXLAN1_IP"
     unset TS_API_TOKEN
   '';
+  renewIp = pkgs.writeScript "renew_ip.sh" script;
   build = n: id:
     let
       ids = toString id;
@@ -91,6 +92,8 @@ let
         })
         peers;
     };
+    systemd.services.keepalived.postStop = script;
+    systemd.services.keepalived.postStart = script;
     services.keepalived.enable = true;
     services.keepalived.openFirewall = true;
     services.keepalived.extraGlobalDefs = ''
