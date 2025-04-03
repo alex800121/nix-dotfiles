@@ -46,7 +46,8 @@ let
     {
       services.keepalived.vrrpInstances."VW_${ids}" = {
         priority = initPrio - n;
-        state = if n == 0 then "MASTER" else "BACKUP";
+        state = "BACKUP";
+        # state = if n == 0 then "MASTER" else "BACKUP";
         interface = name;
         virtualIps = [
           {
