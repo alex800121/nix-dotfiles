@@ -111,6 +111,7 @@ let
     services.keepalived.extraConfig = ''
       vrrp_track_process track_vaultwarden {
         process vaultwarden
+        quorum 1
         weight 10
       }
     '';
