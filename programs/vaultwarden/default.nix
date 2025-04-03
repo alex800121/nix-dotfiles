@@ -3,6 +3,7 @@ let
   inherit (config.networking) hostName;
   inherit (userConfig.keepalived) routerIds;
   inherit (builtins) toString;
+  hosts = [ "acer-tp" "alexrpi4tp" "oracle" "fw13" ];
   master = lib.head routerIds;
   masterTsIp = "100.64.0.${toString master}";
   domainName = "alex${hostName}.duckdns.org";
@@ -52,7 +53,7 @@ let
           binlog_format = "ROW";
           default_storage_engine = "InnoDB";
           innodb_doublewrite = 1;
-          wsrep_cluster_address = "gcomm://acer-tp,alexrpi4tp,oracle";
+          wsrep_cluster_address = "gcomm://${lib.concatStringsSep "," hosts}";
           wsrep_cluster_name = "galera";
           wsrep_node_address = masterTsIp;
           wsrep_on = "ON";
@@ -123,4 +124,4 @@ let
       };
     };
 in
-lib.foldl' mkVHost init [ "acer-tp" "alexrpi4tp" "oracle" "fw13" ]
+lib.foldl' mkVHost init hosts
