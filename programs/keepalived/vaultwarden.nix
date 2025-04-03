@@ -59,7 +59,7 @@ let
           notify_master ${renewIp}
           notify_backup ${renewIp}
           track_process {
-            track_vaultwarden
+            track_vaultwarden weight 10
           }
         '';
       };
@@ -112,7 +112,7 @@ let
       vrrp_track_process track_vaultwarden {
         process vaultwarden
         quorum 1
-        weight 10
+        delay 1
       }
     '';
     services.keepalived.extraGlobalDefs = ''
