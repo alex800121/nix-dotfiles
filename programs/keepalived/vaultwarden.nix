@@ -14,15 +14,13 @@ let
   name = "vxlan${toString networkId}";
   updateScript = ''
     TS_API_TOKEN=$(${pkgs.coreutils}/bin/cat ${config.age.secrets.tsApi.path})
-    TS_NODE_ID=$(${pkgs.curl}/bin/curl \
-                    --request GET \
+    TS_NODE_ID=$(${pkgs.curl}/bin/curl --request GET \
                     --url https://api.tailscale.com/api/v2/tailnet/alex800121.github/devices \
                     -u "$TS_API_TOKEN:" \
                       | ${pkgs.jq}/bin/jq \
                           -r \
                           '.[].[] | select(.hostname=="${userConfig.hostName}").nodeId')
-    OLD_VXLAN1_IP=$(${pkgs.curl}/bin/curl \
-                      --request GET \
+    OLD_VXLAN1_IP=$(${pkgs.curl}/bin/curl --request GET \
                       --url https://api.tailscale.com/api/v2/device/$TS_NODE_ID/routes \
                       -u "$TS_API_TOKEN:" \
                         | ${pkgs.jq}/bin/jq \
@@ -33,8 +31,7 @@ let
                           -n \
                           --argjson data "$OLD_VXLAN1_IP" \
                           '{routes: ([inputs] + $data)}')
-    ${pkgs.curl}/bin/curl 
-      --request POST \
+    ${pkgs.curl}/bin/curl --request POST \
       --url https://api.tailscale.com/api/v2/device/$TS_NODE_ID/routes \
       -u "$TS_API_TOKEN:" \
       --header 'Content-Type: application/json' \
