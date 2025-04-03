@@ -58,6 +58,9 @@ let
         extraConfig = ''
           notify_master ${renewIp}
           notify_backup ${renewIp}
+          track_process {
+            track_vaultwarden
+          }
         '';
       };
     };
@@ -105,6 +108,12 @@ let
     systemd.services.keepalived.postStart = updateScript;
     services.keepalived.enable = true;
     services.keepalived.openFirewall = true;
+    services.keepalived.extraConfig = ''
+      vrrp_track_process track_vaultwarden {
+        process vaultwarden
+        weight 10
+      }
+    '';
     services.keepalived.extraGlobalDefs = ''
        # delay for second set of gratuitous ARPs after transition to MASTER
       vrrp_garp_master_delay 10    # seconds, default 5, 0 for no second set
