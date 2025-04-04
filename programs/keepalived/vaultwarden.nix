@@ -53,7 +53,7 @@ let
         virtual_router_id ${ids}
         priority ${toString (initPrio - n)}
         virtual_ipaddress {
-          192.168.101.${ids}/32 dev ${name} label vw${ids}
+          192.168.101.${ids}/32 dev ${name} label ${name}:vw${ids}
         }
         notify_master ${renewIp}
         notify_backup ${renewIp}
