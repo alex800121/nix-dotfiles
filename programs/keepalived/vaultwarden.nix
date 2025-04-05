@@ -5,8 +5,7 @@ let
   inherit (userConfig.tailscale) id peers;
   inherit (builtins) toString;
   inherit (lib) recursiveUpdate head tail map imap0 foldl';
-  master = head routers;
-  masterIp = "192.168.60.${toString master.id}";
+  masterIp = "192.168.60.${toString id}";
   masterTsIp = "100.64.0.${toString id}";
   peerTsIp = x: "100.64.0.${toString x}";
   initPrio = 100;
