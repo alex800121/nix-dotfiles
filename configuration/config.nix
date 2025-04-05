@@ -13,7 +13,10 @@
           clients = [ "alexrpi4tp" ];
         }
       ];
-      tsId = 4;
+      tailscale = {
+        id = 4;
+        peers = [ 2 3 5 ];
+      };
       keepalived.routers = [
         {
           id = 1;
@@ -55,7 +58,10 @@
       fontSize = 11.5;
       autoLogin = true;
       url = "alexrpi4gate";
-      tsId = 2;
+      tailscale = {
+        id = 4;
+        peers = [ 4 3 5 ];
+      };
       keepalived.routers = [
         {
           id = 1;
@@ -86,7 +92,10 @@
           clients = [ "alexrpi4tp" ];
         }
       ];
-      tsId = 3;
+      tailscale = {
+        id = 3;
+        peers = [ 2 4 5 ];
+      };
       keepalived.routers = [
         {
           id = 1;
@@ -133,7 +142,10 @@
         fontSize = 12;
         autoLogin = false;
         soundcardPciId = "c1:00.6";
-        tsId = 5;
+        tailscale = {
+          id = 5;
+          peers = [ 2 3 4 ];
+        };
         keepalived.routers = [
           {
             id = 1;
