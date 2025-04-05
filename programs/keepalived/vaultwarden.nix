@@ -1,14 +1,14 @@
 { pkgs, config, lib, userConfig, ... }:
 let
-  inherit (userConfig.keepalived) routerIds;
+  inherit (userConfig.keepalived) routers;
   inherit (userConfig) hostName;
   inherit (builtins) toString;
   inherit (lib) recursiveUpdate head tail map imap0 foldl';
-  master = head routerIds;
-  peers = tail routerIds;
-  masterIp = "192.168.60.${toString master}";
-  masterTsIp = "100.64.0.${toString master}";
-  peerTsIp = x: "100.64.0.${toString x}";
+  master = head routers;
+  peers = tail routers;
+  masterIp = "192.168.60.${toString master.id}";
+  masterTsIp = "100.64.0.${toString master.id}";
+  peerTsIp = x: "100.64.0.${toString x.id}";
   initPrio = 100;
   networkId = 1;
   name = "vxlan${toString networkId}";
@@ -39,7 +39,7 @@ let
     unset TS_API_TOKEN
   '';
   renewIp = pkgs.writeScript "renew_ip.sh" updateScript;
-  build = n: id:
+  build = { id, priority }:
     let
       ids = toString id;
     in
@@ -51,7 +51,7 @@ let
           track_vaultwarden
         }
         virtual_router_id ${ids}
-        priority ${toString (initPrio - n)}
+        priority ${toString (initPrio - priority)}
         virtual_ipaddress {
           192.168.101.${ids}/32 dev ${name} label ${name}:vw${ids}
         }
@@ -70,7 +70,7 @@ let
       }
 
     ''
-    + lib.concatStrings (lib.imap0 build routerIds);
+    + lib.concatStrings (lib.map build routers);
 in
 {
   age.secrets.tsApi = {
