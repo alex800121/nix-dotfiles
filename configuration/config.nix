@@ -59,7 +59,7 @@
       autoLogin = true;
       url = "alexrpi4gate";
       tailscale = {
-        id = 4;
+        id = 2;
         peers = [ 4 3 5 ];
       };
       keepalived.routers = [
