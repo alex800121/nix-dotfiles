@@ -30,4 +30,5 @@ in
   "tsapi_oracle.age".publicKeys = oracle;
   "tsapi_acer-tp.age".publicKeys = acer-tp;
   "tsapi_fw13.age".publicKeys = fw13;
+  "tsapi.age".publicKeys = alexrpi4tp ++ oracle ++ acer-tp ++ fw13;
 }
