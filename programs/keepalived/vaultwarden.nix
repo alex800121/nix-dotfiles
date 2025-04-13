@@ -73,7 +73,8 @@ let
 in
 {
   age.secrets.tsApi = {
-    file = ../../secrets/tsapi_${hostName}.age;
+    file = ../../secrets/tsapi.age;
+    # file = ../../secrets/tsapi_${hostName}.age;
     owner = "root";
     group = "root";
     mode = "600";
