@@ -18,17 +18,7 @@ in
   "ssh_host_borgbackup_acer-tp_vaultwarden_alexrpi4tp.age".publicKeys = alexrpi4tp;
   "ssh_host_borgbackup_oracle_vaultwarden_alexrpi4tp.age".publicKeys = alexrpi4tp;
   "passphrase_borgbackup_vaultwarden_alexrpi4tp.age".publicKeys = alexrpi4tp;
-  "env_vaultwarden_oracle.age".publicKeys = oracle;
-  "env_vaultwarden_alexrpi4tp.age".publicKeys = alexrpi4tp;
-  "env_vaultwarden_acer-tp.age".publicKeys = acer-tp;
-  "env_vaultwarden_fw13.age".publicKeys = fw13;
-  "ddtoken_alexrpi4tp.age".publicKeys = alexrpi4tp;
-  "ddtoken_oracle.age".publicKeys = oracle;
-  "ddtoken_acer-tp.age".publicKeys = acer-tp;
-  "ddtoken_fw13.age".publicKeys = fw13;
-  # "tsapi_alexrpi4tp.age".publicKeys = alexrpi4tp;
-  # "tsapi_oracle.age".publicKeys = oracle;
-  # "tsapi_acer-tp.age".publicKeys = acer-tp;
-  # "tsapi_fw13.age".publicKeys = fw13;
+  "env_vaultwarden.age".publicKeys = alexrpi4tp ++ oracle ++ acer-tp ++ fw13;
+  "ddtoken.age".publicKeys = alexrpi4tp ++ oracle ++ acer-tp ++ fw13;
   "tsapi.age".publicKeys = alexrpi4tp ++ oracle ++ acer-tp ++ fw13;
 }

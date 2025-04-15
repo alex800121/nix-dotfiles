@@ -24,7 +24,7 @@ in
 
   users.extraGroups."vaultwarden" = { };
   age.secrets."vaultwarden.env" = {
-    file = ../../secrets/env_vaultwarden_${hostName}.age;
+    file = ../../secrets/env_vaultwarden.age;
     owner = "vaultwarden";
     group = "vaultwarden";
     mode = "600";

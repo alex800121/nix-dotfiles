@@ -2,7 +2,7 @@
 let
   inherit (config.networking) hostName;
   gateName = "alexgate.duckdns.org";
-  ddtokenName = "ddtoken_${hostName}";
+  ddtokenName = "ddtoken";
 in
 {
   age.secrets."${ddtokenName}" = {

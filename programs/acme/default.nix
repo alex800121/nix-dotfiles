@@ -1,7 +1,7 @@
 { lib, pkgs, config, ... }:
 let
   inherit (config.networking) hostName;
-  ddtokenName = "ddtoken_${hostName}";
+  ddtokenName = "ddtoken";
   domainName = "alex${hostName}.duckdns.org";
 in
 {
