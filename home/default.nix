@@ -21,9 +21,9 @@ in
       recursive = true;
       source = ../programs/nixpkgs;
     };
-    fcitx5 = {
-      source = ../programs/fcitx5;
-    };
+    # fcitx5 = {
+    #   source = ../programs/fcitx5;
+    # };
   };
 
   # Home Manager needs a bit of information about you and the
