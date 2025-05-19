@@ -9,8 +9,6 @@ let
   # masterTsIp = "100.64.0.${toString id}";
   peerTsIp = x: "100.64.0.${toString x}";
   initPrio = 100;
-  networkId = 1;
-  name = "vxlan${toString networkId}";
   updateScript = ''
     TS_API_TOKEN=$(${pkgs.coreutils}/bin/cat ${config.age.secrets.tsApi.path})
     TS_NODE_ID=$(${pkgs.curl}/bin/curl --request GET \
@@ -43,14 +41,14 @@ let
     ''
       vrrp_instance VW_${ids} {
         state BACKUP
-        interface ${name}
+        interface ${brName}
         track_process {
           track_vaultwarden
         }
         virtual_router_id ${ids}
         priority ${toString (initPrio - priority)}
         virtual_ipaddress {
-          192.168.101.${ids}/32 dev ${name} label ${name}:vw${ids}
+          192.168.101.${ids}/32 dev ${brName} label ${brName}:vw${ids}
         }
         notify_master ${renewIp}
         notify_backup ${renewIp}
