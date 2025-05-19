@@ -1,12 +1,10 @@
 { pkgs, config, lib, userConfig, ... }:
 let
   inherit (userConfig.keepalived) routers;
-  inherit (config.networking) hostName;
   inherit (userConfig.tailscale) id peers;
   inherit (builtins) toString;
-  inherit (lib) recursiveUpdate head tail map imap0 foldl';
-  masterIp = "192.168.60.${toString id}/24";
-  # masterTsIp = "100.64.0.${toString id}";
+  inherit (lib) recursiveUpdate foldl';
+  masterIp = "192.168.60.${masterIds}/24";
   peerTsIp = x: "100.64.0.${toString x}";
   initPrio = 100;
   updateScript = ''
@@ -35,21 +33,21 @@ let
       --data "$NEW_VXLAN1_IP"
     unset TS_API_TOKEN
   '';
-  ids = toString id;
+  masterIds = toString id;
   renewIp = pkgs.writeScript "renew_ip.sh" updateScript;
   build = { id, priority }:
-    let ids = toString id; in
+    let vwInstance = toString id; in
     ''
-      vrrp_instance VW_${ids} {
+      vrrp_instance VW_${vwInstance} {
         state BACKUP
         interface ${brName}
         track_process {
           track_vaultwarden
         }
-        virtual_router_id ${ids}
+        virtual_router_id ${vwInstance}
         priority ${toString (initPrio - priority)}
         virtual_ipaddress {
-          192.168.101.${ids}/32 dev ${brName} label ${brName}:vw${ids}
+          192.168.101.${vwInstance}/32 dev ${brName} label ${brName}:vw${vwInstance}
         }
         notify_master ${renewIp}
         notify_backup ${renewIp}
@@ -67,13 +65,13 @@ let
 
     ''
     + lib.concatStrings (lib.map build routers);
-  brName = "br${ids}";
+  brName = "br${masterIds}";
   geneveConfig =
     foldl'
       (acc: x:
         let
           remote = toString x;
-          combine = ids + remote;
+          combine = masterIds + remote;
           name = "gen${combine}";
         in
         recursiveUpdate acc
@@ -100,14 +98,15 @@ let
           }
       )
       {
-        systemd.network.netdevs."0${ids}-${brName}" = {
+        systemd.network.enable = true;
+        systemd.network.netdevs."0${masterIds}-${brName}" = {
           enable = true;
           netdevConfig = {
             Name = brName;
             Kind = "bridge";
           };
         };
-        systemd.network.networks."0${ids}-${brName}" = {
+        systemd.network.networks."0${masterIds}-${brName}" = {
           enable = true;
           matchConfig = {
             Name = brName;
@@ -130,35 +129,6 @@ in
   environment.systemPackages = with pkgs; [
     keepalived
   ];
-  systemd.network.enable = true;
-  # systemd.network.netdevs."20-${name}" = {
-  #   netdevConfig = {
-  #     Name = name;
-  #     Kind = "vxlan";
-  #   };
-  #   vxlanConfig = {
-  #     VNI = networkId;
-  #     Local = masterTsIp;
-  #     MacLearning = true;
-  #     DestinationPort = 4789;
-  #     Independent = true;
-  #   };
-  # };
-  # systemd.network.networks."20-${name}" = {
-  #   matchConfig = {
-  #     Name = name;
-  #   };
-  #   address = [
-  #     "${masterIp}/24"
-  #   ];
-  #   bridgeFDBs = map
-  #     (x: {
-  #       Destination = peerTsIp x;
-  #       VNI = networkId;
-  #       MACAddress = "00:00:00:00:00:00";
-  #     })
-  #     peers;
-  # };
   systemd.services.keepalived.postStop = updateScript;
   systemd.services.keepalived.postStart = updateScript;
   services.keepalived.enable = true;
