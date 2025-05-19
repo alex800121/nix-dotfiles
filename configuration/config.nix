@@ -15,7 +15,7 @@
       ];
       tailscale = {
         id = 4;
-        peers = [ 2 3 5 ];
+        peers = [ 2 3 ];
       };
       keepalived.routers = [
         {
@@ -60,7 +60,7 @@
       url = "alexrpi4gate";
       tailscale = {
         id = 2;
-        peers = [ 4 3 5 ];
+        peers = [ 4 3 ];
       };
       keepalived.routers = [
         {
@@ -94,7 +94,7 @@
       ];
       tailscale = {
         id = 3;
-        peers = [ 2 4 5 ];
+        peers = [ 2 4 ];
       };
       keepalived.routers = [
         {
@@ -142,16 +142,16 @@
         fontSize = 12;
         autoLogin = false;
         soundcardPciId = "c1:00.6";
-        tailscale = {
-          id = 5;
-          peers = [ 2 3 4 ];
-        };
-        keepalived.routers = [
-          {
-            id = 1;
-            priority = 3;
-          }
-        ];
+        # tailscale = {
+        #   id = 5;
+        #   peers = [ 2 3 4 ];
+        # };
+        # keepalived.routers = [
+        #   {
+        #     id = 1;
+        #     priority = 3;
+        #   }
+        # ];
       };
       extraModules = [
         ./fw13.nix

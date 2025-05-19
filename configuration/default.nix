@@ -292,4 +292,10 @@ in
     enable = true;
     style = "adwaita-dark";
   };
+
+  services.hoogle = {
+    enable = true;
+    packages = hp: with hp; [
+    ];
+  };
 } 

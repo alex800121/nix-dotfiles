@@ -105,6 +105,7 @@ in
   };
 
   home.packages = with pkgs; [
+    graphviz
     vlc
     firefox
     google-chrome
@@ -123,6 +124,7 @@ in
     cabal-install
     ghcid
     ghc
+    haskellPackages.cabal-hoogle
     rust-bin.stable.latest.complete
     telegram-desktop
     obs-studio
