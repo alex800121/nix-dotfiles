@@ -38,6 +38,7 @@ let
   ids = toString id;
   renewIp = pkgs.writeScript "renew_ip.sh" updateScript;
   build = { id, priority }:
+    let ids = toString id; in
     ''
       vrrp_instance VW_${ids} {
         state BACKUP
