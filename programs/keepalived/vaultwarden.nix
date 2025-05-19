@@ -1,7 +1,7 @@
 { pkgs, config, lib, userConfig, ... }:
 let
   inherit (userConfig.keepalived) routers;
-  inherit (config.networking) hostName ;
+  inherit (config.networking) hostName;
   inherit (userConfig.tailscale) id peers;
   inherit (builtins) toString;
   inherit (lib) recursiveUpdate head tail map imap0 foldl';
@@ -37,11 +37,9 @@ let
       --data "$NEW_VXLAN1_IP"
     unset TS_API_TOKEN
   '';
+  ids = toString id;
   renewIp = pkgs.writeScript "renew_ip.sh" updateScript;
   build = { id, priority }:
-    let
-      ids = toString id;
-    in
     ''
       vrrp_instance VW_${ids} {
         state BACKUP
@@ -70,6 +68,57 @@ let
 
     ''
     + lib.concatStrings (lib.map build routers);
+  brName = "br${ids}";
+  geneveConfig =
+    foldl'
+      (acc: x:
+        let
+          remote = toString x;
+          combine = ids + remote;
+          name = "gen${combine}";
+        in
+        recursiveUpdate acc
+          {
+            systemd.network.netdevs."${combine}-${name}" = {
+              enable = true;
+              netdevConfig = {
+                Name = name;
+                Kind = "geneve";
+              };
+              extraConfig = ''
+                [GENEVE]
+                Id=1
+                Remote=${peerTsIp x}
+              '';
+            };
+            systemd.network.networks."${combine}-${name}" = {
+              enable = true;
+              matchConfig = {
+                Name = name;
+              };
+              bridge = [ brName ];
+            };
+          }
+      )
+      {
+        systemd.network.netdevs."0${ids}-${brName}" = {
+          enable = true;
+          netdevConfig = {
+            Name = brName;
+            Kind = "bridge";
+          };
+        };
+        systemd.network.networks."0${ids}-${brName}" = {
+          enable = true;
+          matchConfig = {
+            Name = brName;
+          };
+          address = [
+            masterIp
+          ];
+        };
+      }
+      peers;
 in
 {
   age.secrets.tsApi = {
@@ -83,34 +132,34 @@ in
     keepalived
   ];
   systemd.network.enable = true;
-  systemd.network.netdevs."20-${name}" = {
-    netdevConfig = {
-      Name = name;
-      Kind = "vxlan";
-    };
-    vxlanConfig = {
-      VNI = networkId;
-      Local = masterTsIp;
-      MacLearning = true;
-      DestinationPort = 4789;
-      Independent = true;
-    };
-  };
-  systemd.network.networks."20-${name}" = {
-    matchConfig = {
-      Name = name;
-    };
-    address = [
-      "${masterIp}/24"
-    ];
-    bridgeFDBs = map
-      (x: {
-        Destination = peerTsIp x;
-        VNI = networkId;
-        MACAddress = "00:00:00:00:00:00";
-      })
-      peers;
-  };
+  # systemd.network.netdevs."20-${name}" = {
+  #   netdevConfig = {
+  #     Name = name;
+  #     Kind = "vxlan";
+  #   };
+  #   vxlanConfig = {
+  #     VNI = networkId;
+  #     Local = masterTsIp;
+  #     MacLearning = true;
+  #     DestinationPort = 4789;
+  #     Independent = true;
+  #   };
+  # };
+  # systemd.network.networks."20-${name}" = {
+  #   matchConfig = {
+  #     Name = name;
+  #   };
+  #   address = [
+  #     "${masterIp}/24"
+  #   ];
+  #   bridgeFDBs = map
+  #     (x: {
+  #       Destination = peerTsIp x;
+  #       VNI = networkId;
+  #       MACAddress = "00:00:00:00:00:00";
+  #     })
+  #     peers;
+  # };
   systemd.services.keepalived.postStop = updateScript;
   systemd.services.keepalived.postStart = updateScript;
   services.keepalived.enable = true;
@@ -141,4 +190,4 @@ in
     vrrp_gna_interval 0.000001
   '';
   services.keepalived.extraConfig = extraConfig;
-}
+} // geneveConfig
