@@ -65,12 +65,14 @@ let
 
     ''
     + lib.concatStrings (lib.map build routers);
+  defaultPort = 6081;
   brName = "br${masterIds}";
   geneveConfig =
     foldl'
       (acc: x:
         let
           remote = toString x;
+          port = toString (defaultPort + x);
           combine = masterIds + remote;
           name = "gen${combine}";
         in
@@ -86,6 +88,7 @@ let
                 [GENEVE]
                 Id=1
                 Remote=${peerTsIp x}
+                DestinationPort=${port}
               '';
             };
             systemd.network.networks."${combine}-${name}" = {
