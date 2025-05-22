@@ -89,7 +89,7 @@ let
               };
               extraConfig = ''
                 [GENEVE]
-                Id=${networkId}
+                Id=${toString networkId}
                 Remote=${peerTsIp x}
                 DestinationPort=${port}
               '';
