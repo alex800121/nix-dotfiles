@@ -5,6 +5,7 @@ let
   inherit (builtins) toString;
   inherit (lib) recursiveUpdate foldl';
   masterIp = "192.168.60.${masterIds}/24";
+  masterTsIp = "100.64.0.${masterIds}";
   peerTsIp = x: "100.64.0.${toString x}";
   initPrio = 100;
   updateScript = ''
@@ -68,6 +69,28 @@ let
     + lib.concatStrings (lib.map build routers);
   defaultPort = 6081;
   brName = "br${masterIds}";
+  brConfig =
+    {
+      systemd.network.enable = true;
+      systemd.network.netdevs."0${masterIds}-${brName}" = {
+        enable = true;
+        netdevConfig = {
+          Name = brName;
+          Kind = "bridge";
+        };
+      };
+      systemd.network.networks."0${masterIds}-${brName}" = {
+        enable = true;
+        matchConfig = {
+          Name = brName;
+        };
+        address = [
+          masterIp
+        ];
+      };
+    };
+  vxlanName = "vxlan0";
+  networkId = 1;
   geneveConfig =
     foldl'
       (acc: x:
@@ -87,7 +110,7 @@ let
               };
               extraConfig = ''
                 [GENEVE]
-                Id=1
+                Id=${networkId}
                 Remote=${peerTsIp x}
                 DestinationPort=${port}
               '';
@@ -101,25 +124,7 @@ let
             };
           }
       )
-      {
-        systemd.network.enable = true;
-        systemd.network.netdevs."0${masterIds}-${brName}" = {
-          enable = true;
-          netdevConfig = {
-            Name = brName;
-            Kind = "bridge";
-          };
-        };
-        systemd.network.networks."0${masterIds}-${brName}" = {
-          enable = true;
-          matchConfig = {
-            Name = brName;
-          };
-          address = [
-            masterIp
-          ];
-        };
-      }
+      brConfig
       peers;
 in
 {
@@ -133,6 +138,35 @@ in
   environment.systemPackages = with pkgs; [
     keepalived
   ];
+  systemd.network.netdevs."20-${vxlanName}" = {
+    netdevConfig = {
+      Name = vxlanName;
+      Kind = "vxlan";
+    };
+    vxlanConfig = {
+      VNI = networkId;
+      Local = masterTsIp;
+      MacLearning = true;
+      DestinationPort = 4789;
+      Independent = true;
+    };
+  };
+  systemd.network.networks."20-${vxlanName}" = {
+    matchConfig = {
+      Name = vxlanName;
+    };
+    # address = [
+    #   "${masterIp}/24"
+    # ];
+    bridge = [ brName ];
+    bridgeFDBs = map
+      (x: {
+        Destination = peerTsIp x;
+        VNI = networkId;
+        MACAddress = "00:00:00:00:00:00";
+      })
+      peers;
+  };
   systemd.services.keepalived.postStop = updateScript;
   systemd.services.keepalived.postStart = updateScript;
   services.keepalived.enable = true;
@@ -163,4 +197,5 @@ in
     vrrp_gna_interval 0.000001
   '';
   services.keepalived.extraConfig = extraConfig;
-} // geneveConfig
+}
+  # // geneveConfig
