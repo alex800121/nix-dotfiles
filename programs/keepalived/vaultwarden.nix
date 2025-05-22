@@ -138,6 +138,23 @@ in
   environment.systemPackages = with pkgs; [
     keepalived
   ];
+  systemd.network.enable = true;
+  systemd.network.netdevs."0${masterIds}-${brName}" = {
+    enable = true;
+    netdevConfig = {
+      Name = brName;
+      Kind = "bridge";
+    };
+  };
+  systemd.network.networks."0${masterIds}-${brName}" = {
+    enable = true;
+    matchConfig = {
+      Name = brName;
+    };
+    address = [
+      masterIp
+    ];
+  };
   systemd.network.netdevs."20-${vxlanName}" = {
     netdevConfig = {
       Name = vxlanName;
@@ -198,4 +215,4 @@ in
   '';
   services.keepalived.extraConfig = extraConfig;
 }
-  # // geneveConfig
+# // geneveConfig
