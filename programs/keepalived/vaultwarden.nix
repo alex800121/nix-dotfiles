@@ -16,22 +16,22 @@ let
                       | ${pkgs.jq}/bin/jq \
                           -r \
                           '.[].[] | select(.hostname=="${userConfig.hostName}").nodeId')
-    OLD_VXLAN1_IP=$(${pkgs.curl}/bin/curl --request GET \
+    OLD_VXLAN_IP=$(${pkgs.curl}/bin/curl --request GET \
                       --url https://api.tailscale.com/api/v2/device/$TS_NODE_ID/routes \
                       -u "$TS_API_TOKEN:" \
                         | ${pkgs.jq}/bin/jq \
                             '.enabledRoutes | map(select((test("192\\.168\\.101") | not)))')
-    NEW_VXLAN1_IP=$(${pkgs.iproute2}/bin/ip addr show dev vxlan1 \
+    NEW_VXLAN_IP=$(${pkgs.iproute2}/bin/ip addr show dev ${vxlanName} \
                       | ${pkgs.gawk}/bin/awk '/192\.168\.101/{printf "\"" $2 "\""}' \
                       | ${pkgs.jq}/bin/jq \
                           -n \
-                          --argjson data "$OLD_VXLAN1_IP" \
+                          --argjson data "$OLD_VXLAN_IP" \
                           '{routes: ([inputs] + $data)}')
     ${pkgs.curl}/bin/curl --request POST \
       --url https://api.tailscale.com/api/v2/device/$TS_NODE_ID/routes \
       -u "$TS_API_TOKEN:" \
       --header 'Content-Type: application/json' \
-      --data "$NEW_VXLAN1_IP"
+      --data "$NEW_VXLAN_IP"
     unset TS_API_TOKEN
   '';
   masterIds = toString id;
@@ -89,43 +89,43 @@ let
         ];
       };
     };
-  vxlanName = "vxlan0";
+  vxlanName = "vxlan${toString networkId}";
   networkId = 1;
-  geneveConfig =
-    foldl'
-      (acc: x:
-        let
-          remote = toString x;
-          port = toString (defaultPort + x);
-          combine = masterIds + remote;
-          name = "gen${combine}";
-        in
-        recursiveUpdate acc
-          {
-            systemd.network.netdevs."${combine}-${name}" = {
-              enable = true;
-              netdevConfig = {
-                Name = name;
-                Kind = "geneve";
-              };
-              extraConfig = ''
-                [GENEVE]
-                Id=${networkId}
-                Remote=${peerTsIp x}
-                DestinationPort=${port}
-              '';
-            };
-            systemd.network.networks."${combine}-${name}" = {
-              enable = true;
-              matchConfig = {
-                Name = name;
-              };
-              bridge = [ brName ];
-            };
-          }
-      )
-      brConfig
-      peers;
+  # geneveConfig =
+  #   foldl'
+  #     (acc: x:
+  #       let
+  #         remote = toString x;
+  #         port = toString (defaultPort + x);
+  #         combine = masterIds + remote;
+  #         name = "gen${combine}";
+  #       in
+  #       recursiveUpdate acc
+  #         {
+  #           systemd.network.netdevs."${combine}-${name}" = {
+  #             enable = true;
+  #             netdevConfig = {
+  #               Name = name;
+  #               Kind = "geneve";
+  #             };
+  #             extraConfig = ''
+  #               [GENEVE]
+  #               Id=${networkId}
+  #               Remote=${peerTsIp x}
+  #               DestinationPort=${port}
+  #             '';
+  #           };
+  #           systemd.network.networks."${combine}-${name}" = {
+  #             enable = true;
+  #             matchConfig = {
+  #               Name = name;
+  #             };
+  #             bridge = [ brName ];
+  #           };
+  #         }
+  #     )
+  #     brConfig
+  #     peers;
 in
 {
   age.secrets.tsApi = {
