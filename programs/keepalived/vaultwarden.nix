@@ -21,7 +21,7 @@ let
                       -u "$TS_API_TOKEN:" \
                         | ${pkgs.jq}/bin/jq \
                             '.enabledRoutes | map(select((test("192\\.168\\.101") | not)))')
-    NEW_VXLAN_IP=$(${pkgs.iproute2}/bin/ip addr show dev ${vxlanName} \
+    NEW_VXLAN_IP=$(${pkgs.iproute2}/bin/ip addr show dev ${brName} \
                       | ${pkgs.gawk}/bin/awk '/192\.168\.101/{printf "\"" $2 "\""}' \
                       | ${pkgs.jq}/bin/jq \
                           -n \
