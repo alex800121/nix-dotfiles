@@ -105,7 +105,7 @@ let
       )
       { }
       peers;
-in
+in recursiveUpdate
 {
   age.secrets.tsApi = {
     file = ../../secrets/tsapi.age;
@@ -190,5 +190,4 @@ in
     vrrp_gna_interval 0.000001
   '';
   services.keepalived.extraConfig = extraConfig;
-}
-  // geneveConfig
+} geneveConfig
