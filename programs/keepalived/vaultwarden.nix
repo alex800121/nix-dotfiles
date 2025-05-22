@@ -51,8 +51,7 @@ let
         virtual_ipaddress {
           192.168.101.${vwInstance}/32 dev ${brName} label ${brName}:vw${vwInstance}
         }
-        notify_master ${renewIp}
-        notify_backup ${renewIp}
+        notify ${renewIp}
       }
 
     '';
