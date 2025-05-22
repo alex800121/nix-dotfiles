@@ -44,7 +44,7 @@ let
         track_process {
           track_vaultwarden
         }
-        advert_int 5
+        advert_int 1
         virtual_router_id ${vwInstance}
         priority ${toString (initPrio - priority)}
         virtual_ipaddress {
