@@ -91,7 +91,7 @@ let
                 [GENEVE]
                 Id=1
                 Remote=${peerTsIp x}
-                DestinationPort=${port}
+                # DestinationPort=${port}
               '';
             };
             systemd.network.networks."${combine}-${name}" = {
@@ -123,41 +123,6 @@ let
         };
       }
       peers;
-  # geneveConfig =
-  #   foldl'
-  #     (acc: x:
-  #       let
-  #         remote = toString x;
-  #         port = toString (defaultPort + x);
-  #         combine = masterIds + remote;
-  #         name = "gen${combine}";
-  #       in
-  #       recursiveUpdate acc
-  #         {
-  #           systemd.network.netdevs."${combine}-${name}" = {
-  #             enable = true;
-  #             netdevConfig = {
-  #               Name = name;
-  #               Kind = "geneve";
-  #             };
-  #             extraConfig = ''
-  #               [GENEVE]
-  #               Id=${toString networkId}
-  #               Remote=${peerTsIp x}
-  #               DestinationPort=${port}
-  #             '';
-  #           };
-  #           systemd.network.networks."${combine}-${name}" = {
-  #             enable = true;
-  #             matchConfig = {
-  #               Name = name;
-  #             };
-  #             bridge = [ brName ];
-  #           };
-  #         }
-  #     )
-  #     { }
-  #     peers;
 in
 recursiveUpdate
 {
