@@ -4,6 +4,7 @@ let
   inherit (userConfig.tailscale) id peers;
   inherit (builtins) toString;
   inherit (lib) recursiveUpdate foldl';
+  masterIds = toString id;
   masterIp = "192.168.60.${masterIds}/24";
   masterTsIp = "100.64.0.${masterIds}";
   peerTsIp = x: "100.64.0.${toString x}";
@@ -34,7 +35,6 @@ let
       --data "$NEW_VXLAN_IP"
     unset TS_API_TOKEN
   '';
-  masterIds = toString id;
   renewIp = pkgs.writeScript "renew_ip.sh" updateScript;
   build = { id, priority }:
     let vwInstance = toString id; in
@@ -89,7 +89,7 @@ let
               };
               extraConfig = ''
                 [GENEVE]
-                Id=${toString networkId}
+                Id=1
                 Remote=${peerTsIp x}
                 DestinationPort=${port}
               '';
@@ -103,9 +103,63 @@ let
             };
           }
       )
-      { }
+      {
+        systemd.network.enable = true;
+        systemd.network.netdevs."0${masterIds}-${brName}" = {
+          enable = true;
+          netdevConfig = {
+            Name = brName;
+            Kind = "bridge";
+          };
+        };
+        systemd.network.networks."0${masterIds}-${brName}" = {
+          enable = true;
+          matchConfig = {
+            Name = brName;
+          };
+          address = [
+            masterIp
+          ];
+        };
+      }
       peers;
-in recursiveUpdate
+  # geneveConfig =
+  #   foldl'
+  #     (acc: x:
+  #       let
+  #         remote = toString x;
+  #         port = toString (defaultPort + x);
+  #         combine = masterIds + remote;
+  #         name = "gen${combine}";
+  #       in
+  #       recursiveUpdate acc
+  #         {
+  #           systemd.network.netdevs."${combine}-${name}" = {
+  #             enable = true;
+  #             netdevConfig = {
+  #               Name = name;
+  #               Kind = "geneve";
+  #             };
+  #             extraConfig = ''
+  #               [GENEVE]
+  #               Id=${toString networkId}
+  #               Remote=${peerTsIp x}
+  #               DestinationPort=${port}
+  #             '';
+  #           };
+  #           systemd.network.networks."${combine}-${name}" = {
+  #             enable = true;
+  #             matchConfig = {
+  #               Name = name;
+  #             };
+  #             bridge = [ brName ];
+  #           };
+  #         }
+  #     )
+  #     { }
+  #     peers;
+in
+recursiveUpdate
 {
   age.secrets.tsApi = {
     file = ../../secrets/tsapi.age;
@@ -117,23 +171,23 @@ in recursiveUpdate
   environment.systemPackages = with pkgs; [
     keepalived
   ];
-  systemd.network.enable = true;
-  systemd.network.netdevs."0${masterIds}-${brName}" = {
-    enable = true;
-    netdevConfig = {
-      Name = brName;
-      Kind = "bridge";
-    };
-  };
-  systemd.network.networks."0${masterIds}-${brName}" = {
-    enable = true;
-    matchConfig = {
-      Name = brName;
-    };
-    address = [
-      masterIp
-    ];
-  };
+  # systemd.network.enable = true;
+  # systemd.network.netdevs."0${masterIds}-${brName}" = {
+  #   enable = true;
+  #   netdevConfig = {
+  #     Name = brName;
+  #     Kind = "bridge";
+  #   };
+  # };
+  # systemd.network.networks."0${masterIds}-${brName}" = {
+  #   enable = true;
+  #   matchConfig = {
+  #     Name = brName;
+  #   };
+  #   address = [
+  #     masterIp
+  #   ];
+  # };
   # systemd.network.netdevs."20-${vxlanName}" = {
   #   netdevConfig = {
   #     Name = vxlanName;
@@ -190,4 +244,5 @@ in recursiveUpdate
     vrrp_gna_interval 0.000001
   '';
   services.keepalived.extraConfig = extraConfig;
-} geneveConfig
+}
+  geneveConfig
