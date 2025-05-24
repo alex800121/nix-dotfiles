@@ -18,7 +18,7 @@ in
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMYRhvHSun0BXMV1oBi93FncWVFEma5pv6fKeruccOuW alex800121@acer-tp"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICpxrX0RcNtg/wOxeJ7SUkUEVzWUYvZk4z0Khd7fxgVd root@acer-tp"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHv15uz9Ndk+y0SZ2L64OgjLXBV8JwTDHbYca9a/oYHx alex800121@oracle"
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHAmj2g3azH1O+1a1p8CK6csf1vSILXrLoHS5srPvFA2 root@oracle"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHudmbpZMo5vJ4m2WxV3dyw9BTapuoN6AdTnfZuugo99 root@oracle"
   ];
 
   nix.settings.substituters = [ "https://nix-community.cachix.org" ];
