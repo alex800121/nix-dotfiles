@@ -32,6 +32,7 @@ in
     [
       # Include the results of the hardware scan.
       # ../hardware/oracle2.nix
+      ./distributed-builds.nix
       ../programs/sshd
       ../programs/tailscale/server.nix
       ../programs/borgbackup/server.nix
