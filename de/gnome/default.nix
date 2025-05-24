@@ -50,8 +50,9 @@ in
               "auto-power-profile@dmy3k.github.io"
               "gtk4-ding@smedius.gitlab.com"
               "tailscale-status@maxgallup.github.com"
+              "tailscale@joaophi.github.com"
             ];
-            welcome-dialog-last-shown-version = "47.0";
+            welcome-dialog-last-shown-version = "48.1";
           };
           "org/gnome/shell/extensions/gtk4-ding" = {
             show-network-volumes = true;
@@ -162,6 +163,7 @@ in
     auto-power-profile
     gtk4-desktop-icons-ng-ding
     tailscale-status
+    tailscale-qs
   ];
 
   environment.variables.GSK_RENDERER = "gl";
