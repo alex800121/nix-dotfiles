@@ -5,7 +5,7 @@
   updateConfig = lib.recursiveUpdate defaultConfig userConfig;
   inherit (updateConfig) userName;
 in {
-  nixpkgs.config.allowUnfree = true;
+  # nixpkgs.config.allowUnfree = true;
   nix = {
     settings = {
       experimental-features = "nix-command flakes";
@@ -31,7 +31,7 @@ in {
   # You can update Home Manager without changing this value. See
   # the Home Manager release notes for a list of state version
   # changes in each release.
-  home.stateVersion = "24.11";
+  home.stateVersion = "25.05";
 
   home.sessionVariables = {
     BROWSER = "firefox";

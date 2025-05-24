@@ -11,7 +11,7 @@ let
   inherit (pkgs) system;
 in
 {
-  system.stateVersion = lib.mkDefault "24.11";
+  system.stateVersion = lib.mkDefault "25.05";
   boot.binfmt.emulatedSystems = builtins.filter (x: x != system) [
     "aarch64-linux"
     "x86_64-linux"
@@ -45,7 +45,7 @@ in
   services.kmscon.fonts = [
     {
       name = "Hack Nerd Font Mono";
-      package = pkgs.nerdfonts;
+      package = pkgs.nerd-fonts.hack;
     }
   ];
 
@@ -127,7 +127,7 @@ in
   time.timeZone = lib.mkDefault "Asia/Taipei";
 
   # Select internationalisation properties.
-  i18n.defaultLocale = "en_US.utf8";
+  i18n.defaultLocale = "en_US.UTF-8";
   i18n.inputMethod = {
     type = "fcitx5";
     enable = true;
@@ -171,7 +171,7 @@ in
   # security.tpm2.pkcs11.enable = true;
   # security.tpm2.tctiEnvironment.enable = true;
 
-  hardware.pulseaudio.enable = false;
+  # hardware.pulseaudio.enable = false;
   # services.pipewire.socketActivation = true;
   # services.pipewire.systemWide = true;
   services.pipewire = {
@@ -193,7 +193,7 @@ in
   fonts = {
     enableDefaultPackages = true;
     packages = with pkgs; [
-      nerdfonts
+      nerd-fonts.hack
       noto-fonts-cjk-sans
       noto-fonts-cjk-serif
       noto-fonts-emoji
@@ -283,7 +283,6 @@ in
   services.locate = {
     enable = true;
     package = pkgs.plocate;
-    localuser = null;
     interval = "hourly";
     # prunePaths = [ "/media/alex800121" ];
   };

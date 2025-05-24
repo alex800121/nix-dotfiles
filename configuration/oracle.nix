@@ -118,7 +118,7 @@ in
     };
   };
   time.timeZone = lib.mkDefault "Asia/Singapore";
-  i18n.defaultLocale = "en_US.utf8";
+  i18n.defaultLocale = "en_US.UTF-8";
 
   users.mutableUsers = true;
   users.users."${userName}" = {
@@ -175,7 +175,7 @@ in
 
   services.openssh.enable = true;
 
-  system.stateVersion = "24.11"; # Did you read the comment?
+  system.stateVersion = "25.05"; # Did you read the comment?
 
 }
 

@@ -1,5 +1,6 @@
 local iron = require("iron.core")
 local ht = require("haskell-tools")
+local view = require("iron.view")
 
 iron.setup {
   config = {
@@ -12,5 +13,6 @@ iron.setup {
         end,
       },
     },
+    repl_open_cmd = view.bottom(40),
   },
 }

@@ -70,7 +70,7 @@
     vimdiffAlias = true;
     extraPackages = with pkgs; [
       tree-sitter
-      nerdfonts
+      nerd-fonts.hack
       ripgrep
       fd
       haskell-language-server
