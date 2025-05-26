@@ -1,4 +1,4 @@
-{ config, pkgs, lib, userConfig, inputs, system, ... }:
+{ config, nixpkgsUnstable, pkgs, lib, userConfig, inputs, system, ... }:
 {
   home.sessionVariables."CODELLDB_PATH" = "${pkgs.vscode-extensions.vadimcn.vscode-lldb}/share/vscode/extensions/vadimcn.vscode-lldb/adapter/codelldb";
   home.sessionVariables."LIBLLDB_PATH" = "${pkgs.vscode-extensions.vadimcn.vscode-lldb}/share/vscode/extensions/vadimcn.vscode-lldb/lldb/lib/liblldb.so";
@@ -59,7 +59,7 @@
       nvim-dap
       nvim-dap-ui
       transparent-nvim
-      haskell-tools-nvim
+      nixpkgsUnstable.vimPlugins.haskell-tools-nvim
       toggleterm-nvim
       iron-nvim
       haskell-snippets-nvim

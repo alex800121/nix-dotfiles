@@ -137,8 +137,8 @@ local on_attach = function(client, bufnr)
   -- Mappings.
   -- See `:help vim.lsp.*` for documentation on any of the below functions
   whichkey.add({
-    {'<leader>w', group = "+Workspace Folder..." },
-    {'<leader>s', group = "+Set ... List" },
+    { '<leader>w', group = "+Workspace Folder..." },
+    { '<leader>s', group = "+Set ... List" },
   })
   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts('declaration'))
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts('definition'))
@@ -146,8 +146,8 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', 'gs', vim.lsp.buf.signature_help, bufopts('signature_help'))
   vim.keymap.set('n', 'gt', vim.lsp.buf.type_definition, bufopts('type definition'))
   vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts('references'))
-  vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts('Next diagnostic'))
-  vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts('Previous diagnostic'))
+  vim.keymap.set('n', ']d', function () vim.diagnostic.jump({count=1, float=true}) end, opts('Next diagnostic'))
+  vim.keymap.set('n', '[d', function () vim.diagnostic.jump({count=-1, float=true}) end, opts('Previous diagnostic'))
   vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts('hover'))
   vim.keymap.set('n', '<leader>o', vim.diagnostic.open_float, opts('Open float'))
   vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, bufopts('add workspace folder'))
@@ -205,6 +205,11 @@ lspconfig['nil_ls'].setup({
       formatting = {
         command = { "nixpkgs-fmt" },
       },
+      flake = {
+        autoArchive = true,
+        autoEvalInputs = true,
+        nixpkgsInputName = "nixos"
+      }
     },
   },
   capabilities = capabilities,

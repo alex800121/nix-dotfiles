@@ -140,22 +140,6 @@
         "type": "github"
       }
     },
-    "haskell-updates": {
-      "locked": {
-        "lastModified": 1748046153,
-        "narHash": "sha256-ml/3y9uPM++guOeYURUdnBi1+x4L7cqsbabNc1kOKz0=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "4a5acc987bdd1e7b3352d060c0ad0c2b23c6f3f7",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "ref": "haskell-updates",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -354,7 +338,6 @@
     "root": {
       "inputs": {
         "agenix": "agenix",
-        "haskell-updates": "haskell-updates",
         "home-manager": "home-manager_2",
         "lanzaboote": "lanzaboote",
         "musnix": "musnix",
