@@ -28,6 +28,8 @@ in
       [org.gnome.desktop.default-applications.terminal]
       exec='alacritty'
       exec-arg='-e'
+      [org.gnome.desktop.sound]
+      allow-volume-above-100-percent=true
     '';
   };
 
@@ -164,6 +166,7 @@ in
     gtk4-desktop-icons-ng-ding
     tailscale-status
     tailscale-qs
+    pkgs.gnome-tweaks
   ];
 
   environment.variables.GSK_RENDERER = "gl";
