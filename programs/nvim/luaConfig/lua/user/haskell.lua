@@ -17,7 +17,8 @@ vim.g.haskell_tools = {
     default_settings = {
       haskell = {
         -- The formatting providers.
-        formattingProvider = 'ormolu'
+        formattingProvider = 'ormolu',
+        cabalFormattingProvider = "cabal-gild"
       }
     },
     on_attach = function(client, bufnr, ht)

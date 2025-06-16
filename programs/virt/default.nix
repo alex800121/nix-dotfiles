@@ -13,7 +13,6 @@
     };
     spiceUSBRedirection.enable = true;
   };
-  # virtualisation.lxd.enable = true;
 
   environment.systemPackages = with pkgs; [
     virt-manager

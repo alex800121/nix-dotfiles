@@ -80,7 +80,8 @@
       haskellPackages.haskell-debug-adapter
       haskellPackages.fast-tags
       ormolu
-      nil
+      # nil
+      inputs.nil.packages."${system}".default
       lua-language-server
       nixpkgs-fmt
       vscode-extensions.vadimcn.vscode-lldb

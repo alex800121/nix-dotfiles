@@ -175,26 +175,6 @@ local on_attach = function(client, bufnr)
   -- })
 end
 
--- lspconfig['hls'].setup({
---   filetypes = { 'haskell', 'lhaskell', 'cabal' },
---   cmd = { "haskell-language-server-wrapper", "--lsp" },
---   root_dir = function(filepath)
---     return (
---       lspconfig.util.root_pattern('hie.yaml', 'stack.yaml', 'cabal.project')(filepath)
---       or lspconfig.util.root_pattern('*.cabal', 'package.yaml')(filepath)
---     )
---   end,
---   settings = {
---     haskell = {
---       cabalFormattingProvider = "cabalfmt",
---       formattingProvider = "ormolu"
---     }
---   },
---   single_file_support = true,
---   capabilities = capabilities,
---   on_attach = on_attach
--- })
-
 lspconfig['nil_ls'].setup({
   cmd = { "nil" },
   filetype = { "nix" },

@@ -28,8 +28,6 @@ in
       [org.gnome.desktop.default-applications.terminal]
       exec='alacritty'
       exec-arg='-e'
-      [org.gnome.desktop.sound]
-      allow-volume-above-100-percent=true
     '';
   };
 
@@ -38,6 +36,10 @@ in
     profiles.user.databases = [
       {
         settings = {
+          "org/gnome/desktop/sound" = {
+            allow-volume-above-100-percent = true;
+          };
+
           "org/gnome/mutter" = {
             experimental-features = [ "scale-monitor-framebuffer" ];
             dynamic-workspaces = true;

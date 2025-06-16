@@ -125,6 +125,11 @@ in
     ghcid
     ghc
     haskellPackages.hoogle
+    haskellPackages.cabal-gild
+    # haskellPackages.cabal-fmt
+    # haskellPackages.hls-cabal-fmt-plugin
+    llvm_15
+    clang_15
     rust-bin.stable.latest.complete
     telegram-desktop
     obs-studio
