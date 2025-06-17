@@ -30,6 +30,7 @@ in
     ../hardware/acer-tp.nix
     ../hardware/desktop.nix
     ../de/gnome
+    ../programs/seaweedfs
     ../programs/nix-ld
     ../programs/code-tunnel
     ../programs/sshd
@@ -60,6 +61,7 @@ in
   fileSystems."/".options = [ "noatime" "compress=zstd" ];
   fileSystems."/home".options = [ "noatime" "compress=zstd" ];
   fileSystems."/nix".options = [ "noatime" "compress=zstd" ];
+  fileSystems."/data".options = [ "noatime" "compress=zstd" ];
   fileSystems."/swap".options = [ "noatime" ];
   swapDevices = [{ device = "/swap/swapfile"; }];
 }

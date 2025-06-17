@@ -21,10 +21,10 @@
 
   boot.initrd.luks.devices."enc".device = "/dev/disk/by-uuid/ea1c5936-ac88-4b2e-9891-06eb29140ea7";
 
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/9745-B9D2";
-      fsType = "vfat";
-      options = [ "fmask=0077" "dmask=0077" ];
+  fileSystems."/nix" =
+    { device = "/dev/disk/by-uuid/9fb41848-319b-4166-9e4f-05db0ff15b78";
+      fsType = "btrfs";
+      options = [ "subvol=nix" ];
     };
 
   fileSystems."/swap" =
@@ -33,16 +33,22 @@
       options = [ "subvol=swap" ];
     };
 
-  fileSystems."/nix" =
-    { device = "/dev/disk/by-uuid/9fb41848-319b-4166-9e4f-05db0ff15b78";
-      fsType = "btrfs";
-      options = [ "subvol=nix" ];
-    };
-
   fileSystems."/home" =
     { device = "/dev/disk/by-uuid/9fb41848-319b-4166-9e4f-05db0ff15b78";
       fsType = "btrfs";
       options = [ "subvol=home" ];
+    };
+
+  fileSystems."/boot" =
+    { device = "/dev/disk/by-uuid/9745-B9D2";
+      fsType = "vfat";
+      options = [ "fmask=0077" "dmask=0077" ];
+    };
+
+  fileSystems."/data" =
+    { device = "/dev/disk/by-uuid/9fb41848-319b-4166-9e4f-05db0ff15b78";
+      fsType = "btrfs";
+      options = [ "subvol=data" ];
     };
 
   swapDevices = [ ];
@@ -52,8 +58,7 @@
   # still possible to use this option, but it's recommended to use it in conjunction
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   networking.useDHCP = lib.mkDefault true;
-  # networking.interfaces.enp0s20f0u1u4.useDHCP = lib.mkDefault true;
-  # networking.interfaces.wlan0.useDHCP = lib.mkDefault true;
+  # networking.interfaces.eth0.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
