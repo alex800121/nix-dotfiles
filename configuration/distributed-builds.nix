@@ -20,10 +20,12 @@ in
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHv15uz9Ndk+y0SZ2L64OgjLXBV8JwTDHbYca9a/oYHx alex800121@oracle"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHudmbpZMo5vJ4m2WxV3dyw9BTapuoN6AdTnfZuugo99 root@oracle"
   ];
+  nix.sshServe.write = true;
+  nix.sshServe.trusted = true;
 
   nix.settings.substituters = [ "https://nix-community.cachix.org" ];
   nix.settings.trusted-substituters = [ "https://nix-community.cachix.org" ];
-  nix.settings.trusted-users = [ "nix-ssh" "alex800121" "@wheel" ];
+  nix.settings.trusted-users = [ "alex800121" "@wheel" ];
   nix.settings.trusted-public-keys = [
     "nix-acer-tp:POOYVdWQp5avm9ZWd65SVcLdYiMNNx7Pfq/GtHr5WUc="
     "nix-fw13:yQd04YEg7RVa2KMfA8HtgYvTmki5BU0dVbJrRCLuEoU="
