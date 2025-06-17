@@ -189,6 +189,10 @@ in
   programs.zellij = {
     enable = true;
   };
+  xdg.configFile."config.kdl" = {
+    source = ../programs/zellij/config.kdl;
+    target = "zellij/config.kdl";
+  };
 
   programs.vscode = {
     # package = pkgs.vscode-fhs;
