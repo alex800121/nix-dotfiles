@@ -37,7 +37,8 @@ in
       ../programs/tailscale/server.nix
       ../programs/sshd
       ../programs/seaweedfs
-      ./hardware-configuration.nix
+      ../hardware/oracle2.nix
+      # ./hardware-configuration.nix
     ];
 
   # Use the systemd-boot EFI boot loader.

@@ -29,6 +29,7 @@ in
     ../hardware/laptop.nix
     ../de/gnome
     ../de/gnome/fw13
+    ../programs/seaweedfs
     ../programs/sshd
     ../programs/virt
     ../programs/tailscale/client.nix
