@@ -31,7 +31,10 @@ in
   imports =
     [
       # Include the results of the hardware scan.
-      ../hardware/oracle.nix
+      inputs.agenix.nixosModules.default
+      inputs.disko.nixosModules.disko
+      ../hardware/disko/oracle2.nix
+      ../hardware/oracle2.nix
       ./distributed-builds.nix
       ./ssh-serve.nix
       ../programs/seaweedfs
@@ -40,7 +43,6 @@ in
       # ../programs/borgbackup/server.nix
       (import ../programs/borgbackup/vaultwarden.nix [ "acer-tp" ])
       ../programs/vaultwarden
-      inputs.agenix.nixosModules.default
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -129,7 +131,10 @@ in
     isNormalUser = true;
     description = "${userName}";
     extraGroups = [ "networkmanager" "tss" "storage" "disk" "libvirtd" "audio" "systemd-network" "sudo" "wheel" "code-server" "input" ];
+    initialPassword = "";
+    uid = 1000;
   };
+  users.groups."users".gid = 100;
 
   # boot.supportedFilesystems = [ "btrfs" "vfat" ];
   boot.initrd = {
