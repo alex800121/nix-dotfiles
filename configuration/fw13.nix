@@ -24,6 +24,7 @@ in
     ./timezoned.nix
     # ./secure-boot.nix
     ./distributed-builds.nix
+    ./ssh-serve.nix
     ../hardware/amd.nix
     ../hardware/fw13.nix
     ../hardware/laptop.nix

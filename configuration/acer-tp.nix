@@ -25,6 +25,7 @@ in
     ./default.nix
     ./secure-boot.nix
     ./distributed-builds.nix
+    ./ssh-serve.nix
     ./timezoned.nix
     ./initrd-network.nix
     ../hardware/acer-tp.nix

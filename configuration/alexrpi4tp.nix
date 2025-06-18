@@ -3,6 +3,7 @@
   imports = [
     ./rpi4.nix
     ./distributed-builds.nix
+    ./ssh-serve.nix
     ../hardware/alexrpi4tp.nix
     ../programs/sshd
     ../programs/tailscale/server.nix

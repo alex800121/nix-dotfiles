@@ -34,6 +34,7 @@ in
       # ../hardware/oracle2.nix
       inputs.agenix.nixosModules.default
       inputs.disko.nixosModules.disko
+      ./distributed-builds.nix
       ../programs/tailscale/server.nix
       ../programs/sshd
       ../programs/seaweedfs
