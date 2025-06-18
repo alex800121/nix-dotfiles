@@ -6,15 +6,15 @@ let
   inherit (userConfig.tailscale) id;
   dbHosts = [ "acer-tp" "alexrpi4tp" "oracle" "oracle2" "oracle3" ];
   tsIp = "100.64.0.${toString id}";
-  domainName = "alex${hostName}.duckdns.org";
-  vwName = "vw.${domainName}";
+  # domainName = "alex${hostName}.duckdns.org";
+  # vwName = "vw.${domainName}";
   gateName = "alexgate.duckdns.org";
   vwGateName = "vw.${gateName}";
   port = config.services.mysql.settings.mysqld.port;
 in
 {
   imports = [
-    ../acme
+    # ../acme
     ../acme/gate.nix
     ../keepalived/vaultwarden.nix
   ];
@@ -119,12 +119,12 @@ in
   boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
   boot.kernel.sysctl."net.ipv6.conf.all.forwarding" = 1;
 
-  services.caddy.virtualHosts."${vwName}" = {
-    useACMEHost = domainName;
-    extraConfig = ''
-      reverse_proxy http://${config.services.vaultwarden.config.ROCKET_ADDRESS}:${config.services.vaultwarden.config.ROCKET_PORT}
-    '';
-  };
+  # services.caddy.virtualHosts."${vwName}" = {
+  #   useACMEHost = domainName;
+  #   extraConfig = ''
+  #     reverse_proxy http://${config.services.vaultwarden.config.ROCKET_ADDRESS}:${config.services.vaultwarden.config.ROCKET_PORT}
+  #   '';
+  # };
 
   services.caddy.virtualHosts."${vwGateName}" = {
     useACMEHost = gateName;
