@@ -246,6 +246,7 @@ in
     socat
     jq
     wl-clipboard
+    lemonade
     ripgrep
     gparted
     parted
