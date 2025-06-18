@@ -7,6 +7,16 @@
       userName = "alex800121";
       fontSize = 11.5;
       autoLogin = true;
+      tailscale = {
+        id = 5;
+        peers = [ 2 3 4 6 ];
+      };
+      keepalived.routers = [
+        {
+          id = 1;
+          priority = 3;
+        }
+      ];
     };
     extraModules = [
       ./oracle2.nix
@@ -24,6 +34,16 @@
       userName = "alex800121";
       fontSize = 11.5;
       autoLogin = true;
+      tailscale = {
+        id = 6;
+        peers = [ 2 3 4 5 ];
+      };
+      keepalived.routers = [
+        {
+          id = 1;
+          priority = 4;
+        }
+      ];
     };
     extraModules = [
       ./oracle2.nix
@@ -49,7 +69,7 @@
       ];
       tailscale = {
         id = 4;
-        peers = [ 2 3 ];
+        peers = [ 2 3 5 6 ];
       };
       keepalived.routers = [
         {
@@ -93,7 +113,7 @@
       url = "alexrpi4gate";
       tailscale = {
         id = 2;
-        peers = [ 4 3 ];
+        peers = [ 3 4 5 6 ];
       };
       keepalived.routers = [
         {
@@ -127,7 +147,7 @@
       ];
       tailscale = {
         id = 3;
-        peers = [ 2 4 ];
+        peers = [ 2 4 5 6 ];
       };
       keepalived.routers = [
         {
@@ -175,16 +195,6 @@
         fontSize = 12;
         autoLogin = false;
         soundcardPciId = "c1:00.6";
-        # tailscale = {
-        #   id = 5;
-        #   peers = [ 2 3 4 ];
-        # };
-        # keepalived.routers = [
-        #   {
-        #     id = 1;
-        #     priority = 3;
-        #   }
-        # ];
       };
       extraModules = [
         ./fw13.nix
