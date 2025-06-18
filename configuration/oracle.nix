@@ -31,7 +31,7 @@ in
   imports =
     [
       # Include the results of the hardware scan.
-      # ../hardware/oracle2.nix
+      ../hardware/oracle.nix
       ./distributed-builds.nix
       ./ssh-serve.nix
       ../programs/seaweedfs

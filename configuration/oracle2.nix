@@ -34,11 +34,12 @@ in
       # ../hardware/oracle2.nix
       inputs.agenix.nixosModules.default
       inputs.disko.nixosModules.disko
+      ../hardware/disko/oracle2.nix
+      ../hardware/oracle2.nix
       ./distributed-builds.nix
       ../programs/tailscale/server.nix
       ../programs/sshd
       ../programs/seaweedfs
-      ../hardware/oracle2.nix
       # ./hardware-configuration.nix
     ];
 

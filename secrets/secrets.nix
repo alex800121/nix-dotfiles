@@ -11,6 +11,12 @@ let
   oracle-user = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHv15uz9Ndk+y0SZ2L64OgjLXBV8JwTDHbYca9a/oYHx";
   oracle-system = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHAmj2g3azH1O+1a1p8CK6csf1vSILXrLoHS5srPvFA2";
   oracle = [ oracle-user oracle-system ];
+  oracle2-user = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBn3nkUDVHY0ZDAxo6bAjMb2k5ic7G6RCDQkBOtJo8dd";
+  oracle2-system = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFvDQec6+LCW0+KHPGwIAofQEalfPNa7M5gUsPBIAfnM";
+  oracle2 = [ oracle2-user oracle2-system ];
+  oracle3-user = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGobHzAuouhLf9IXr9eJl2saxFkal+cxcTAWP8EYo+Zl";
+  oracle3-system = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM1xdQ/DG5W62vO+cJZTEhiOd0V2N9CBqwhnd3xA4Vqj";
+  oracle3 = [ oracle3-user oracle3-system ];
 in
 {
   "ssh_host_borgbackup_acer-tp_vaultwarden_db_alexrpi4tp.age".publicKeys = alexrpi4tp;
@@ -18,7 +24,8 @@ in
   "ssh_host_borgbackup_acer-tp_vaultwarden_alexrpi4tp.age".publicKeys = alexrpi4tp;
   "ssh_host_borgbackup_oracle_vaultwarden_alexrpi4tp.age".publicKeys = alexrpi4tp;
   "passphrase_borgbackup_vaultwarden_alexrpi4tp.age".publicKeys = alexrpi4tp;
-  "env_vaultwarden.age".publicKeys = alexrpi4tp ++ oracle ++ acer-tp ++ fw13;
+  "env_vaultwarden.age".publicKeys = alexrpi4tp ++ oracle ++ oracle2 ++ oracle3 ++ acer-tp ++ fw13;
   "ddtoken.age".publicKeys = alexrpi4tp ++ oracle ++ acer-tp ++ fw13;
-  "tsapi.age".publicKeys = alexrpi4tp ++ oracle ++ acer-tp ++ fw13;
+  "tsapi.age".publicKeys = alexrpi4tp ++ oracle ++ oracle2 ++ oracle3 ++ acer-tp ++ fw13;
+  "tsauth.age".publicKeys = alexrpi4tp ++ oracle ++ oracle2 ++ oracle3 ++ acer-tp ++ fw13;
 }
