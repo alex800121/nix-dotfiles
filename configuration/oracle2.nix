@@ -40,7 +40,7 @@ in
       ../programs/tailscale/server.nix
       ../programs/sshd
       ../programs/seaweedfs
-      ../programs/vaultwarden
+      # ../programs/vaultwarden
     ];
 
   # Use the systemd-boot EFI boot loader.
