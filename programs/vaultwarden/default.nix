@@ -4,7 +4,7 @@ let
   inherit (userConfig.keepalived) routers;
   inherit (builtins) toString;
   inherit (userConfig.tailscale) id;
-  dbHosts = [ "acer-tp" "alexrpi4tp" "oracle" "fw13" ];
+  dbHosts = [ "acer-tp" "alexrpi4tp" "oracle" "oracle2" "oracle3" ];
   tsIp = "100.64.0.${toString id}";
   domainName = "alex${hostName}.duckdns.org";
   vwName = "vw.${domainName}";
