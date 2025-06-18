@@ -61,12 +61,6 @@
       userName = "alex800121";
       fontSize = 11.5;
       autoLogin = true;
-      borgbackupRepo = [
-        {
-          repoName = "vaultwarden";
-          clients = [ "alexrpi4tp" ];
-        }
-      ];
       tailscale = {
         id = 4;
         peers = [ 2 3 ];
@@ -144,7 +138,7 @@
       borgbackupRepo = [
         {
           repoName = "vaultwarden";
-          clients = [ "alexrpi4tp" ];
+          clients = [ "oracle" "alexrpi4tp" ];
         }
       ];
       tailscale = {

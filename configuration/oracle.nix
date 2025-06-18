@@ -37,7 +37,8 @@ in
       ../programs/seaweedfs
       ../programs/sshd
       ../programs/tailscale/server.nix
-      ../programs/borgbackup/server.nix
+      # ../programs/borgbackup/server.nix
+      (import ../programs/borgbackup/vaultwarden.nix [ "acer-tp" ])
       ../programs/vaultwarden
       inputs.agenix.nixosModules.default
     ];

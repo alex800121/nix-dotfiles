@@ -11,8 +11,7 @@
     ../programs/code-tunnel
     # ../programs/duckdns
     ../programs/vaultwarden
-    (import ../programs/borgbackup/vaultwarden.nix [ "acer-tp" "oracle" ])
-    # ../programs/borgbackup/vaultwarden.nix
+    (import ../programs/borgbackup/vaultwarden.nix [ "acer-tp" ])
     inputs.agenix.nixosModules.default
   ];
 }

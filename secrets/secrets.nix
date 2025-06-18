@@ -20,10 +20,10 @@ let
 in
 {
   "ssh_host_borgbackup_acer-tp_vaultwarden_db_alexrpi4tp.age".publicKeys = alexrpi4tp;
-  "ssh_host_borgbackup_oracle_vaultwarden_db_alexrpi4tp.age".publicKeys = alexrpi4tp;
   "ssh_host_borgbackup_acer-tp_vaultwarden_alexrpi4tp.age".publicKeys = alexrpi4tp;
-  "ssh_host_borgbackup_oracle_vaultwarden_alexrpi4tp.age".publicKeys = alexrpi4tp;
-  "passphrase_borgbackup_vaultwarden_alexrpi4tp.age".publicKeys = alexrpi4tp;
+  "ssh_host_borgbackup_acer-tp_vaultwarden_db_oracle.age".publicKeys = oracle;
+  "ssh_host_borgbackup_acer-tp_vaultwarden_oracle.age".publicKeys = oracle;
+  "passphrase_borgbackup_vaultwarden.age".publicKeys = alexrpi4tp ++ oracle;
   "env_vaultwarden.age".publicKeys = alexrpi4tp ++ oracle ++ oracle2 ++ oracle3 ++ acer-tp ++ fw13;
   "ddtoken.age".publicKeys =alexrpi4tp ++ oracle ++ oracle2 ++ oracle3 ++ acer-tp ++ fw13; 
   "tsapi.age".publicKeys = alexrpi4tp ++ oracle ++ oracle2 ++ oracle3 ++ acer-tp ++ fw13;

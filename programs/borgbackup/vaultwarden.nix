@@ -1,7 +1,7 @@
 servers: { config, lib, pkgs, ... }:
 let
   inherit (config.networking) hostName;
-  passphrase = "passphrase_borgbackup_vaultwarden_${hostName}";
+  passphrase = "passphrase_borgbackup_vaultwarden";
   dbUserName = config.services.mysql.user;
   dbGroupName = config.services.mysql.group;
   userName = "vaultwarden";
