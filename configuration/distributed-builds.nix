@@ -14,6 +14,7 @@ in
     "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
     "nix-alexrpi4tp:VvDq2N5Uq0wxLD1s78xD7odwk9zCSt8dqu6cdP5n8ws="
     "nix-oracle:LzSqFMTgbYSaQ7+UKD7FmyclOi/iwh7GqVcyuETKsV0="
+    "nix-common:tfkDg1lt8EUsog/Gex0wLDW61jqUslDg9nevljQ6aKM="
   ];
 
   nix.buildMachines = lib.filter (x: x.hostName != hostName)

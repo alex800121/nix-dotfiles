@@ -134,7 +134,7 @@ in
     initialPassword = "";
     uid = 1000;
   };
-  users.groups."users".gid = 100;
+  users.groups.users.gid = 100;
 
   # boot.supportedFilesystems = [ "btrfs" "vfat" ];
   boot.initrd = {

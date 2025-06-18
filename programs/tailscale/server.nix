@@ -29,7 +29,7 @@ in
   imports = [ ./default.nix ];
   services.tailscale.useRoutingFeatures = "server";
   services.tailscale.extraUpFlags = [
-    ''--advertise-routes=""''
+    "--advertise-routes="
   ];
   services.tailscale.extraSetFlags = [
     "--advertise-exit-node"

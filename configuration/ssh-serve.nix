@@ -1,11 +1,11 @@
-{ userConfig, lib, ... }:
-let
-  setCred = "nix.key:" + lib.strings.concatStrings
-    (lib.strings.splitString
-      "\n"
-      (builtins.readFile ../secrets/nix-${userConfig.hostName}));
-in
+{ config, userConfig, lib, ... }:
 {
+  age.secrets.nix-common = {
+    file = ../secrets/nix_common.age;
+    owner = "nix-ssh";
+    group = "nix-ssh";
+    mode = "600";
+  };
   nix.sshServe.enable = true;
   nix.sshServe.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBN61RwZQS17DGsNh0qV6OpZBQ2569cCyXY38G4T2Vc+ alex800121@alexrpi4tp"
@@ -25,17 +25,8 @@ in
   nix.sshServe.trusted = true;
 
   nix.extraOptions = ''
-    secret-key-files = /run/credentials/nix-daemon.service/nix.key
+    secret-key-files = ${config.age.secrets.nix-common.path}
     builders-use-substitutes = true
   '';
-
-  # age.secrets."nix-${hostName}" = {
-  #   file = ../secrets/nix-${hostName}.age;
-  #   owner = "nix-ssh";
-  #   group = "nix-ssh";
-  #   mode = "600";
-  # };
-
-  systemd.services.nix-daemon.serviceConfig.SetCredentialEncrypted = setCred;
 
 }
