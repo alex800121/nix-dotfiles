@@ -123,6 +123,9 @@ in
       })
       peers;
   };
+  systemd.services.keepalived.wants = [ "tailscale-server-ip.service" "network-online.target" "tailscaled.service" ];
+  systemd.services.keepalived.after = [ "tailscale-server-ip.service" "network-online.target" "tailscaled.service" ];
+  systemd.services.keepalived.requires = [ "tailscale-server-ip.service" "network-online.target" "tailscaled.service" ];
   systemd.services.keepalived.postStop = updateScript;
   systemd.services.keepalived.postStart = updateScript;
   services.keepalived.enable = true;

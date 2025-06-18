@@ -17,7 +17,7 @@ let
           --url https://api.tailscale.com/api/v2/device/$TS_NODE_ID/ip \
           -u "$TS_API_TOKEN:" \
           --header 'Content-Type: application/json' \
-          --data '$POST_IP'
+          --data "$POST_IP"
       echo "Change tailscale server IP from $TS_NODE_IP to ${tsIp}"
     else
       echo "No need to set IP"
@@ -33,11 +33,12 @@ in
     "--accept-routes=true"
   ];
 
-  systemd.services."tailscale_server_ip" = {
+  systemd.services."tailscale-server-ip" = {
     enable = true;
     description = "Set tailscale server ip";
-    wantedBy = [ "network-online.target" "tailscaled.service" ];
-    after = [ "network-online.target" "tailscaled.service" ];
+    wantedBy = [ "tailscaled.service" ];
+    requires = [ "tailscaled.service" "network-online.target" ];
+    after = [ "tailscaled.service" "network-online.target" ];
     path = with pkgs; [
       coreutils
       curl

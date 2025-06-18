@@ -70,8 +70,9 @@ in
       };
     };
   };
-  systemd.services.mysql.wants = [ "network-online.target" "tailscaled.service" ];
-  systemd.services.mysql.after = [ "network-online.target" "tailscaled.service" ];
+  systemd.services.mysql.wants = [ "tailscale-server-ip.service" "network-online.target" "tailscaled.service" ];
+  systemd.services.mysql.after = [ "tailscale-server-ip.service" "network-online.target" "tailscaled.service" ];
+  systemd.services.mysql.requires = [ "tailscale-server-ip.service" "network-online.target" "tailscaled.service" ];
   systemd.services.mysql.serviceConfig.Restart = lib.mkForce "on-failure";
   systemd.services.mysql.path = with pkgs; [
     mariadb
