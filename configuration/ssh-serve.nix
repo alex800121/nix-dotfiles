@@ -16,6 +16,8 @@ in
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICpxrX0RcNtg/wOxeJ7SUkUEVzWUYvZk4z0Khd7fxgVd root@acer-tp"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHv15uz9Ndk+y0SZ2L64OgjLXBV8JwTDHbYca9a/oYHx alex800121@oracle"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHudmbpZMo5vJ4m2WxV3dyw9BTapuoN6AdTnfZuugo99 root@oracle"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBn3nkUDVHY0ZDAxo6bAjMb2k5ic7G6RCDQkBOtJo8dd alex800121@oracle2"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBYAa4EReVbKim6EeXqwlFB88zmajL31WWfVsvIOO1Lc root@oracle2"
   ];
   nix.sshServe.write = true;
   nix.sshServe.trusted = true;
