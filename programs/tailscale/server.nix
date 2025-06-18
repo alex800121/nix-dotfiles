@@ -7,17 +7,20 @@ let
     TS_ID_IP=$(curl --request GET \
                       --url https://api.tailscale.com/api/v2/tailnet/-/devices?fields=default \
                       -u "$TS_API_TOKEN:" \
-                        | jq '.[].[] | select(.hostname=="oracle2") \
-                        | {id: .nodeId, addr: (.addresses.[] | select(test("100")))}')
+                        | jq '.[].[] | select(.hostname=="${userConfig.hostName}") 
+                                    | {id: .nodeId, addr: (.addresses.[] | select(test("100")))}')
     TS_NODE_IP=$(echo $TS_ID_IP | jq -r .addr)
     if [ "$TS_NODE_IP" != "${tsIp}" ]; then
-      TS_NODE_ID=$(echo $TS_ID_ID | jq -r .id)
-      POST_IP="{\"ipv4\":\"$TS_NODE_IP\"}"
-      curl/bin/curl --request POST \
+      TS_NODE_ID=$(echo $TS_ID_IP | jq -r .id)
+      POST_IP="{\"ipv4\":\"${tsIp}\"}"
+      curl --request POST \
           --url https://api.tailscale.com/api/v2/device/$TS_NODE_ID/ip \
           -u "$TS_API_TOKEN:" \
           --header 'Content-Type: application/json' \
-          --data "$POST_IP"
+          --data '$POST_IP'
+      echo "Change tailscale server IP from $TS_NODE_IP to ${tsIp}"
+    else
+      echo "No need to set IP"
     fi
     unset TS_API_TOKEN
   '';
