@@ -5,6 +5,7 @@ in
 {
   programs.ssh = {
     startAgent = true;
+    forwardX11 = true;
     # extraConfig = ''
     #   Host acer-tp-dd
     #       Hostname alexacer-tp.duckdns.org
@@ -25,7 +26,7 @@ in
       PasswordAuthentication = false;
       # GatewayPorts = "yes";
       GatewayPorts = "clientspecified";
-      X11Forwarding = false;
+      X11Forwarding = true;
     };
     extraConfig = ''
       PermitTunnel yes

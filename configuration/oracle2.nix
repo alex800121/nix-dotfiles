@@ -169,6 +169,7 @@ in
     fastfetch
     git
     inputs.agenix.packages.${system}.default
+    wl-clipboard
   ];
   environment.variables = {
     EDITOR = "nvim";

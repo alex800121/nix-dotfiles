@@ -40,6 +40,7 @@
     wget
     git
     btrfs-progs
+    wl-clipboard
   ];
 
   environment.variables = {
