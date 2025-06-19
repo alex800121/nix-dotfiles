@@ -222,7 +222,9 @@ in
     isNormalUser = true;
     description = "${userName}";
     extraGroups = [ "networkmanager" "tss" "storage" "disk" "libvirtd" "audio" "systemd-network" "sudo" "wheel" "code-server" "input" ];
+    uid = 1000;
   };
+  users.groups.users.gid = 100;
 
   security.sudo.wheelNeedsPassword = false;
 

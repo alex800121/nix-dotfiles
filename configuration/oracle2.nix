@@ -130,7 +130,9 @@ in
     description = "${userName}";
     extraGroups = [ "networkmanager" "tss" "storage" "disk" "libvirtd" "audio" "systemd-network" "sudo" "wheel" "code-server" "input" ];
     initialPassword = "";
+    uid = 1000;
   };
+  users.groups.users.gid = 100;
 
   # boot.supportedFilesystems = [ "btrfs" "vfat" ];
   boot.initrd = {
@@ -158,7 +160,7 @@ in
   boot.initrd.systemd.network.networks."00-eth0" = cfg;
   boot.initrd.network.flushBeforeStage2 = true;
   boot.initrd.systemd.enable = true;
-  # boot.initrd.systemd.tpm2.enable = true;
+  boot.initrd.systemd.tpm2.enable = true;
 
   environment.systemPackages = with pkgs; [
     neovim
