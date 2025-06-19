@@ -21,23 +21,26 @@ let
                               }')
     echo $TS_INFO
 
+    TS_NODE_ID=$(echo $TS_INFO | jq -r .id)
+
     TS_ROUTES=$(echo $TS_INFO | jq -r '{routes}')
-    curl --request POST \
-        --url https://api.tailscale.com/api/v2/device/$TS_NODE_ID/routes \
-        -u "$TS_API_TOKEN:" \
-        --header 'Content-Type: application/json' \
-        --data "$TS_ROUTES"
+    RESPONSE=$(curl --request POST \
+                    --url https://api.tailscale.com/api/v2/device/$TS_NODE_ID/routes \
+                    -u "$TS_API_TOKEN:" \
+                    --header 'Content-Type: application/json' \
+                    --data "$TS_ROUTES")
+    echo $RESPONSE
     echo "Advertised exit node"
 
-    TS_NODE_IP=$(echo $TS_INFO | jq -r .addr)
+    TS_NODE_IP=$(echo $TS_INFO | jq -r .ip)
     if [ "$TS_NODE_IP" != "${tsIp}" ]; then
-      TS_NODE_ID=$(echo $TS_INFO | jq -r .id)
       POST_IP="{\"ipv4\":\"${tsIp}\"}"
-      curl --request POST \
-          --url https://api.tailscale.com/api/v2/device/$TS_NODE_ID/ip \
-          -u "$TS_API_TOKEN:" \
-          --header 'Content-Type: application/json' \
-          --data "$POST_IP"
+      RESPONSE=$(curl --request POST \
+                      --url https://api.tailscale.com/api/v2/device/$TS_NODE_ID/ip \
+                      -u "$TS_API_TOKEN:" \
+                      --header 'Content-Type: application/json' \
+                      --data "$POST_IP")
+      echo $RESPONSE
       echo "Change tailscale server IP from $TS_NODE_IP to ${tsIp}"
     else
       echo "No need to set server IP"
