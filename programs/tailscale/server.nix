@@ -2,16 +2,36 @@
 let
   inherit (userConfig.tailscale) id;
   tsIp = "100.64.0.${toString id}";
-  updateServerIp = ''
+  updateServer = ''
     TS_API_TOKEN=$(cat ${config.age.secrets.tsServerApi.path})
-    TS_ID_IP=$(curl --request GET \
-                      --url https://api.tailscale.com/api/v2/tailnet/-/devices?fields=default \
-                      -u "$TS_API_TOKEN:" \
-                        | jq '.[].[] | select(.hostname=="${userConfig.hostName}") 
-                                    | {id: .nodeId, addr: (.addresses.[] | select(test("100")))}')
-    TS_NODE_IP=$(echo $TS_ID_IP | jq -r .addr)
+    TS_INFO=$(curl \
+                --request GET \
+                --url https://api.tailscale.com/api/v2/tailnet/-/devices?fields=all \
+                -u "$TS_API_TOKEN:" \
+                    | jq '.[].[]
+                            | select(.hostname=="${userConfig.hostName}")
+                            | {
+                                id: .nodeId,
+                                ip: (.addresses.[] | select(startswith("100"))),
+                                routes: [ (.enabledRoutes.[] 
+                                            | select(.!="0.0.0.0/0" and .!="::/0")),
+                                          "0.0.0.0/0",
+                                          "::/0"
+                                        ]
+                              }')
+    echo $TS_INFO
+
+    TS_ROUTES=$(echo $TS_INFO | jq -r '{routes}')
+    curl --request POST \
+        --url https://api.tailscale.com/api/v2/device/$TS_NODE_ID/routes \
+        -u "$TS_API_TOKEN:" \
+        --header 'Content-Type: application/json' \
+        --data "$TS_ROUTES"
+    echo "Advertised exit node"
+
+    TS_NODE_IP=$(echo $TS_INFO | jq -r .addr)
     if [ "$TS_NODE_IP" != "${tsIp}" ]; then
-      TS_NODE_ID=$(echo $TS_ID_IP | jq -r .id)
+      TS_NODE_ID=$(echo $TS_INFO | jq -r .id)
       POST_IP="{\"ipv4\":\"${tsIp}\"}"
       curl --request POST \
           --url https://api.tailscale.com/api/v2/device/$TS_NODE_ID/ip \
@@ -20,7 +40,7 @@ let
           --data "$POST_IP"
       echo "Change tailscale server IP from $TS_NODE_IP to ${tsIp}"
     else
-      echo "No need to set IP"
+      echo "No need to set server IP"
     fi
     unset TS_API_TOKEN
   '';
@@ -47,7 +67,7 @@ in
       curl
       jq
     ];
-    script = updateServerIp;
+    script = updateServer;
     serviceConfig = {
       Type = "oneshot";
       Restart = "on-failure";

@@ -177,6 +177,7 @@ in
     inputs.agenix.packages.${system}.default
     wl-clipboard
     lemonade
+    jq
   ];
   environment.variables = {
     EDITOR = "nvim";

@@ -41,6 +41,8 @@
     git
     btrfs-progs
     wl-clipboard
+    jq
+    lemondae
   ];
 
   environment.variables = {
