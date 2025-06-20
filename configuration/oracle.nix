@@ -180,6 +180,9 @@ in
     lemonade
     jq
   ];
+
+  documentation.man.generateCaches = true;
+
   environment.variables = {
     EDITOR = "nvim";
     VISUAL = "nvim";

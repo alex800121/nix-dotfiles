@@ -263,6 +263,7 @@ in
     gcc
     conntrack-tools
   ];
+  documentation.man.generateCaches = true;
 
   programs.localsend.enable = true;
   programs.localsend.openFirewall = true;

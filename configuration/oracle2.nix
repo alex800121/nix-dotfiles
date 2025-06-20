@@ -163,6 +163,8 @@ in
   boot.initrd.systemd.enable = true;
   # boot.initrd.systemd.tpm2.enable = true;
 
+  documentation.man.generateCaches = true;
+
   environment.systemPackages = with pkgs; [
     neovim
     wget
