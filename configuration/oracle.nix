@@ -135,6 +135,7 @@ in
     uid = 1000;
   };
   users.groups.users.gid = 100;
+  security.sudo.wheelNeedsPassword = false;
 
   # boot.supportedFilesystems = [ "btrfs" "vfat" ];
   boot.initrd = {
@@ -150,9 +151,9 @@ in
       };
     };
   };
-  boot.initrd.luks.devices."enc".preLVM = true;
-  boot.initrd.luks.devices."enc".allowDiscards = true;
-  boot.initrd.luks.devices."enc".bypassWorkqueues = true;
+  # boot.initrd.luks.devices."enc".preLVM = true;
+  # boot.initrd.luks.devices."enc".allowDiscards = true;
+  # boot.initrd.luks.devices."enc".bypassWorkqueues = true;
   fileSystems."/".options = [ "noatime" "compress=zstd" ];
   fileSystems."/home".options = [ "noatime" "compress=zstd" ];
   fileSystems."/nix".options = [ "noatime" "compress=zstd" ];
@@ -162,7 +163,7 @@ in
   boot.initrd.systemd.network.networks."00-eth0" = cfg;
   boot.initrd.network.flushBeforeStage2 = true;
   boot.initrd.systemd.enable = true;
-  boot.initrd.systemd.tpm2.enable = true;
+  # boot.initrd.systemd.tpm2.enable = true;
 
   environment.systemPackages = with pkgs; [
     neovim

@@ -23,6 +23,14 @@ let
 
     TS_NODE_ID=$(echo $TS_INFO | jq -r .id)
 
+    RESPONSE=$(curl --request POST \
+                    --url https://api.tailscale.com/api/v2/device/$TS_NODE_ID/key \
+                    -u "$TS_API_TOKEN:" \
+                    --header 'Content-Type: application/json' \
+                    --data "{\"keyExpiryDisabled\": true}")
+    echo $RESPONSE
+    echo "Expiry disabled"
+
     TS_ROUTES=$(echo $TS_INFO | jq -r '{routes}')
     RESPONSE=$(curl --request POST \
                     --url https://api.tailscale.com/api/v2/device/$TS_NODE_ID/routes \
@@ -55,16 +63,20 @@ in
     "--advertise-routes="
   ];
   services.tailscale.extraSetFlags = [
-    "--advertise-exit-node"
     "--accept-routes=true"
+    "--advertise-exit-node"
   ];
-
+  systemd.services."tailscaled-set" = {
+    requires = [ "tailscaled-autoconnect.service" "tailscaled.service" "network-online.target" ];
+    after = [ "tailscaled-autoconnect.service" "tailscaled.service" "network-online.target" ];
+  };
   systemd.services."tailscale-server-ip" = {
     enable = true;
     description = "Set tailscale server ip";
     wantedBy = [ "tailscaled.service" ];
-    requires = [ "tailscaled.service" "network-online.target" ];
-    after = [ "tailscaled.service" "network-online.target" ];
+    requires = [ "tailscaled-set.service" "tailscaled.service" "network-online.target" ];
+    after = [ "tailscaled-set.service" "tailscaled.service" "network-online.target" ];
+    restartIfChanged = true;
     path = with pkgs; [
       coreutils
       curl
