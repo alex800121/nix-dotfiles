@@ -310,6 +310,11 @@ in
   programs.localsend.enable = true;
   programs.localsend.openFirewall = true;
 
+  environment.etc.inputrc = {
+    enable = true;
+    source = ./inputrc;
+  };
+
   environment.variables = {
     EDITOR = "nvim";
     VISUAL = "nvim";
