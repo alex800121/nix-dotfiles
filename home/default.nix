@@ -52,42 +52,6 @@ in
   # Let Home Manager install and manage itself.
   # programs.home-manager.enable = true;
 
-  programs.bash = {
-    enable = true;
-    enableCompletion = true;
-    shellOptions = [
-      "histappend"
-      "checkwinsize"
-      "extglob"
-      "globstar"
-      "checkjobs"
-      "-cdspell"
-    ];
-    shellAliases = {
-      ls = "ls --color=auto";
-      ll = "ls -alF";
-      la = "ls -A";
-      l = "ls -CF";
-      nv = "nvim";
-    };
-    # historyControl = [ "ignoredups" "ignorespace" ];
-    historyFileSize = 100000;
-    historySize = 10000;
-    /* bashrcExtra = ''
-      PS1='\[\033[01;34m\]\W \[\033[00m\]\$ '
-      set -o vi
-      HISTCONTROL=ignoreboth
-    ''; */
-    bashrcExtra = ''
-      if [ -z "''${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
-        debian_chroot=$(cat /etc/debian_chroot)
-      fi
-
-      PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w \$\[\033[00m\] '
-      set -o vi
-      HISTCONTROL=ignoreboth
-    '';
-  };
   programs.readline = {
     enable = true;
     extraConfig = "set completion-ignore-case On";

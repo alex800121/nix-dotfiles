@@ -34,6 +34,7 @@ in
     ../programs/sshd
     ../programs/virt
     ../programs/tailscale/client.nix
+    ../programs/postgresql
     inputs.agenix.nixosModules.default
     # ../programs/vaultwarden
   ];
