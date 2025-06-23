@@ -59,7 +59,12 @@ in {
     cabal-install
     ghcid
     ghc
+    w3m
   ];
+  home.file.".w3m/config" = {
+    enable = true;
+    source = ../programs/w3m/config;
+  };
 
   programs.git = {
     enable = true;

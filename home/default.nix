@@ -68,7 +68,12 @@ in
     enable = true;
   };
 
+  home.file.".w3m/config" = {
+    enable = true;
+    source = ../programs/w3m/config;
+  };
   home.packages = with pkgs; [
+    w3m
     graphviz
     vlc
     firefox

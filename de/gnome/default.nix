@@ -51,7 +51,7 @@ in
               "appindicatorsupport@rgcjonas.gmail.com"
               "kimpanel@kde.org"
               "drive-menu@gnome-shell-extensions.gcampax.github.com"
-              "auto-power-profile@dmy3k.github.io"
+              # "auto-power-profile@dmy3k.github.io"
               "gtk4-ding@smedius.gitlab.com"
               "tailscale-status@maxgallup.github.com"
               "tailscale@joaophi.github.com"
@@ -164,7 +164,7 @@ in
     kimpanel
     appindicator
     xwayland-indicator
-    auto-power-profile
+    # auto-power-profile
     gtk4-desktop-icons-ng-ding
     tailscale-status
     tailscale-qs

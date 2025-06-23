@@ -75,12 +75,12 @@ lib.foldl'
 {
   users.extraUsers."${dbUserName}" = {
     createHome = true;
-    home = "/home/${dbUserName}";
+    home = "/var/lib/${dbUserName}";
     extraGroups = [ groupName ];
   };
   users.extraUsers."${userName}" = {
     createHome = true;
-    home = "/home/${userName}";
+    home = "/var/lib/${userName}";
   };
   age.secrets."${passphrase}" = {
     file = ../../secrets/${passphrase}.age;
