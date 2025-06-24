@@ -1,14 +1,13 @@
 { pkgs, lib, userConfig, nixpkgsUnstable, ... }:
 let
-  defaultConfig = {
-    fontSize = 11.5;
-  };
-  updateConfig = lib.recursiveUpdate defaultConfig userConfig;
-  inherit (updateConfig) userName;
-  inherit (pkgs) system;
+  inherit (userConfig) userName;
 in
 {
 
+  imports = [
+    ../programs/kitty
+    ../programs/alacritty
+  ];
   # nixpkgs.config.allowUnfree = true;
   nix = {
     settings = {
@@ -147,12 +146,6 @@ in
   };
   programs.htop = {
     enable = true;
-  };
-
-  programs.alacritty = {
-    enable = true;
-    package = pkgs.alacritty;
-    settings = import ../programs/alacritty/alacritty-settings.nix updateConfig;
   };
 
   programs.zellij = {

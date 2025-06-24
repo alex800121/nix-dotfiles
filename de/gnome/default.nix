@@ -24,10 +24,14 @@ in
   # Enable the GNOME Desktop Environment.
   services.xserver.desktopManager.gnome = {
     enable = true;
+    # extraGSettingsOverrides = ''
+    #   [org.gnome.desktop.default-applications.terminal]
+    #   exec='alacritty'
+    #   exec-arg='-e'
+    # '';
     extraGSettingsOverrides = ''
       [org.gnome.desktop.default-applications.terminal]
-      exec='alacritty'
-      exec-arg='-e'
+      exec='kitty'
     '';
   };
 
@@ -124,7 +128,7 @@ in
 
           "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
             binding = "<Super>t";
-            command = "alacritty";
+            command = "kitty";
             name = "Terminal";
           };
 
@@ -138,7 +142,7 @@ in
             "google-chrome.desktop"
             "spotify.desktop"
             "code.desktop"
-            "Alacritty.desktop"
+            "kitty.desktop"
             "org.gnome.Nautilus.desktop"
             "writer.desktop"
           ];

@@ -155,12 +155,12 @@ in
       if [ "$TERM" != "dumb" ] || [ -n "$INSIDE_EMACS" ]; then
         USER_COLOR="1;31"
         ((UID)) && USER_COLOR="1;32"
-        PS1="\n\[\e[\[$USER_COLOR\]m\]\u@\h\[\e[0m\]:\[\e[1;34m\]\w \$\[\e[0m\] "
+        PS1="\n\e[\[$USER_COLOR\]m\u@\h\e[0m:\e[1;34m\w \$\e[0m "
         if [ -z "$INSIDE_EMACS" ]; then
-          PS1="\[\e]0;\u@\h:\w\a\]$PS1"
+          PS1="\e]0;\u@\h:\w\a$PS1"
         fi
         if test "$TERM" = "xterm"; then
-          PS1="\[\e]2;\h:\u:\w\007\]$PS1"
+          PS1="\e]2;\h:\u:\w\007$PS1"
         fi
       fi
     '';
