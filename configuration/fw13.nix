@@ -34,6 +34,8 @@ in
     ../programs/virt
     ../programs/tailscale/client.nix
     ../programs/postgresql
+    ../programs/kitty
+    ../programs/alacritty
     inputs.agenix.nixosModules.default
   ];
 

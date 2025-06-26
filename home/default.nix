@@ -5,8 +5,6 @@ in
 {
 
   imports = [
-    ../programs/kitty
-    ../programs/alacritty
   ];
   # nixpkgs.config.allowUnfree = true;
   nix = {

@@ -25,8 +25,8 @@ in
       ./common.nix
       inputs.agenix.nixosModules.default
       inputs.disko.nixosModules.disko
-      ../hardware/disko/oracle2.nix
-      ../hardware/oracle2.nix
+      ../hardware/disko/oracle.nix
+      ../hardware/oracle.nix
       ./distributed-builds.nix
       ../programs/tailscale/server.nix
       ../programs/seaweedfs

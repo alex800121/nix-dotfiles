@@ -1,5 +1,5 @@
 { pkgs, userConfig, ... }: {
-  programs.kitty = {
+  home-manager.users."${userConfig.userName}".programs.kitty = {
     enable = true;
     enableGitIntegration = true;
     font = {
@@ -11,5 +11,10 @@
     settings = {
       background_opacity = 0.7;
     };
+  };
+
+  xdg.terminal-exec.enable = true;
+  xdg.terminal-exec.settings = {
+    default = [ "kitty.desktop" ];
   };
 }
