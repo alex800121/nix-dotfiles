@@ -34,10 +34,6 @@ in
     ../programs/seaweedfs
     ../programs/nix-ld
     ../programs/code-tunnel
-    ../programs/sshd
-    # ../programs/virt
-    # ../programs/duckdns
-    # ../programs/duckdns/initrd.nix
     ../programs/tailscale/server.nix
     ../programs/borgbackup/server.nix
     inputs.agenix.nixosModules.default

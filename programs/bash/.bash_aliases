@@ -1,5 +1,0 @@
-alias sshrpi4='ssh alex800121@alexrpi4gate.duckdns.org'
-alias sshubuntu='ssh alex800121@alexubuntugate.duckdns.org'
-alias sshdormrpi='ssh -p 40000 pi@alexrpi4gate.duckdns.org'
-alias sshdormubu='ssh -p 40000 pi@alexubuntugate.duckdns.org'
-alias nv='nvim'

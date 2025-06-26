@@ -31,12 +31,10 @@ in
     ../de/gnome
     ../de/gnome/fw13
     ../programs/seaweedfs
-    ../programs/sshd
     ../programs/virt
     ../programs/tailscale/client.nix
     ../programs/postgresql
     inputs.agenix.nixosModules.default
-    # ../programs/vaultwarden
   ];
 
   boot.initrd.luks.devices."enc".preLVM = true;
@@ -53,14 +51,4 @@ in
   boot.initrd.systemd.enable = true;
   boot.initrd.systemd.tpm2.enable = true;
 
-  # networking.networkmanager.enable = false;
-  # networking.networkmanager.unmanaged = [
-  #   "*"
-  # ];
-  # networking.useNetworkd = true;
-  # networking.wireless.enable = false;
-  # networking.wireless.iwd.enable = true;
-  # services.ollama.enable = true;
-  # services.ollama.package = nixpkgsUnstable.ollama;
-  # services.ollama.acceleration = "rocm";
 }

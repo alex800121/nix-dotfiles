@@ -74,7 +74,10 @@
       ];
     };
     extraModules = [
-      ./oracle.nix
+      ./oracle2.nix
+      ./ssh-serve.nix
+      (import ../programs/borgbackup/vaultwarden.nix [ "acer-tp" ])
+      ../programs/vaultwarden
     ];
     hmModules = [
       ../home/minimal.nix

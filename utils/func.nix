@@ -4,7 +4,7 @@
       {
         inherit (conf) system;
         modules = [
-          ../configuration/minimal.nix
+          ../configuration/common.nix
           ../programs/sshd
           "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
         ];
@@ -36,7 +36,6 @@
         };
         modules = [
           {
-            nixpkgs.config.allowUnsupportedSystem = true;
             nixpkgs.overlays = [
               inputs.rust-overlay.overlays.default
               (import ../overlay/google-chrome.nix)

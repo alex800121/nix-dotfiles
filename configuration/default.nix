@@ -11,68 +11,32 @@ let
   inherit (pkgs) system;
 in
 {
-  system.stateVersion = lib.mkDefault "25.05";
+  imports = [
+    ./common.nix
+  ];
+
   boot.binfmt.emulatedSystems = builtins.filter (x: x != system) [
     "aarch64-linux"
     "x86_64-linux"
   ];
+
   boot.kernelPackages = lib.mkDefault
     (if builtins.hasAttr "kernelVersion" conf
     then pkgs."linuxPackages_${conf.kernelVersion}"
     else pkgs.linuxPackages);
-
-  hardware.enableAllFirmware = true;
-  hardware.enableRedistributableFirmware = true;
 
   hardware.acpilight.enable = true;
 
   services.fwupd.enable = true;
   services.fwupd.extraRemotes = [ "lvfs-testing" ];
 
-  console = {
-    earlySetup = true;
-    font = "${pkgs.terminus_font}/share/consolefonts/ter-v32n.psf.gz";
-  };
-
   services.gpm.enable = true;
-
-  services.kmscon.enable = true;
-  # services.kmscon.autologinUser = userName;
-  services.kmscon.hwRender = true;
-  services.kmscon.extraConfig = ''
-    font-size=14
-  '';
-  services.kmscon.fonts = [
-    {
-      name = "Hack Nerd Font Mono";
-      package = pkgs.nerd-fonts.hack;
-    }
-  ];
 
   # Bootloader.
   boot.supportedFilesystems = [ "ntfs" ];
   boot.loader.systemd-boot.enable = lib.mkDefault true;
   boot.loader.systemd-boot.consoleMode = lib.mkDefault "auto";
   boot.loader.efi.canTouchEfiVariables = lib.mkDefault true;
-
-  nix = {
-    gc = {
-      automatic = true;
-      dates = "weekly";
-      options = ''
-        --delete-older-than 7d
-      '';
-    };
-    optimise = {
-      automatic = true;
-      dates = [ "weekly" ];
-    };
-    extraOptions = ''
-      experimental-features = nix-command flakes
-      builders-use-substitutes = true
-    '';
-  };
-  nix.settings.max-jobs = lib.mkDefault "auto";
 
   services.power-profiles-daemon.enable = lib.mkDefault true;
 
@@ -103,7 +67,6 @@ in
     publish.workstation = true;
     publish.userServices = true;
   };
-  # networking.nftables.enable = true;
 
   networking = {
     inherit hostName; # Define your hostname.
@@ -124,50 +87,8 @@ in
   # Set your time zone.
   time.hardwareClockInLocalTime = lib.mkDefault true;
   services.automatic-timezoned.enable = lib.mkDefault false;
-  time.timeZone = lib.mkDefault "Asia/Taipei";
-
-  programs.bash = {
-    completion.enable = true;
-    shellAliases = {
-      ls = "ls --color=auto";
-      ll = "ls -alh";
-      la = "ls -A";
-      l = "ls -CF";
-      nv = "nvim";
-    };
-    enableLsColors = true;
-    vteIntegration = true;
-    interactiveShellInit = ''
-      HISTCONTROL=ignorespace:ignoreboth
-      HISTSIZE=100000
-      HISTFILESIZE=100000
-      shopt -s histappend
-
-      shopt -s checkwinsize
-      shopt -s extglob
-      shopt -s globstar
-      shopt -s checkjobs
-      shopt -s cdspell
-      shopt -o -s vi
-    '';
-    promptInit = ''
-      # Provide a nice prompt if the terminal supports it.
-      if [ "$TERM" != "dumb" ] || [ -n "$INSIDE_EMACS" ]; then
-        USER_COLOR="1;31"
-        ((UID)) && USER_COLOR="1;32"
-        PS1="\n\e[\[$USER_COLOR\]m\u@\h\e[0m:\e[1;34m\w \$\e[0m "
-        if [ -z "$INSIDE_EMACS" ]; then
-          PS1="\e]0;\u@\h:\w\a$PS1"
-        fi
-        if test "$TERM" = "xterm"; then
-          PS1="\e]2;\h:\u:\w\007$PS1"
-        fi
-      fi
-    '';
-  };
 
   # Select internationalisation properties.
-  i18n.defaultLocale = "en_US.UTF-8";
   i18n.inputMethod = {
     type = "fcitx5";
     enable = true;
@@ -257,24 +178,6 @@ in
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.mutableUsers = true;
-  users.users."${userName}" = {
-    isNormalUser = true;
-    description = "${userName}";
-    extraGroups = [ "networkmanager" "tss" "storage" "disk" "libvirtd" "audio" "systemd-network" "sudo" "wheel" "code-server" "input" ];
-    uid = 1000;
-  };
-  users.groups.users.gid = 100;
-
-  security.sudo.wheelNeedsPassword = false;
-
-  nixpkgs = {
-    config = {
-      allowBroken = true;
-      allowUnfree = true;
-      pulseaudio = true;
-    };
-  };
 
   services.usbmuxd.enable = true;
 
@@ -282,41 +185,23 @@ in
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    btrfs-progs
     firefox
-    coreutils
     socat
-    jq
-    wl-clipboard
-    lemonade
-    ripgrep
     gparted
-    parted
     adwaita-icon-theme
-    neovim
-    curl
-    wget
-    git
     git-filter-repo
     inputs.agenix.packages."${system}".default
     fastfetch
     gcc
     conntrack-tools
   ];
+
   documentation.man.generateCaches = true;
 
   programs.localsend.enable = true;
   programs.localsend.openFirewall = true;
 
-  environment.etc.inputrc = {
-    enable = true;
-    source = ./inputrc;
-  };
-
   environment.variables = {
-    EDITOR = "nvim";
-    VISUAL = "nvim";
-    SUDO_EDITOR = "nvim";
     QT_IM_MODULE = "fcitx";
     GTK_IM_MODULE = "fcitx";
     XMODIFIERS = "@im=fcitx";

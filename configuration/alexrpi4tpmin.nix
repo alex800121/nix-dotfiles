@@ -3,7 +3,6 @@
     (modulesPath + "/installer/sd-card/sd-image-aarch64-new-kernel-no-zfs-installer.nix")
     ./rpi4.nix
     ../hardware/rpi4.nix
-    ../programs/sshd
     ({ userConfig, ... }: {
       sdImage.compressImage = false;
       sdImage.expandOnBoot = true;

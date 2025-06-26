@@ -156,6 +156,17 @@ in
     target = "zellij/config.kdl";
   };
 
+  programs.chawan = {
+    enable = true;
+    package = nixpkgsUnstable.chawan;
+    settings = {
+      buffer = {
+        images = true;
+        autofocus = true;
+      };
+    };
+  };
+
   programs.vscode = {
     # package = pkgs.vscode-fhs;
     enable = true;

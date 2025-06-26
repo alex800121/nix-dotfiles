@@ -12,15 +12,7 @@ let
     };
     networkConfig = {
       DHCP = true;
-      # MulticastDNS = true;
-      # LLMNR = true;
     };
-    # linkConfig = {
-    #   RequiredForOnline = true;
-    #   RequiredFamilyForOnline = "any";
-    #   Multicast = true;
-    #   AllMulticast = true;
-    # };
   };
 in
 {
@@ -30,17 +22,14 @@ in
     else pkgs.linuxPackages);
   imports =
     [
-      # Include the results of the hardware scan.
-      # ../hardware/oracle2.nix
+      ./common.nix
       inputs.agenix.nixosModules.default
       inputs.disko.nixosModules.disko
       ../hardware/disko/oracle2.nix
       ../hardware/oracle2.nix
       ./distributed-builds.nix
       ../programs/tailscale/server.nix
-      ../programs/sshd
       ../programs/seaweedfs
-      # ../programs/vaultwarden
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -50,24 +39,6 @@ in
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   # networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
-  nix = {
-    gc = {
-      automatic = true;
-      dates = "weekly";
-      options = ''
-        --delete-older-than 7d
-      '';
-    };
-    optimise = {
-      automatic = true;
-      dates = [ "weekly" ];
-    };
-    extraOptions = ''
-      experimental-features = nix-command flakes
-      builders-use-substitutes = true
-    '';
-  };
-  nix.settings.max-jobs = lib.mkDefault "auto";
 
   powerManagement.enable = false;
   networking.firewall.enable = lib.mkDefault true;
@@ -95,6 +66,7 @@ in
       AllMulticast = true;
     };
   };
+
   services.resolved = {
     enable = true;
     llmnr = "true";
@@ -102,6 +74,7 @@ in
       MulticastDNS=resolve
     '';
   };
+
   services.avahi = {
     publish.enable = true;
     publish.hinfo = true;
@@ -110,6 +83,7 @@ in
     publish.workstation = true;
     publish.userServices = true;
   };
+
   networking = {
     inherit hostName; # Define your hostname.
     networkmanager = {
@@ -121,58 +95,8 @@ in
       wifi.backend = "iwd";
     };
   };
-  time.timeZone = lib.mkDefault "Asia/Singapore";
-  i18n.defaultLocale = "en_US.UTF-8";
-  programs.bash = {
-    completion.enable = true;
-    shellAliases = {
-      ls = "ls --color=auto";
-      ll = "ls -alh";
-      la = "ls -A";
-      l = "ls -CF";
-      nv = "nvim";
-    };
-    enableLsColors = true;
-    vteIntegration = true;
-    interactiveShellInit = ''
-      HISTCONTROL=ignorespace:ignoreboth
-      HISTSIZE=100000
-      HISTFILESIZE=100000
-      shopt -s histappend
 
-      shopt -s checkwinsize
-      shopt -s extglob
-      shopt -s globstar
-      shopt -s checkjobs
-      shopt -s cdspell
-      shopt -o -s vi
-    '';
-    promptInit = ''
-      # Provide a nice prompt if the terminal supports it.
-      if [ "$TERM" != "dumb" ] || [ -n "$INSIDE_EMACS" ]; then
-        USER_COLOR="1;31"
-        ((UID)) && USER_COLOR="1;32"
-        PS1="\n\[\e[\[$USER_COLOR\]m\]\u@\h\[\e[0m\]:\[\e[1;34m\]\w \$\[\e[0m\] "
-        if [ -z "$INSIDE_EMACS" ]; then
-          PS1="\[\e]0;\u@\h:\w\a\]$PS1"
-        fi
-        if test "$TERM" = "xterm"; then
-          PS1="\[\e]2;\h:\u:\w\007\]$PS1"
-        fi
-      fi
-    '';
-  };
-
-  users.mutableUsers = true;
-  users.users."${userName}" = {
-    isNormalUser = true;
-    description = "${userName}";
-    extraGroups = [ "networkmanager" "tss" "storage" "disk" "libvirtd" "audio" "systemd-network" "sudo" "wheel" "code-server" "input" ];
-    initialPassword = "";
-    uid = 1000;
-  };
-  users.groups.users.gid = 100;
-  security.sudo.wheelNeedsPassword = false;
+  time.timeZone = "Asia/Singapore";
 
   # boot.supportedFilesystems = [ "btrfs" "vfat" ];
   boot.initrd = {
@@ -203,29 +127,4 @@ in
   # boot.initrd.systemd.tpm2.enable = true;
 
   documentation.man.generateCaches = true;
-
-  environment.systemPackages = with pkgs; [
-    neovim
-    wget
-    btrfs-progs
-    coreutils
-    ripgrep
-    parted
-    curl
-    fastfetch
-    git
-    inputs.agenix.packages.${system}.default
-    wl-clipboard
-    jq
-    lemonade
-  ];
-  environment.variables = {
-    EDITOR = "nvim";
-    VISUAL = "nvim";
-    SUDO_EDITOR = "nvim";
-  };
-
-  services.openssh.enable = true;
-
-  system.stateVersion = "25.05"; # Did you read the comment?
 }
