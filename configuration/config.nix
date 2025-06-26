@@ -162,6 +162,8 @@
     hmModules = [
       ../home
       ../programs/nvim
+      ../programs/kitty
+      ../programs/alacritty
     ];
   };
   fw13-musnix =
@@ -183,6 +185,8 @@
       hmModules = [
         ../home
         ../programs/nvim
+        ../programs/kitty
+        ../programs/alacritty
       ];
     };
   fw13 =
@@ -202,6 +206,8 @@
       hmModules = [
         ../home
         ../programs/nvim
+        ../programs/kitty
+        ../programs/alacritty
       ];
     };
 }

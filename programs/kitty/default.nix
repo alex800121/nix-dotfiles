@@ -1,5 +1,5 @@
 { pkgs, userConfig, ... }: {
-  home-manager.users."${userConfig.userName}".programs.kitty = {
+  programs.kitty = {
     enable = true;
     enableGitIntegration = true;
     font = {
@@ -7,14 +7,16 @@
       name = "Hack Nerd Font Mono";
       size = userConfig.fontSize or 11.5;
     };
-    shellIntegration.enableBashIntegration =  true;
+    shellIntegration.enableBashIntegration = true;
     settings = {
       background_opacity = 0.7;
     };
   };
-
-  xdg.terminal-exec.enable = true;
-  xdg.terminal-exec.settings = {
-    default = [ "kitty.desktop" ];
+  home.packages = [ pkgs.xdg-terminal-exec ];
+  xdg.configFile."xdg-terminals.list" = {
+    enable = true;
+    text = ''
+      kitty.desktop
+    '';
   };
 }

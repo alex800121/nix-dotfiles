@@ -69,6 +69,7 @@ in
     enable = true;
     source = ../programs/w3m/config;
   };
+
   home.packages = with pkgs; [
     w3m
     graphviz
