@@ -1,4 +1,4 @@
-{ userConfig, lib, pkgs, ... }:
+{ inputs, userConfig, lib, pkgs, ... }:
 let
   inherit (userConfig) userName hostName;
 in
@@ -76,7 +76,7 @@ in
     btrfs-progs
     wl-clipboard
     jq
-    lemondae
+    lemonade
   ];
 
   environment.variables = {
