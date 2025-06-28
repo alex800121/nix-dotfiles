@@ -1,6 +1,7 @@
 { pkgs, lib, userConfig, nixpkgsUnstable, ... }:
 let
   inherit (userConfig) userName;
+  term = userConfig.term or "";
 in
 {
 
@@ -49,16 +50,15 @@ in
   # Let Home Manager install and manage itself.
   # programs.home-manager.enable = true;
 
-  programs.readline = {
-    enable = true;
-    extraConfig = "set completion-ignore-case On";
-  };
-  # targets.genericLinux.enable = true;
-
   programs.direnv = {
     enable = true;
     enableBashIntegration = true;
     nix-direnv.enable = true;
+  };
+
+  programs.man = {
+    enable = true;
+    generateCaches = true;
   };
 
   fonts.fontconfig = {
@@ -162,6 +162,8 @@ in
       buffer = {
         images = true;
         autofocus = true;
+        scripting = true;
+        cookies = "save";
       };
     };
   };

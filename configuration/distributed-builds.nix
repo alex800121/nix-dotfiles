@@ -10,6 +10,7 @@ in
   nix.settings.trusted-users = [ "nix-ssh" "alex800121" "@wheel" ];
   nix.settings.trusted-public-keys = [
     "nix-common:tfkDg1lt8EUsog/Gex0wLDW61jqUslDg9nevljQ6aKM="
+    "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
   ];
 
   nix.buildMachines = lib.filter (x: x.hostName != hostName)

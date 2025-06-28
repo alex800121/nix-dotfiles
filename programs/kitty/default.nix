@@ -12,11 +12,4 @@
       background_opacity = 0.7;
     };
   };
-  home.packages = [ pkgs.xdg-terminal-exec ];
-  xdg.configFile."xdg-terminals.list" = {
-    enable = true;
-    text = ''
-      kitty.desktop
-    '';
-  };
 }

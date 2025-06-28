@@ -155,6 +155,11 @@
           priority = 2;
         }
       ];
+      # term = "wezterm";
+      # termArg = "start --cwd .";
+      # termDesktop = "org.wezfurlong.wezterm.desktop";
+      term = "kitty";
+      termDesktop = "kitty.desktop";
     };
     extraModules = [
       ./acer-tp.nix
@@ -162,52 +167,60 @@
     hmModules = [
       ../home
       ../programs/nvim
+      # ../programs/wezterm
       ../programs/kitty
       ../programs/alacritty
     ];
   };
-  fw13-musnix =
-    {
-      system = "x86_64-linux";
-      kernelVersion = "6_12";
-      userConfig = {
-        hostName = "fw13";
-        userName = "alex800121";
-        fontSize = 12;
-        autoLogin = false;
-        soundcardPciId = "c1:00.6";
-      };
-      extraModules = [
-        ./fw13.nix
-        ./musnix.nix
-        ./linux-rt.nix
-      ];
-      hmModules = [
-        ../home
-        ../programs/nvim
-        ../programs/kitty
-        ../programs/alacritty
-      ];
+  fw13-musnix = {
+    system = "x86_64-linux";
+    kernelVersion = "6_12";
+    userConfig = {
+      hostName = "fw13";
+      userName = "alex800121";
+      fontSize = 12;
+      autoLogin = false;
+      soundcardPciId = "c1:00.6";
+      term = "kitty";
+      termDesktop = "kitty.desktop";
     };
-  fw13 =
-    {
-      system = "x86_64-linux";
-      kernelVersion = "6_12";
-      userConfig = {
-        hostName = "fw13";
-        userName = "alex800121";
-        fontSize = 12;
-        autoLogin = false;
-        soundcardPciId = "c1:00.6";
-      };
-      extraModules = [
-        ./fw13.nix
-      ];
-      hmModules = [
-        ../home
-        ../programs/nvim
-        ../programs/kitty
-        ../programs/alacritty
-      ];
+    extraModules = [
+      ./fw13.nix
+      ./musnix.nix
+      ./linux-rt.nix
+    ];
+    hmModules = [
+      ../home
+      ../programs/nvim
+      # ../programs/wezterm
+      ../programs/kitty
+      ../programs/alacritty
+    ];
+  };
+  fw13 = {
+    system = "x86_64-linux";
+    kernelVersion = "6_12";
+    userConfig = {
+      hostName = "fw13";
+      userName = "alex800121";
+      fontSize = 12;
+      autoLogin = false;
+      soundcardPciId = "c1:00.6";
+      term = "kitty";
+      termDesktop = "kitty.desktop";
+      # term = "wezterm";
+      # termArg = "start --cwd .";
+      # termDesktop = "org.wezfurlong.wezterm.desktop";
     };
+    extraModules = [
+      ./fw13.nix
+    ];
+    hmModules = [
+      ../home
+      ../programs/nvim
+      ../programs/wezterm
+      ../programs/kitty
+      ../programs/alacritty
+    ];
+  };
 }

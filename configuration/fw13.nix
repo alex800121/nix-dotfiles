@@ -37,11 +37,6 @@ in
     inputs.agenix.nixosModules.default
   ];
 
-  xdg.terminal-exec.enable = true;
-  xdg.terminal-exec.settings = {
-    default = [ "kitty.desktop" ];
-  };
-
   boot.initrd.luks.devices."enc".preLVM = true;
   boot.initrd.luks.devices."enc".allowDiscards = true;
   boot.initrd.luks.devices."enc".bypassWorkqueues = true;

@@ -5,6 +5,9 @@ let
   };
   updateConfig = lib.recursiveUpdate defaultConfig userConfig;
   inherit (updateConfig) userName autoLogin;
+  term = userConfig.term or "kgx";
+  termArg = userConfig.termArg or "";
+  termDesktop = userConfig.termDesktop or "org.gnome.Console.desktop";
 in
 {
 
@@ -24,14 +27,10 @@ in
   # Enable the GNOME Desktop Environment.
   services.xserver.desktopManager.gnome = {
     enable = true;
-    # extraGSettingsOverrides = ''
-    #   [org.gnome.desktop.default-applications.terminal]
-    #   exec='alacritty'
-    #   exec-arg='-e'
-    # '';
     extraGSettingsOverrides = ''
       [org.gnome.desktop.default-applications.terminal]
-      exec='kitty'
+      exec='${term}'
+      exec-arg='${termArg}'
     '';
   };
 
@@ -128,7 +127,7 @@ in
 
           "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
             binding = "<Super>t";
-            command = "kitty";
+            command = "xdg-terminal";
             name = "Terminal";
           };
 
@@ -142,7 +141,7 @@ in
             "google-chrome.desktop"
             "spotify.desktop"
             "code.desktop"
-            "kitty.desktop"
+            termDesktop
             "org.gnome.Nautilus.desktop"
             "writer.desktop"
           ];
@@ -168,12 +167,16 @@ in
     kimpanel
     appindicator
     xwayland-indicator
-    # auto-power-profile
     gtk4-desktop-icons-ng-ding
     tailscale-status
     tailscale-qs
     pkgs.gnome-tweaks
   ];
+  xdg.terminal-exec.enable = true;
+  xdg.terminal-exec.settings = { default = [ termDesktop ]; };
+  environment.etc."xdg/xdg-terminals.list".text = ''
+    ${termDesktop}
+  '';
 
   environment.variables.GSK_RENDERER = "gl";
 }

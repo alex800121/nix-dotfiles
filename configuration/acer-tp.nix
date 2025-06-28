@@ -36,8 +36,6 @@ in
     ../programs/code-tunnel
     ../programs/tailscale/server.nix
     ../programs/borgbackup/server.nix
-    ../programs/kitty
-    ../programs/alacritty
     inputs.agenix.nixosModules.default
     ../programs/vaultwarden
   ];
