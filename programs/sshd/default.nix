@@ -5,14 +5,26 @@ in
 {
   programs.ssh = {
     startAgent = true;
-    forwardX11 = true;
+    forwardX11 = false;
     # extraConfig = ''
-    #   Host acer-tp-dd
-    #       Hostname alexacer-tp.duckdns.org
-    #       Port 31000
-    #   Host alexrpi4tp-dd
-    #       Hostname alexrpi4gate.duckdns.org
-    #       Port 30000
+    #   Host fw13
+    #       Hostname fw13
+    #       Port 22000
+    #   Host acer-tp
+    #       Hostname acer-tp
+    #       Port 22000
+    #   Host alexrpi4tp
+    #       Hostname alexrpi4tp
+    #       Port 22000
+    #   Host oracle
+    #       Hostname oracle
+    #       Port 22000
+    #   Host oracle2
+    #       Hostname oracle2
+    #       Port 22000
+    #   Host oracle3
+    #       Hostname oracle3
+    #       Port 22000
     # '';
   };
 
@@ -20,13 +32,14 @@ in
   services.openssh = {
     enable = true;
     ports = [ 22 ];
+    # ports = [ 22000 ];
     settings = {
       UseDns = true;
       PermitRootLogin = lib.mkDefault "prohibit-password";
       PasswordAuthentication = false;
       # GatewayPorts = "yes";
       GatewayPorts = "clientspecified";
-      X11Forwarding = true;
+      X11Forwarding = false;
     };
     extraConfig = ''
       PermitTunnel yes

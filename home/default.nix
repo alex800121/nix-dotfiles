@@ -163,7 +163,6 @@ in
         images = true;
         autofocus = true;
         scripting = true;
-        cookies = "save";
       };
     };
   };

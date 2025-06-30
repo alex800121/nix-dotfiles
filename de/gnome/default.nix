@@ -1,4 +1,4 @@
-{ lib, userConfig, pkgs, ... }:
+{ nixpkgsUnstable, lib, userConfig, pkgs, ... }:
 let
   defaultConfig = {
     autoLogin = false;
@@ -54,9 +54,8 @@ in
               "appindicatorsupport@rgcjonas.gmail.com"
               "kimpanel@kde.org"
               "drive-menu@gnome-shell-extensions.gcampax.github.com"
-              # "auto-power-profile@dmy3k.github.io"
               "gtk4-ding@smedius.gitlab.com"
-              "tailscale-status@maxgallup.github.com"
+              # "tailscale-status@maxgallup.github.com"
               "tailscale@joaophi.github.com"
             ];
             welcome-dialog-last-shown-version = "48.1";
@@ -168,7 +167,7 @@ in
     appindicator
     xwayland-indicator
     gtk4-desktop-icons-ng-ding
-    tailscale-status
+    nixpkgsUnstable.gnomeExtensions.tailscale-status
     tailscale-qs
     pkgs.gnome-tweaks
   ];

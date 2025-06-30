@@ -33,7 +33,7 @@ in
     ../de/gnome
     ../programs/seaweedfs
     ../programs/nix-ld
-    ../programs/code-tunnel
+    # ../programs/code-tunnel
     ../programs/tailscale/server.nix
     ../programs/borgbackup/server.nix
     inputs.agenix.nixosModules.default

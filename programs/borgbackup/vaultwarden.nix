@@ -58,7 +58,7 @@ let
           passCommand = "cat ${config.age.secrets.${passphrase}.path}";
         };
         environment = {
-          BORG_RSH = "ssh -i ${config.age.secrets.${sshHostKey}.path}";
+          BORG_RSH = "ssh -p 22000 -i ${config.age.secrets.${sshHostKey}.path}";
         };
         startAt = "daily";
         prune.keep = {

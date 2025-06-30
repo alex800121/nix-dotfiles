@@ -10,6 +10,8 @@
     shellIntegration.enableBashIntegration = true;
     settings = {
       background_opacity = 0.7;
+      allow_remote_control = "yes";
+      enabled_layouts = "tall";
     };
   };
 }
