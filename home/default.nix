@@ -162,7 +162,7 @@ in
       buffer = {
         images = true;
         autofocus = true;
-        scripting = true;
+        # scripting = true;
       };
     };
   };
