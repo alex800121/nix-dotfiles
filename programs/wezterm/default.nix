@@ -1,5 +1,6 @@
-{ userConfig, ... }: {
+{ inputs, userConfig, pkgs, ... }: {
   programs.wezterm = {
+    package = inputs.wezterm.packages.${pkgs.system}.default;
     enable = true;
     enableBashIntegration = false;
     # enableBashIntegration = true;

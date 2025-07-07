@@ -1,6 +1,7 @@
 {
   description = "NixOS configuration";
   inputs = {
+    wezterm.url = "github:wezterm/wezterm?dir=nix";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
     nixpkgsUnstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nil = {
