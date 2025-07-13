@@ -194,6 +194,8 @@ in
     fastfetch
     gcc
     conntrack-tools
+    man-pages
+    man-pages-posix
   ];
 
   documentation.man.generateCaches = true;

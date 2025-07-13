@@ -1,4 +1,4 @@
-{ inputs, nixpkgsUnstable, ... }:
+{ inputs, pkgs, ... }:
 let
   cfg = {
     matchConfig = {
@@ -51,4 +51,9 @@ in
   boot.initrd.systemd.enable = true;
   boot.initrd.systemd.tpm2.enable = true;
 
+  services.flatpak.enable = true;
+  xdg.portal.enable = true;
+  environment.systemPackages = with pkgs; [
+    gnome-software
+  ];
 }
