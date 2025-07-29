@@ -58,7 +58,7 @@ let
           passCommand = "cat ${config.age.secrets.${passphrase}.path}";
         };
         environment = {
-          BORG_RSH = "ssh -p 22 -i ${config.age.secrets.${sshHostKey}.path}";
+          BORG_RSH = "ssh -i ${config.age.secrets.${sshHostKey}.path}";
         };
         startAt = "daily";
         prune.keep = {
@@ -75,12 +75,12 @@ lib.foldl'
 {
   users.extraUsers."${dbUserName}" = {
     createHome = true;
-    home = "/var/lib/${dbUserName}";
+    home = "/var/lib/system_home/${dbUserName}";
     extraGroups = [ groupName ];
   };
   users.extraUsers."${userName}" = {
     createHome = true;
-    home = "/var/lib/${userName}";
+    home = "/var/lib/system_home/${userName}";
   };
   age.secrets."${passphrase}" = {
     file = ../../secrets/${passphrase}.age;
