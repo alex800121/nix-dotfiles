@@ -60,7 +60,7 @@ let
         environment = {
           BORG_RSH = "ssh -i ${config.age.secrets.${sshHostKey}.path}";
         };
-        startAt = "daily";
+        startAt = "*-*-* 00:00:10";
         prune.keep = {
           within = "1d"; # Keep all archives from the last day
           daily = 7;
