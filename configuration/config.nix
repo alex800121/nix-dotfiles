@@ -212,23 +212,6 @@
       # termArg = "start --cwd .";
       # termDesktop = "org.wezfurlong.wezterm.desktop";
     };
-    # overlaysUnstable = [
-    #   (final: prev: {
-    #     chawan = prev.chawan.overrideAttrs (old:
-    #       let
-    #         version = "0.2.1";
-    #       in
-    #       {
-    #         inherit version;
-    #         src = prev.fetchFromSourcehut {
-    #           owner = "~bptato";
-    #           repo = "chawan";
-    #           rev = "v${version}";
-    #           hash = "sha256-n0hyAT6XuNJTpjLlYiiDER1xrz8nwT+Q2kSkg28Y8zE=";
-    #         };
-    #       });
-    #   })
-    # ];
     extraModules = [
       ./fw13.nix
     ];
