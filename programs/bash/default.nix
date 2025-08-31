@@ -7,6 +7,7 @@
       la = "ls -A";
       l = "ls -CF";
       nv = "nvim";
+      vinfo = "info --vi-keys";
     };
     enableLsColors = true;
     vteIntegration = true;

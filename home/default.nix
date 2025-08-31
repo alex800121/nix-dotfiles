@@ -108,7 +108,7 @@ in
     kdePackages.kdenlive
     x42-plugins
     nixpkgsUnstable.winetricks
-    nixpkgsUnstable.wineWowPackages.full
+    nixpkgsUnstable.wineWowPackages.unstableFull
     bitwarden-desktop
     tldr
   ];
@@ -163,7 +163,8 @@ in
         images = true;
         autofocus = true;
         cookie = true;
-        # scripting = true;
+        referer-from = true;
+        scripting = true;
       };
     };
   };

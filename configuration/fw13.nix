@@ -1,4 +1,4 @@
-{ inputs, pkgs, ... }:
+{ inputs, pkgs, nixpkgsUnstable, ... }:
 let
   cfg = {
     matchConfig = {
@@ -55,5 +55,12 @@ in
   xdg.portal.enable = true;
   environment.systemPackages = with pkgs; [
     gnome-software
+    # nixpkgsUnstable.waydroid-helper
   ];
+
+  # virtualisation.waydroid.enable = true;
+  # virtualisation.waydroid.package = nixpkgsUnstable.waydroid;
+  #
+  # networking.firewall.allowedUDPPorts = [ 53 67 ];
+  # networking.firewall.trustedInterfaces = [ "waydroid0" ];
 }
