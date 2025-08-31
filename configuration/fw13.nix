@@ -54,7 +54,7 @@ in
   services.flatpak.enable = true;
   xdg.portal.enable = true;
   environment.systemPackages = with pkgs; [
-    gnome-software
+    # gnome-software
     # nixpkgsUnstable.waydroid-helper
   ];
 

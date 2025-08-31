@@ -107,8 +107,9 @@ in
     zoom-us
     kdePackages.kdenlive
     x42-plugins
-    nixpkgsUnstable.winetricks
+    # nixpkgsUnstable.winetricks
     nixpkgsUnstable.wineWowPackages.unstableFull
+    bottles
     bitwarden-desktop
     tldr
   ];
