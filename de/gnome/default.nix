@@ -10,7 +10,9 @@ let
   termDesktop = userConfig.termDesktop or "org.gnome.Console.desktop";
 in
 {
-
+  hardware.logitech.wireless.enable = true;
+  hardware.logitech.wireless.enableGraphical = true;
+  
   services.xserver.displayManager = {
     gdm = {
       wayland = true;
@@ -170,6 +172,9 @@ in
     nixpkgsUnstable.gnomeExtensions.tailscale-status
     tailscale-qs
     pkgs.gnome-tweaks
+    # pkgs.solaar
+    solaar-extension
+    # pkgs.logitech-udev-rules
   ];
   xdg.terminal-exec.enable = true;
   xdg.terminal-exec.settings = { default = [ termDesktop ]; };

@@ -112,6 +112,7 @@ in
     bottles
     bitwarden-desktop
     tldr
+    # solaar
   ];
 
   xdg.mime.enable = true;
