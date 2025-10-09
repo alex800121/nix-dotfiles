@@ -33,7 +33,7 @@ in
     ../programs/seaweedfs
     ../programs/virt
     ../programs/tailscale/client.nix
-    ../programs/postgresql
+    # ../programs/postgresql
     inputs.agenix.nixosModules.default
   ];
 
