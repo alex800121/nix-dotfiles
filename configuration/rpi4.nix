@@ -111,7 +111,7 @@
 
   # List packages installed in system profile. To search, run:
   environment.systemPackages = with pkgs; [
-    nixpkgsUnstable.raspberrypi-eeprom
+    raspberrypi-eeprom
     libraspberrypi
     raspberrypifw
     device-tree_rpi
