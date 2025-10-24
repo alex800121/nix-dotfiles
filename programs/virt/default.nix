@@ -1,4 +1,7 @@
-{ pkgs, ... }: {
+{ inputs, userConfig, pkgs, nixpkgsUnstable, ... }: {
+  # imports = [ inputs.winboat.nixosModules.default ];
+  # services.winboat.enable = true;
+
   virtualisation = {
     libvirtd = {
       enable = true;
@@ -14,13 +17,24 @@
     spiceUSBRedirection.enable = true;
   };
 
-  virtualisation.podman = {
+  # virtualisation.podman = {
+  #   enable = true;
+  #   dockerCompat = true;
+  #   dockerSocket.enable = true;
+  # };
+
+  virtualisation.docker = {
     enable = true;
-    dockerCompat = true;
-    dockerSocket.enable = true;
   };
-  
+
+  users.users."${userConfig.userName}" = {
+    extraGroups = [ "docker" ];
+  };
+
   environment.systemPackages = with pkgs; [
+    # inputs.winboat.winboat
+    docker-compose
+    freerdp
     virt-manager
     virt-viewer
     spice
@@ -28,5 +42,6 @@
     spice-protocol
     # win-virtio
     win-spice
+    nixpkgsUnstable.winboat
   ];
 }

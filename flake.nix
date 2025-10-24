@@ -35,6 +35,10 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    winboat = {
+      url = "github:TibixDev/winboat/ebe8c6301de068bf6092cfb9a4efa0520c8ba258";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
