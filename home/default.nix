@@ -143,13 +143,6 @@ in
     userEmail = "alex800121@hotmail.com";
   };
 
-  programs.btop = {
-    enable = true;
-  };
-  programs.htop = {
-    enable = true;
-  };
-
   programs.zellij = {
     enable = true;
   };

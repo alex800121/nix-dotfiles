@@ -77,6 +77,7 @@ in
     wl-clipboard
     jq
     lemonade
+    btop
   ];
 
   environment.variables = {

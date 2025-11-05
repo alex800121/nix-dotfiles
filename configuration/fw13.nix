@@ -38,6 +38,13 @@ in
     inputs.declarative-flatpak.nixosModules.default
   ];
 
+  nixpkgs.overlays = [
+    (
+      self: super: {
+        btop = super.btop.override { rocmSupport = true; };
+      }
+    )
+  ];
   boot.initrd.luks.devices."enc".preLVM = true;
   boot.initrd.luks.devices."enc".allowDiscards = true;
   boot.initrd.luks.devices."enc".bypassWorkqueues = true;
@@ -77,7 +84,7 @@ in
 
   environment.systemPackages = with pkgs; [
     # gnome-software
-    nixpkgsUnstable.wineWowPackages.unstableFull
+    # nixpkgsUnstable.wineWowPackages.unstableFull
   ];
 
 }
