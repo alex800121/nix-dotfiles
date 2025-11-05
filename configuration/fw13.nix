@@ -35,6 +35,7 @@ in
     ../programs/tailscale/client.nix
     # ../programs/postgresql
     inputs.agenix.nixosModules.default
+    inputs.declarative-flatpak.nixosModules.default
   ];
 
   boot.initrd.luks.devices."enc".preLVM = true;
@@ -51,16 +52,32 @@ in
   boot.initrd.systemd.enable = true;
   boot.initrd.systemd.tpm2.enable = true;
 
-  services.flatpak.enable = true;
+  environment.sessionVariables."XDG_DATA_DIRS" = [ "/var/lib/flatpak/exports/share" ];
+  services.flatpak = {
+    enable = true;
+    remotes = {
+      "flathub" = "https://dl.flathub.org/repo/flathub.flatpakrepo";
+    };
+    packages = [
+      "flathub:app/com.usebottles.bottles//stable"
+      "flathub:app/com.github.tchx84.Flatseal//stable"
+    ];
+    overrides = {
+      "com.usebottles.bottles" = {
+        Context = {
+          filesystems = [
+            "xdg-data/applications"
+          ];
+        };
+      };
+    };
+  };
+
   xdg.portal.enable = true;
+
   environment.systemPackages = with pkgs; [
     # gnome-software
-    # nixpkgsUnstable.waydroid-helper
+    nixpkgsUnstable.wineWowPackages.unstableFull
   ];
 
-  # virtualisation.waydroid.enable = true;
-  # virtualisation.waydroid.package = nixpkgsUnstable.waydroid;
-  #
-  # networking.firewall.allowedUDPPorts = [ 53 67 ];
-  # networking.firewall.trustedInterfaces = [ "waydroid0" ];
 }

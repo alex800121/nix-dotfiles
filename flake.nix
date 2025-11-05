@@ -4,6 +4,7 @@
     wezterm.url = "github:wezterm/wezterm?dir=nix";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
     nixpkgsUnstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    declarative-flatpak.url = "github:in-a-dil-emma/declarative-flatpak/latest";
     nil = {
       url = "github:oxalica/nil";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -33,10 +34,6 @@
     };
     disko = {
       url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    winboat = {
-      url = "github:TibixDev/winboat/ebe8c6301de068bf6092cfb9a4efa0520c8ba258";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };

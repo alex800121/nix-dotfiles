@@ -14,6 +14,7 @@ in
     };
   };
 
+  xdg.enable = true;
   xdg.configFile = {
     nixpkgs = {
       recursive = true;
@@ -108,8 +109,8 @@ in
     kdePackages.kdenlive
     x42-plugins
     # nixpkgsUnstable.winetricks
-    nixpkgsUnstable.wineWowPackages.unstableFull
-    bottles
+    # nixpkgsUnstable.wineWowPackages.unstableFull
+    # bottles
     bitwarden-desktop
     tldr
     # solaar

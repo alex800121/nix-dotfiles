@@ -43,5 +43,6 @@
     # win-virtio
     win-spice
     nixpkgsUnstable.winboat
+    nixpkgsUnstable.distrobox
   ];
 }

@@ -60,6 +60,22 @@
         "type": "github"
       }
     },
+    "declarative-flatpak": {
+      "locked": {
+        "lastModified": 1759051580,
+        "narHash": "sha256-MjIJINFFc+aokxDJIXawSP2kGNain4AJXTLo719ci5Q=",
+        "owner": "in-a-dil-emma",
+        "repo": "declarative-flatpak",
+        "rev": "2b34c5d4281d0de59f7c25080bc26f76f6b1c63d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "in-a-dil-emma",
+        "ref": "latest",
+        "repo": "declarative-flatpak",
+        "type": "github"
+      }
+    },
     "disko": {
       "inputs": {
         "nixpkgs": [
@@ -426,6 +442,7 @@
     "root": {
       "inputs": {
         "agenix": "agenix",
+        "declarative-flatpak": "declarative-flatpak",
         "disko": "disko",
         "home-manager": "home-manager_2",
         "lanzaboote": "lanzaboote",
@@ -435,8 +452,7 @@
         "nixpkgs": "nixpkgs",
         "nixpkgsUnstable": "nixpkgsUnstable",
         "rust-overlay": "rust-overlay_2",
-        "wezterm": "wezterm",
-        "winboat": "winboat"
+        "wezterm": "wezterm"
       }
     },
     "rust-overlay": {
@@ -554,27 +570,6 @@
         "dir": "nix",
         "owner": "wezterm",
         "repo": "wezterm",
-        "type": "github"
-      }
-    },
-    "winboat": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1760091228,
-        "narHash": "sha256-Jds9Q+26pWBqxcDg2mmfFGpbFdoOtANgirvwOf6PMkQ=",
-        "owner": "TibixDev",
-        "repo": "winboat",
-        "rev": "ebe8c6301de068bf6092cfb9a4efa0520c8ba258",
-        "type": "github"
-      },
-      "original": {
-        "owner": "TibixDev",
-        "repo": "winboat",
-        "rev": "ebe8c6301de068bf6092cfb9a4efa0520c8ba258",
         "type": "github"
       }
     },
