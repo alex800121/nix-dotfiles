@@ -1,4 +1,4 @@
-{ inputs, pkgs, nixpkgsUnstable, ... }:
+{ inputs, pkgs, nixpkgsUnstable, userConfig, ... }:
 let
   cfg = {
     matchConfig = {
@@ -68,8 +68,15 @@ in
     packages = [
       "flathub:app/com.usebottles.bottles//stable"
       "flathub:app/com.github.tchx84.Flatseal//stable"
+      "flathub:app/io.freetubeapp.FreeTube//stable"
+      "flathub:app/com.markopejic.downloader//stable"
     ];
     overrides = {
+      "com.markopejic.downloader" = {
+        Environment = {
+          "GTK_THEME" = "Adwaita:dark";
+        };
+      };
       "com.usebottles.bottles" = {
         Context = {
           filesystems = [
@@ -86,5 +93,9 @@ in
     # gnome-software
     # nixpkgsUnstable.wineWowPackages.unstableFull
   ];
+
+  # services.gnunet.enable = true;
+  # services.gnunet.package = nixpkgsUnstable.gnunet;
+  # users.users."${userConfig.userName}".extraGroups = [ "gnunet" ];
 
 }

@@ -84,7 +84,7 @@ in
     ardour
     helvum
     musescore
-    libreoffice
+    nixpkgsUnstable.libreoffice-fresh
     nix-prefetch-git
     cabal2nix
     nodejs
@@ -94,8 +94,6 @@ in
     ghc
     haskellPackages.hoogle
     haskellPackages.cabal-gild
-    # haskellPackages.cabal-fmt
-    # haskellPackages.hls-cabal-fmt-plugin
     llvm_15
     clang_15
     rust-bin.stable.latest.complete
@@ -108,12 +106,9 @@ in
     zoom-us
     kdePackages.kdenlive
     x42-plugins
-    # nixpkgsUnstable.winetricks
-    # nixpkgsUnstable.wineWowPackages.unstableFull
-    # bottles
     bitwarden-desktop
     tldr
-    # solaar
+    mpv
   ];
 
   xdg.mime.enable = true;

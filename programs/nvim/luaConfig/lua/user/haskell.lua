@@ -1,4 +1,4 @@
--- local haskell_tools = require 'haskell-tools'
+local haskell_tools = require 'haskell-tools'
 local whichkey = require 'which-key'
 local luasnip = require 'luasnip'
 local haskell_snippets = require('haskell-snippets').all

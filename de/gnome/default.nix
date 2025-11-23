@@ -12,7 +12,7 @@ in
 {
   hardware.logitech.wireless.enable = true;
   hardware.logitech.wireless.enableGraphical = true;
-  
+
   services.xserver.displayManager = {
     gdm = {
       wayland = true;
@@ -46,7 +46,10 @@ in
           };
 
           "org/gnome/mutter" = {
-            experimental-features = [ "scale-monitor-framebuffer" ];
+            experimental-features = [
+              "scale-monitor-framebuffer"
+              # "xwayland-native-scaling"
+            ];
             dynamic-workspaces = true;
           };
 

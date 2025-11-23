@@ -1,6 +1,4 @@
 { inputs, userConfig, pkgs, nixpkgsUnstable, ... }: {
-  # imports = [ inputs.winboat.nixosModules.default ];
-  # services.winboat.enable = true;
 
   virtualisation = {
     libvirtd = {
@@ -32,9 +30,8 @@
   };
 
   environment.systemPackages = with pkgs; [
-    # inputs.winboat.winboat
     docker-compose
-    freerdp
+    nixpkgsUnstable.freerdp
     virt-manager
     virt-viewer
     spice
