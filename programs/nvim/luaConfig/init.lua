@@ -6,7 +6,6 @@ require'user.options'
 require'user.keymaps'
 require'user.indent'
 require'user.buffer'
-require'user.project'
 require'user.nvimtree'.setup()
 -- require'user.treesitter'
 require'user.telescope'
