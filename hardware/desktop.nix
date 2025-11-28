@@ -1,10 +1,12 @@
 { config, lib, pkgs, modulesPath, ... }:
 {
-  services.logind = {
-    lidSwitch = "ignore";
-    lidSwitchDocked = "ignore";
-    lidSwitchExternalPower = "ignore";
-    killUserProcesses = false;
-    extraConfig = ''IdleAction=ignore'';
+  services.logind.settings.Login = {
+    HandleLidSwitch = "ignore";
+    HandleLidSwitchDocked = "ignore";
+    HandleLidSwitchExternalPower = "ignore";
+    KillUserProcesses = false;
+    HandlePowerKey = "suspend";
+    HandlePowerKeyLongPress = "poweroff";
+    IdleAction = "ignore";
   };
 }
