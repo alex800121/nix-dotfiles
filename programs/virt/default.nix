@@ -34,7 +34,9 @@
     spice-protocol
     # win-virtio
     win-spice
-    nixpkgsUnstable.winboat
+    # (winboat.override {
+    #   nodejs_24 = pkgs.nodejs_24;
+    # })
     nixpkgsUnstable.distrobox
   ];
 }
