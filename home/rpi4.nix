@@ -68,8 +68,8 @@ in {
 
   programs.git = {
     enable = true;
-    userName = "alex800121";
-    userEmail = "alex800121@hotmail.com";
+    settings.user.name = "alex800121";
+    settings.user.email = "alex800121@hotmail.com";
   };
 
   programs.htop.enable = true;
