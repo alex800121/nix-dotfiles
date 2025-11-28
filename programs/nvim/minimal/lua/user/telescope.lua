@@ -4,7 +4,7 @@ local whichkey = require'which-key'
 
 telescope.setup()
 telescope.load_extension('fzf')
-telescope.load_extension('projects')
+-- telescope.load_extension('projects')
 -- telescope.load_extension('ht')
 
 whichkey.add({
@@ -16,4 +16,4 @@ vim.keymap.set('n', '<leader>fl', builtin.live_grep, { desc = "Fuzzy live grep",
 vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = "Fuzzy buffers", noremap = true, buffer = false })
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = "Fuzzy help", noremap = true, buffer = false })
 vim.keymap.set('n', '<leader>fd', builtin.diagnostics, { desc = "Fuzzy help", noremap = true, buffer = false })
-vim.keymap.set('n', '<leader>fp', function() telescope.extensions.projects.projects({}) end, { desc = "Fuzzy project", noremap = true, buffer = false })
+-- vim.keymap.set('n', '<leader>fp', function() telescope.extensions.projects.projects({}) end, { desc = "Fuzzy project", noremap = true, buffer = false })
