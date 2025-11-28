@@ -1,4 +1,4 @@
-{ config, nixpkgsUnstable, pkgs, lib, userConfig, inputs, system, ... }:
+{ config, nixpkgsUnstable, pkgs, lib, userConfig, inputs, ... }:
 {
   home.sessionVariables."CODELLDB_PATH" = "${pkgs.vscode-extensions.vadimcn.vscode-lldb}/share/vscode/extensions/vadimcn.vscode-lldb/adapter/codelldb";
   home.sessionVariables."LIBLLDB_PATH" = "${pkgs.vscode-extensions.vadimcn.vscode-lldb}/share/vscode/extensions/vadimcn.vscode-lldb/lldb/lib/liblldb.so";
@@ -81,7 +81,7 @@
       haskellPackages.fast-tags
       ormolu
       # nil
-      inputs.nil.packages."${system}".default
+      inputs.nil.packages."${pkgs.stdenv.hostPlatform.system}".default
       lua-language-server
       nixpkgs-fmt
       vscode-extensions.vadimcn.vscode-lldb

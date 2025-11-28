@@ -4,7 +4,7 @@ let
 in
 {
   programs.ssh = {
-    startAgent = true;
+    startAgent = lib.mkDefault true;
     forwardX11 = false;
     # extraConfig = ''
     #   Host fw13

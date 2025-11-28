@@ -1,8 +1,8 @@
 {
-  mkNixosIso = inputs: conf: configName: {
+  mkNixosIso = inputs: conf@{ system, ... }: configName: {
     nixosConfigurations."${configName}-iso" = inputs.nixpkgs.lib.nixosSystem
       {
-        inherit (conf) system;
+        inherit system;
         modules = [
           ../configuration/common.nix
           ../programs/sshd
@@ -19,7 +19,7 @@
   };
   mkNixosConfig =
     inputs:
-    conf@{ system, userConfig, extraModules ? [ ], hmModules ? [ ], overlays ? [ ], overlaysUnstable ? [], ... }:
+    conf@{ system, userConfig, extraModules ? [ ], hmModules ? [ ], overlays ? [ ], overlaysUnstable ? [ ], ... }:
     configName:
     let
       nixpkgsUnstable = import inputs.nixpkgsUnstable {

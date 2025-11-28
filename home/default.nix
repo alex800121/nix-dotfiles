@@ -79,7 +79,7 @@ in
     google-chrome
     android-tools
     scrcpy
-    libsForQt5.plasma-browser-integration
+    kdePackages.plasma-browser-integration
     gnome-network-displays
     ardour
     helvum
@@ -94,14 +94,14 @@ in
     ghc
     haskellPackages.hoogle
     haskellPackages.cabal-gild
-    llvm_15
-    clang_15
+    llvm_18
+    clang_18
     rust-bin.stable.latest.complete
     telegram-desktop
     obs-studio
     gimp3
     wireshark
-    onlyoffice-bin_latest
+    onlyoffice-desktopeditors
     spotify
     zoom-us
     kdePackages.kdenlive
@@ -134,8 +134,8 @@ in
 
   programs.git = {
     enable = true;
-    userName = "alex800121";
-    userEmail = "alex800121@hotmail.com";
+    settings.user.name = "alex800121";
+    settings.user.email = "alex800121@hotmail.com";
   };
 
   programs.zellij = {

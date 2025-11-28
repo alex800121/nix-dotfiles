@@ -5,7 +5,7 @@ let
   };
   updateConfig = lib.recursiveUpdate defaultConfig userConfig;
   inherit (updateConfig) userName hostName;
-  inherit (pkgs) system;
+  inherit (pkgs.stdenv.hostPlatform) system;
   cfg = {
     matchConfig = {
       Name = "eth0";

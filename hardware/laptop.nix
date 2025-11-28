@@ -1,11 +1,11 @@
 { config, lib, pkgs, inputs, ... }: {
-  services.logind = {
-    lidSwitch = "suspend";
-    lidSwitchDocked = "ignore";
-    lidSwitchExternalPower = "suspend";
-    killUserProcesses = false;
-    powerKey = "suspend";
-    powerKeyLongPress = "poweroff";
+  services.logind.settings.Login = {
+    HandleLidSwitch = "suspend";
+    HandleLidSwitchDocked = "ignore";
+    HandleLidSwitchExternalPower = "suspend";
+    KillUserProcesses = false;
+    HandlePowerKey = "suspend";
+    HandlePowerKeyLongPress = "poweroff";
   };
   # services.fprintd.enable = true;
   # services.fprintd.tod.enable = true;

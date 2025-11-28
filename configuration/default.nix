@@ -8,7 +8,7 @@ let
   };
   updateConfig = lib.recursiveUpdate defaultConfig userConfig;
   inherit (updateConfig) userName hostName;
-  inherit (pkgs) system;
+  inherit (pkgs.stdenv.hostPlatform) system;
 in
 {
   imports = [
@@ -96,8 +96,8 @@ in
       waylandFrontend = true;
       addons = with pkgs; [
         fcitx5-chewing
-        fcitx5-chinese-addons
-        fcitx5-configtool
+        qt6Packages.fcitx5-chinese-addons
+        qt6Packages.fcitx5-configtool
         fcitx5-gtk
         libsForQt5.fcitx5-qt
         # fcitx5-rime
@@ -157,10 +157,10 @@ in
       nerd-fonts.hack
       noto-fonts-cjk-sans
       noto-fonts-cjk-serif
-      noto-fonts-emoji
+      noto-fonts-color-emoji
       wqy_zenhei
       wqy_microhei
-      vistafonts-cht
+      vista-fonts-cht
       font-awesome
       cantarell-fonts
       liberation_ttf

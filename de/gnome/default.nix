@@ -13,7 +13,7 @@ in
   hardware.logitech.wireless.enable = true;
   hardware.logitech.wireless.enableGraphical = true;
 
-  services.xserver.displayManager = {
+  services.displayManager = {
     gdm = {
       wayland = true;
       enable = true;
@@ -27,7 +27,7 @@ in
   };
 
   # Enable the GNOME Desktop Environment.
-  services.xserver.desktopManager.gnome = {
+  services.desktopManager.gnome = {
     enable = true;
     extraGSettingsOverrides = ''
       [org.gnome.desktop.default-applications.terminal]
@@ -35,6 +35,9 @@ in
       exec-arg='${termArg}'
     '';
   };
+
+  services.gnome.gcr-ssh-agent.enable = true;
+  programs.ssh.startAgent = false;
 
   programs.dconf = {
     enable = true;

@@ -1,6 +1,7 @@
 { inputs, userConfig, lib, pkgs, ... }:
 let
   inherit (userConfig) userName hostName;
+  inherit (pkgs.stdenv.hostPlatform) system;
 in
 {
   imports = [
