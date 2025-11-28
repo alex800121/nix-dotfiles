@@ -218,7 +218,7 @@
     hmModules = [
       ../home
       ../programs/nvim
-      ../programs/wezterm
+      # ../programs/wezterm
       ../programs/kitty
       ../programs/alacritty
     ];

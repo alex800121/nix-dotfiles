@@ -5,13 +5,16 @@ in
 {
   nix.distributedBuilds = true;
 
-  nix.settings.substituters = [ "https://wezterm.cachix.org" "https://nix-community.cachix.org" ];
+  nix.settings.substituters = [
+    # "https://wezterm.cachix.org"
+    "https://nix-community.cachix.org"
+  ];
   nix.settings.trusted-substituters = [ "https://nix-community.cachix.org" ];
   nix.settings.trusted-users = [ "nix-ssh" "alex800121" "@wheel" ];
   nix.settings.trusted-public-keys = [
     "nix-common:tfkDg1lt8EUsog/Gex0wLDW61jqUslDg9nevljQ6aKM="
     "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-    "wezterm.cachix.org-1:kAbhjYUC9qvblTE+s7S+kl5XM1zVa4skO+E/1IDWdH0="
+    # "wezterm.cachix.org-1:kAbhjYUC9qvblTE+s7S+kl5XM1zVa4skO+E/1IDWdH0="
   ];
 
   nix.buildMachines = lib.filter (x: x.hostName != hostName)
