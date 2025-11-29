@@ -1,4 +1,3 @@
-local lspconfig = require 'lspconfig'
 local cmp = require 'cmp'
 local luasnip = require 'luasnip'
 local lspkind = require 'lspkind'
@@ -117,8 +116,6 @@ cmp.event:on(
   cmp_autopairs.on_confirm_done()
 )
 
--- Setup lspconfig.
-
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 vim.diagnostic.config({
@@ -160,45 +157,12 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', '<leader>F', function() vim.lsp.buf.format { async = true } end, bufopts('code format'))
   vim.keymap.set('n', '<leader>sl', vim.diagnostic.setloclist, opts('Set Location List'))
   vim.keymap.set('n', '<leader>sf', vim.diagnostic.setqflist, opts('Set Quickfix List'))
-  -- vim.api.nvim_create_autocmd("CursorHold", {
-  --   buffer = bufnr,
-  --   callback = function()
-  --     local localopts = {
-  --       focusable = false,
-  --       close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
-  --       border = 'rounded',
-  --       source = 'always',
-  --       scope = 'cursor',
-  --     }
-  --     vim.diagnostic.open_float(nil, localopts)
-  --   end
-  -- })
 end
 
--- lspconfig['hls'].setup({
---   filetypes = { 'haskell', 'lhaskell', 'cabal' },
---   cmd = { "haskell-language-server-wrapper", "--lsp" },
---   root_dir = function(filepath)
---     return (
---       lspconfig.util.root_pattern('hie.yaml', 'stack.yaml', 'cabal.project')(filepath)
---       or lspconfig.util.root_pattern('*.cabal', 'package.yaml')(filepath)
---     )
---   end,
---   settings = {
---     haskell = {
---       cabalFormattingProvider = "cabalfmt",
---       formattingProvider = "ormolu"
---     }
---   },
---   single_file_support = true,
---   capabilities = capabilities,
---   on_attach = on_attach
--- })
-
-lspconfig['nil_ls'].setup({
+vim.lsp.config('nil_ls', {
   cmd = { "nil" },
   filetype = { "nix" },
-  root_dir = lspconfig.util.root_pattern("flake.nix", ".git"),
+  root_markers = {"flake.nix", ".git"},
   single_file_support = true,
   settings = {
     ['nil'] = {
@@ -215,12 +179,13 @@ lspconfig['nil_ls'].setup({
   capabilities = capabilities,
   on_attach = on_attach
 })
+vim.lsp.enable('nil_ls')
 
-lspconfig['lua_ls'].setup({
+vim.lsp.config('lua_ls', {
   cmd = { "lua-language-server" },
   filetypes = { "lua" },
-  root_dir = lspconfig.util.root_pattern(".luarc.json", ".luarc.jsonc", ".luacheckrc", ".stylua.toml", "stylua.toml",
-    "selene.toml", "selene.yml", ".git"),
+  root_markers = {".luarc.json", ".luarc.jsonc", ".luacheckrc", ".stylua.toml", "stylua.toml",
+    "selene.toml", "selene.yml", ".git"},
   single_file_support = true,
   settings = {
     Lua = {
@@ -245,8 +210,10 @@ lspconfig['lua_ls'].setup({
   capabilities = capabilities,
   on_attach = on_attach
 })
+vim.lsp.enable('lua_ls')
 
-lspconfig['rust_analyzer'].setup({
+vim.lsp.config('rust_analyzer', {
+  root_markers = {"*.cargo"},
   settings = {
     ["rust-analyzer"] = {
       cargo = {
@@ -266,3 +233,4 @@ lspconfig['rust_analyzer'].setup({
   capabilities = capabilities,
   on_attach = on_attach,
 })
+vim.lsp.enable('rust_analyzer')

@@ -38,7 +38,6 @@
           {
             nixpkgs.overlays = [
               inputs.rust-overlay.overlays.default
-              (import ../overlay/google-chrome.nix)
             ] ++ overlays;
           }
           # agenix.nixosModules.default
