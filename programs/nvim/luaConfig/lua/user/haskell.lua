@@ -14,13 +14,6 @@ vim.g.haskell_tools = {
     hoogle = { mode = 'auto' },
   },
   hls = {
-    default_settings = {
-      haskell = {
-        -- The formatting providers.
-        formattingProvider = 'ormolu',
-        cabalFormattingProvider = "cabal-gild"
-      }
-    },
     on_attach = function(client, bufnr, ht)
       local bufopts = function(def) return { noremap = true, silent = true, buffer = bufnr, desc = 'LSP: ' .. def } end
       -- Mappings.
@@ -33,11 +26,12 @@ vim.g.haskell_tools = {
       vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts('declaration'))
       vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts('definition'))
       vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts('implementation'))
-      vim.keymap.set('n', 'gs', vim.lsp.buf.signature_help, bufopts('signature_help'))
+      -- vim.keymap.set('n', 'gs', vim.lsp.buf.signature_help, bufopts('signature_help'))
       vim.keymap.set('n', 'gt', vim.lsp.buf.type_definition, bufopts('type definition'))
       vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts('references'))
-      vim.keymap.set('n', ']d', function () vim.diagnostic.jump({count=1, float=true}) end, opts('Next diagnostic'))
-      vim.keymap.set('n', '[d', function () vim.diagnostic.jump({count=-1, float=true}) end, opts('Previous diagnostic'))
+      vim.keymap.set('n', ']d', function() vim.diagnostic.jump({ count = 1, float = true }) end, opts('Next diagnostic'))
+      vim.keymap.set('n', '[d', function() vim.diagnostic.jump({ count = -1, float = true }) end,
+        opts('Previous diagnostic'))
       vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts('hover'))
       vim.keymap.set('n', '<leader>o', vim.diagnostic.open_float, opts('Open float'))
       vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, bufopts('add workspace folder'))

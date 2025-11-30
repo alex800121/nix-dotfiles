@@ -1,4 +1,4 @@
-local project = require'project_nvim'
+local project = require'project'
 
 project.setup({
   -- Manual mode doesn't automatically change your root directory, so you have
@@ -9,7 +9,7 @@ project.setup({
   -- lsp, while **"pattern"** uses vim-rooter like glob pattern matching. Here
   -- order matters: if one is not detected, the other is used as fallback. You
   -- can also delete or rearangne the detection methods.
-  detection_methods = { "lsp", "pattern" },
+  use_lsp = true,
 
   -- All the patterns used to detect root dir, when **"pattern"** is in
   -- detection_methods

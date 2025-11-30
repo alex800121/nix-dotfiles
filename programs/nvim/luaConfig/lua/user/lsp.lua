@@ -6,7 +6,6 @@ local autopairs = require 'nvim-autopairs'
 local cmp_autopairs = require 'nvim-autopairs.completion.cmp'
 local whichkey = require 'which-key'
 
-
 require("luasnip.loaders.from_vscode").lazy_load()
 
 local has_words_before = function()
@@ -17,13 +16,23 @@ end
 
 vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
 
-lsp_signature.setup()
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+vim.diagnostic.config({
+  virtual_text = false,
+  severity_sort = true,
+  float = {
+    border = 'rounded',
+    source = 'if_many',
+  },
+})
+-- lsp_signature.setup()
 
 -- Global setup.
 cmp.setup({
   snippet = {
     expand = function(args)
-      luasnip.lsp_expand(args.body) -- For `luasnip` users.
+      luasnip.lsp_expand(args.body)   -- For `luasnip` users.
     end,
   },
   window = {
@@ -64,26 +73,26 @@ cmp.setup({
   }),
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
-    { name = 'luasnip' }, -- for luasnip users.
+    { name = 'luasnip' },   -- for luasnip users.
     { name = 'nvim_lua' },
     { name = 'buffer' },
     { name = 'path' },
-    { name = 'nvim_lsp_signature_help' },
+    -- { name = 'nvim_lsp_signature_help' },
   }),
   formatting = {
     fields = { "kind", "abbr", "menu" },
     format = lspkind.cmp_format({
-      mode = 'symbol_text', -- show only symbol annotations
+      mode = 'symbol_text',   -- show only symbol annotations
       menu = ({
         buffer = "[Buffer]",
         nvim_lsp = "[LSP]",
         luasnip = "[LuaSnip]",
         nvim_lua = "[Lua]",
         path = "[Path]",
-        nvim_lsp_signature_help = "[Signature]",
+        -- nvim_lsp_signature_help = "[Signature]",
       }),
-      maxwidth = 50,         -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
-      ellipsis_char = '...', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
+      maxwidth = 50,           -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+      ellipsis_char = '...',   -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
     })
   },
   experimental = {
@@ -116,16 +125,6 @@ cmp.event:on(
   cmp_autopairs.on_confirm_done()
 )
 
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
-vim.diagnostic.config({
-  virtual_text = false,
-  severity_sort = true,
-  float = {
-    border = 'rounded',
-    source = 'always',
-  },
-})
 
 local opts = function(def) return { noremap = true, silent = true, desc = def } end
 
@@ -143,8 +142,8 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', 'gs', vim.lsp.buf.signature_help, bufopts('signature_help'))
   vim.keymap.set('n', 'gt', vim.lsp.buf.type_definition, bufopts('type definition'))
   vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts('references'))
-  vim.keymap.set('n', ']d', function () vim.diagnostic.jump({count=1, float=true}) end, opts('Next diagnostic'))
-  vim.keymap.set('n', '[d', function () vim.diagnostic.jump({count=-1, float=true}) end, opts('Previous diagnostic'))
+  vim.keymap.set('n', ']d', function() vim.diagnostic.jump({ count = 1, float = true }) end, opts('Next diagnostic'))
+  vim.keymap.set('n', '[d', function() vim.diagnostic.jump({ count = -1, float = true }) end, opts('Previous diagnostic'))
   vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts('hover'))
   vim.keymap.set('n', '<leader>o', vim.diagnostic.open_float, opts('Open float'))
   vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, bufopts('add workspace folder'))
@@ -162,7 +161,7 @@ end
 vim.lsp.config('nil_ls', {
   cmd = { "nil" },
   filetype = { "nix" },
-  root_markers = {"flake.nix", ".git"},
+  root_markers = { "flake.nix", ".git" },
   single_file_support = true,
   settings = {
     ['nil'] = {
@@ -184,8 +183,8 @@ vim.lsp.enable('nil_ls')
 vim.lsp.config('lua_ls', {
   cmd = { "lua-language-server" },
   filetypes = { "lua" },
-  root_markers = {".luarc.json", ".luarc.jsonc", ".luacheckrc", ".stylua.toml", "stylua.toml",
-    "selene.toml", "selene.yml", ".git"},
+  root_markers = { ".luarc.json", ".luarc.jsonc", ".luacheckrc", ".stylua.toml", "stylua.toml",
+    "selene.toml", "selene.yml", ".git" },
   single_file_support = true,
   settings = {
     Lua = {
@@ -213,7 +212,7 @@ vim.lsp.config('lua_ls', {
 vim.lsp.enable('lua_ls')
 
 vim.lsp.config('rust_analyzer', {
-  root_markers = {"*.cargo"},
+  root_markers = { "*.cargo" },
   settings = {
     ["rust-analyzer"] = {
       cargo = {

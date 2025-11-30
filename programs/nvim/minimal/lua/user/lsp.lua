@@ -1,4 +1,3 @@
-local lspconfig = require 'lspconfig'
 local cmp = require 'cmp'
 local luasnip = require 'luasnip'
 local lspkind = require 'lspkind'
@@ -8,7 +7,6 @@ local cmp_autopairs = require 'nvim-autopairs.completion.cmp'
 local whichkey = require 'which-key'
 
 
-require("luasnip.loaders.from_vscode").lazy_load()
 
 local has_words_before = function()
   unpack = unpack or table.unpack
@@ -17,107 +15,6 @@ local has_words_before = function()
 end
 
 vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
-
-lsp_signature.setup()
-
--- Global setup.
-cmp.setup({
-  snippet = {
-    expand = function(args)
-      luasnip.lsp_expand(args.body) -- For `luasnip` users.
-    end,
-  },
-  window = {
-    completion = cmp.config.window.bordered(),
-    documentation = cmp.config.window.bordered(),
-  },
-  mapping = cmp.mapping.preset.insert({
-    ["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-1), { "i", "c" }),
-    ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(1), { "i", "c" }),
-    ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
-    ["<C-e>"] = cmp.mapping(cmp.mapping.close(), { "i", "c" }),
-    ['<C-y>'] = cmp.mapping.confirm({ select = true }),
-    ['<CR>'] = cmp.mapping.confirm({ select = false }),
-    ["<Tab>"] = cmp.mapping(
-      function(fallback)
-        if cmp.visible() then
-          cmp.select_next_item()
-        elseif luasnip.expand_or_jumpable() then
-          luasnip.expand_or_jump()
-        elseif has_words_before() then
-          cmp.complete()
-        else
-          fallback()
-        end
-      end, { "i", "s" }
-    ),
-    ["<S-Tab>"] = cmp.mapping(
-      function(fallback)
-        if cmp.visible() then
-          cmp.select_prev_item()
-        elseif luasnip.jumpable(-1) then
-          luasnip.jump(-1)
-        else
-          fallback()
-        end
-      end, { "i", "s" }
-    ),
-  }),
-  sources = cmp.config.sources({
-    { name = 'nvim_lsp' },
-    { name = 'luasnip' }, -- for luasnip users.
-    { name = 'nvim_lua' },
-    { name = 'buffer' },
-    { name = 'path' },
-    { name = 'nvim_lsp_signature_help' },
-  }),
-  formatting = {
-    fields = { "kind", "abbr", "menu" },
-    format = lspkind.cmp_format({
-      mode = 'symbol_text', -- show only symbol annotations
-      menu = ({
-        buffer = "[Buffer]",
-        nvim_lsp = "[LSP]",
-        luasnip = "[LuaSnip]",
-        nvim_lua = "[Lua]",
-        path = "[Path]",
-        nvim_lsp_signature_help = "[Signature]",
-      }),
-      maxwidth = 50,         -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
-      ellipsis_char = '...', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
-    })
-  },
-  experimental = {
-    ghost_text = false,
-  },
-})
-
--- `/` cmdline setup.
-cmp.setup.cmdline('/', {
-  mapping = cmp.mapping.preset.cmdline(),
-  sources = {
-    { name = 'buffer' }
-  }
-})
-
--- `:` cmdline setup.
-cmp.setup.cmdline(':', {
-  mapping = cmp.mapping.preset.cmdline(),
-  sources = cmp.config.sources({
-    { name = 'path' }
-  }, {
-    { name = 'cmdline' }
-  })
-})
-
-autopairs.setup()
-
-cmp.event:on(
-  'confirm_done',
-  cmp_autopairs.on_confirm_done()
-)
-
--- Setup lspconfig.
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
@@ -132,13 +29,115 @@ vim.diagnostic.config({
 
 local opts = function(def) return { noremap = true, silent = true, desc = def } end
 
+autopairs.setup()
+
 local on_attach = function(client, bufnr)
   local bufopts = function(def) return { noremap = true, silent = true, buffer = bufnr, desc = 'LSP: ' .. def } end
+  require("luasnip.loaders.from_vscode").lazy_load()
+
+  lsp_signature.setup()
+
+  -- Global setup.
+  cmp.setup({
+    snippet = {
+      expand = function(args)
+        luasnip.lsp_expand(args.body) -- For `luasnip` users.
+      end,
+    },
+    window = {
+      completion = cmp.config.window.bordered(),
+      documentation = cmp.config.window.bordered(),
+    },
+    mapping = cmp.mapping.preset.insert({
+      ["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-1), { "i", "c" }),
+      ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(1), { "i", "c" }),
+      ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
+      ["<C-e>"] = cmp.mapping(cmp.mapping.close(), { "i", "c" }),
+      ['<C-y>'] = cmp.mapping.confirm({ select = true }),
+      ['<CR>'] = cmp.mapping.confirm({ select = false }),
+      ["<Tab>"] = cmp.mapping(
+        function(fallback)
+          if cmp.visible() then
+            cmp.select_next_item()
+          elseif luasnip.expand_or_jumpable() then
+            luasnip.expand_or_jump()
+          elseif has_words_before() then
+            cmp.complete()
+          else
+            fallback()
+          end
+        end, { "i", "s" }
+      ),
+      ["<S-Tab>"] = cmp.mapping(
+        function(fallback)
+          if cmp.visible() then
+            cmp.select_prev_item()
+          elseif luasnip.jumpable(-1) then
+            luasnip.jump(-1)
+          else
+            fallback()
+          end
+        end, { "i", "s" }
+      ),
+    }),
+    sources = cmp.config.sources({
+      { name = 'nvim_lsp' },
+      { name = 'luasnip' }, -- for luasnip users.
+      { name = 'nvim_lua' },
+      { name = 'buffer' },
+      { name = 'path' },
+      { name = 'nvim_lsp_signature_help' },
+    }),
+    formatting = {
+      fields = { "kind", "abbr", "menu" },
+      format = lspkind.cmp_format({
+        mode = 'symbol_text', -- show only symbol annotations
+        menu = ({
+          buffer = "[Buffer]",
+          nvim_lsp = "[LSP]",
+          luasnip = "[LuaSnip]",
+          nvim_lua = "[Lua]",
+          path = "[Path]",
+          nvim_lsp_signature_help = "[Signature]",
+        }),
+        maxwidth = 50,       -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+        ellipsis_char = '...', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
+      })
+    },
+    experimental = {
+      ghost_text = false,
+    },
+  })
+
+  -- `/` cmdline setup.
+  cmp.setup.cmdline('/', {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = {
+      { name = 'buffer' }
+    }
+  })
+
+  -- `:` cmdline setup.
+  cmp.setup.cmdline(':', {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = cmp.config.sources({
+      { name = 'path' }
+    }, {
+      { name = 'cmdline' }
+    })
+  })
+
+
+  cmp.event:on(
+    'confirm_done',
+    cmp_autopairs.on_confirm_done()
+  )
+
   -- Mappings.
   -- See `:help vim.lsp.*` for documentation on any of the below functions
   whichkey.add({
-    {'<leader>w', group = "+Workspace Folder..." },
-    {'<leader>s', group = "+Set ... List" },
+    { '<leader>w', group = "+Workspace Folder..." },
+    { '<leader>s', group = "+Set ... List" },
   })
   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts('declaration'))
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts('definition'))
@@ -146,8 +145,8 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', 'gs', vim.lsp.buf.signature_help, bufopts('signature_help'))
   vim.keymap.set('n', 'gt', vim.lsp.buf.type_definition, bufopts('type definition'))
   vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts('references'))
-  vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts('Next diagnostic'))
-  vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts('Previous diagnostic'))
+  vim.keymap.set('n', ']d', function() vim.diagnostic.jump({ count = 1, float = true }) end, opts('Next diagnostic'))
+  vim.keymap.set('n', '[d', function() vim.diagnostic.jump({ count = -1, float = true }) end, opts('Previous diagnostic'))
   vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts('hover'))
   vim.keymap.set('n', '<leader>o', vim.diagnostic.open_float, opts('Open float'))
   vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, bufopts('add workspace folder'))
@@ -160,25 +159,12 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', '<leader>F', function() vim.lsp.buf.format { async = true } end, bufopts('code format'))
   vim.keymap.set('n', '<leader>sl', vim.diagnostic.setloclist, opts('Set Location List'))
   vim.keymap.set('n', '<leader>sf', vim.diagnostic.setqflist, opts('Set Quickfix List'))
-  -- vim.api.nvim_create_autocmd("CursorHold", {
-  --   buffer = bufnr,
-  --   callback = function()
-  --     local localopts = {
-  --       focusable = false,
-  --       close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
-  --       border = 'rounded',
-  --       source = 'always',
-  --       scope = 'cursor',
-  --     }
-  --     vim.diagnostic.open_float(nil, localopts)
-  --   end
-  -- })
 end
 
-lspconfig['nil_ls'].setup({
+vim.lsp.config('nil_ls', {
   cmd = { "nil" },
   filetype = { "nix" },
-  root_dir = lspconfig.util.root_pattern("flake.nix", ".git"),
+  root_markers = { "flake.nix", ".git" },
   single_file_support = true,
   settings = {
     ['nil'] = {
@@ -188,19 +174,20 @@ lspconfig['nil_ls'].setup({
       flake = {
         autoArchive = true,
         autoEvalInputs = true,
-        nixpkgsInputName = "nixos",
-      },
+        nixpkgsInputName = "nixos"
+      }
     },
   },
   capabilities = capabilities,
   on_attach = on_attach
 })
+vim.lsp.enable('nil_ls')
 
-lspconfig['lua_ls'].setup({
+vim.lsp.config('lua_ls', {
   cmd = { "lua-language-server" },
   filetypes = { "lua" },
-  root_dir = lspconfig.util.root_pattern(".luarc.json", ".luarc.jsonc", ".luacheckrc", ".stylua.toml", "stylua.toml",
-    "selene.toml", "selene.yml", ".git"),
+  root_markers = { ".luarc.json", ".luarc.jsonc", ".luacheckrc", ".stylua.toml", "stylua.toml",
+    "selene.toml", "selene.yml", ".git" },
   single_file_support = true,
   settings = {
     Lua = {
@@ -225,8 +212,10 @@ lspconfig['lua_ls'].setup({
   capabilities = capabilities,
   on_attach = on_attach
 })
+vim.lsp.enable('lua_ls')
 
-lspconfig['rust_analyzer'].setup({
+vim.lsp.config('rust_analyzer', {
+  root_markers = { "*.cargo" },
   settings = {
     ["rust-analyzer"] = {
       cargo = {
@@ -246,3 +235,4 @@ lspconfig['rust_analyzer'].setup({
   capabilities = capabilities,
   on_attach = on_attach,
 })
+vim.lsp.enable('rust_analyzer')

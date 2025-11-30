@@ -59,7 +59,7 @@
       nvim-dap
       nvim-dap-ui
       transparent-nvim
-      nixpkgsUnstable.vimPlugins.haskell-tools-nvim
+      haskell-tools-nvim
       toggleterm-nvim
       iron-nvim
       haskell-snippets-nvim

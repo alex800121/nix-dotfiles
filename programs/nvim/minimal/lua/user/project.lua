@@ -1,4 +1,4 @@
-local project = require'project_nvim'
+local project = require'project'
 
 project.setup({
   -- Manual mode doesn't automatically change your root directory, so you have

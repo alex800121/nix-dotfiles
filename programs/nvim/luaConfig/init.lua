@@ -7,6 +7,7 @@ require'user.keymaps'
 require'user.indent'
 require'user.buffer'
 require'user.nvimtree'.setup()
+require'user.project'
 -- require'user.treesitter'
 require'user.telescope'
 require'user.undotree'
