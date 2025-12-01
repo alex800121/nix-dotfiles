@@ -2,6 +2,7 @@ local haskell_tools = require 'haskell-tools'
 local whichkey = require 'which-key'
 local luasnip = require 'luasnip'
 local haskell_snippets = require('haskell-snippets').all
+
 luasnip.add_snippets('haskell', haskell_snippets, { key = 'haskell' })
 
 local opts = function(def) return { noremap = true, silent = true, desc = def } end
@@ -26,7 +27,7 @@ vim.g.haskell_tools = {
       vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts('declaration'))
       vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts('definition'))
       vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts('implementation'))
-      -- vim.keymap.set('n', 'gs', vim.lsp.buf.signature_help, bufopts('signature_help'))
+      vim.keymap.set('n', 'gs', vim.lsp.buf.signature_help, bufopts('signature_help'))
       vim.keymap.set('n', 'gt', vim.lsp.buf.type_definition, bufopts('type definition'))
       vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts('references'))
       vim.keymap.set('n', ']d', function() vim.diagnostic.jump({ count = 1, float = true }) end, opts('Next diagnostic'))

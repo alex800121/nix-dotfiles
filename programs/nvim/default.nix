@@ -17,6 +17,7 @@
       nvim-web-devicons
       onedark-nvim
       indent-blankline-nvim
+      nvim-treesitter-parsers.haskell
       (nvim-treesitter.withPlugins (p: with p; [
         haskell
       ]))
@@ -50,7 +51,7 @@
       cmp_luasnip
       cmp-nvim-lsp
       cmp-nvim-lua
-      # cmp-treesitter
+      cmp-treesitter
       cmp-path
       cmp-buffer
       cmp-cmdline
@@ -73,12 +74,12 @@
       nerd-fonts.hack
       ripgrep
       fd
-      haskell-language-server
-      haskellPackages.hoogle
-      haskellPackages.ghci-dap
-      haskellPackages.haskell-dap
-      haskellPackages.haskell-debug-adapter
-      haskellPackages.fast-tags
+      haskell.packages.ghc912.haskell-language-server
+      haskell.packages.ghc912.hoogle
+      haskell.packages.ghc912.ghci-dap
+      haskell.packages.ghc912.haskell-dap
+      haskell.packages.ghc912.haskell-debug-adapter
+      haskell.packages.ghc912.fast-tags
       ormolu
       # nil
       inputs.nil.packages."${pkgs.stdenv.hostPlatform.system}".default

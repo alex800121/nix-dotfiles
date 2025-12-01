@@ -38,6 +38,24 @@
           {
             nixpkgs.overlays = [
               inputs.rust-overlay.overlays.default
+              (self: super:
+                {
+                  haskell = super.haskell // {
+                    packages = super.haskell.packages // {
+                      ghc912 = super.haskell.packages.ghc912.override {
+                        overrides = hself: hsuper: {
+                          cabal-install = self.haskell.lib.overrideCabal hsuper.cabal-install
+                            {
+                              version = "3.14.2.0";
+                              revision = "3";
+                              sha256 = "sha256-6KE9dUIECq0yFGWldlFCZ6dT0CgIqYqxd1EkPBMce9s=";
+                              editedCabalFile = "sha256-8COFdH/TBkcbIm3iqNQcKASYCxsbdtXMqCPkpGwaRf0=";
+                            };
+                        };
+                      };
+                    };
+                  };
+                })
             ] ++ overlays;
           }
           # agenix.nixosModules.default

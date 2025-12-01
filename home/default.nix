@@ -89,11 +89,11 @@ in
     cabal2nix
     nodejs
     gh
-    cabal-install
-    ghcid
-    ghc
-    haskellPackages.hoogle
-    haskellPackages.cabal-gild
+    haskell.packages.ghc912.cabal-install
+    haskell.packages.ghc912.ghcid
+    haskell.compiler.ghc912
+    haskell.packages.ghc912.hoogle
+    haskell.packages.ghc912.cabal-gild
     llvm_18
     clang_18
     rust-bin.stable.latest.complete

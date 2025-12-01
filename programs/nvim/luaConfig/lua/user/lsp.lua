@@ -6,6 +6,8 @@ local autopairs = require 'nvim-autopairs'
 local cmp_autopairs = require 'nvim-autopairs.completion.cmp'
 local whichkey = require 'which-key'
 
+-- vim.lsp.log.set_level(vim.lsp.log.levels.DEBUG)
+
 require("luasnip.loaders.from_vscode").lazy_load()
 
 local has_words_before = function()
@@ -157,6 +159,20 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', '<leader>sl', vim.diagnostic.setloclist, opts('Set Location List'))
   vim.keymap.set('n', '<leader>sf', vim.diagnostic.setqflist, opts('Set Quickfix List'))
 end
+
+-- vim.lsp.config('hls', {
+--   filetypes = { 'haskell', 'lhaskell', 'cabal' },
+--   settings = {
+--     haskell = {
+--       plugin = {
+--         hlint = {
+--           globalOn = false
+--         }
+--       }
+--     }
+--   }
+-- })
+-- vim.lsp.enable('hls')
 
 vim.lsp.config('nil_ls', {
   cmd = { "nil" },
