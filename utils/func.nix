@@ -27,35 +27,57 @@
         overlays = overlaysUnstable;
         config.allowUnfree = true;
       };
+      nixpkgs2505 = import inputs.nixpkgs2505 {
+        inherit system;
+        config.allowUnfree = true;
+      };
     in
     {
       nixosConfigurations."${configName}" = inputs.nixpkgs.lib.nixosSystem {
         inherit system;
         specialArgs = {
-          inherit nixpkgsUnstable conf userConfig inputs extraModules hmModules;
+          inherit nixpkgs2505 nixpkgsUnstable conf userConfig inputs extraModules hmModules;
         };
         modules = [
           {
             nixpkgs.overlays = [
               inputs.rust-overlay.overlays.default
-              (self: super:
-                {
-                  haskell = super.haskell // {
-                    packages = super.haskell.packages // {
-                      ghc912 = super.haskell.packages.ghc912.override {
-                        overrides = hself: hsuper: {
-                          cabal-install = self.haskell.lib.overrideCabal hsuper.cabal-install
-                            {
-                              version = "3.14.2.0";
-                              revision = "3";
-                              sha256 = "sha256-6KE9dUIECq0yFGWldlFCZ6dT0CgIqYqxd1EkPBMce9s=";
-                              editedCabalFile = "sha256-8COFdH/TBkcbIm3iqNQcKASYCxsbdtXMqCPkpGwaRf0=";
-                            };
-                        };
-                      };
-                    };
-                  };
-                })
+              # (self: super:
+              #   {
+              #     haskell = super.haskell // {
+              #       packages = super.haskell.packages // {
+              #         ghc912 = super.haskell.packages.ghc912.override {
+              #           overrides = hself: hsuper: {
+              #             Cabal_3_14_2_0 = hsuper.Cabal_3_14_2_0.overrideScope (cself: csuper: {
+              #               Cabal-syntax = cself.Cabal-syntax_3_14_2_0;
+              #             });
+              #             cabal-install-solver = self.haskell.lib.overrideCabal
+              #               (hsuper.cabal-install-solver.overrideScope (cself: csuper: {
+              #                 Cabal = hself.Cabal_3_14_2_0;
+              #                 Cabal-syntax = cself.Cabal-syntax_3_14_2_0;
+              #               }))
+              #               {
+              #                 version = "3.14.2.0";
+              #                 revision = "0";
+              #                 sha256 = "sha256-4R0XF/VPdYUkWFm7LIMFq0lOP7sH+zWaxE7aNfNmoRQ=";
+              #                 editedCabalFile = "sha256-vSvFUUxNGYcveRUOHg465t9bvIzizHNfcPx/osk281I=";
+              #               };
+              #             cabal-install = self.haskell.lib.overrideCabal
+              #               (hsuper.cabal-install.overrideScope (cself: csuper: {
+              #                 Cabal = hself.Cabal_3_14_2_0;
+              #                 Cabal-syntax = cself.Cabal-syntax_3_14_2_0;
+              #               }))
+              #               {
+              #                 version = "3.14.2.0";
+              #                 revision = "3";
+              #                 sha256 = "sha256-6KE9dUIECq0yFGWldlFCZ6dT0CgIqYqxd1EkPBMce9s=";
+              #                 editedCabalFile = "sha256-8COFdH/TBkcbIm3iqNQcKASYCxsbdtXMqCPkpGwaRf0=";
+              #               };
+              #           };
+              #         };
+              #       };
+              #     };
+              #   })
             ] ++ overlays;
           }
           # agenix.nixosModules.default
@@ -66,7 +88,7 @@
               useUserPackages = true;
               users."${userConfig.userName}".imports = hmModules;
               extraSpecialArgs = {
-                inherit nixpkgsUnstable inputs userConfig system;
+                inherit nixpkgs2505 nixpkgsUnstable inputs userConfig system;
               };
               backupFileExtension = "bak";
             };

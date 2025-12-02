@@ -2,6 +2,7 @@
   description = "NixOS configuration";
   inputs = {
     # wezterm.url = "github:wezterm/wezterm?dir=nix";
+    nixpkgs2505.url = "github:nixos/nixpkgs/nixos-25.05";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
     nixpkgsUnstable.url = "github:nixos/nixpkgs/nixos-unstable";
     declarative-flatpak.url = "github:in-a-dil-emma/declarative-flatpak/latest";

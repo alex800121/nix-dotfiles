@@ -1,4 +1,4 @@
-{ pkgs, lib, userConfig, nixpkgsUnstable, ... }:
+{ pkgs, lib, userConfig, nixpkgs2505, nixpkgsUnstable, ... }:
 let
   inherit (userConfig) userName;
   term = userConfig.term or "";
@@ -89,7 +89,7 @@ in
     cabal2nix
     nodejs
     gh
-    haskell.packages.ghc912.cabal-install
+    nixpkgs2505.cabal-install
     haskell.packages.ghc912.ghcid
     haskell.compiler.ghc912
     haskell.packages.ghc912.hoogle
