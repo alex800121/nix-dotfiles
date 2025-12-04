@@ -175,7 +175,7 @@ in
     appindicator
     xwayland-indicator
     gtk4-desktop-icons-ng-ding
-    nixpkgsUnstable.gnomeExtensions.tailscale-status
+    tailscale-status
     tailscale-qs
     pkgs.gnome-tweaks
     # pkgs.solaar

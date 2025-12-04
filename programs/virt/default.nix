@@ -26,17 +26,14 @@
 
   environment.systemPackages = with pkgs; [
     docker-compose
-    nixpkgsUnstable.freerdp
+    freerdp
     virt-manager
     virt-viewer
     spice
     spice-gtk
     spice-protocol
-    # win-virtio
     win-spice
-    # (winboat.override {
-    #   nodejs_24 = pkgs.nodejs_24;
-    # })
-    nixpkgsUnstable.distrobox
+    nixpkgsUnstable.winboat
+    distrobox
   ];
 }

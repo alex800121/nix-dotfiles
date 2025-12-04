@@ -84,12 +84,12 @@ in
     ardour
     helvum
     musescore
-    nixpkgsUnstable.libreoffice-fresh
+    libreoffice-fresh
     nix-prefetch-git
     cabal2nix
     nodejs
     gh
-    nixpkgs2505.cabal-install
+    haskell.packages.ghc912.cabal-install
     haskell.packages.ghc912.ghcid
     haskell.compiler.ghc912
     haskell.packages.ghc912.hoogle
@@ -156,6 +156,9 @@ in
         cookie = true;
         referer-from = true;
         scripting = true;
+      };
+      network = {
+        max-redirect = 100;
       };
     };
   };
