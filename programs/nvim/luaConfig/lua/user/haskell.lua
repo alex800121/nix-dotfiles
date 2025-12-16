@@ -15,6 +15,12 @@ vim.g.haskell_tools = {
     hoogle = { mode = 'auto' },
   },
   hls = {
+    settings = {
+      haskell = {
+        cabalFormattingProvider = "cabal-gild",
+        formattingProvider = "fourmolu"
+      },
+    },
     on_attach = function(client, bufnr, ht)
       local bufopts = function(def) return { noremap = true, silent = true, buffer = bufnr, desc = 'LSP: ' .. def } end
       -- Mappings.

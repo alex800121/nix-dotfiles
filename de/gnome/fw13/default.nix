@@ -11,4 +11,7 @@ in
       settings."org/gnome/mutter".experimental-features = [ "scale-monitor-framebuffer" ];
     }
   ];
+  networking.networkmanager.plugins = with pkgs; [
+    networkmanager-openconnect
+  ];
 }

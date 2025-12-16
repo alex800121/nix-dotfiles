@@ -72,6 +72,7 @@ in
   };
 
   home.packages = with pkgs; [
+    openfortivpn
     w3m
     graphviz
     vlc
@@ -94,6 +95,8 @@ in
     haskell.compiler.ghc912
     haskell.packages.ghc912.hoogle
     haskell.packages.ghc912.cabal-gild
+    haskell.packages.ghc912.fourmolu
+    haskell.packages.ghc912.haskell-language-server
     llvm_18
     clang_18
     rust-bin.stable.latest.complete
@@ -109,6 +112,7 @@ in
     bitwarden-desktop
     tldr
     mpv
+    rstudioWrapper
   ];
 
   xdg.mime.enable = true;

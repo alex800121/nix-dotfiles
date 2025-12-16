@@ -80,13 +80,18 @@
       haskell.packages.ghc912.haskell-dap
       haskell.packages.ghc912.haskell-debug-adapter
       haskell.packages.ghc912.fast-tags
-      ormolu
+      haskell.packages.ghc912.fourmolu
+      haskell.packages.ghc912.cabal-gild
+      # ormolu
       # nil
       inputs.nil.packages."${pkgs.stdenv.hostPlatform.system}".default
       lua-language-server
       nixpkgs-fmt
       vscode-extensions.vadimcn.vscode-lldb
     ];
+  };
+  xdg.configFile."fourmolu.yaml" = {
+    source = ./fourmolu.yaml;
   };
   xdg.configFile.nvim = {
     source = ./luaConfig;

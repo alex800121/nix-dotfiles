@@ -1,4 +1,4 @@
-{ userConfit, pkgs, lib, ... }: {
+{ userConfig, pkgs, lib, ... }: {
   imports = [./default.nix];
   services.tailscale.useRoutingFeatures = "client";
   services.tailscale.extraSetFlags = [
