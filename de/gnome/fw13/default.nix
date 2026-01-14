@@ -11,6 +11,10 @@ in
       settings."org/gnome/mutter".experimental-features = [ "scale-monitor-framebuffer" ];
     }
   ];
+
+  services.samba.enable = true;
+  services.samba.smbd.enable = true;
+
   networking.networkmanager.plugins = with pkgs; [
     networkmanager-openconnect
   ];

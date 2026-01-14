@@ -113,6 +113,7 @@ in
     tldr
     mpv
     rstudioWrapper
+    xournalpp
   ];
 
   xdg.mime.enable = true;

@@ -9,7 +9,7 @@
     {
       name = "realtime-config";
       patch = null;
-      extraStructuredConfig = with lib.kernel; {
+      structuredExtraConfig = with lib.kernel; {
         PREEMPT_RT = yes;
         # Fix error: unused option: PREEMPT_RT.
         # EXPERT = yes; # PREEMPT_RT depends on it (in kernel/Kconfig.preempt)

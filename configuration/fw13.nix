@@ -33,6 +33,7 @@ in
     ../programs/seaweedfs
     ../programs/virt
     ../programs/tailscale/client.nix
+    ../programs/thunderbird
     # ../programs/postgresql
     inputs.agenix.nixosModules.default
     inputs.declarative-flatpak.nixosModules.default
