@@ -13,6 +13,7 @@ in
   hardware.logitech.wireless.enable = true;
   hardware.logitech.wireless.enableGraphical = true;
 
+  qt.platformTheme = "gnome";
   services.displayManager = {
     gdm = {
       wayland = true;
@@ -62,15 +63,16 @@ in
               "appindicatorsupport@rgcjonas.gmail.com"
               "kimpanel@kde.org"
               "drive-menu@gnome-shell-extensions.gcampax.github.com"
-              "gtk4-ding@smedius.gitlab.com"
+              # "gtk4-ding@smedius.gitlab.com"
               # "tailscale-status@maxgallup.github.com"
               "tailscale@joaophi.github.com"
             ];
             welcome-dialog-last-shown-version = "48.1";
           };
-          "org/gnome/shell/extensions/gtk4-ding" = {
-            show-network-volumes = true;
-          };
+
+          # "org/gnome/shell/extensions/gtk4-ding" = {
+          #   show-network-volumes = true;
+          # };
 
           "org/gnome/shell/extensions/kimpanel".vertical = true;
 
@@ -151,6 +153,7 @@ in
             termDesktop
             "org.gnome.Nautilus.desktop"
             "writer.desktop"
+            "thunderbird.desktop"
           ];
 
           "org/gnome/desktop/background" = {
@@ -174,7 +177,7 @@ in
     kimpanel
     appindicator
     xwayland-indicator
-    gtk4-desktop-icons-ng-ding
+    # gtk4-desktop-icons-ng-ding
     tailscale-status
     tailscale-qs
     pkgs.gnome-tweaks

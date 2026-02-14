@@ -77,6 +77,7 @@ in
         "connection.mdns" = 1;
       };
       wifi.backend = "iwd";
+      wifi.powersave = false;
     };
   };
   systemd.network.wait-online.enable = lib.mkDefault (!config.networking.networkmanager.enable);

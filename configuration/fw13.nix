@@ -60,6 +60,9 @@ in
   boot.initrd.systemd.enable = true;
   boot.initrd.systemd.tpm2.enable = true;
 
+  programs.appimage.enable = true;
+  programs.appimage.binfmt = true;
+
   environment.sessionVariables."XDG_DATA_DIRS" = [ "/var/lib/flatpak/exports/share" ];
   services.flatpak = {
     enable = true;
@@ -93,6 +96,7 @@ in
   environment.systemPackages = with pkgs; [
     # gnome-software
     # nixpkgsUnstable.wineWowPackages.unstableFull
+    x32edit
   ];
 
   # services.gnunet.enable = true;

@@ -86,6 +86,7 @@ in
     helvum
     musescore
     libreoffice-fresh
+    corefonts
     nix-prefetch-git
     cabal2nix
     nodejs
@@ -104,7 +105,7 @@ in
     obs-studio
     gimp3
     wireshark
-    onlyoffice-desktopeditors
+    # onlyoffice-desktopeditors
     spotify
     zoom-us
     kdePackages.kdenlive
