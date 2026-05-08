@@ -114,7 +114,7 @@ in
   environment.systemPackages = with pkgs; [
     # gnome-software
     # nixpkgsUnstable.wineWowPackages.unstableFull
-    x32edit
+    # x32edit
     libimobiledevice
     ifuse # optional, to mount using 'ifuse'
   ];
