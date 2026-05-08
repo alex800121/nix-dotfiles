@@ -105,7 +105,7 @@ in
     # hoogle
     # cabal-gild
     fourmolu
-    (nixpkgsUnstable.haskell-language-server.override { supportedGhcVersions = [ "9122" ]; })
+    (haskell-language-server.override { supportedGhcVersions = [ "9122" ]; })
     llvm_20
     clang_20
     rust-bin.stable.latest.complete
@@ -121,7 +121,7 @@ in
     # bitwarden-desktop
     tldr
     mpv
-    rstudioWrapper
+    # rstudioWrapper
     # xournalpp
   ];
 
@@ -177,14 +177,14 @@ in
     };
   };
 
-  programs.vscode = {
-    # package = pkgs.vscode-fhs;
-    enable = true;
-    profiles.default.enableExtensionUpdateCheck = true;
-    profiles.default.enableUpdateCheck = true;
-    mutableExtensionsDir = true;
-    # extensions = [
-    #   pkgs.vscode-extensions.vadimcn.vscode-lldb
-    # ];
-  };
+  # programs.vscode = {
+  #   # package = pkgs.vscode-fhs;
+  #   enable = true;
+  #   profiles.default.enableExtensionUpdateCheck = true;
+  #   profiles.default.enableUpdateCheck = true;
+  #   mutableExtensionsDir = true;
+  #   # extensions = [
+  #   #   pkgs.vscode-extensions.vadimcn.vscode-lldb
+  #   # ];
+  # };
 }

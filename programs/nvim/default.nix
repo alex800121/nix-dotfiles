@@ -74,14 +74,14 @@
       nerd-fonts.hack
       ripgrep
       fd
-      haskell.packages.ghc912.haskell-language-server
-      haskell.packages.ghc912.hoogle
+      # haskell.packages.ghc912.haskell-language-server
+      # haskell.packages.ghc912.hoogle
       haskell.packages.ghc912.ghci-dap
       haskell.packages.ghc912.haskell-dap
       haskell.packages.ghc912.haskell-debug-adapter
       haskell.packages.ghc912.fast-tags
-      haskell.packages.ghc912.fourmolu
-      haskell.packages.ghc912.cabal-gild
+      # haskell.packages.ghc912.fourmolu
+      # haskell.packages.ghc912.cabal-gild
       # ormolu
       # nil
       inputs.nil.packages."${pkgs.stdenv.hostPlatform.system}".default

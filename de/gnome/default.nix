@@ -149,8 +149,9 @@ in
             # "firefox.desktop"
             "google-chrome.desktop"
             "com.spotify.Client.desktop"
+            "com.visualstudio.code.desktop"
             # "spotify.desktop"
-            "code.desktop"
+            # "code.desktop"
             termDesktop
             "org.gnome.Nautilus.desktop"
             "org.libreoffice.LibreOffice.writer.desktop"

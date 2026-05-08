@@ -84,6 +84,7 @@ in
       "flathub:app/us.zoom.Zoom//stable"
       "flathub:app/org.gnome.SoundJuicer//stable"
       "flathub:app/com.spotify.Client//stable"
+      "flathub:app/com.visualstudio.code//stable"
       "flathub:app/org.kde.kdenlive//stable"
       "flathub:app/it.mijorus.gearlever//stable"
       "flathub:app/com.github.xournalpp.xournalpp//stable"

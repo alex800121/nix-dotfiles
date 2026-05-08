@@ -161,7 +161,7 @@ in
       noto-fonts-color-emoji
       wqy_zenhei
       wqy_microhei
-      vista-fonts-cht
+      # vista-fonts-cht
       font-awesome
       cantarell-fonts
       liberation_ttf
