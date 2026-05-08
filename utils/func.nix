@@ -42,41 +42,41 @@
           {
             nixpkgs.overlays = [
               inputs.rust-overlay.overlays.default
-              (self: super: {
-                haskell = super.haskell // {
-                  packages = super.haskell.packages // {
-                    ghc9122 = super.haskell.packages.ghc9122.override {
-                      overrides = hself: hsuper:
-                        let
-                          oScope = cself: csuper: {
-                            Cabal-syntax = cself.Cabal-syntax_3_14_2_0;
-                            Cabal = cself.Cabal_3_14_2_0;
-                          };
-                          cabal-install = hsuper.cabal-install.overrideScope oScope;
-                          cabal-install-solver = hsuper.cabal-install-solver.overrideScope oScope;
-                        in
-                        {
-                          cabal-install-solver = super.haskell.lib.overrideCabal
-                            cabal-install-solver
-                            (drv: {
-                              version = "3.14.2.0";
-                              revision = "0";
-                              sha256 = "sha256-4R0XF/VPdYUkWFm7LIMFq0lOP7sH+zWaxE7aNfNmoRQ=";
-                            });
-                          cabal-install = super.haskell.lib.overrideCabal
-                            cabal-install
-                            (drv: {
-                              version = "3.14.2.0";
-                              revision = "3";
-                              sha256 = "1nvv3h9kq92ifyqqma88538579v7898pd9b52hras2h489skv8g8";
-                              editedCabalFile = "sha256-8COFdH/TBkcbIm3iqNQcKASYCxsbdtXMqCPkpGwaRf0=";
-                              libraryHaskellDepends = [ hself.lukko ] ++ drv.libraryHaskellDepends;
-                            });
-                        };
-                    };
-                  };
-                };
-              })
+              # (self: super: {
+              #   haskell = super.haskell // {
+              #     packages = super.haskell.packages // {
+              #       ghc9122 = super.haskell.packages.ghc9122.override {
+              #         overrides = hself: hsuper:
+              #           let
+              #             oScope = cself: csuper: {
+              #               Cabal-syntax = cself.Cabal-syntax_3_14_2_0;
+              #               Cabal = cself.Cabal_3_14_2_0;
+              #             };
+              #             cabal-install = hsuper.cabal-install.overrideScope oScope;
+              #             cabal-install-solver = hsuper.cabal-install-solver.overrideScope oScope;
+              #           in
+              #           {
+              #             cabal-install-solver = super.haskell.lib.overrideCabal
+              #               cabal-install-solver
+              #               (drv: {
+              #                 version = "3.14.2.0";
+              #                 revision = "0";
+              #                 sha256 = "sha256-4R0XF/VPdYUkWFm7LIMFq0lOP7sH+zWaxE7aNfNmoRQ=";
+              #               });
+              #             cabal-install = super.haskell.lib.overrideCabal
+              #               cabal-install
+              #               (drv: {
+              #                 version = "3.14.2.0";
+              #                 revision = "3";
+              #                 sha256 = "1nvv3h9kq92ifyqqma88538579v7898pd9b52hras2h489skv8g8";
+              #                 editedCabalFile = "sha256-8COFdH/TBkcbIm3iqNQcKASYCxsbdtXMqCPkpGwaRf0=";
+              #                 libraryHaskellDepends = [ hself.lukko ] ++ drv.libraryHaskellDepends;
+              #               });
+              #           };
+              #       };
+              #     };
+              #   };
+              # })
             ] ++ overlays;
           }
           # agenix.nixosModules.default

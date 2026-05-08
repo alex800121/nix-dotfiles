@@ -148,11 +148,12 @@ in
           "org/gnome/shell".favorite-apps = [
             # "firefox.desktop"
             "google-chrome.desktop"
-            "spotify.desktop"
+            "com.spotify.Client.desktop"
+            # "spotify.desktop"
             "code.desktop"
             termDesktop
             "org.gnome.Nautilus.desktop"
-            "writer.desktop"
+            "org.libreoffice.LibreOffice.writer.desktop"
             "thunderbird.desktop"
           ];
 

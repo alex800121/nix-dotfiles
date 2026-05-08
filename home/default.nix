@@ -75,46 +75,54 @@ in
     openfortivpn
     w3m
     graphviz
-    vlc
+    # vlc
     firefox
     google-chrome
     android-tools
     scrcpy
     kdePackages.plasma-browser-integration
-    gnome-network-displays
-    ardour
-    helvum
-    musescore
-    libreoffice-fresh
+    # gnome-network-displays
+    # ardour
+    # helvum
+    # musescore
+    # libreoffice-fresh
     corefonts
     nix-prefetch-git
     cabal2nix
     nodejs
     gh
-    haskell.packages.ghc912.cabal-install
-    haskell.packages.ghc912.ghcid
     haskell.compiler.ghc912
+    # (haskell.packages.ghc912.ghcWithPackages (pkgs: with pkgs; [llvm_20 clang_20]))
+    # (haskell.compiler.ghc912.override {useLLVM = true;})
+    # haskell.packages.ghc912.cabal-install
+    # haskell.packages.ghc912.ghcid
     haskell.packages.ghc912.hoogle
     haskell.packages.ghc912.cabal-gild
-    haskell.packages.ghc912.fourmolu
-    haskell.packages.ghc912.haskell-language-server
-    llvm_18
-    clang_18
+    # haskell.packages.ghc912.fourmolu
+    # haskell.packages.ghc912.haskell-language-server
+    cabal-install
+    ghcid
+    # hoogle
+    # cabal-gild
+    fourmolu
+    (nixpkgsUnstable.haskell-language-server.override { supportedGhcVersions = [ "9122" ]; })
+    llvm_20
+    clang_20
     rust-bin.stable.latest.complete
-    telegram-desktop
-    obs-studio
-    gimp3
+    # telegram-desktop
+    # obs-studio
+    # gimp3
     wireshark
     # onlyoffice-desktopeditors
-    spotify
-    zoom-us
-    kdePackages.kdenlive
+    # spotify
+    # zoom-us
+    # kdePackages.kdenlive
     x42-plugins
-    bitwarden-desktop
+    # bitwarden-desktop
     tldr
     mpv
     rstudioWrapper
-    xournalpp
+    # xournalpp
   ];
 
   xdg.mime.enable = true;
