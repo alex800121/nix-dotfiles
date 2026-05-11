@@ -42,6 +42,15 @@
           {
             nixpkgs.overlays = [
               inputs.rust-overlay.overlays.default
+              (self: super: let
+                ghc9122 = super.haskell.compiler.ghc9122.override { useLLVM = true; };
+              in {
+                haskell = super.haskell // {
+                  compiler = super.haskell.compiler // {
+                    ghc9122 = ghc9122;
+                  };
+                };
+              })
               # (self: super: {
               #   haskell = super.haskell // {
               #     packages = super.haskell.packages // {
@@ -87,7 +96,7 @@
               useUserPackages = true;
               users."${userConfig.userName}".imports = hmModules;
               extraSpecialArgs = {
-                inherit nixpkgs2505 nixpkgsUnstable inputs userConfig system;
+                inherit nixpkgs2505 nixpkgsUnstable inputs userConfig;
               };
               backupFileExtension = "bak";
             };

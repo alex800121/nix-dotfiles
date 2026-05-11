@@ -118,6 +118,8 @@ in
     # x32edit
     libimobiledevice
     ifuse # optional, to mount using 'ifuse'
+    llvm_20
+    clang_20
   ];
 
   # services.gnunet.enable = true;

@@ -88,24 +88,26 @@ in
     # libreoffice-fresh
     corefonts
     nix-prefetch-git
-    cabal2nix
     nodejs
     gh
-    haskell.compiler.ghc912
     # (haskell.packages.ghc912.ghcWithPackages (pkgs: with pkgs; [llvm_20 clang_20]))
     # (haskell.compiler.ghc912.override {useLLVM = true;})
     # haskell.packages.ghc912.cabal-install
     # haskell.packages.ghc912.ghcid
-    haskell.packages.ghc912.hoogle
-    haskell.packages.ghc912.cabal-gild
     # haskell.packages.ghc912.fourmolu
     # haskell.packages.ghc912.haskell-language-server
-    cabal-install
-    ghcid
     # hoogle
     # cabal-gild
+    cabal2nix
+    # (haskell.compiler.ghc912.override { useLLVM = true; })
+    haskell.compiler.ghc912
+    haskell.packages.ghc912.hoogle
+    haskell.packages.ghc912.cabal-gild
+    haskell.packages.ghc912.haskell-language-server
+    cabal-install
+    ghcid
     fourmolu
-    (haskell-language-server.override { supportedGhcVersions = [ "9122" ]; })
+    # (haskell-language-server.override { supportedGhcVersions = [ "9122" ]; })
     llvm_20
     clang_20
     rust-bin.stable.latest.complete
