@@ -59,9 +59,14 @@ in
 {
   imports = [ ./default.nix ];
   services.tailscale.useRoutingFeatures = "server";
+  age.secrets."tssecret" = {
+    file = ../../secrets/tssecret.age;
+  };
+
+  services.tailscale.authKeyFile = config.age.secrets."tssecret".path;
   services.tailscale.extraUpFlags = [
     "--advertise-routes="
-    "--advertise-flags=tag:server"
+    "--advertise-tags=tag:server"
   ];
   services.tailscale.extraSetFlags = [
     "--accept-routes=true"
