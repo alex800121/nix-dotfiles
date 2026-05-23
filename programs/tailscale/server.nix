@@ -61,6 +61,7 @@ in
   services.tailscale.useRoutingFeatures = "server";
   services.tailscale.extraUpFlags = [
     "--advertise-routes="
+    "--advertise-flags=tag:server"
   ];
   services.tailscale.extraSetFlags = [
     "--accept-routes=true"

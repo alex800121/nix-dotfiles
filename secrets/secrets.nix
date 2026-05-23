@@ -28,5 +28,7 @@ in
   "ddtoken.age".publicKeys =alexrpi4tp ++ oracle ++ oracle2 ++ oracle3 ++ acer-tp ++ fw13; 
   "tsapi.age".publicKeys = alexrpi4tp ++ oracle ++ oracle2 ++ oracle3 ++ acer-tp ++ fw13;
   "tsauth.age".publicKeys = alexrpi4tp ++ oracle ++ oracle2 ++ oracle3 ++ acer-tp ++ fw13;
+  "tsid.age".publicKeys = alexrpi4tp ++ oracle ++ oracle2 ++ oracle3 ++ acer-tp ++ fw13;
+  "tssecret.age".publicKeys = alexrpi4tp ++ oracle ++ oracle2 ++ oracle3 ++ acer-tp ++ fw13;
   "nix_common.age".publicKeys = alexrpi4tp ++ oracle ++ oracle2 ++ oracle3 ++ acer-tp ++ fw13;
 }

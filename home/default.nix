@@ -123,6 +123,7 @@ in
     # bitwarden-desktop
     tldr
     mpv
+    webex
     # rstudioWrapper
     # xournalpp
   ];

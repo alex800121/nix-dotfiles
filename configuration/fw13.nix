@@ -70,6 +70,7 @@ in
       "flathub" = "https://dl.flathub.org/repo/flathub.flatpakrepo";
     };
     packages = [
+      "flathub:app/com.calibre_ebook.calibre//stable"
       "flathub:app/com.github.AlizaMedicalImaging.AlizaMS//stable"
       "flathub:app/com.usebottles.bottles//stable"
       "flathub:app/com.github.tchx84.Flatseal//stable"
@@ -120,10 +121,16 @@ in
     ifuse # optional, to mount using 'ifuse'
     llvm_20
     clang_20
+    smartmontools
   ];
 
   # services.gnunet.enable = true;
   # services.gnunet.package = nixpkgsUnstable.gnunet;
   # users.users."${userConfig.userName}".extraGroups = [ "gnunet" ];
+
+  services.smartd = {
+    enable = true;
+    autodetect = true;
+  };
 
 }
