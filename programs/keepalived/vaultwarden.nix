@@ -10,13 +10,15 @@ let
   peerTsIp = x: "100.64.0.${toString x}";
   initPrio = 100;
   updateScript = ''
-    TS_API_TOKEN=$(${pkgs.coreutils}/bin/cat ${config.age.secrets.tsApi.path})
+    TS_ID=$(${pkgs.coreutils}/bin/cat ${config.age.secrets.tsid.path})
+    TS_SECRET=$(${pkgs.coreutils}/bin/cat ${config.age.secrets.tssecret.path})
+    TS_API_TOKEN=$(${pkgs.curl}/bin/curl -d "client_id=$TS_ID" -d "client_secret=$TS_SECRET" "https://api.tailscale.com/api/v2/oauth/token" | ${pkgs.jq}/bin/jq .access_token -r)
     TS_NODE_ID=$(${pkgs.curl}/bin/curl --request GET \
                     --url https://api.tailscale.com/api/v2/tailnet/alex800121.github/devices \
                     -u "$TS_API_TOKEN:" \
                       | ${pkgs.jq}/bin/jq \
                           -r \
-                          '.[].[] | select(.hostname=="${userConfig.hostName}").nodeId')
+                          '.[].[] | select(.hostname=="${config.networking.hostName}").nodeId')
     OLD_VXLAN_IP=$(${pkgs.curl}/bin/curl --request GET \
                       --url https://api.tailscale.com/api/v2/device/$TS_NODE_ID/routes \
                       -u "$TS_API_TOKEN:" \
@@ -34,6 +36,8 @@ let
       --header 'Content-Type: application/json' \
       --data "$NEW_VXLAN_IP"
     unset TS_API_TOKEN
+    unset TS_SECRET
+    unset TS_ID
   '';
   renewIp = pkgs.writeScript "renew_ip.sh" updateScript;
   build = { id, priority }:
@@ -70,12 +74,18 @@ let
   networkId = 1;
 in
 {
-  age.secrets.tsApi = {
-    file = ../../secrets/tsapi.age;
-    # file = ../../secrets/tsapi_${hostName}.age;
-    owner = "root";
-    group = "root";
-    mode = "600";
+  # age.secrets.tsApi = {
+  #   file = ../../secrets/tsapi.age;
+  #   # file = ../../secrets/tsapi_${hostName}.age;
+  #   owner = "root";
+  #   group = "root";
+  #   mode = "600";
+  # };
+  age.secrets."tssecret" = {
+    file = ../../secrets/tssecret.age;
+  };
+  age.secrets."tsid" = {
+    file = ../../secrets/tsid.age;
   };
   environment.systemPackages = with pkgs; [
     keepalived

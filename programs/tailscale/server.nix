@@ -2,14 +2,17 @@
 let
   inherit (userConfig.tailscale) id;
   tsIp = "100.64.0.${toString id}";
+
   updateServer = ''
-    TS_API_TOKEN=$(cat ${config.age.secrets.tsServerApi.path})
+    TS_ID=$(cat ${config.age.secrets.tsid.path})
+    TS_SECRET=$(cat ${config.age.secrets.tssecret.path})
+    TS_API_TOKEN=$(curl -d "client_id=$TS_ID" -d "client_secret=$TS_SECRET" "https://api.tailscale.com/api/v2/oauth/token" | jq .access_token -r)
     TS_INFO=$(curl \
                 --request GET \
                 --url https://api.tailscale.com/api/v2/tailnet/-/devices?fields=all \
                 -u "$TS_API_TOKEN:" \
                     | jq '.[].[]
-                            | select(.hostname=="${userConfig.hostName}")
+                            | select(.hostname=="${config.networking.hostName}")
                             | {
                                 id: .nodeId,
                                 ip: (.addresses.[] | select(startswith("100"))),
@@ -54,6 +57,8 @@ let
       echo "No need to set server IP"
     fi
     unset TS_API_TOKEN
+    unset TS_SECRET
+    unset TS_ID
   '';
 in
 {
@@ -61,6 +66,9 @@ in
   services.tailscale.useRoutingFeatures = "server";
   age.secrets."tssecret" = {
     file = ../../secrets/tssecret.age;
+  };
+  age.secrets."tsid" = {
+    file = ../../secrets/tsid.age;
   };
 
   services.tailscale.authKeyFile = config.age.secrets."tssecret".path;
@@ -100,11 +108,11 @@ in
 
   boot.kernel.sysctl."net.ipv4.ip_forward" = lib.mkDefault 1;
   boot.kernel.sysctl."net.ipv6.conf.all.forwarding" = lib.mkDefault 1;
-  age.secrets.tsServerApi = {
-    file = ../../secrets/tsapi.age;
-    # file = ../../secrets/tsapi_${hostName}.age;
-    owner = "root";
-    group = "root";
-    mode = "600";
-  };
+  # age.secrets.tsServerApi = {
+  #   file = ../../secrets/tsapi.age;
+  #   # file = ../../secrets/tsapi_${hostName}.age;
+  #   owner = "root";
+  #   group = "root";
+  #   mode = "600";
+  # };
 }
