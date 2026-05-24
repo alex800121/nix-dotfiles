@@ -126,7 +126,7 @@
     ];
     hmModules = [
       ../home/rpi4.nix
-      ../programs/nvim
+      ../programs/nvim/minimal.nix
     ];
   };
   acer-tp = {

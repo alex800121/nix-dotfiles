@@ -64,6 +64,8 @@ in
   };
 
   services.tailscale.authKeyFile = config.age.secrets."tssecret".path;
+  services.tailscale.authKeyParameters.ephemeral = false;
+  services.tailscale.authKeyParameters.preauthorized = true;
   services.tailscale.extraUpFlags = [
     "--advertise-routes="
     "--advertise-tags=tag:server"

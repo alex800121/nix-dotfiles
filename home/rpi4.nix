@@ -56,9 +56,9 @@ in {
     gh 
     nil
     nixpkgs-fmt
-    cabal-install
-    ghcid
-    ghc
+    # cabal-install
+    # ghcid
+    # ghc
     w3m
   ];
   home.file.".w3m/config" = {
