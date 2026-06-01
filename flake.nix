@@ -3,7 +3,7 @@
   inputs = {
     # wezterm.url = "github:wezterm/wezterm?dir=nix";
     # nixpkgs2505.url = "github:nixos/nixpkgs/nixos-25.05";
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
     nixpkgsUnstable.url = "github:nixos/nixpkgs/nixos-unstable";
     declarative-flatpak.url = "github:in-a-dil-emma/declarative-flatpak/latest";
     nil = {
@@ -11,14 +11,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.11";
+      url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixos-hardware = {
       url = "github:NixOS/nixos-hardware/master";
     };
     lanzaboote = {
-      url = "github:nix-community/lanzaboote/v0.4.3";
+      url = "github:nix-community/lanzaboote/v1.0.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     musnix = {

@@ -69,10 +69,8 @@ in
 
   services.resolved = {
     enable = true;
-    llmnr = "true";
-    extraConfig = ''
-      MulticastDNS=resolve
-    '';
+    settings.Resolve.LLMNR = true;
+    settings.Resolve.MulticastDNS = "resolve";
   };
 
   services.avahi = {
@@ -126,5 +124,7 @@ in
   boot.initrd.systemd.enable = true;
   # boot.initrd.systemd.tpm2.enable = true;
 
-  documentation.man.generateCaches = true;
+  documentation.man.enable = true;
+  documentation.man.cache.enable = true;
+  documentation.man.cache.generateAtRuntime = true;
 }

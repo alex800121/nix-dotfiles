@@ -14,7 +14,7 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/9fb41848-319b-4166-9e4f-05db0ff15b78";
+    { device = "/dev/mapper/enc";
       fsType = "btrfs";
       options = [ "subvol=root" ];
     };
@@ -22,19 +22,19 @@
   boot.initrd.luks.devices."enc".device = "/dev/disk/by-uuid/ea1c5936-ac88-4b2e-9891-06eb29140ea7";
 
   fileSystems."/nix" =
-    { device = "/dev/disk/by-uuid/9fb41848-319b-4166-9e4f-05db0ff15b78";
+    { device = "/dev/mapper/enc";
       fsType = "btrfs";
       options = [ "subvol=nix" ];
     };
 
   fileSystems."/swap" =
-    { device = "/dev/disk/by-uuid/9fb41848-319b-4166-9e4f-05db0ff15b78";
+    { device = "/dev/mapper/enc";
       fsType = "btrfs";
       options = [ "subvol=swap" ];
     };
 
   fileSystems."/home" =
-    { device = "/dev/disk/by-uuid/9fb41848-319b-4166-9e4f-05db0ff15b78";
+    { device = "/dev/mapper/enc";
       fsType = "btrfs";
       options = [ "subvol=home" ];
     };
@@ -46,7 +46,7 @@
     };
 
   fileSystems."/data" =
-    { device = "/dev/disk/by-uuid/9fb41848-319b-4166-9e4f-05db0ff15b78";
+    { device = "/dev/mapper/enc";
       fsType = "btrfs";
       options = [ "subvol=data" ];
     };

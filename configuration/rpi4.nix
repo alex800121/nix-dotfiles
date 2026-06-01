@@ -1,4 +1,4 @@
-{ nixpkgsUnstable, pkgs, ... }: {
+{ nixpkgsUnstable, lib, conf, pkgs, ... }: {
 
   imports = [
     ./common.nix
@@ -13,7 +13,12 @@
     "reset-raspberrypi" # required for vl805 firmware to load
   ];
   # boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_rpi4;
-  boot.kernelPackages = pkgs.linuxPackages_rpi4;
+  # boot.kernelPackages = pkgs.linuxPackages_rpi4;
+
+  boot.kernelPackages = lib.mkDefault
+    (if builtins.hasAttr "kernelVersion" conf
+    then pkgs."linuxPackages_${conf.kernelVersion}"
+    else pkgs.linuxPackages);
 
   fileSystems."/".options = [ "noatime" "compress=zstd" ];
   fileSystems."/".neededForBoot = true;
@@ -107,7 +112,9 @@
   };
 
 
-  documentation.man.generateCaches = true;
+  documentation.man.enable = true;
+  documentation.man.cache.enable = true;
+  documentation.man.cache.generateAtRuntime = true;
 
   # List packages installed in system profile. To search, run:
   environment.systemPackages = with pkgs; [

@@ -1,7 +1,7 @@
 {
   oracle3 = {
     system = "aarch64-linux";
-    kernelVersion = "6_12";
+    kernelVersion = "6_18";
     userConfig = {
       hostName = "oracle3";
       userName = "alex800121";
@@ -28,7 +28,7 @@
   };
   oracle2 = {
     system = "aarch64-linux";
-    kernelVersion = "6_12";
+    kernelVersion = "6_18";
     userConfig = {
       hostName = "oracle2";
       userName = "alex800121";
@@ -55,7 +55,7 @@
   };
   oracle = {
     system = "aarch64-linux";
-    kernelVersion = "6_12";
+    kernelVersion = "6_18";
     userConfig = {
       hostName = "oracle";
       userName = "alex800121";
@@ -86,7 +86,7 @@
   };
   alexrpi4tpmin = {
     system = "aarch64-linux";
-    kernelVersion = "rpi4";
+    kernelVersion = "6_18";
     userConfig = {
       hostName = "alexrpi4tp";
       userName = "alex800121";
@@ -102,7 +102,7 @@
   };
   alexrpi4tp = {
     system = "aarch64-linux";
-    kernelVersion = "rpi4";
+    kernelVersion = "6_18";
     userConfig = {
       hostName = "alexrpi4tp";
       userName = "alex800121";
@@ -131,7 +131,7 @@
   };
   acer-tp = {
     system = "x86_64-linux";
-    kernelVersion = "6_12";
+    kernelVersion = "6_18";
     userConfig = {
       hostName = "acer-tp";
       userName = "alex800121";
@@ -174,7 +174,7 @@
   };
   fw13-musnix = {
     system = "x86_64-linux";
-    kernelVersion = "6_12";
+    kernelVersion = "6_18";
     userConfig = {
       hostName = "fw13";
       userName = "alex800121";
@@ -199,7 +199,7 @@
   };
   fw13 = {
     system = "x86_64-linux";
-    kernelVersion = "6_12";
+    kernelVersion = "6_18";
     userConfig = {
       hostName = "fw13";
       userName = "alex800121";

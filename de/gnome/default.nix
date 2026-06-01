@@ -16,7 +16,7 @@ in
   qt.platformTheme = "gnome";
   services.displayManager = {
     gdm = {
-      wayland = true;
+      # wayland = true;
       enable = true;
     };
   };

@@ -1,6 +1,6 @@
 { pkgs, ... }: {
   services.kmscon.enable = true;
-  services.kmscon.hwRender = true;
+  # services.kmscon.hwRender = true;
   services.kmscon.extraConfig = ''
     font-size=14
   '';
