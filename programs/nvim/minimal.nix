@@ -51,7 +51,8 @@
       fd
       nil
       lua-language-server
-      nixpkgs-fmt
+      # nixpkgs-fmt
+      nixfmt
     ];
   };
   xdg.configFile.nvim = {

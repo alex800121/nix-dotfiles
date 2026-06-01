@@ -9,7 +9,10 @@ project.setup({
   -- lsp, while **"pattern"** uses vim-rooter like glob pattern matching. Here
   -- order matters: if one is not detected, the other is used as fallback. You
   -- can also delete or rearangne the detection methods.
-  use_lsp = true,
+  detection_methods = { "lsp", "pattern" },
+  lsp = {
+    enabled = true,
+  },
 
   -- All the patterns used to detect root dir, when **"pattern"** is in
   -- detection_methods
@@ -17,7 +20,7 @@ project.setup({
 
   -- Table of lsp clients to ignore by name
   -- eg: { "efm", ... }
-  ignore_lsp = {},
+  -- ignore_lsp = {},
 
   -- Don't calculate root dir on specific directories
   -- Ex: { "~/.cargo/*", ... }
@@ -38,5 +41,5 @@ project.setup({
 
   -- Path where project.nvim will store the project history for use in
   -- telescope
-  datapath = vim.fn.stdpath("data"),
+  history = { save_dir = vim.fn.stdpath("data"),},
 })

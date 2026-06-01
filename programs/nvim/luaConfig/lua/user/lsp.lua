@@ -182,7 +182,7 @@ vim.lsp.config('nil_ls', {
   settings = {
     ['nil'] = {
       formatting = {
-        command = { "nixpkgs-fmt" },
+        command = { "nixfmt" },
       },
       flake = {
         autoArchive = true,

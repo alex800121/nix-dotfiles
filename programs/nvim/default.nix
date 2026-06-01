@@ -20,6 +20,7 @@
       nvim-treesitter-parsers.haskell
       (nvim-treesitter.withPlugins (p: with p; [
         haskell
+        nix
       ]))
       #   c
       #   cpp
@@ -28,7 +29,6 @@
       #   query
       #   haskell
       #   rust
-      #   nix
       #   json
       #   yaml
       #   toml
@@ -86,7 +86,8 @@
       # nil
       inputs.nil.packages."${pkgs.stdenv.hostPlatform.system}".default
       lua-language-server
-      nixpkgs-fmt
+      # nixpkgs-fmt
+      nixfmt
       vscode-extensions.vadimcn.vscode-lldb
     ];
   };

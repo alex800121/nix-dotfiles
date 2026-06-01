@@ -55,7 +55,8 @@ in {
     dmidecode
     gh 
     nil
-    nixpkgs-fmt
+    nixfmt
+    # nixpkgs-fmt
     # cabal-install
     # ghcid
     # ghc
