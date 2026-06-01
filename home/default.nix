@@ -137,7 +137,8 @@ in
     "text/html" = [ "google-chrome.desktop" ];
     "x-scheme-handler/https" = [ "google-chrome.desktop" ];
     "application/octet-stream" = [ "org.musescore.MuseScore.desktop" ];
-    "application/vnd.openxmlformats-officedocument.wordprocessingml.document" = [ "writer.desktop" ];
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document" = [ "org.libreoffice.LibreOffice.writer.desktop" ];
+    "application/vnd.oasis.opendocument.text" = [ "org.libreoffice.LibreOffice.writer.desktop" ];
   };
   xdg.mimeApps.associations.added = {
     "x-scheme-handler/http" = [ "google-chrome.desktop" ];
@@ -145,7 +146,7 @@ in
     "text/html" = [ "google-chrome.desktop" ];
     "x-scheme-handler/https" = [ "google-chrome.desktop" ];
     "application/octet-stream" = [ "org.musescore.MuseScore.desktop" ];
-    "application/vnd.openxmlformats-officedocument.wordprocessingml.document" = [ "writer.desktop" ];
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document" = [ "org.libreoffice.LibreOffice.writer.desktop" ];
   };
   xdg.configFile."mimeapps.list".force = true;
 
