@@ -67,8 +67,8 @@
                         __overlay__ {
                                 trips {
                                         cpu_hot: trip-point@0 {
-                                                temperature = <65000>;	/* (millicelsius) Fan started at 55°C */
-                                                hysteresis = <10000>;	/* (millicelsius) Fan stopped at 45°C */
+                                                temperature = <55000>;	/* (millicelsius) Fan started at 65°C */
+                                                hysteresis = <10000>;	/* (millicelsius) Fan stopped at 55°C */
                                                 type = "active";
                                         };
                                 };

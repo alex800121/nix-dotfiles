@@ -50,11 +50,15 @@ in
           };
 
           "org/gnome/mutter" = {
-            experimental-features = [
-              "scale-monitor-framebuffer"
-              # "xwayland-native-scaling"
-            ];
+            # experimental-features = [
+            #   "scale-monitor-framebuffer"
+            #   "xwayland-native-sc:ling"
+            # ];
             dynamic-workspaces = true;
+          };
+
+          "org/gnome/mutter/wayland" = {
+            xwayland-scaling-factor = lib.gvariant.mkDouble 1.0;
           };
 
           "org/gnome/shell" = {
