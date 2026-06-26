@@ -5,18 +5,6 @@
   updateConfig = lib.recursiveUpdate defaultConfig userConfig;
   inherit (updateConfig) userName;
 in {
-  # nixpkgs.config.allowUnfree = true;
-  nix = {
-    settings = {
-      experimental-features = "nix-command flakes";
-    };
-  };
-  xdg.configFile = {
-    nixpkgs = {
-      recursive = true;
-      source = ../programs/nixpkgs;
-    };
-  };
 
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
@@ -32,40 +20,5 @@ in {
   # the Home Manager release notes for a list of state version
   # changes in each release.
   home.stateVersion = "26.05";
-
-  home.sessionVariables = {
-    EDITOR = "nvim";
-    VISUAL = "nvim";
-    SUDO_EDITOR = "nvim";
-  };
-
-  # Let Home Manager install and manage itself.
-  # programs.home-manager.enable = true;
-
-  programs.readline = {
-    enable = true;
-    extraConfig = "set completion-ignore-case On";
-  };
-
-  home.packages = with pkgs; [
-    nix-prefetch-git
-    fastfetch
-    ripgrep
-    dmidecode
-  ];
-
-  programs.git = {
-    enable = true;
-    settings.user.name = "alex800121";
-    settings.user.email = "alex800121@hotmail.com";
-  };
-
-  programs.zellij = {
-    enable = true;
-  };
-  xdg.configFile."config.kdl" = {
-    source = ../programs/zellij/config.kdl;
-    target = "zellij/config.kdl";
-  };
 
 }

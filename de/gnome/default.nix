@@ -1,4 +1,10 @@
-{ nixpkgsUnstable, lib, userConfig, pkgs, ... }:
+{
+  nixpkgsUnstable,
+  lib,
+  userConfig,
+  pkgs,
+  ...
+}:
 let
   defaultConfig = {
     autoLogin = false;
@@ -52,14 +58,14 @@ in
           "org/gnome/mutter" = {
             # experimental-features = [
             #   "scale-monitor-framebuffer"
-            #   "xwayland-native-sc:ling"
+            #   "xwayland-native-scaling"
             # ];
             dynamic-workspaces = true;
           };
 
-          "org/gnome/mutter/wayland" = {
-            xwayland-scaling-factor = lib.gvariant.mkDouble 1.0;
-          };
+          # "org/gnome/mutter/wayland" = {
+          #   xwayland-scaling-factor = lib.gvariant.mkDouble 1.33333333333333333333;
+          # };
 
           "org/gnome/shell" = {
             disable-user-extensions = false;
@@ -67,9 +73,10 @@ in
               "appindicatorsupport@rgcjonas.gmail.com"
               "kimpanel@kde.org"
               "drive-menu@gnome-shell-extensions.gcampax.github.com"
-              # "gtk4-ding@smedius.gitlab.com"
-              # "tailscale-status@maxgallup.github.com"
-              "tailscale@joaophi.github.com"
+              "gtk4-ding@smedius.gitlab.com"
+              "xwayland-indicator@swsnr.de"
+              "solaar-extension@sidevesh"
+              "tailscale-gnome-qs@tailscale-qs.github.io"
             ];
             welcome-dialog-last-shown-version = "48.1";
           };
@@ -129,8 +136,12 @@ in
           };
 
           "org/gnome/desktop/wm/keybindings" = {
+            switch-applications = [ "<Super>Tab" ];
+            switch-applications-backward = [ "<Shift><Super>Tab" ];
             switch-group = [ "<Super>Above_Tab" ];
             switch-group-backward = [ "<Shift><Super>Above_Tab" ];
+            switch-windows = [ "<Alt>Tab" ];
+            switch-windows-backward = [ "<Shift><Alt>Tab" ];
             toggle-fullscreen = [ "<Super>f" ];
           };
 
@@ -151,7 +162,8 @@ in
 
           "org/gnome/shell".favorite-apps = [
             # "firefox.desktop"
-            "google-chrome.desktop"
+            # "google-chrome.desktop"
+            "app.zen_browser.zen.desktop"
             "com.spotify.Client.desktop"
             "com.visualstudio.code.desktop"
             # "spotify.desktop"
@@ -192,7 +204,9 @@ in
     # pkgs.logitech-udev-rules
   ];
   xdg.terminal-exec.enable = true;
-  xdg.terminal-exec.settings = { default = [ termDesktop ]; };
+  xdg.terminal-exec.settings = {
+    default = [ termDesktop ];
+  };
   environment.etc."xdg/xdg-terminals.list".text = ''
     ${termDesktop}
   '';

@@ -7,7 +7,7 @@
       name = "Hack Nerd Font Mono";
       size = userConfig.fontSize or 11.5;
     };
-    shellIntegration.enableBashIntegration = true;
+    # shellIntegration.enableBashIntegration = false;
     settings = {
       background_opacity = 0.7;
       allow_remote_control = "yes";

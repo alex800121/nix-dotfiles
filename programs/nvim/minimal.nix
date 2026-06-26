@@ -51,7 +51,6 @@
       fd
       nil
       lua-language-server
-      # nixpkgs-fmt
       nixfmt
     ];
   };

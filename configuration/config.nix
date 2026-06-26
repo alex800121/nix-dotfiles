@@ -168,8 +168,8 @@
       ../home
       ../programs/nvim
       # ../programs/wezterm
-      ../programs/kitty
-      ../programs/alacritty
+      # ../programs/kitty
+      # ../programs/alacritty
     ];
   };
   fw13-musnix = {
@@ -193,13 +193,13 @@
       ../home
       ../programs/nvim
       # ../programs/wezterm
-      ../programs/kitty
-      ../programs/alacritty
+      # ../programs/kitty
+      # ../programs/alacritty
     ];
   };
   fw13 = {
     system = "x86_64-linux";
-    kernelVersion = "7_0";
+    kernelVersion = "6_18";
     userConfig = {
       hostName = "fw13";
       userName = "alex800121";
@@ -218,9 +218,8 @@
     hmModules = [
       ../home
       ../programs/nvim
-      # ../programs/wezterm
-      ../programs/kitty
-      ../programs/alacritty
+      # ../programs/kitty
+      # ../programs/alacritty
     ];
   };
 }

@@ -1,9 +1,10 @@
 <monitors version="2">
   <configuration>
+    <layoutmode>logical</layoutmode>
     <logicalmonitor>
       <x>0</x>
       <y>0</y>
-      <scale>1.5</scale>
+      <scale>1.3333333730697632</scale>
       <primary>yes</primary>
       <monitor>
         <monitorspec>

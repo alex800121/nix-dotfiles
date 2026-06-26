@@ -51,7 +51,7 @@ x = 0
 y = 0
 
 [general]
-import = ["/nix/store/44ahn6npdnss0spniqxzrvn0b5630v6h-gruvbox_dark.toml"]
+import = ["themes/gruvbox_dark.toml"]
 live_config_reload = true
 working_directory = "None"
 ipc_socket = true

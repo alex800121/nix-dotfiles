@@ -1,4 +1,10 @@
-{ inputs, userConfig, lib, pkgs, ... }:
+{
+  inputs,
+  userConfig,
+  lib,
+  pkgs,
+  ...
+}:
 let
   inherit (userConfig) userName hostName;
   inherit (pkgs.stdenv.hostPlatform) system;
@@ -18,6 +24,11 @@ in
     font = "${pkgs.terminus_font}/share/consolefonts/ter-v32n.psf.gz";
   };
 
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
+  nix.settings.builders-use-substitutes = true;
   nix = {
     gc = {
       automatic = true;
@@ -30,10 +41,6 @@ in
       automatic = true;
       dates = [ "weekly" ];
     };
-    extraOptions = ''
-      experimental-features = nix-command flakes
-      builders-use-substitutes = true
-    '';
   };
   nix.settings.max-jobs = lib.mkDefault "auto";
 
@@ -53,7 +60,19 @@ in
   users.users."${userName}" = {
     isNormalUser = true;
     description = "${userName}";
-    extraGroups = [ "networkmanager" "tss" "storage" "disk" "libvirtd" "audio" "systemd-network" "sudo" "wheel" "code-server" "input" ];
+    extraGroups = [
+      "networkmanager"
+      "tss"
+      "storage"
+      "disk"
+      "libvirtd"
+      "audio"
+      "systemd-network"
+      "sudo"
+      "wheel"
+      "code-server"
+      "input"
+    ];
     uid = 1000;
     initialPassword = "";
   };
@@ -66,6 +85,10 @@ in
   };
 
   environment.systemPackages = with pkgs; [
+    nix-prefetch-git
+    dmidecode
+    fastfetch
+    zellij
     coreutils
     parted
     inputs.agenix.packages.${system}.default
@@ -73,19 +96,25 @@ in
     neovim
     curl
     wget
-    git
     btrfs-progs
     wl-clipboard
     jq
     lemonade
     btop
+    chawan
   ];
 
-  environment.variables = {
-    EDITOR = "nvim";
-    VISUAL = "nvim";
-    SUDO_EDITOR = "nvim";
+  environment.etc."zellij/config.kdl" = {
+    enable = true;
+    source = ../programs/zellij/config.kdl;
   };
+  environment.variables.ZELLIJ_CONFIG_DIR = "/etc/zellij";
+
+  programs.git.enable = true;
+
+  environment.variables.EDITOR = "nvim";
+  environment.variables.VISUAL = "nvim";
+  environment.variables.SUDO_EDITOR = "nvim";
 
   networking.wireless.iwd.enable = true;
 

@@ -185,21 +185,39 @@ in
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     firefox
+    kitty
+    alacritty
     socat
     gparted
     adwaita-icon-theme
     git-filter-repo
     inputs.agenix.packages."${system}".default
-    fastfetch
     gcc
     conntrack-tools
     man-pages
     man-pages-posix
   ];
 
+  environment.variables.KITTY_CONFIG_DIRECTORY = "/etc/kitty";
+  environment.etc."kitty/kitty.conf" = {
+    enable = true;
+    source = ../programs/kitty/kitty.conf;
+  };
+
+  environment.etc."alacritty" = {
+    enable = true;
+    source = ../programs/alacritty/config;
+  };
+
+  documentation.enable = true;
   documentation.man.enable = true;
   documentation.man.cache.enable = true;
   documentation.man.cache.generateAtRuntime = true;
+  documentation.dev.enable = true;
+  documentation.doc.enable = true;
+  documentation.info.enable = true;
+  documentation.nixos.enable = true;
+  documentation.nixos.checkRedirects = true;
 
   programs.localsend.enable = true;
   programs.localsend.openFirewall = true;

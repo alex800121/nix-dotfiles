@@ -1,12 +1,29 @@
-servers: { config, lib, pkgs, ... }:
+servers:
+{
+  config,
+  lib,
+  pkgs,
+  userConfig,
+  ...
+}:
 let
   inherit (config.networking) hostName;
+  timeOffset = 
+    (
+      x:
+      let
+        i = builtins.stringLength x - 2;
+      in
+      builtins.substring i 2 x
+    )
+      "00${builtins.toString userConfig.tailscale.id}";
   passphrase = "passphrase_borgbackup_vaultwarden";
   dbUserName = config.services.mysql.user;
   dbGroupName = config.services.mysql.group;
   userName = "vaultwarden";
   groupName = "vaultwarden";
-  mergeServers = serverName:
+  mergeServers =
+    serverName:
     let
       sshHostKey = "ssh_host_borgbackup_${serverName}_vaultwarden_${hostName}";
       dbSshHostKey = "ssh_host_borgbackup_${serverName}_vaultwarden_db_${hostName}";
@@ -39,7 +56,7 @@ let
         environment = {
           BORG_RSH = "ssh -i ${config.age.secrets.${dbSshHostKey}.path}";
         };
-        startAt = "daily";
+        startAt = "*-*-* ${timeOffset}:00:00";
         prune.keep = {
           within = "1d"; # Keep all archives from the last day
           daily = 7;
@@ -60,7 +77,7 @@ let
         environment = {
           BORG_RSH = "ssh -i ${config.age.secrets.${sshHostKey}.path}";
         };
-        startAt = "*-*-* 00:00:10";
+        startAt = "*-*-* ${timeOffset}:01:00";
         prune.keep = {
           within = "1d"; # Keep all archives from the last day
           daily = 7;
@@ -70,9 +87,7 @@ let
       };
     };
 in
-lib.foldl'
-  (acc: serverName: lib.recursiveUpdate acc (mergeServers serverName))
-{
+lib.foldl' (acc: serverName: lib.recursiveUpdate acc (mergeServers serverName)) {
   users.extraUsers."${dbUserName}" = {
     createHome = true;
     home = "/var/lib/system_home/${dbUserName}";
@@ -88,5 +103,4 @@ lib.foldl'
     group = groupName;
     mode = "660";
   };
-}
-  servers
+} servers
