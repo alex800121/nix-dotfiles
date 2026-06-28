@@ -10,6 +10,10 @@ vim.opt.smarttab = true
 vim.opt.softtabstop = 2
 vim.opt.shiftwidth = 2
 
+vim.o.wildmenu = true
+vim.o.wildoptions = 'pum'
+vim.o.wildmode = 'list:longest,full'
+
 vim.opt.termguicolors = true
 
 vim.opt.mousemoveevent = true
@@ -28,6 +32,8 @@ vim.opt.conceallevel = 0
 vim.opt.hlsearch = true
 
 vim.opt.showmode = false
+
+vim.opt.showtabline = 2
 
 vim.opt.splitright = true
 vim.opt.splitbelow = true

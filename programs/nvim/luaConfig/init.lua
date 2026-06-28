@@ -1,21 +1,7 @@
+require('vim._core.ui2').enable({ enable = true })
 vim.loader.enable()
 
-require'nvim-web-devicons'.setup()
-require'toggleterm'.setup()
 require'user.options'
 require'user.keymaps'
-require'user.indent'
-require'user.buffer'
-require'user.nvimtree'.setup()
-require'user.project'
--- require'user.treesitter'
 require'user.telescope'
-require'user.undotree'
-require'user.lualine'
-require'user.comment'
 require'user.lsp'
-require'user.gitsigns'
-require'user.dap'
-require'user.haskell'
-require'user.iron'
--- require'user.scrollEOF'

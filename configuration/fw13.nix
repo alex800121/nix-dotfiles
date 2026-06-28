@@ -1,7 +1,6 @@
 {
   inputs,
   pkgs,
-  nixpkgsUnstable,
   userConfig,
   ...
 }:
@@ -37,7 +36,7 @@ in
     ../hardware/laptop.nix
     ../de/gnome
     ../de/gnome/fw13
-    ../programs/seaweedfs
+    # ../programs/seaweedfs
     ../programs/virt
     ../programs/tailscale/client.nix
     ../programs/thunderbird
@@ -206,10 +205,6 @@ in
     tldr
     mpv
   ];
-
-  # services.gnunet.enable = true;
-  # services.gnunet.package = nixpkgsUnstable.gnunet;
-  # users.users."${userConfig.userName}".extraGroups = [ "gnunet" ];
 
   services.smartd = {
     enable = true;

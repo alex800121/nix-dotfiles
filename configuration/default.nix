@@ -1,13 +1,9 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-{ pkgs, config, lib, userConfig, inputs, nixpkgsUnstable, conf, ... }:
+{ pkgs, config, lib, userConfig, inputs, conf, ... }:
 let
-  defaultConfig = {
-    autoLogin = false;
-  };
-  updateConfig = lib.recursiveUpdate defaultConfig userConfig;
-  inherit (updateConfig) userName hostName;
+  inherit (userConfig) hostName;
   inherit (pkgs.stdenv.hostPlatform) system;
 in
 {

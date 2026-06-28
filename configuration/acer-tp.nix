@@ -16,9 +16,6 @@ let
       AllMulticast = true;
     };
   };
-  resolvedConf = ''
-    [Resolve]
-  '';
 in
 {
   imports = [
@@ -30,10 +27,8 @@ in
     ./initrd-network.nix
     ../hardware/acer-tp.nix
     ../hardware/desktop.nix
-    ../de/gnome
-    ../programs/seaweedfs
+    # ../de/gnome
     ../programs/nix-ld
-    # ../programs/code-tunnel
     ../programs/tailscale/server.nix
     ../programs/borgbackup/server.nix
     inputs.agenix.nixosModules.default

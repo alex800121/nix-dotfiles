@@ -1,4 +1,4 @@
-{ nixpkgsUnstable, lib, conf, pkgs, ... }: {
+{ lib, conf, pkgs, ... }: {
 
   imports = [
     ./common.nix

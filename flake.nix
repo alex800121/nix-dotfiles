@@ -1,11 +1,10 @@
 {
   description = "NixOS configuration";
   inputs = {
-    # wezterm.url = "github:wezterm/wezterm?dir=nix";
-    # nixpkgs2505.url = "github:nixos/nixpkgs/nixos-25.05";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
     nixpkgsUnstable.url = "github:nixos/nixpkgs/nixos-unstable";
     declarative-flatpak.url = "github:in-a-dil-emma/declarative-flatpak/latest";
+
     nil = {
       url = "github:oxalica/nil";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -40,22 +39,24 @@
   };
 
   outputs =
-    inputs@{ self
-    , nixpkgs
-    , ...
+    inputs@{
+      self,
+      nixpkgs,
+      ...
     }:
     let
-      foldlAttrs = nixpkgs.lib.attrsets.foldlAttrs;
-      recursiveUpdate = nixpkgs.lib.recursiveUpdate;
-      buildConfigWith = f: foldlAttrs (acc: name: conf: recursiveUpdate acc (f conf name)) { };
       mkNixosIso = (import ./utils/func.nix).mkNixosIso inputs;
       mkNixosConfig = (import ./utils/func.nix).mkNixosConfig inputs;
       config = import ./configuration/config.nix;
-      outputConfigs = buildConfigWith mkNixosConfig config;
-      outputIso = buildConfigWith mkNixosIso config;
     in
-    builtins.foldl' (x: y: recursiveUpdate x y) { } [
-      outputIso
-      outputConfigs
-    ];
+    {
+      nixosConfigurations.fw13 = mkNixosConfig config.fw13;
+      nixosConfigurations.fw13-musnix = mkNixosConfig config.fw13-musnix;
+      nixosConfigurations.acer-tp = mkNixosConfig config.acer-tp;
+      nixosConfigurations.oracle = mkNixosConfig config.oracle;
+      nixosConfigurations.oracle2 = mkNixosConfig config.oracle2;
+      nixosConfigurations.oracle3 = mkNixosConfig config.oracle3;
+      nixosConfigurations.alexrpi4tp = mkNixosConfig config.alexrpi4tp;
+      nixosConfigurations.alexrpi4tpmin = mkNixosIso config.alexrpi4tpmin;
+    };
 }

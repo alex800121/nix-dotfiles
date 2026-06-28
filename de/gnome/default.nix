@@ -1,5 +1,4 @@
 {
-  nixpkgsUnstable,
   lib,
   userConfig,
   pkgs,
@@ -22,7 +21,6 @@ in
   qt.platformTheme = "gnome";
   services.displayManager = {
     gdm = {
-      # wayland = true;
       enable = true;
     };
   };
@@ -63,9 +61,9 @@ in
             dynamic-workspaces = true;
           };
 
-          # "org/gnome/mutter/wayland" = {
-          #   xwayland-scaling-factor = lib.gvariant.mkDouble 1.33333333333333333333;
-          # };
+          "org/gnome/mutter/wayland" = {
+            xwayland-scaling-factor = lib.gvariant.mkDouble 1.33333333333333333333;
+          };
 
           "org/gnome/shell" = {
             disable-user-extensions = false;

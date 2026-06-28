@@ -1,4 +1,4 @@
-{ pkgs, nixpkgsUnstable, ... }:
+{ pkgs, ... }:
 # let
 #   monitorsConfig = pkgs.writeText "gdm_monitors.xml" (builtins.readFile ./monitors.xml);
 # in

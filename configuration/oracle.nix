@@ -1,4 +1,4 @@
-{ conf, pkgs, config, userConfig, lib, inputs, nixpkgsUnstable, ... }:
+{ conf, pkgs, config, userConfig, lib, inputs, ... }:
 let
   defaultConfig = {
     autoLogin = false;
@@ -29,7 +29,7 @@ in
       ../hardware/oracle.nix
       ./distributed-builds.nix
       ../programs/tailscale/server.nix
-      ../programs/seaweedfs
+      # ../programs/seaweedfs
     ];
 
   # Use the systemd-boot EFI boot loader.

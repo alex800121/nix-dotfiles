@@ -1,4 +1,4 @@
-{ inputs, userConfig, pkgs, nixpkgsUnstable, ... }: {
+{ inputs, userConfig, pkgs, ... }: {
 
   virtualisation = {
     libvirtd = {
@@ -33,7 +33,7 @@
     spice-gtk
     spice-protocol
     win-spice
-    nixpkgsUnstable.winboat
+    winboat
     distrobox
   ];
 }

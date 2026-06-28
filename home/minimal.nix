@@ -1,4 +1,4 @@
-{ pkgs, lib, userConfig, ... }: let
+{ pkgs, lib, userConfig ? {}, ... }: let
   defaultConfig = {
     fontSize = 11.5;
   };

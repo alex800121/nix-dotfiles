@@ -1,4 +1,4 @@
-{ pkgs, lib, userConfig, nixpkgsUnstable, ... }:
+{ pkgs, lib, userConfig ? {}, ... }:
 let
   inherit (userConfig) userName;
   term = userConfig.term or "";

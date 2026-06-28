@@ -32,8 +32,8 @@ vim.keymap.set("n", "<leader>W", "<cmd>w<CR>", opts('Write'))
 
 vim.keymap.set("n", "<leader>q", "<cmd>q<CR>", opts('Quit'))
 vim.keymap.set("n", "<leader>Q", "<cmd>qa<CR>", opts('Quit All'))
-vim.keymap.set("n", "<leader>x", "<cmd>Bdelete<CR>", opts('Close Buffer'))
-vim.keymap.set("n", "<leader>X", "<cmd>Bdelete!<CR>", opts('Force Close Buffer'))
+vim.keymap.set("n", "<leader>x", "<cmd>bdelete<CR>", opts('Close Buffer'))
+vim.keymap.set("n", "<leader>X", "<cmd>bdelete!<CR>", opts('Force Close Buffer'))
 
 vim.keymap.set("v", ">", ">gv", opts('Indent Right'))
 vim.keymap.set("v", "<", "<gv", opts('Indent Left'))

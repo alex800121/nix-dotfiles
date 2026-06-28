@@ -1,6 +1,5 @@
 {
   oracle3 = {
-    system = "aarch64-linux";
     kernelVersion = "6_18";
     userConfig = {
       hostName = "oracle3";
@@ -9,14 +8,7 @@
       autoLogin = true;
       tailscale = {
         id = 5;
-        # peers = [ 2 3 4 6 ];
       };
-      # keepalived.routers = [
-      #   {
-      #     id = 1;
-      #     priority = 3;
-      #   }
-      # ];
     };
     extraModules = [
       ./oracle.nix
@@ -27,7 +19,6 @@
     ];
   };
   oracle2 = {
-    system = "aarch64-linux";
     kernelVersion = "6_18";
     userConfig = {
       hostName = "oracle2";
@@ -36,14 +27,7 @@
       autoLogin = true;
       tailscale = {
         id = 6;
-        # peers = [ 2 3 4 5 ];
       };
-      # keepalived.routers = [
-      #   {
-      #     id = 1;
-      #     priority = 4;
-      #   }
-      # ];
     };
     extraModules = [
       ./oracle.nix
@@ -54,7 +38,6 @@
     ];
   };
   oracle = {
-    system = "aarch64-linux";
     kernelVersion = "6_18";
     userConfig = {
       hostName = "oracle";
@@ -64,7 +47,6 @@
       tailscale = {
         id = 4;
         peers = [ 2 3 ];
-        # peers = [ 2 3 5 6 ];
       };
       keepalived.routers = [
         {
@@ -85,7 +67,6 @@
     ];
   };
   alexrpi4tpmin = {
-    system = "aarch64-linux";
     kernelVersion = "6_18";
     userConfig = {
       hostName = "alexrpi4tp";
@@ -101,7 +82,6 @@
     ];
   };
   alexrpi4tp = {
-    system = "aarch64-linux";
     kernelVersion = "6_18";
     userConfig = {
       hostName = "alexrpi4tp";
@@ -112,7 +92,6 @@
       tailscale = {
         id = 2;
         peers = [ 3 4 ];
-        # peers = [ 3 4 5 6 ];
       };
       keepalived.routers = [
         {
@@ -130,7 +109,6 @@
     ];
   };
   acer-tp = {
-    system = "x86_64-linux";
     kernelVersion = "6_18";
     userConfig = {
       hostName = "acer-tp";
@@ -147,7 +125,6 @@
       tailscale = {
         id = 3;
         peers = [ 2 4 ];
-        # peers = [ 2 4 5 6 ];
       };
       keepalived.routers = [
         {
@@ -155,9 +132,6 @@
           priority = 2;
         }
       ];
-      # term = "wezterm";
-      # termArg = "start --cwd .";
-      # termDesktop = "org.wezfurlong.wezterm.desktop";
       term = "kitty";
       termDesktop = "kitty.desktop";
     };
@@ -167,13 +141,9 @@
     hmModules = [
       ../home
       ../programs/nvim
-      # ../programs/wezterm
-      # ../programs/kitty
-      # ../programs/alacritty
     ];
   };
   fw13-musnix = {
-    system = "x86_64-linux";
     kernelVersion = "6_18";
     userConfig = {
       hostName = "fw13";
@@ -192,13 +162,9 @@
     hmModules = [
       ../home
       ../programs/nvim
-      # ../programs/wezterm
-      # ../programs/kitty
-      # ../programs/alacritty
     ];
   };
   fw13 = {
-    system = "x86_64-linux";
     kernelVersion = "6_18";
     userConfig = {
       hostName = "fw13";
@@ -208,9 +174,6 @@
       soundcardPciId = "c1:00.6";
       term = "kitty";
       termDesktop = "kitty.desktop";
-      # term = "wezterm";
-      # termArg = "start --cwd .";
-      # termDesktop = "org.wezfurlong.wezterm.desktop";
     };
     extraModules = [
       ./fw13.nix
@@ -218,8 +181,6 @@
     hmModules = [
       ../home
       ../programs/nvim
-      # ../programs/kitty
-      # ../programs/alacritty
     ];
   };
 }
