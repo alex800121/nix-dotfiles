@@ -1,11 +1,10 @@
-{ pkgs, lib, userConfig ? {}, ... }: let
-  defaultConfig = {
-    fontSize = 11.5;
-  };
-  updateConfig = lib.recursiveUpdate defaultConfig userConfig;
-  inherit (updateConfig) userName;
-in {
-
+userName: {
+  pkgs,
+  lib,
+  config,
+  ...
+}:
+{
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
   home.username = userName;
@@ -19,9 +18,5 @@ in {
   # You can update Home Manager without changing this value. See
   # the Home Manager release notes for a list of state version
   # changes in each release.
-  home.stateVersion = "26.05";
-
-  # Let Home Manager install and manage itself.
-  # programs.home-manager.enable = true;
-
+  home.stateVersion = lib.mkDefault "26.05";
 }

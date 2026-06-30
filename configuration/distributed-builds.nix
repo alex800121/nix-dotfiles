@@ -1,7 +1,4 @@
-{ lib, userConfig, ... }:
-let
-  inherit (userConfig) hostName;
-in
+{ lib, config, ... }:
 {
   nix.distributedBuilds = true;
 
@@ -17,7 +14,7 @@ in
     # "wezterm.cachix.org-1:kAbhjYUC9qvblTE+s7S+kl5XM1zVa4skO+E/1IDWdH0="
   ];
 
-  nix.buildMachines = lib.filter (x: x.hostName != hostName)
+  nix.buildMachines = lib.filter (x: x.hostName != config.networking.hostName)
     [
       {
         hostName = "oracle";

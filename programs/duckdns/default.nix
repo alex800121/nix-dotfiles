@@ -1,9 +1,9 @@
-{ lib, pkgs, userConfig, ... }:
+{ lib, pkgs, url, config, ... }:
 let
   setCred = "ddtoken:" + lib.strings.concatStrings
     (lib.strings.splitString
       "\n"
-      (builtins.readFile ../../secrets/ddtoken-${userConfig.hostName}));
+      (builtins.readFile ../../secrets/ddtoken-${config.networking.hostName}));
 in
 {
 
@@ -15,7 +15,7 @@ in
     wants = [ "systemd-networkd-wait-online.service" "network-online.target" ];
     path = [ pkgs.bash ];
     script = ''
-      ${pkgs.curl}/bin/curl -k "https://www.duckdns.org/update?domains=${userConfig.url}&token=$(cat $CREDENTIALS_DIRECTORY/ddtoken)&ip=" 
+      ${pkgs.curl}/bin/curl -k "https://www.duckdns.org/update?domains=${url}&token=$(cat $CREDENTIALS_DIRECTORY/ddtoken)&ip=" 
     '';
     serviceConfig = {
       Type = "oneshot";

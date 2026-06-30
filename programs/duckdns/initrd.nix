@@ -1,9 +1,9 @@
-{ lib, pkgs, userConfig, ... }:
+{ lib, pkgs, url, config, ... }:
 let
   setCred = "ddtoken:" + lib.strings.concatStrings
     (lib.strings.splitString
       "\n"
-      (builtins.readFile ../../secrets/ddtoken-${userConfig.hostName}));
+      (builtins.readFile ../../secrets/ddtoken-${config.networking.hostName}));
 in
 {
   boot.initrd.systemd.extraBin = {
@@ -36,7 +36,7 @@ in
     conflicts = [ "shutdown.target" ];
     path = [ pkgs.bash ];
     script = ''
-      /bin/curl -k "https://www.duckdns.org/update?domains=${userConfig.url}&token=$(/bin/systemd-creds cat ddtoken)&ip=" 
+      /bin/curl -k "https://www.duckdns.org/update?domains=${url}&token=$(/bin/systemd-creds cat ddtoken)&ip=" 
     '';
     serviceConfig = {
       Type = "oneshot";

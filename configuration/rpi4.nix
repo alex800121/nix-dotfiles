@@ -1,4 +1,10 @@
-{ lib, conf, pkgs, ... }: {
+{
+  lib,
+  conf,
+  pkgs,
+  ...
+}:
+{
 
   imports = [
     ./common.nix
@@ -15,18 +21,31 @@
   # boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_rpi4;
   # boot.kernelPackages = pkgs.linuxPackages_rpi4;
 
-  boot.kernelPackages = lib.mkDefault
-    (if builtins.hasAttr "kernelVersion" conf
-    then pkgs."linuxPackages_${conf.kernelVersion}"
-    else pkgs.linuxPackages);
+  boot.kernelPackages = lib.mkDefault (
+    if builtins.hasAttr "kernelVersion" conf then
+      pkgs."linuxPackages_${conf.kernelVersion}"
+    else
+      pkgs.linuxPackages
+  );
+  initConfig.defaultUser = "alex800121";
+  initConfig.hostName = "alexrpi4tp";
 
-  fileSystems."/".options = [ "noatime" "compress=zstd" ];
+  fileSystems."/".options = [
+    "noatime"
+    "compress=zstd"
+  ];
   fileSystems."/".neededForBoot = true;
-  fileSystems."/home".options = [ "noatime" "compress=zstd" ];
-  fileSystems."/nix".options = [ "noatime" "compress=zstd" ];
+  fileSystems."/home".options = [
+    "noatime"
+    "compress=zstd"
+  ];
+  fileSystems."/nix".options = [
+    "noatime"
+    "compress=zstd"
+  ];
   fileSystems."/swap".options = [ "noatime" ];
   fileSystems."/boot".neededForBoot = true;
-  swapDevices = [{ device = "/swap/swapfile"; }];
+  swapDevices = [ { device = "/swap/swapfile"; } ];
 
   hardware.enableAllFirmware = true;
   hardware.enableRedistributableFirmware = true;
@@ -111,7 +130,6 @@
     };
   };
 
-
   documentation.man.enable = true;
   documentation.man.cache.enable = true;
   documentation.man.cache.generateAtRuntime = true;
@@ -127,6 +145,4 @@
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   programs.mtr.enable = true;
-
 }
-

@@ -35,6 +35,9 @@ in
     ../programs/vaultwarden
   ];
 
+  initConfig.defaultUser = "alex800121";
+  initConfig.hostName = "acer-tp";
+
   networking.networkmanager.enable = false;
   networking.useNetworkd = true;
   systemd.network.enable = true;

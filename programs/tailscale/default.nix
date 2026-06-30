@@ -1,4 +1,4 @@
-{ config, userConfig, ... }: {
+{ config, ... }: {
   services.tailscale.enable = true;
 
   services.tailscale.openFirewall = true;
@@ -17,6 +17,6 @@
   ];
 
   services.tailscale.extraSetFlags = [
-    "--operator=${userConfig.userName}"
+    "--operator=${config.initConfig.defaultUser}"
   ];
 }

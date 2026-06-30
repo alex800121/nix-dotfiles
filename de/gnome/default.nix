@@ -1,19 +1,8 @@
 {
   lib,
-  userConfig,
   pkgs,
   ...
 }:
-let
-  defaultConfig = {
-    autoLogin = false;
-  };
-  updateConfig = lib.recursiveUpdate defaultConfig userConfig;
-  inherit (updateConfig) userName autoLogin;
-  term = userConfig.term or "kgx";
-  termArg = userConfig.termArg or "";
-  termDesktop = userConfig.termDesktop or "org.gnome.Console.desktop";
-in
 {
   hardware.logitech.wireless.enable = true;
   hardware.logitech.wireless.enableGraphical = true;
@@ -26,19 +15,13 @@ in
   };
 
   services.displayManager = {
-    autoLogin.enable = autoLogin;
-    autoLogin.user = userName;
+    autoLogin.enable = lib.mkDefault false;
     defaultSession = "gnome";
   };
 
   # Enable the GNOME Desktop Environment.
   services.desktopManager.gnome = {
     enable = true;
-    extraGSettingsOverrides = ''
-      [org.gnome.desktop.default-applications.terminal]
-      exec='${term}'
-      exec-arg='${termArg}'
-    '';
   };
 
   services.gnome.gcr-ssh-agent.enable = true;
@@ -153,20 +136,13 @@ in
             name = "Terminal";
           };
 
-          # "org/gnome/desktop/default-applications/terminal".exec = "alacritty";
-          # "org/gnome/desktop/default-applications/terminal".exec-arg = "-e";
-
           "org/gnome/desktop/interface".color-scheme = "prefer-dark";
 
           "org/gnome/shell".favorite-apps = [
-            # "firefox.desktop"
-            # "google-chrome.desktop"
             "app.zen_browser.zen.desktop"
             "com.spotify.Client.desktop"
             "com.visualstudio.code.desktop"
-            # "spotify.desktop"
-            # "code.desktop"
-            termDesktop
+            "kitty.desktop"
             "org.gnome.Nautilus.desktop"
             "org.libreoffice.LibreOffice.writer.desktop"
             "thunderbird.desktop"
@@ -179,9 +155,6 @@ in
             secondary-color = "#f0f0f0";
           };
 
-          # "org/gnome/system/location" = {
-          #   enabled = true;
-          # };
         };
       }
     ];
@@ -201,13 +174,9 @@ in
     solaar-extension
     # pkgs.logitech-udev-rules
   ];
+
   xdg.terminal-exec.enable = true;
-  xdg.terminal-exec.settings = {
-    default = [ termDesktop ];
-  };
-  environment.etc."xdg/xdg-terminals.list".text = ''
-    ${termDesktop}
-  '';
+  xdg.terminal-exec.settings.default = [ "kitty.desktop" ];
 
   environment.variables.GSK_RENDERER = "gl";
 }

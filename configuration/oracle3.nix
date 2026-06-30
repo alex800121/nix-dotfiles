@@ -5,5 +5,5 @@
       ./oracleComon.nix
     ];
 
-  initConfig.hostName = "oracle";
+  initConfig.hostName = "oracle3";
 }

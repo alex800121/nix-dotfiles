@@ -1,4 +1,4 @@
-{ inputs, userConfig, pkgs, ... }: {
+{ inputs, pkgs, config, ... }: {
 
   virtualisation = {
     libvirtd = {
@@ -20,7 +20,7 @@
     enable = true;
   };
 
-  users.users."${userConfig.userName}" = {
+  users.users."${config.initConfig.defaultUser}" = {
     extraGroups = [ "docker" ];
   };
 

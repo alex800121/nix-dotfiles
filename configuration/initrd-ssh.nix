@@ -1,4 +1,4 @@
-{ config, userConfig, lib, ... }: {
+{ config, lib, ... }: {
 
   boot.initrd.systemd.enable = true;
   boot.initrd.systemd.tpm2.enable = true;
@@ -10,11 +10,11 @@
       ignoreEmptyHostKeys = true;
       port = 2222;
     };
-    ssh.authorizedKeys = config.users.users."${userConfig.userName}".openssh.authorizedKeys.keys;
+    ssh.authorizedKeys = config.users.users."${config.initConfig.defaultUser}".openssh.authorizedKeys.keys;
   };
 
   boot.initrd.secrets = {
-    "/etc/secrets/initrd_ssh_host_ed25519_key" = ../secrets/initrd_ssh_host_ed25519_key-${userConfig.hostName};
+    "/etc/secrets/initrd_ssh_host_ed25519_key" = ../secrets/initrd_ssh_host_ed25519_key-${config.networking.hostName};
   };
   boot.initrd.systemd.services.sshd.serviceConfig.LoadCredentialEncrypted = ''
     initrd.ssh.host.key:/etc/secrets/initrd_ssh_host_ed25519_key

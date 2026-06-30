@@ -1,4 +1,4 @@
-{ config, userConfig, lib, ... }:
+{ config, lib, ... }:
 {
   age.secrets.nix-common = {
     file = ../secrets/nix_common.age;

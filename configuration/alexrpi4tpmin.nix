@@ -3,11 +3,11 @@
     (modulesPath + "/installer/sd-card/sd-image-aarch64-new-kernel-no-zfs-installer.nix")
     ./rpi4.nix
     ../hardware/rpi4.nix
-    ({ userConfig, ... }: {
+    ({ config, ... }: {
       sdImage.compressImage = false;
       sdImage.expandOnBoot = true;
       users.users.root.initialPassword = "root";
-      users.users."${userConfig.userName}".initialPassword = "${userConfig.userName}";
+      users.users."${config.initConfig.defaultUser}".initialPassword = "${config.initConfig.defaultUser}";
       nixpkgs.overlays = [
         (final: super: {
           makeModulesClosure = x:

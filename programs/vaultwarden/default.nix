@@ -1,6 +1,5 @@
 { pkgs, config, userConfig, lib, ... }:
 let
-  inherit (config.networking) hostName;
   inherit (userConfig.keepalived) routers;
   inherit (builtins) toString;
   inherit (userConfig.tailscale) id;

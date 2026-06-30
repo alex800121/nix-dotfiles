@@ -1,4 +1,4 @@
-{ config, userConfig, lib, ... }: {
+{ config, lib, ... }: {
 
   boot.initrd.systemd.enable = true;
 

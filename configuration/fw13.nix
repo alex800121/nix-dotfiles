@@ -1,7 +1,6 @@
 {
   inputs,
   pkgs,
-  userConfig,
   ...
 }:
 let
@@ -44,6 +43,9 @@ in
     inputs.agenix.nixosModules.default
     inputs.declarative-flatpak.nixosModules.default
   ];
+
+  initConfig.defaultUser = "alex800121";
+  initConfig.hostName = "fw13";
 
   # hardware.framework.laptop13.audioEnhancement.enable = true;
   # hardware.framework.laptop13.audioEnhancement.hideRawDevice = false;

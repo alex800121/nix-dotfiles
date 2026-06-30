@@ -1,9 +1,8 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-{ pkgs, config, lib, userConfig, inputs, conf, ... }:
+{ pkgs, config, lib, inputs, conf, ... }:
 let
-  inherit (userConfig) hostName;
   inherit (pkgs.stdenv.hostPlatform) system;
 in
 {
@@ -63,7 +62,6 @@ in
   };
 
   networking = {
-    inherit hostName; # Define your hostname.
     networkmanager = {
       enable = lib.mkDefault true;
       dns = "systemd-resolved";
@@ -85,20 +83,28 @@ in
 
   # Select internationalisation properties.
   i18n.inputMethod = {
-    type = "fcitx5";
+    type = "ibus";
     enable = true;
-    fcitx5 = {
-      waylandFrontend = true;
-      addons = with pkgs; [
-        fcitx5-chewing
-        qt6Packages.fcitx5-chinese-addons
-        qt6Packages.fcitx5-configtool
-        fcitx5-gtk
-        libsForQt5.fcitx5-qt
-        # fcitx5-rime
-      ];
-    };
+    enableGtk2 = true;
+    enableGtk3 = true;
+    ibus.engines = with pkgs.ibus-engines; [ chewing ];
+    ibus.waylandFrontend = true;
   };
+  # i18n.inputMethod = {
+  #   type = "fcitx5";
+  #   enable = true;
+  #   fcitx5 = {
+  #     waylandFrontend = true;
+  #     addons = with pkgs; [
+  #       fcitx5-chewing
+  #       qt6Packages.fcitx5-chinese-addons
+  #       qt6Packages.fcitx5-configtool
+  #       fcitx5-gtk
+  #       libsForQt5.fcitx5-qt
+  #       # fcitx5-rime
+  #     ];
+  #   };
+  # };
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
@@ -150,6 +156,7 @@ in
     enableDefaultPackages = true;
     packages = with pkgs; [
       nerd-fonts.hack
+      corefonts
       noto-fonts-cjk-sans
       noto-fonts-cjk-serif
       noto-fonts-color-emoji
@@ -218,13 +225,13 @@ in
   programs.localsend.enable = true;
   programs.localsend.openFirewall = true;
 
-  environment.variables = {
-    QT_IM_MODULE = "fcitx";
-    GTK_IM_MODULE = "fcitx";
-    XMODIFIERS = "@im=fcitx";
-    NIXOS_OZONE_WL = "1";
-    XCURSOR_THEME = "Adwaita";
-  };
+  # environment.variables = {
+  #   QT_IM_MODULE = "fcitx";
+  #   GTK_IM_MODULE = "fcitx";
+  #   XMODIFIERS = "@im=fcitx";
+  #   NIXOS_OZONE_WL = "1";
+  #   XCURSOR_THEME = "Adwaita";
+  # };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

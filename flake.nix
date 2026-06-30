@@ -57,6 +57,6 @@
       nixosConfigurations.oracle2 = mkNixosConfig config.oracle2;
       nixosConfigurations.oracle3 = mkNixosConfig config.oracle3;
       nixosConfigurations.alexrpi4tp = mkNixosConfig config.alexrpi4tp;
-      nixosConfigurations.alexrpi4tpmin = mkNixosIso config.alexrpi4tpmin;
+      nixosConfigurations.alexrpi4tpmin = mkNixosConfig config.alexrpi4tpmin;
     };
 }
