@@ -49,7 +49,7 @@
                 ../home
               ] ++ hmModules;
               extraSpecialArgs = {
-                inherit inputs userConfig;
+                inherit inputs;
               };
               backupFileExtension = "bak";
             };

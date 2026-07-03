@@ -1,6 +1,5 @@
 { pkgs, config, ... }:
 let
-  inherit (config.networking) hostName;
   gateName = "alexgate.duckdns.org";
   ddtokenName = "ddtoken";
 in
@@ -18,7 +17,6 @@ in
   security.acme.certs."${gateName}" = {
     dnsProvider = "duckdns";
     dnsResolver = "1.1.1.1:53";
-    # dnsPropagationCheck = true;
     dnsPropagationCheck = false;
     domain = gateName;
     extraDomainNames = [ "*.${gateName}" ];

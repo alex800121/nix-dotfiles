@@ -18,15 +18,7 @@
     "pcie_brcmstb" # required for the pcie bus to work
     "reset-raspberrypi" # required for vl805 firmware to load
   ];
-  # boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_rpi4;
-  # boot.kernelPackages = pkgs.linuxPackages_rpi4;
 
-  boot.kernelPackages = lib.mkDefault (
-    if builtins.hasAttr "kernelVersion" conf then
-      pkgs."linuxPackages_${conf.kernelVersion}"
-    else
-      pkgs.linuxPackages
-  );
   initConfig.defaultUser = "alex800121";
   initConfig.hostName = "alexrpi4tp";
 

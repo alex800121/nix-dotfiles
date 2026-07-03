@@ -15,11 +15,6 @@ in
     "x86_64-linux"
   ];
 
-  boot.kernelPackages = lib.mkDefault
-    (if builtins.hasAttr "kernelVersion" conf
-    then pkgs."linuxPackages_${conf.kernelVersion}"
-    else pkgs.linuxPackages);
-
   hardware.acpilight.enable = true;
 
   services.fwupd.enable = true;

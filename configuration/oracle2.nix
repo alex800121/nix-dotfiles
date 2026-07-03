@@ -2,7 +2,7 @@
 {
   imports =
     [
-      ./oracleComon.nix
+      ./oracleCommon.nix
     ];
 
   initConfig.hostName = "oracle2";

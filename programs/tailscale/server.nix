@@ -1,8 +1,11 @@
-{ userConfig, config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 let
-  inherit (userConfig.tailscale) id;
-  tsIp = "100.64.0.${toString id}";
-
+  tsIp = config.services.tailscale.server.ip;
   updateServer = ''
     TS_ID=$(cat ${config.age.secrets.tsid.path})
     TS_SECRET=$(cat ${config.age.secrets.tssecret.path})
@@ -63,56 +66,89 @@ let
 in
 {
   imports = [ ./default.nix ];
-  services.tailscale.useRoutingFeatures = "server";
-  age.secrets."tssecret" = {
-    file = ../../secrets/tssecret.age;
-  };
-  age.secrets."tsid" = {
-    file = ../../secrets/tsid.age;
-  };
 
-  services.tailscale.authKeyFile = config.age.secrets."tssecret".path;
-  services.tailscale.authKeyParameters.ephemeral = false;
-  services.tailscale.authKeyParameters.preauthorized = true;
-  services.tailscale.extraUpFlags = [
-    "--advertise-routes="
-    "--advertise-tags=tag:server"
-  ];
-  services.tailscale.extraSetFlags = [
-    "--accept-routes=true"
-    "--advertise-exit-node"
-  ];
-  systemd.services."tailscaled-set" = {
-    requires = [ "tailscaled-autoconnect.service" "tailscaled.service" "network-online.target" ];
-    after = [ "tailscaled-autoconnect.service" "tailscaled.service" "network-online.target" ];
-  };
-  systemd.services."tailscale-server-ip" = {
-    enable = true;
-    description = "Set tailscale server ip";
-    wantedBy = [ "tailscaled.service" ];
-    requires = [ "tailscaled-set.service" "tailscaled.service" "network-online.target" ];
-    after = [ "tailscaled-set.service" "tailscaled.service" "network-online.target" ];
-    restartIfChanged = true;
-    path = with pkgs; [
-      coreutils
-      curl
-      jq
-    ];
-    script = updateServer;
-    serviceConfig = {
-      Type = "oneshot";
-      Restart = "on-failure";
-      RestartSec = "5s";
+  options = {
+    services.tailscale.server.ip = lib.mkOption {
+      type = lib.types.nullOr lib.types.str;
+      default =
+        if config.initConfig.id != null then "100.64.0.${builtins.toString config.initConfig.id}" else null;
     };
   };
 
-  boot.kernel.sysctl."net.ipv4.ip_forward" = lib.mkDefault 1;
-  boot.kernel.sysctl."net.ipv6.conf.all.forwarding" = lib.mkDefault 1;
-  # age.secrets.tsServerApi = {
-  #   file = ../../secrets/tsapi.age;
-  #   # file = ../../secrets/tsapi_${hostName}.age;
-  #   owner = "root";
-  #   group = "root";
-  #   mode = "600";
-  # };
+  config = lib.mkMerge [
+
+    {
+      assertions = [
+        {
+          assertion = config.services.tailscale.server.ip != null;
+          message = "must set one of topo.nix/initConfig.id/services.tailscale.server.ip in tailscale servers";
+        }
+      ];
+    }
+
+    {
+      services.tailscale.useRoutingFeatures = "server";
+      age.secrets."tssecret" = {
+        file = ../../secrets/tssecret.age;
+      };
+      age.secrets."tsid" = {
+        file = ../../secrets/tsid.age;
+      };
+
+      services.tailscale.authKeyFile = config.age.secrets."tssecret".path;
+      services.tailscale.authKeyParameters.ephemeral = false;
+      services.tailscale.authKeyParameters.preauthorized = true;
+      services.tailscale.extraUpFlags = [
+        "--advertise-routes="
+        "--advertise-tags=tag:server"
+      ];
+      services.tailscale.extraSetFlags = [
+        "--accept-routes=true"
+        "--advertise-exit-node"
+      ];
+      systemd.services."tailscaled-set" = {
+        requires = [
+          "tailscaled-autoconnect.service"
+          "tailscaled.service"
+          "network-online.target"
+        ];
+        after = [
+          "tailscaled-autoconnect.service"
+          "tailscaled.service"
+          "network-online.target"
+        ];
+      };
+      boot.kernel.sysctl."net.ipv4.ip_forward" = lib.mkDefault 1;
+      boot.kernel.sysctl."net.ipv6.conf.all.forwarding" = lib.mkDefault 1;
+
+      systemd.services."tailscale-server-ip" = {
+        enable = true;
+        description = "Set tailscale server ip";
+        wantedBy = [ "tailscaled.service" ];
+        requires = [
+          "tailscaled-set.service"
+          "tailscaled.service"
+          "network-online.target"
+        ];
+        after = [
+          "tailscaled-set.service"
+          "tailscaled.service"
+          "network-online.target"
+        ];
+        restartIfChanged = true;
+        path = with pkgs; [
+          coreutils
+          curl
+          jq
+        ];
+        script = updateServer;
+        serviceConfig = {
+          Type = "oneshot";
+          Restart = "on-failure";
+          RestartSec = "5s";
+        };
+      };
+    }
+
+  ];
 }

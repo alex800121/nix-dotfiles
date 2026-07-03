@@ -1,5 +1,5 @@
-{ inputs, ... }: {
-
+{ inputs, ... }:
+{
   imports = [
     ./rpi4.nix
     ./distributed-builds.nix
@@ -9,7 +9,9 @@
     ../programs/nix-ld
     # ../programs/code-tunnel
     ../programs/vaultwarden
-    (import ../programs/borgbackup/vaultwarden.nix [ "acer-tp" ])
+    ../programs/borgbackup/vaultwarden.nix
     inputs.agenix.nixosModules.default
   ];
+  services.vaultwarden.borgbackup.enable = true;
+  services.vaultwarden.borgbackup.servers = [ "acer-tp" ];
 }

@@ -6,7 +6,6 @@ let
       (builtins.readFile ../../secrets/ddtoken-${config.networking.hostName}));
 in
 {
-
   systemd.services.duckdns = {
     enable = true;
     description = "duckdns update";

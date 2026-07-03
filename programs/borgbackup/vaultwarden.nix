@@ -1,14 +1,13 @@
-servers:
 {
   config,
   lib,
   pkgs,
-  userConfig,
   ...
 }:
 let
   inherit (config.networking) hostName;
-  timeOffset = 
+  cfg = config.services.vaultwarden.borgbackup;
+  timeOffset =
     (
       x:
       let
@@ -16,32 +15,40 @@ let
       in
       builtins.substring i 2 x
     )
-      "00${builtins.toString userConfig.tailscale.id}";
+      "00${builtins.toString config.initConfig.id}";
   passphrase = "passphrase_borgbackup_vaultwarden";
   dbUserName = config.services.mysql.user;
   dbGroupName = config.services.mysql.group;
   userName = "vaultwarden";
   groupName = "vaultwarden";
-  mergeServers =
+  mergeSecrets =
     serverName:
     let
       sshHostKey = "ssh_host_borgbackup_${serverName}_vaultwarden_${hostName}";
       dbSshHostKey = "ssh_host_borgbackup_${serverName}_vaultwarden_db_${hostName}";
     in
     {
-      age.secrets."${dbSshHostKey}" = {
+      secrets."${dbSshHostKey}" = {
         file = ../../secrets/${dbSshHostKey}.age;
         owner = dbUserName;
         group = dbGroupName;
         mode = "600";
       };
-      age.secrets."${sshHostKey}" = {
+      secrets."${sshHostKey}" = {
         file = ../../secrets/${sshHostKey}.age;
         owner = userName;
         group = groupName;
         mode = "600";
       };
-      services.borgbackup.jobs."vaultwarden-db-${serverName}" = {
+    };
+  mergeServices =
+    serverName:
+    let
+      sshHostKey = "ssh_host_borgbackup_${serverName}_vaultwarden_${hostName}";
+      dbSshHostKey = "ssh_host_borgbackup_${serverName}_vaultwarden_db_${hostName}";
+    in
+    {
+      jobs."vaultwarden-db-${serverName}" = {
         user = dbUserName;
         group = dbGroupName;
         repo = "borg@${serverName}:.";
@@ -64,7 +71,7 @@ let
           monthly = -1; # Keep at least one archive for each month
         };
       };
-      services.borgbackup.jobs."vaultwarden-${serverName}" = {
+      jobs."vaultwarden-${serverName}" = {
         user = userName;
         group = groupName;
         repo = "borg@${serverName}:.";
@@ -87,20 +94,43 @@ let
       };
     };
 in
-lib.foldl' (acc: serverName: lib.recursiveUpdate acc (mergeServers serverName)) {
-  users.extraUsers."${dbUserName}" = {
-    createHome = true;
-    home = "/var/lib/system_home/${dbUserName}";
-    extraGroups = [ groupName ];
+{
+  options = {
+    services.vaultwarden.borgbackup.enable = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+    };
+    services.vaultwarden.borgbackup.servers = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+      default = [ ];
+    };
   };
-  users.extraUsers."${userName}" = {
-    createHome = true;
-    home = "/var/lib/system_home/${userName}";
+
+  config.users = lib.mkIf cfg.enable {
+    extraUsers."${dbUserName}" = {
+      createHome = true;
+      home = "/var/lib/system_home/${dbUserName}";
+      extraGroups = [ groupName ];
+    };
+    extraUsers."${userName}" = {
+      createHome = true;
+      home = "/var/lib/system_home/${userName}";
+    };
   };
-  age.secrets."${passphrase}" = {
-    file = ../../secrets/${passphrase}.age;
-    owner = userName;
-    group = groupName;
-    mode = "660";
-  };
-} servers
+  config.age = lib.mkIf cfg.enable (
+    lib.mkMerge (
+      map mergeSecrets cfg.servers
+      ++ [
+        {
+          secrets."${passphrase}" = {
+            file = ../../secrets/${passphrase}.age;
+            owner = userName;
+            group = groupName;
+            mode = "660";
+          };
+        }
+      ]
+    )
+  );
+  config.services.borgbackup = lib.mkIf cfg.enable (lib.mkMerge (map mergeServices cfg.servers));
+}

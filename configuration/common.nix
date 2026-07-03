@@ -53,7 +53,6 @@ in
       };
     })
     ({
-      networking.hostName = config.initConfig.hostName;
 
       hardware.enableAllFirmware = true;
       hardware.enableRedistributableFirmware = true;
