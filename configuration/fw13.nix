@@ -1,5 +1,6 @@
 {
   inputs,
+  config,
   pkgs,
   ...
 }:
@@ -38,14 +39,19 @@ in
     # ../programs/seaweedfs
     ../programs/virt
     ../programs/tailscale/client.nix
-    ../programs/thunderbird
+    # ../programs/thunderbird
     # ../programs/postgresql
     inputs.agenix.nixosModules.default
     inputs.declarative-flatpak.nixosModules.default
+    ../programs/nvim/default.nix
   ];
 
   initConfig.defaultUser = "alex800121";
   initConfig.hostName = "fw13";
+
+  system.fsPackages = [ pkgs.apfsprogs ];
+  boot.extraModulePackages = [ config.boot.kernelPackages.apfs ];
+  boot.initrd.kernelModules = [ "apfs" ];
 
   # hardware.framework.laptop13.audioEnhancement.enable = true;
   # hardware.framework.laptop13.audioEnhancement.hideRawDevice = false;
@@ -53,7 +59,6 @@ in
     (self: super: {
       btop = super.btop.override { rocmSupport = true; };
     })
-    # inputs.comfyui-nix.overlays.default
   ];
   boot.initrd.luks.devices."enc".preLVM = true;
   boot.initrd.luks.devices."enc".allowDiscards = true;
@@ -101,6 +106,7 @@ in
       "flathub:app/org.rncbc.qpwgraph//stable"
       "flathub:app/org.gnome.NetworkDisplays//stable"
       "flathub:app/com.usebottles.bottles//stable"
+      "flathub:app/org.gnome.DejaDup//stable"
 
       # Secret Management
       "flathub:app/com.bitwarden.desktop//stable"
@@ -134,6 +140,7 @@ in
       "flathub:app/com.github.xournalpp.xournalpp//stable"
       "flathub:app/org.libreoffice.LibreOffice//stable"
       "flathub:app/org.telegram.desktop//stable"
+      "flathub:app/org.mozilla.thunderbird//stable"
     ];
     overrides = {
       "com.markopejic.downloader" = {

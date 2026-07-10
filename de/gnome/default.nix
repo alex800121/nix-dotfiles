@@ -145,7 +145,7 @@
             "kitty.desktop"
             "org.gnome.Nautilus.desktop"
             "org.libreoffice.LibreOffice.writer.desktop"
-            "thunderbird.desktop"
+            "org.mozilla.thunderbird.desktop"
           ];
 
           "org/gnome/desktop/background" = {

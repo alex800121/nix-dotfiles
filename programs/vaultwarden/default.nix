@@ -28,7 +28,7 @@ in
     };
     services.vaultwarden.galera.peers = lib.mkOption {
       type = lib.types.listOf lib.types.str;
-      default = (import ../../configuration/topo.nix)."${config.networking.hostName}".peers or [ ];
+      default = config.initConfig.topo."${config.networking.hostName}".peers or [ ];
     };
     services.vaultwarden.galera.ip = lib.mkOption {
       type = lib.types.nullOr lib.types.str;

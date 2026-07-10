@@ -57,6 +57,10 @@ in
       hardware.enableAllFirmware = true;
       hardware.enableRedistributableFirmware = true;
 
+      nixpkgs.overlays = [
+        inputs.rust-overlay.overlays.default
+      ];
+
       programs.ssh = {
         startAgent = lib.mkDefault true;
         forwardX11 = false;

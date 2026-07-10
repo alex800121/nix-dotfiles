@@ -1,7 +1,8 @@
-{ inputs, ... }:
+{ pkgs, inputs, ... }:
 {
   imports = [
     ./rpi4.nix
+    ./topo.nix
     ./distributed-builds.nix
     ./ssh-serve.nix
     ../hardware/alexrpi4tp.nix
@@ -11,6 +12,7 @@
     ../programs/vaultwarden
     ../programs/borgbackup/vaultwarden.nix
     inputs.agenix.nixosModules.default
+    ../programs/nvim/minimal.nix
   ];
   services.vaultwarden.borgbackup.enable = true;
   services.vaultwarden.borgbackup.servers = [ "acer-tp" ];

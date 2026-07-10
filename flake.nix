@@ -4,13 +4,8 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
     nixpkgsUnstable.url = "github:nixos/nixpkgs/nixos-unstable";
     declarative-flatpak.url = "github:in-a-dil-emma/declarative-flatpak/latest";
-
-    nil = {
-      url = "github:oxalica/nil";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    home-manager = {
-      url = "github:nix-community/home-manager/release-26.05";
+    wrappers = {
+      url = "github:BirdeeHub/nix-wrapper-modules";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixos-hardware = {
@@ -47,16 +42,15 @@
     let
       mkNixosIso = (import ./utils/func.nix).mkNixosIso inputs;
       mkNixosConfig = (import ./utils/func.nix).mkNixosConfig inputs;
-      config = import ./configuration/config.nix;
     in
     {
-      nixosConfigurations.fw13 = mkNixosConfig config.fw13;
-      nixosConfigurations.fw13-musnix = mkNixosConfig config.fw13-musnix;
-      nixosConfigurations.acer-tp = mkNixosConfig config.acer-tp;
-      nixosConfigurations.oracle = mkNixosConfig config.oracle;
-      nixosConfigurations.oracle2 = mkNixosConfig config.oracle2;
-      nixosConfigurations.oracle3 = mkNixosConfig config.oracle3;
-      nixosConfigurations.alexrpi4tp = mkNixosConfig config.alexrpi4tp;
-      nixosConfigurations.alexrpi4tpmin = mkNixosConfig config.alexrpi4tpmin;
+      nixosConfigurations.fw13 = mkNixosConfig [ configuration/fw13.nix ];
+      nixosConfigurations.fw13-musnix = mkNixosConfig [ configuration/fw13-musnix.nix ];
+      nixosConfigurations.acer-tp = mkNixosConfig [ configuration/acer-tp.nix ];
+      nixosConfigurations.oracle = mkNixosConfig [ configuration/oracle.nix ];
+      nixosConfigurations.oracle2 = mkNixosConfig [ configuration/oracle2.nix ];
+      nixosConfigurations.oracle3 = mkNixosConfig [ configuration/oracle3.nix ];
+      nixosConfigurations.alexrpi4tp = mkNixosConfig [ configuration/alexrpi4tp.nix ];
+      nixosConfigurations.alexrpi4tpmin = mkNixosConfig [ configuration/alexrpi4tpmin.nix ];
     };
 }

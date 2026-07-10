@@ -85,11 +85,11 @@ in
     };
     services.vaultwarden.galera.tailscale.keepalived.router.id = lib.mkOption {
       type = lib.types.nullOr lib.types.ints.u8;
-      default = (import ../../configuration/topo.nix)."${config.networking.hostName}".keepalived.router.id or null;
+      default = config.initConfig.topo."${config.networking.hostName}".keepalived.router.id or null;
     };
     services.vaultwarden.galera.tailscale.keepalived.router.priority = lib.mkOption {
       type = lib.types.nullOr lib.types.ints.u8;
-      default = (import ../../configuration/topo.nix)."${config.networking.hostName}".keepalived.router.priority or null;
+      default = config.initConfig.topo."${config.networking.hostName}".keepalived.router.priority or null;
     };
   };
   config = lib.mkIf config.services.vaultwarden.galera.tailscale.keepalived.enable {

@@ -20,6 +20,7 @@ in
       ./distributed-builds.nix
       ../programs/tailscale/server.nix
       # ../programs/seaweedfs
+    ../programs/nvim/minimal.nix
     ];
 
   initConfig.defaultUser = "alex800121";

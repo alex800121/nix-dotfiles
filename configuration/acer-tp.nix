@@ -20,6 +20,7 @@ in
 {
   imports = [
     ./default.nix
+    ./topo.nix
     ./secure-boot.nix
     ./distributed-builds.nix
     ./ssh-serve.nix
@@ -32,6 +33,7 @@ in
     ../programs/tailscale/server.nix
     inputs.agenix.nixosModules.default
     ../programs/vaultwarden/default.nix
+    ../programs/nvim/default.nix
   ];
 
   initConfig.defaultUser = "alex800121";
@@ -63,10 +65,22 @@ in
   boot.initrd.luks.devices."enc".preLVM = true;
   boot.initrd.luks.devices."enc".allowDiscards = true;
   boot.initrd.luks.devices."enc".bypassWorkqueues = true;
-  fileSystems."/".options = [ "noatime" "compress=zstd" ];
-  fileSystems."/home".options = [ "noatime" "compress=zstd" ];
-  fileSystems."/nix".options = [ "noatime" "compress=zstd" ];
-  fileSystems."/data".options = [ "noatime" "compress=zstd" ];
+  fileSystems."/".options = [
+    "noatime"
+    "compress=zstd"
+  ];
+  fileSystems."/home".options = [
+    "noatime"
+    "compress=zstd"
+  ];
+  fileSystems."/nix".options = [
+    "noatime"
+    "compress=zstd"
+  ];
+  fileSystems."/data".options = [
+    "noatime"
+    "compress=zstd"
+  ];
   fileSystems."/swap".options = [ "noatime" ];
-  swapDevices = [{ device = "/swap/swapfile"; }];
+  swapDevices = [ { device = "/swap/swapfile"; } ];
 }

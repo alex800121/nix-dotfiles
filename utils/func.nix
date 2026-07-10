@@ -1,7 +1,7 @@
 {
   mkNixosIso =
     inputs:
-    conf@{ ... }:
+    _extraModules:
     inputs.nixpkgs.lib.nixosSystem {
       modules = [
         ../configuration/common.nix
@@ -13,49 +13,9 @@
     };
   mkNixosConfig =
     inputs:
-    conf@{
-      userConfig,
-      extraModules ? [ ],
-      hmModules ? [ ],
-      overlays ? [ ],
-      ...
-    }:
+    extraModules:
     inputs.nixpkgs.lib.nixosSystem {
-      specialArgs = {
-        inherit
-          conf
-          userConfig
-          inputs
-          extraModules
-          hmModules
-          ;
-      };
-      modules = [
-        ../configuration/initConfig.nix
-        {
-          nixpkgs.overlays = [
-            inputs.rust-overlay.overlays.default
-          ]
-          ++ overlays;
-        }
-        inputs.home-manager.nixosModules.home-manager
-        (
-          { lib, config, ... }:
-          {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              users."${config.initConfig.defaultUser}".imports = [
-                ../home
-              ] ++ hmModules;
-              extraSpecialArgs = {
-                inherit inputs;
-              };
-              backupFileExtension = "bak";
-            };
-          }
-        )
-      ]
-      ++ extraModules;
+      specialArgs = { inherit inputs; };
+      modules = extraModules;
     };
 }
