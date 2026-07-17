@@ -13,6 +13,7 @@
   config = {
     specs.general = {
       enable = true;
+      lazy = false;
       data = with pkgs.vimPlugins; [
         mini-icons
         gruvbox-nvim
@@ -37,8 +38,23 @@
       haskell.packages.ghc912.cabal-gild
       haskell.packages.ghc912.fast-tags
       haskell.packages.ghc912.haskell-language-server
-      fourmolu
       # inputs.nil.packages."${system}".default
+      (wlib.evalPackage [
+        { inherit pkgs; }
+        (
+          {
+            pkgs,
+            config,
+            wlib,
+            ...
+          }:
+          {
+            imports = [ wlib.modules.default ];
+            package = pkgs.fourmolu;
+            flags."--config" = ./fourmolu.yaml;
+          }
+        )
+      ])
       nil
       nixfmt
       lua-language-server

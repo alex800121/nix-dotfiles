@@ -10,7 +10,7 @@
         imports = [
           ./module.nix
         ];
-        inherit pkgs;
+        inherit (super) pkgs;
       };
     })
   ];

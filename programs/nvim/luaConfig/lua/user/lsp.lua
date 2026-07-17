@@ -2,6 +2,7 @@ local whichkey = require 'which-key'
 
 vim.opt.completeopt = { 'menu', 'menuone', 'noselect', 'popup' }
 vim.opt.complete = { '.', 'o', 'w', 'b', 'u', 't' }
+vim.opt.autocomplete = true
 
 vim.diagnostic.config({
   virtual_text = false,
@@ -42,7 +43,6 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', '<leader>F', function() vim.lsp.buf.format { async = true } end, bufopts('code format'))
   vim.keymap.set('n', '<leader>sl', vim.diagnostic.setloclist, opts('Set Location List'))
   vim.keymap.set('n', '<leader>sf', vim.diagnostic.setqflist, opts('Set Quickfix List'))
-  vim.bo.autocomplete = true
   vim.lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
 end
 
@@ -54,7 +54,14 @@ vim.lsp.config['hls'] = {
   settings = {
     haskell = {
       cabalFormattingProvider = "cabal-gild",
-      formattingProvider = "fourmolu"
+      formattingProvider = "fourmolu",
+      plugin = {
+        fourmolu = {
+          config = {
+            external = true
+          }
+        }
+      }
     }
   },
   on_attach = on_attach,

@@ -53,8 +53,7 @@ in
   boot.extraModulePackages = [ config.boot.kernelPackages.apfs ];
   boot.initrd.kernelModules = [ "apfs" ];
 
-  # hardware.framework.laptop13.audioEnhancement.enable = true;
-  # hardware.framework.laptop13.audioEnhancement.hideRawDevice = false;
+  hardware.framework.laptop13.audioEnhancement.enable = false;
   nixpkgs.overlays = [
     (self: super: {
       btop = super.btop.override { rocmSupport = true; };
@@ -187,6 +186,7 @@ in
 
   environment.systemPackages = with pkgs; [
     # x32edit
+    # proton-vpn
     libimobiledevice
     ifuse # optional, to mount using 'ifuse'
     llvm_20
@@ -203,11 +203,11 @@ in
     cabal2nix
     haskell.compiler.ghc912
     haskell.packages.ghc912.hoogle
-    haskell.packages.ghc912.cabal-gild
-    haskell.packages.ghc912.haskell-language-server
+    # haskell.packages.ghc912.cabal-gild
+    # haskell.packages.ghc912.haskell-language-server
     cabal-install
     ghcid
-    fourmolu
+    # fourmolu
     rust-bin.stable.latest.complete
     wireshark
     x42-plugins
