@@ -42,31 +42,24 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', '<leader>F', function() vim.lsp.buf.format { async = true } end, bufopts('code format'))
   vim.keymap.set('n', '<leader>sl', vim.diagnostic.setloclist, opts('Set Location List'))
   vim.keymap.set('n', '<leader>sf', vim.diagnostic.setqflist, opts('Set Quickfix List'))
+  vim.bo.autocomplete = true
   vim.lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
-  vim.bo.autocomplete = vim.bo.buftype == ""
 end
 
-vim.lsp.config['hls'] = {
-  cmd = { 'haskell-language-server-wrapper', '--lsp' },
-  filetypes = { 'haskell', 'lhaskell', 'cabal' },
-  root_markers = { '*.cabal', 'stack.yaml', 'cabal.project', 'package.yaml', 'hie.yaml', '.git' },
-  single_file_support = true,
-  settings = {
-    haskell = {
-      cabalFormattingProvider = "cabal-gild",
-      formattingProvider = "fourmolu",
-      plugin = {
-        fourmolu = {
-          config = {
-            external = true
-          }
-        }
-      }
-    }
-  },
-  on_attach = on_attach,
-}
-vim.lsp.enable('hls')
+-- vim.lsp.config['hls'] = {
+--   cmd = { 'haskell-language-server-wrapper', '--lsp' },
+--   filetypes = { 'haskell', 'lhaskell', 'cabal' },
+--   root_markers = { '*.cabal', 'stack.yaml', 'cabal.project', 'package.yaml', 'hie.yaml', '.git' },
+--   single_file_support = true,
+--   settings = {
+--     haskell = {
+--       cabalFormattingProvider = "cabal-gild",
+--       formattingProvider = "fourmolu"
+--     }
+--   },
+--   on_attach = on_attach,
+-- }
+-- vim.lsp.enable('hls')
 
 vim.lsp.config['nil_ls'] = {
   cmd = { "nil" },
@@ -111,25 +104,25 @@ vim.lsp.config['lua_ls'] = {
 }
 vim.lsp.enable('lua_ls')
 
-vim.lsp.config['rust_analyzer'] = {
-  root_markers = { "*.cargo" },
-  settings = {
-    ["rust-analyzer"] = {
-      cargo = {
-        features = "all",
-      },
-      -- Add clippy lints for Rust.
-      checkOnSave = true,
-      check = {
-        command = "clippy",
-        features = "all",
-      },
-      procMacro = {
-        enable = true,
-      },
-    },
-  },
-  -- capabilities = capabilities,
-  on_attach = on_attach,
-}
-vim.lsp.enable('rust_analyzer')
+-- vim.lsp.config['rust_analyzer'] = {
+--   root_markers = { "*.cargo" },
+--   settings = {
+--     ["rust-analyzer"] = {
+--       cargo = {
+--         features = "all",
+--       },
+--       -- Add clippy lints for Rust.
+--       checkOnSave = true,
+--       check = {
+--         command = "clippy",
+--         features = "all",
+--       },
+--       procMacro = {
+--         enable = true,
+--       },
+--     },
+--   },
+--   -- capabilities = capabilities,
+--   on_attach = on_attach,
+-- }
+-- vim.lsp.enable('rust_analyzer')

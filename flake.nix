@@ -8,6 +8,8 @@
       url = "github:BirdeeHub/nix-wrapper-modules";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    import-tree.url = "github:vic/import-tree";
+    flake-parts.url = "github:hercules-ci/flake-parts";
     nixos-hardware = {
       url = "github:NixOS/nixos-hardware/master";
     };
@@ -34,23 +36,22 @@
   };
 
   outputs =
-    inputs@{
-      self,
-      nixpkgs,
-      ...
-    }:
+    inputs:
     let
       mkNixosIso = (import ./utils/func.nix).mkNixosIso inputs;
       mkNixosConfig = (import ./utils/func.nix).mkNixosConfig inputs;
     in
-    {
-      nixosConfigurations.fw13 = mkNixosConfig [ configuration/fw13.nix ];
-      nixosConfigurations.fw13-musnix = mkNixosConfig [ configuration/fw13-musnix.nix ];
-      nixosConfigurations.acer-tp = mkNixosConfig [ configuration/acer-tp.nix ];
-      nixosConfigurations.oracle = mkNixosConfig [ configuration/oracle.nix ];
-      nixosConfigurations.oracle2 = mkNixosConfig [ configuration/oracle2.nix ];
-      nixosConfigurations.oracle3 = mkNixosConfig [ configuration/oracle3.nix ];
-      nixosConfigurations.alexrpi4tp = mkNixosConfig [ configuration/alexrpi4tp.nix ];
-      nixosConfigurations.alexrpi4tpmin = mkNixosConfig [ configuration/alexrpi4tpmin.nix ];
-    };
+    inputs.flake-parts.lib.mkFlake { inherit inputs; } (top: {
+      imports = [ (inputs.import-tree ./modules) ];
+      flake = {
+        nixosConfigurations.fw13 = mkNixosConfig [ configuration/fw13.nix ];
+        nixosConfigurations.fw13-musnix = mkNixosConfig [ configuration/fw13-musnix.nix ];
+        nixosConfigurations.acer-tp = mkNixosConfig [ configuration/acer-tp.nix ];
+        nixosConfigurations.oracle = mkNixosConfig [ configuration/oracle.nix ];
+        nixosConfigurations.oracle2 = mkNixosConfig [ configuration/oracle2.nix ];
+        nixosConfigurations.oracle3 = mkNixosConfig [ configuration/oracle3.nix ];
+        nixosConfigurations.alexrpi4tp = mkNixosConfig [ configuration/alexrpi4tp.nix ];
+        nixosConfigurations.alexrpi4tpmin = mkNixosConfig [ configuration/alexrpi4tpmin.nix ];
+      };
+    });
 }
