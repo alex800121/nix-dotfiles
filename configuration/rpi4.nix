@@ -23,22 +23,7 @@
   initConfig.defaultUser = "alex800121";
   initConfig.hostName = "alexrpi4tp";
 
-  fileSystems."/".options = [
-    "noatime"
-    "compress=zstd"
-  ];
   fileSystems."/".neededForBoot = true;
-  fileSystems."/home".options = [
-    "noatime"
-    "compress=zstd"
-  ];
-  fileSystems."/nix".options = [
-    "noatime"
-    "compress=zstd"
-  ];
-  fileSystems."/swap".options = [ "noatime" ];
-  fileSystems."/boot".neededForBoot = true;
-  swapDevices = [ { device = "/swap/swapfile"; } ];
 
   hardware.enableAllFirmware = true;
   hardware.enableRedistributableFirmware = true;
@@ -122,10 +107,6 @@
       AllMulticast = true;
     };
   };
-
-  documentation.man.enable = true;
-  documentation.man.cache.enable = true;
-  documentation.man.cache.generateAtRuntime = true;
 
   # List packages installed in system profile. To search, run:
   environment.systemPackages = with pkgs; [
