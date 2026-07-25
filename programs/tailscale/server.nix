@@ -47,6 +47,7 @@ let
     echo "Advertised exit node"
 
     TS_NODE_IP=$(echo $TS_INFO | jq -r .ip)
+    echo "tailscale server ip is $TS_NODE_IP"
     if [ "$TS_NODE_IP" != "${tsIp}" ]; then
       POST_IP="{\"ipv4\":\"${tsIp}\"}"
       RESPONSE=$(curl --request POST \
