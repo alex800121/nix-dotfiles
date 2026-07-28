@@ -17,9 +17,9 @@
   services.vaultwarden.borgbackup.enable = true;
   services.vaultwarden.borgbackup.servers = [ "acer-tp" ];
 
-  boot.loader.systemd-boot.enable = false;
-  boot.loader.generic-extlinux-compatible.enable = true;
-  # boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.generic-extlinux-compatible.enable = false;
+  boot.loader.efi.canTouchEfiVariables = false;
 
   boot.initrd.supportedFilesystems.btrfs = true;
 
