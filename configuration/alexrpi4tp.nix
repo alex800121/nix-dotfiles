@@ -18,7 +18,8 @@
   services.vaultwarden.borgbackup.servers = [ "acer-tp" ];
 
   boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = false;
+  boot.loader.generic-extlinux-compatible = lib.mkForce false;
+  boot.loader.efi.canTouchEfiVariables = true;
 
   fileSystems."/".options = [
     "noatime"
