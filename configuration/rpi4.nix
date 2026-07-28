@@ -29,12 +29,12 @@
   hardware.enableRedistributableFirmware = true;
   # Use the extlinux boot loader. (NixOS wants to enable GRUB by default)
   # Enables the generation of /boot/extlinux/extlinux.conf
-  boot.loader.generic-extlinux-compatible.enable = true;
+  # boot.loader.generic-extlinux-compatible.enable = true;
   boot.loader.grub.enable = false;
 
-  # hardware.deviceTree.enable = true;
-  # hardware.deviceTree.filter = "bcm2711-rpi-4-b.dtb";
-  # hardware.deviceTree.name = "broadcom/bcm2711-rpi-4-b.dtb";
+  hardware.deviceTree.enable = true;
+  hardware.deviceTree.filter = "bcm2711-rpi-4-b.dtb";
+  hardware.deviceTree.name = "broadcom/bcm2711-rpi-4-b.dtb";
   # hardware.deviceTree.overlays = [
   #   {
   #     name = "gpio-fan";
