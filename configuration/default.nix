@@ -1,13 +1,24 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-{ pkgs, config, lib, inputs, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  inputs,
+  ...
+}:
 let
   inherit (pkgs.stdenv.hostPlatform) system;
 in
 {
   imports = [
     ./common.nix
+  ];
+
+  nixpkgs.overlays = [
+    inputs.self.overlays.alacritty
+    inputs.self.overlays.kitty
   ];
 
   boot.binfmt.emulatedSystems = builtins.filter (x: x != system) [
@@ -166,9 +177,18 @@ in
     fontconfig = {
       enable = true;
       defaultFonts = {
-        serif = [ "Noto Serif CJK TC" "Ubuntu" ];
-        sansSerif = [ "Noto Sans CJK TC" "Ubuntu" ];
-        monospace = [ "Noto Sans Mono CJK TC" "Ubuntu" ];
+        serif = [
+          "Noto Serif CJK TC"
+          "Ubuntu"
+        ];
+        sansSerif = [
+          "Noto Sans CJK TC"
+          "Ubuntu"
+        ];
+        monospace = [
+          "Noto Sans Mono CJK TC"
+          "Ubuntu"
+        ];
         emoji = [ "Noto Color Emoji" ];
       };
     };
@@ -195,17 +215,6 @@ in
     man-pages
     man-pages-posix
   ];
-
-  environment.variables.KITTY_CONFIG_DIRECTORY = "/etc/kitty";
-  environment.etc."kitty/kitty.conf" = {
-    enable = true;
-    source = ../programs/kitty/kitty.conf;
-  };
-
-  environment.etc."alacritty" = {
-    enable = true;
-    source = ../programs/alacritty/config;
-  };
 
   documentation.enable = true;
   documentation.man.enable = true;
@@ -247,8 +256,9 @@ in
 
   services.hoogle = {
     enable = true;
-    packages = hp: with hp; [
-    ];
+    packages =
+      hp: with hp; [
+      ];
     port = 40091;
   };
-} 
+}

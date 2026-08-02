@@ -103,7 +103,7 @@ in
       "flathub:app/com.github.tchx84.Flatseal//stable"
       "flathub:app/it.mijorus.gearlever//stable"
       "flathub:app/org.rncbc.qpwgraph//stable"
-      "flathub:app/org.gnome.NetworkDisplays//stable"
+      # "flathub:app/org.gnome.NetworkDisplays//stable"
       "flathub:app/com.usebottles.bottles//stable"
       "flathub:app/org.gnome.DejaDup//stable"
 
@@ -187,6 +187,7 @@ in
   environment.systemPackages = with pkgs; [
     # x32edit
     # proton-vpn
+    gnome-network-displays
     libimobiledevice
     ifuse # optional, to mount using 'ifuse'
     llvm_20
@@ -214,6 +215,14 @@ in
     tldr
     mpv
   ];
+
+  services.hoogle = {
+    enable = true;
+    packages =
+      hp: with hp; [
+      ];
+    port = 40091;
+  };
 
   services.smartd = {
     enable = true;
