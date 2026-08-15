@@ -43,7 +43,7 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', '<leader>sl', vim.diagnostic.setloclist, opts('Set Location List'))
   vim.keymap.set('n', '<leader>sf', vim.diagnostic.setqflist, opts('Set Quickfix List'))
   vim.lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
-  vim.opt.autocomplete = true
+  vim.bo.autocomplete = vim.bo.buftype == ""
 end
 
 vim.lsp.config['hls'] = {

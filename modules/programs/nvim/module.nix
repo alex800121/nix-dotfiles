@@ -20,6 +20,8 @@
           lazy = false;
           data = with pkgs.vimPlugins; [
             mini-icons
+            mini-files
+            nvim-web-devicons
             gruvbox-nvim
             which-key-nvim
             (nvim-treesitter.withPlugins (

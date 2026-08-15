@@ -1,4 +1,4 @@
-local whichkey = require'which-key'
+local whichkey = require 'which-key'
 
 whichkey.setup()
 
@@ -23,7 +23,7 @@ vim.keymap.set("n", "<leader>W", "<cmd>w<CR>", opts('Write'))
 --     echohl WarningMsg | echomsg "Sudo write." | echohl None
 --   ]], {})
 -- end, { noremap = true, buffer = false, silent = true, desc = "Sudo write" })
--- vim.api.nvim_create_autocmd({"FileChangedShell"}, { 
+-- vim.api.nvim_create_autocmd({"FileChangedShell"}, {
 --   pattern = { "*" },
 --   command = [[
 --     let v:fcs_choice="edit"
@@ -53,3 +53,5 @@ vim.keymap.set("n", "<C-Left>", ":vertical resize -2<CR>", opts('Window: Resize 
 vim.keymap.set("n", "<C-Right>", ":vertical resize +2<CR>", opts('Window: Resize Right'))
 
 vim.keymap.set("n", "<leader> ", "<cmd>nohlsearch<CR>", opts('Clear Highlight Search'))
+
+vim.keymap.set("n", "<leader>e", MiniFiles.open, opts('Open MiniFiles'))

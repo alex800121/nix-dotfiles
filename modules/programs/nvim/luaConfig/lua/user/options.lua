@@ -14,6 +14,10 @@ vim.o.wildmenu = true
 vim.o.wildoptions = 'pum'
 vim.o.wildmode = 'list:longest,full'
 
+-- vim.g.netrw_liststyle = 3
+-- vim.g.netrw_banner = 0
+-- vim.g.netrw_winsize = 30
+
 vim.opt.termguicolors = true
 
 vim.opt.mousemoveevent = true

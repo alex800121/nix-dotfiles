@@ -16,7 +16,7 @@
       ];
 
       options = {
-        configDir = lib.mkOption {
+        programs.alacritty.configDir = lib.mkOption {
           type = lib.types.nullOr lib.types.path;
           default = null;
           description = "config dir containing alacritty.toml";
@@ -27,8 +27,8 @@
         {
           package = lib.mkDefault pkgs.alacritty;
         }
-        (lib.mkIf (config.configDir != null) {
-          flags."--config-file" = "${config.configDir}/alacritty.toml";
+        (lib.mkIf (config.programs.alacritty.configDir != null) {
+          flags."--config-file" = "${config.programs.alacritty.configDir}/alacritty.toml";
         })
       ];
 

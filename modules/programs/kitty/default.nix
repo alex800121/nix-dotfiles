@@ -7,7 +7,7 @@
         imports = [
           self.wrapperModules.kitty-module
         ];
-        configDir = ./config;
+        programs.kitty.configDir = ./config;
         inherit pkgs;
       };
     };

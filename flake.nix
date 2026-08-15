@@ -44,8 +44,7 @@
     inputs.flake-parts.lib.mkFlake { inherit inputs; } (top: {
       imports = [ (inputs.import-tree ./modules) ];
       flake = {
-        nixosConfigurations.fw13 = mkNixosConfig [ configuration/fw13.nix ];
-        nixosConfigurations.fw13-musnix = mkNixosConfig [ configuration/fw13-musnix.nix ];
+        # nixosConfigurations.fw13-musnix = mkNixosConfig [ configuration/fw13-musnix.nix ];
         nixosConfigurations.acer-tp = mkNixosConfig [ configuration/acer-tp.nix ];
         nixosConfigurations.oracle = mkNixosConfig [ configuration/oracle.nix ];
         nixosConfigurations.oracle2 = mkNixosConfig [ configuration/oracle2.nix ];

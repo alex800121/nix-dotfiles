@@ -3,7 +3,7 @@
     { config, ... }:
     {
       age.secrets.nix-common = {
-        file = ../secrets/nix_common.age;
+        file = ../../secrets/nix_common.age;
         owner = "nix-ssh";
         group = "nix-ssh";
         mode = "600";
@@ -30,5 +30,6 @@
         secret-key-files = ${config.age.secrets.nix-common.path}
         builders-use-substitutes = true
       '';
+
     };
 }

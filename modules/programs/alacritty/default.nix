@@ -7,7 +7,7 @@
         imports = [
           self.wrapperModules.alacritty-module
         ];
-        configDir = ./config;
+        programs.alacritty.configDir = ./config;
         inherit pkgs;
       };
     };

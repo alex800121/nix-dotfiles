@@ -1,8 +1,9 @@
+
 { inputs, ... }:
 {
   imports = [ inputs.wrappers.flakeModules.wrappers ];
 
-  flake.wrappers.kitty-module =
+  flake.wrappers.zellij-module =
     {
       config,
       wlib,
@@ -16,19 +17,19 @@
       ];
 
       options = {
-        programs.kitty.configDir = lib.mkOption {
+        programs.zellij.configFile = lib.mkOption {
           type = lib.types.nullOr lib.types.path;
           default = null;
-          description = "config dir containing kitty.conf";
+          description = "config file for zellij";
         };
       };
 
       config = lib.mkMerge [
         {
-          package = lib.mkDefault pkgs.kitty;
+          package = lib.mkDefault pkgs.zellij;
         }
-        (lib.mkIf (config.programs.kitty.configDir != null) {
-          flags."--config" = "${config.programs.kitty.configDir}/kitty.conf";
+        (lib.mkIf (config.programs.zellij.configFile != null) {
+          env.ZELLIJ_CONFIG_FILE = config.programs.zellij.configFile;
         })
       ];
 
