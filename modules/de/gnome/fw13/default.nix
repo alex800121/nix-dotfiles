@@ -1,27 +1,45 @@
 {
   flake.nixosModules.de-gnome-fw13 =
-    { pkgs, ... }:
-    # let
-    #   monitorsConfig = pkgs.writeText "gdm_monitors.xml" (builtins.readFile ./monitors.xml);
-    # in
     {
-      # systemd.tmpfiles.rules = [
-      #   "L+ /run/gdm/.config/monitors.xml - - - - ${monitorsConfig}"
-      # ];
-      environment.etc."xdg/monitors.xml".source = ./monitors.xml;
+      lib,
+      pkgs,
+      config,
+      ...
+    }:
+    {
+      config = {
+        # systemd.tmpfiles.rules = [
+        #   "L+ /run/gdm/.config/monitors.xml - - - - ${monitorsConfig}"
+        # ];
+        environment.etc."xdg/monitors.xml".source = ./monitors.xml;
 
-      services.samba.enable = true;
-      services.samba.smbd.enable = true;
+        services.samba.enable = true;
+        services.samba.smbd.enable = true;
 
-      # security.pam.services.gdm.enableGnomeKeyring = true;
-      # security.pam.services.login.enableGnomeKeyring = true;
-      # security.pam.services.gdm-password.enableGnomeKeyring = true;
-      # security.pam.services.gdm-fingerprint.enableGnomeKeyring = true;
-      # security.pam.services.gdm-launch-environment.enableGnomeKeyring = true;
-      # services.gnome.gnome-keyring.enable = true;
+        # security.pam.services.gdm.enableGnomeKeyring = true;
+        # security.pam.services.login.enableGnomeKeyring = true;
+        # security.pam.services.gdm-password.enableGnomeKeyring = true;
+        # security.pam.services.gdm-fingerprint.enableGnomeKeyring = true;
+        # security.pam.services.gdm-launch-environment.enableGnomeKeyring = true;
+        security.pam.services.gdm-fingerprint.rules.auth.gdm.control = lib.mkForce "optional";
+        security.pam.services.gdm-fingerprint.rules.auth.gdm.modulePath =
+          lib.mkForce "${config.systemd.package}/lib/security/pam_systemd_loadkey.so";
+        # security.pam.services.gdm-autologin.rules.auth.gdm.control = lib.mkForce "optional";
+        # security.pam.services.gdm-autologin.rules.auth.gdm.modulePath =
+        #   lib.mkForce "${config.systemd.package}/lib/security/pam_systemd_loadkey.so";
 
-      networking.networkmanager.plugins = with pkgs; [
-        networkmanager-openconnect
-      ];
+        services.gnome.gnome-keyring.enable = true;
+        programs.seahorse.enable = true;
+
+        # security.pam.package = nixpkgsOld.pam;
+        # nixpkgs.overlays = [ (_self: _super: { gdm = inputs.nixpkgsOld.legacyPackages.${_super.pkgs.stdenv.hostPlatform.system}.gdm; }) ];
+        # services.displayManager.autoLogin.enable = true;
+        # services.displayManager.autoLogin.user = "alex800121";
+
+        networking.networkmanager.plugins = with pkgs; [
+          networkmanager-openconnect
+        ];
+        # systemd.services.display-manager.serviceConfig.KeyringMode = lib.mkForce "inherit";
+      };
     };
 }

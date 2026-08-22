@@ -13,11 +13,10 @@
         hardware.logitech.wireless.enableGraphical = true;
 
         qt.platformTheme = "gnome";
-        services.displayManager = {
-          gdm = {
-            enable = true;
-          };
-        };
+        # services.greetd.enable = true;
+        # services.displayManager.sddm.enable = true;
+        # services.displayManager.sddm.wayland.enable = true;
+        services.displayManager.gdm.enable = true;
 
         services.displayManager = {
           autoLogin.enable = lib.mkDefault false;

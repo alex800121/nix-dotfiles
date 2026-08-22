@@ -123,6 +123,8 @@
           };
           nix.settings.max-jobs = lib.mkDefault "auto";
 
+          nix.settings.fallback = true;
+
           nixpkgs = {
             config = {
               allowBroken = true;
@@ -162,6 +164,7 @@
             lemonade
             btop
             chawan
+            pciutils
           ];
 
           programs.git.enable = true;

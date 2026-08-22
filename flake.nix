@@ -1,6 +1,8 @@
 {
   description = "NixOS configuration";
   inputs = {
+    nixpkgsOld.url = "github:nixos/nixpkgs/b51242d7d43689db2f3be91bd05d5b24fbb469c4";
+    # nixpkgs.url = "github:nixos/nixpkgs/b51242d7d43689db2f3be91bd05d5b24fbb469c4";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
     nixpkgsUnstable.url = "github:nixos/nixpkgs/nixos-unstable";
     declarative-flatpak.url = "github:in-a-dil-emma/declarative-flatpak/latest";

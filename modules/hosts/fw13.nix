@@ -148,6 +148,7 @@
           "flathub:app/org.libreoffice.LibreOffice//stable"
           "flathub:app/org.telegram.desktop//stable"
           "flathub:app/org.mozilla.thunderbird//stable"
+          "flathub:app/org.zotero.Zotero//stable"
         ];
         overrides = {
           "com.markopejic.downloader" = {
