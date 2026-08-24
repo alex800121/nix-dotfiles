@@ -3,14 +3,29 @@
   flake.nixosConfigurations.fw13 = inputs.nixpkgs.lib.nixosSystem {
     modules = [
       self.nixosModules.fw13
+      self.nixosModules.s13
     ];
   };
   flake.nixosConfigurations.fw13-musnix = inputs.nixpkgs.lib.nixosSystem {
     modules = [
       self.nixosModules.fw13
+      self.nixosModules.s13
       self.nixosModules.musnix
       { musnix.soundcardPciId = "c1:00.6"; }
     ];
+  };
+  flake.nixosModules.s13 = {
+    specialisation.s13 = {
+      inheritParentConfig = true;
+      configuration = {
+        system.nixos.tags = [ "s13" ];
+        hardware.framework = {
+          enableKmod = false;
+          amd-7040.preventWakeOnAC = false;
+          laptop13.audioEnhancement.enable = false;
+        };
+      };
+    };
   };
   flake.nixosModules.fw13 =
     {

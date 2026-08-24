@@ -21,9 +21,22 @@
         # security.pam.services.gdm-password.enableGnomeKeyring = true;
         # security.pam.services.gdm-fingerprint.enableGnomeKeyring = true;
         # security.pam.services.gdm-launch-environment.enableGnomeKeyring = true;
-        security.pam.services.gdm-fingerprint.rules.auth.gdm.control = lib.mkForce "optional";
-        security.pam.services.gdm-fingerprint.rules.auth.gdm.modulePath =
-          lib.mkForce "${config.systemd.package}/lib/security/pam_systemd_loadkey.so";
+        security.pam.services.gdm-fingerprint = {
+          rules.auth = {
+            gdm = {
+              enable = lib.mkForce false;
+            };
+            systemd-loadkey = {
+              order = config.security.pam.services.gdm-fingerprint.rules.auth.gnome_keyring.order - 100;
+              control = "optional";
+              modulePath = "${config.systemd.package}/lib/security/pam_systemd_loadkey.so";
+            };
+          };
+        };
+        systemd.services.display-manager.serviceConfig.KeyringMode = lib.mkForce "inherit";
+        # security.pam.services.gdm-fingerprint.rules.auth.gdm.control = lib.mkForce "optional";
+        # security.pam.services.gdm-fingerprint.rules.auth.gdm.modulePath =
+        #   lib.mkForce "${config.systemd.package}/lib/security/pam_systemd_loadkey.so";
         # security.pam.services.gdm-autologin.rules.auth.gdm.control = lib.mkForce "optional";
         # security.pam.services.gdm-autologin.rules.auth.gdm.modulePath =
         #   lib.mkForce "${config.systemd.package}/lib/security/pam_systemd_loadkey.so";
