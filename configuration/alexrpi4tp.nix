@@ -3,8 +3,10 @@
   imports = [
     ./rpi4.nix
     ./topo.nix
-    ./distributed-builds.nix
-    ./ssh-serve.nix
+    # ./distributed-builds.nix
+    # ./ssh-serve.nix
+    inputs.self.nixosModules.distributed-builds
+    inputs.self.nixosModules.ssh-serve
     ../hardware/alexrpi4tp.nix
     ../programs/tailscale/server.nix
     ../programs/nix-ld

@@ -17,7 +17,8 @@ in
       inputs.disko.nixosModules.disko
       ../hardware/disko/oracle.nix
       ../hardware/oracle.nix
-      ./distributed-builds.nix
+      # ./distributed-builds.nix
+      inputs.self.nixosModules.distributed-builds
       ../programs/tailscale/server.nix
       # ../programs/seaweedfs
     ../programs/nvim/minimal.nix

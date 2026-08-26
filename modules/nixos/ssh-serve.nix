@@ -25,6 +25,7 @@
       ];
       nix.sshServe.write = true;
       nix.sshServe.trusted = true;
+      nix.sshServe.protocol = "ssh-ng";
 
       nix.extraOptions = ''
         secret-key-files = ${config.age.secrets.nix-common.path}

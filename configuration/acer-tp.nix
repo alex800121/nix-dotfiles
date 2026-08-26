@@ -22,8 +22,10 @@ in
     ./default.nix
     ./topo.nix
     ./secure-boot.nix
-    ./distributed-builds.nix
-    ./ssh-serve.nix
+    # ./distributed-builds.nix
+    # ./ssh-serve.nix
+    inputs.self.nixosModules.distributed-builds
+    inputs.self.nixosModules.ssh-serve
     ./timezoned.nix
     ./initrd-network.nix
     ../hardware/acer-tp.nix

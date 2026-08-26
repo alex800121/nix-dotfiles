@@ -6,17 +6,17 @@
 
       nix.settings.substituters = lib.mkAfter [
         "https://nix-community.cachix.org"
-        "ssh://alex800121@oracle"
-        "ssh://alex800121@acer-tp"
-        "ssh://alex800121@alexrpi4tp"
-        "ssh://alex800121@fw13"
+        "ssh-ng://alex800121@oracle"
+        "ssh-ng://alex800121@acer-tp"
+        "ssh-ng://alex800121@alexrpi4tp"
+        "ssh-ng://alex800121@fw13"
       ];
       nix.settings.trusted-substituters = [
         "https://nix-community.cachix.org"
-        "ssh://alex800121@oracle"
-        "ssh://alex800121@acer-tp"
-        "ssh://alex800121@alexrpi4tp"
-        "ssh://alex800121@fw13"
+        "ssh-ng://alex800121@oracle"
+        "ssh-ng://alex800121@acer-tp"
+        "ssh-ng://alex800121@alexrpi4tp"
+        "ssh-ng://alex800121@fw13"
       ];
       nix.settings.trusted-users = [
         "nix-ssh"
@@ -42,6 +42,7 @@
             "gccarch-armv8-a"
           ];
           maxJobs = 2;
+          protocol = "ssh-ng";
         }
         {
           hostName = "alexrpi4tp";
@@ -55,6 +56,7 @@
             "gccarch-armv8-a"
           ];
           maxJobs = 4;
+          protocol = "ssh-ng";
         }
         {
           hostName = "acer-tp";
@@ -70,6 +72,7 @@
             "kvm"
           ];
           maxJobs = 4;
+          protocol = "ssh-ng";
         }
       ];
     };

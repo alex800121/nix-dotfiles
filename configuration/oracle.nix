@@ -1,9 +1,10 @@
-{ ... }:
+{ inputs, ... }:
 {
   imports = [
     ./oracleCommon.nix
     ./topo.nix
-    ./ssh-serve.nix
+    # ./ssh-serve.nix
+    inputs.self.nixosModules.ssh-serve
     ../programs/vaultwarden
     ../programs/borgbackup/vaultwarden.nix
   ];

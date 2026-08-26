@@ -31,6 +31,7 @@
     {
       config,
       pkgs,
+      lib,
       ...
     }:
     let
@@ -64,7 +65,6 @@
         self.nixosModules.distributed-builds
         self.nixosModules.ssh-serve
         self.nixosModules.de-gnome
-        self.nixosModules.de-gnome-fw13
         self.nixosModules.virt
         self.nixosModules.tailscale-client
       ];
@@ -252,5 +252,50 @@
         enable = true;
         autodetect = true;
       };
+
+      # systemd.tmpfiles.rules = [
+      #   "L+ /run/gdm/.config/monitors.xml - - - - ${monitorsConfig}"
+      # ];
+      environment.etc."xdg/monitors.xml".source = _hardware/monitors.xml;
+
+      services.samba.enable = true;
+      services.samba.smbd.enable = true;
+
+      programs.dconf = {
+        enable = true;
+        profiles.user.databases = [
+          {
+            settings = {
+              "org/gnome/mutter/wayland" = {
+                xwayland-scaling-factor = lib.gvariant.mkDouble 1.33333333333333333333;
+              };
+
+              "org/gnome/desktop/peripherals/touchpad" = {
+                tap-to-click = true;
+                disable-while-typing = true;
+                natural-scroll = true;
+                speed = 0.33333333333333333;
+                two-finger-scrolling-enabled = true;
+              };
+
+              "org/gnome/desktop/peripherals/mouse" = {
+                natural-scroll = false;
+                speed = 0.24778761061946897;
+              };
+
+              "org/gnome/shell".favorite-apps = [
+                "app.zen_browser.zen.desktop"
+                "com.spotify.Client.desktop"
+                "com.visualstudio.code.desktop"
+                "kitty.desktop"
+                "org.gnome.Nautilus.desktop"
+                "org.libreoffice.LibreOffice.writer.desktop"
+                "org.mozilla.thunderbird.desktop"
+              ];
+            };
+          }
+        ];
+      };
+
     };
 }
