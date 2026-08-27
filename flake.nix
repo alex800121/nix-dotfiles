@@ -47,12 +47,12 @@
       imports = [ (inputs.import-tree ./modules) ];
       flake = {
         # nixosConfigurations.fw13-musnix = mkNixosConfig [ configuration/fw13-musnix.nix ];
-        nixosConfigurations.acer-tp = mkNixosConfig [ configuration/acer-tp.nix ];
+        # nixosConfigurations.acer-tp = mkNixosConfig [ configuration/acer-tp.nix ];
         nixosConfigurations.oracle = mkNixosConfig [ configuration/oracle.nix ];
         nixosConfigurations.oracle2 = mkNixosConfig [ configuration/oracle2.nix ];
         nixosConfigurations.oracle3 = mkNixosConfig [ configuration/oracle3.nix ];
-        nixosConfigurations.alexrpi4tp = mkNixosConfig [ configuration/alexrpi4tp.nix ];
-        nixosConfigurations.alexrpi4tpmin = mkNixosConfig [ configuration/alexrpi4tpmin.nix ];
+        # nixosConfigurations.alexrpi4tp = mkNixosConfig [ configuration/alexrpi4tp.nix ];
+        # nixosConfigurations.alexrpi4tpmin = mkNixosConfig [ configuration/alexrpi4tpmin.nix ];
       };
     });
 }

@@ -1,4 +1,3 @@
-{ config, lib, pkgs, modulesPath, ... }:
 {
   services.logind.settings.Login = {
     HandleLidSwitch = "ignore";
