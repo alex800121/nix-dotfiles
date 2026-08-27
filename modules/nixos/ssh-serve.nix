@@ -31,6 +31,5 @@
         secret-key-files = ${config.age.secrets.nix-common.path}
         builders-use-substitutes = true
       '';
-
     };
 }

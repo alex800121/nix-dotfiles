@@ -100,21 +100,6 @@
         ibus.engines = with pkgs.ibus-engines; [ chewing ];
         ibus.waylandFrontend = true;
       };
-      # i18n.inputMethod = {
-      #   type = "fcitx5";
-      #   enable = true;
-      #   fcitx5 = {
-      #     waylandFrontend = true;
-      #     addons = with pkgs; [
-      #       fcitx5-chewing
-      #       qt6Packages.fcitx5-chinese-addons
-      #       qt6Packages.fcitx5-configtool
-      #       fcitx5-gtk
-      #       libsForQt5.fcitx5-qt
-      #       # fcitx5-rime
-      #     ];
-      #   };
-      # };
 
       # Enable the X11 windowing system.
       services.xserver.enable = true;

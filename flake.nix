@@ -1,8 +1,6 @@
 {
   description = "NixOS configuration";
   inputs = {
-    nixpkgsOld.url = "github:nixos/nixpkgs/b51242d7d43689db2f3be91bd05d5b24fbb469c4";
-    # nixpkgs.url = "github:nixos/nixpkgs/b51242d7d43689db2f3be91bd05d5b24fbb469c4";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
     nixpkgsUnstable.url = "github:nixos/nixpkgs/nixos-unstable";
     declarative-flatpak.url = "github:in-a-dil-emma/declarative-flatpak/latest";
@@ -39,20 +37,7 @@
 
   outputs =
     inputs:
-    let
-      mkNixosIso = (import ./utils/func.nix).mkNixosIso inputs;
-      mkNixosConfig = (import ./utils/func.nix).mkNixosConfig inputs;
-    in
     inputs.flake-parts.lib.mkFlake { inherit inputs; } (top: {
       imports = [ (inputs.import-tree ./modules) ];
-      flake = {
-        # nixosConfigurations.fw13-musnix = mkNixosConfig [ configuration/fw13-musnix.nix ];
-        # nixosConfigurations.acer-tp = mkNixosConfig [ configuration/acer-tp.nix ];
-        nixosConfigurations.oracle = mkNixosConfig [ configuration/oracle.nix ];
-        nixosConfigurations.oracle2 = mkNixosConfig [ configuration/oracle2.nix ];
-        nixosConfigurations.oracle3 = mkNixosConfig [ configuration/oracle3.nix ];
-        # nixosConfigurations.alexrpi4tp = mkNixosConfig [ configuration/alexrpi4tp.nix ];
-        # nixosConfigurations.alexrpi4tpmin = mkNixosConfig [ configuration/alexrpi4tpmin.nix ];
-      };
     });
 }

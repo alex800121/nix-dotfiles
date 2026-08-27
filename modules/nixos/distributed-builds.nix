@@ -59,6 +59,34 @@
           protocol = "ssh-ng";
         }
         {
+          hostName = "oracle2";
+          sshUser = "alex800121";
+          systems = [ "aarch64-linux" ];
+          supportedFeatures = [
+            "nixos-test"
+            "benchmark"
+            "big-parallel"
+            "kvm"
+            "gccarch-armv8-a"
+          ];
+          maxJobs = 1;
+          protocol = "ssh-ng";
+        }
+        {
+          hostName = "oracle3";
+          sshUser = "alex800121";
+          systems = [ "aarch64-linux" ];
+          supportedFeatures = [
+            "nixos-test"
+            "benchmark"
+            "big-parallel"
+            "kvm"
+            "gccarch-armv8-a"
+          ];
+          maxJobs = 1;
+          protocol = "ssh-ng";
+        }
+        {
           hostName = "acer-tp";
           sshUser = "alex800121";
           systems = [
@@ -71,7 +99,7 @@
             "big-parallel"
             "kvm"
           ];
-          maxJobs = 4;
+          maxJobs = 8;
           protocol = "ssh-ng";
         }
       ];
