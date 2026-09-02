@@ -34,6 +34,7 @@
       # boot.initrd.systemd.repart.enable = true;
       # boot.initrd.systemd.repart.device = "/dev/mmcblk1";
 
+      nixpkgs.buildPlatform = "x86_64-linux";
       image.repart = {
         name = "alexrpi4tp";
         partitions = {
@@ -54,13 +55,14 @@
           };
           root = {
             storePaths = [ config.system.build.toplevel ];
-            nixStorePrefix = "/nix/store";
+            nixStorePrefix = "/nix-subvol/store";
             repartConfig = {
               Format = "btrfs";
               Label = "root";
-              Type = "root";
+              Type = "root-arm64";
               Subvolumes = "/root-subvol /nix-subvol /home-subvol";
-              MakeDirectories = "/home-subvol /root-subvol /nix-subvol";
+              MakeDirectories = "/root-subvol /home-subvol /nix-subvol";
+              SizeMinBytes = "15G";
               # DefaultSubvolume = "/root-subvol";
             };
           };
