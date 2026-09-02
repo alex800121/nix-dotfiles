@@ -105,6 +105,14 @@
       boot.initrd.systemd.enable = true;
       boot.initrd.systemd.tpm2.enable = true;
 
+      boot.loader.systemd-boot.enable = false;
+      boot.loader.limine.enable = true;
+      boot.loader.limine.secureBoot.enable = true;
+      boot.loader.limine.extraConfig = ''
+        remember_last_entry: yes
+        timeout: 5
+      '';
+
       time.hardwareClockInLocalTime = false;
       services.automatic-timezoned.enable = true;
 
@@ -238,6 +246,7 @@
         x42-plugins
         tldr
         mpv
+        sbctl
       ];
 
       services.hoogle = {

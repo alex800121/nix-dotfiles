@@ -1,4 +1,9 @@
 { self, inputs, ... }: {
+  flake.nixosConfigurations.alexrpi4tprepart = inputs.nixpkgs.lib.nixosSystem {
+    modules = [
+      self.nixosModules.alexrpi4tprepart
+    ];
+  };
   flake.nixosConfigurations.alexrpi4tpmin = inputs.nixpkgs.lib.nixosSystem {
     modules = [
       self.nixosModules.alexrpi4tpmin
@@ -10,6 +15,108 @@
       self.nixosModules.alexrpi4tp
     ];
   };
+
+  flake.nixosModules.alexrpi4tprepart =
+    {
+      modulesPath,
+      config,
+      lib,
+      pkgs,
+      ...
+    }:
+    {
+      imports = [
+        "${modulesPath}/image/repart.nix"
+        (modulesPath + "/installer/scan/not-detected.nix")
+        self.nixosModules.rpi4
+      ];
+
+      # boot.initrd.systemd.repart.enable = true;
+      # boot.initrd.systemd.repart.device = "/dev/mmcblk1";
+
+      image.repart = {
+        name = "alexrpi4tp";
+        partitions = {
+          esp = {
+            contents = {
+              "/".source = pkgs.fetchzip {
+                url = "https://github.com/pftf/RPi4/releases/download/v1.51/RPi4_UEFI_Firmware_v1.51.zip";
+                stripRoot = false;
+                hash = "sha256-zMJR5VKnHwt5KYoE6lW09HIF31rmuxx6XagNUMQR2+0=";
+              };
+            };
+            repartConfig = {
+              Format = "vfat";
+              Label = "esp";
+              SizeMinBytes = "1G";
+              Type = "esp";
+            };
+          };
+          root = {
+            storePaths = [ config.system.build.toplevel ];
+            nixStorePrefix = "/nix/store";
+            repartConfig = {
+              Format = "btrfs";
+              Label = "root";
+              Type = "root";
+              Subvolumes = "/root-subvol /nix-subvol /home-subvol";
+              MakeDirectories = "/home-subvol /root-subvol /nix-subvol";
+              # DefaultSubvolume = "/root-subvol";
+            };
+          };
+        };
+      };
+
+      boot.initrd.availableKernelModules = [ "xhci_pci" ];
+      boot.initrd.kernelModules = [ ];
+      boot.kernelModules = [ ];
+      boot.extraModulePackages = [ ];
+
+      fileSystems."/" = {
+        device = "/dev/disk/by-partlabel/root";
+        fsType = "btrfs";
+        options = [ "subvol=root-subvol" ];
+      };
+
+      fileSystems."/home" = {
+        device = "/dev/disk/by-partlabel/root";
+        fsType = "btrfs";
+        options = [ "subvol=home-subvol" ];
+      };
+
+      # fileSystems."/swap" = {
+      #   device = "/dev/disk/by-uuid/7bdf8bd5-93b1-4e43-b670-59117c2a7258";
+      #   fsType = "btrfs";
+      #   options = [ "subvol=swap" ];
+      # };
+
+      fileSystems."/nix" = {
+        device = "/dev/disk/by-partlabel/root";
+        fsType = "btrfs";
+        options = [ "subvol=nix-subvol" ];
+      };
+
+      fileSystems."/boot" = {
+        device = "/dev/disk/by-partlabel/esp";
+        fsType = "vfat";
+        options = [
+          "fmask=0022"
+          "dmask=0022"
+        ];
+      };
+
+      # swapDevices = [ ];
+
+      # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
+      # (the default) this is the recommended approach. When using systemd-networkd it's
+      # still possible to use this option, but it's recommended to use it in conjunction
+      # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
+      networking.useDHCP = lib.mkDefault true;
+      # networking.interfaces.end0.useDHCP = lib.mkDefault true;
+      # networking.interfaces.wlan0.useDHCP = lib.mkDefault true;
+
+      nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
+    };
 
   flake.nixosModules.alexrpi4tpmin =
     {
@@ -54,7 +161,7 @@
         self.nixosModules.ssh-serve
         _hardware/alexrpi4tp.nix
         self.nixosModules.tailscale-server
-        self.nixosModules.nix-ld
+        # self.nixosModules.nix-ld
         self.nixosModules.vaultwarden
         self.nixosModules.borgbackup-vaultwarden
         inputs.agenix.nixosModules.default

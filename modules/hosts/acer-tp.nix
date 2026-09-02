@@ -38,7 +38,7 @@
         self.nixosModules.initrd-network
         _hardware/acer-tp.nix
         _hardware/desktop.nix
-        self.nixosModules.nix-ld
+        # self.nixosModules.nix-ld
         self.nixosModules.tailscale-server
         inputs.agenix.nixosModules.default
         self.nixosModules.vaultwarden
