@@ -1,4 +1,4 @@
-{ self, ... }: {
+{ self, inputs, ... }: {
   flake.nixosModules.tailscale-server =
     {
       config,
@@ -67,7 +67,10 @@
       '';
     in
     {
-      imports = [ self.nixosModules.tailscale ];
+      imports = [
+        inputs.agenix.nixosModules.default
+        self.nixosModules.tailscale
+      ];
 
       options = {
         services.tailscale.server.ip = lib.mkOption {

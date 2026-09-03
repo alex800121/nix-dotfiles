@@ -24,27 +24,41 @@
       pkgs,
       ...
     }:
+    let
+      inherit (pkgs.stdenv.hostPlatform) efiArch;
+    in
     {
       imports = [
         "${modulesPath}/image/repart.nix"
-        (modulesPath + "/installer/scan/not-detected.nix")
-        self.nixosModules.rpi4
+        self.nixosModules.minimal
+        self.nixosModules.topo
+        self.nixosModules.distributed-builds
+        self.nixosModules.tailscale-server
       ];
 
-      # boot.initrd.systemd.repart.enable = true;
+      boot.initrd.systemd.repart.enable = true;
       # boot.initrd.systemd.repart.device = "/dev/mmcblk1";
+      boot.initrd.systemd.enable = true;
+      systemd.repart.partitions."10-root" = {
+        Type = "root";
+        GrowFileSystem = "yes";
+      };
 
-      nixpkgs.buildPlatform = "x86_64-linux";
       image.repart = {
         name = "alexrpi4tp";
         partitions = {
-          esp = {
+          "10-esp" = {
             contents = {
               "/".source = pkgs.fetchzip {
                 url = "https://github.com/pftf/RPi4/releases/download/v1.51/RPi4_UEFI_Firmware_v1.51.zip";
                 stripRoot = false;
                 hash = "sha256-zMJR5VKnHwt5KYoE6lW09HIF31rmuxx6XagNUMQR2+0=";
               };
+              "/EFI/BOOT/BOOT${lib.toUpper efiArch}.EFI".source =
+                "${config.systemd.package}/lib/systemd/boot/efi/systemd-boot${efiArch}.efi";
+
+              "/EFI/Linux/${config.system.boot.loader.ukiFile}".source =
+                "${config.system.build.uki}/${config.system.boot.loader.ukiFile}";
             };
             repartConfig = {
               Format = "vfat";
@@ -58,42 +72,64 @@
             nixStorePrefix = "/nix-subvol/store";
             repartConfig = {
               Format = "btrfs";
-              Label = "root";
-              Type = "root-arm64";
-              Subvolumes = "/root-subvol /nix-subvol /home-subvol";
-              MakeDirectories = "/root-subvol /home-subvol /nix-subvol";
-              SizeMinBytes = "15G";
-              # DefaultSubvolume = "/root-subvol";
+              Label = "nixos";
+              Type = "root";
+              Subvolumes = "/root-subvol /home-subvol /nix-subvol";
+              MakeDirectories = "/root-subvol /home-subvol /nix-subvol /root-subvol/boot /root-subvol/nix /root-subvol/home /nix-subvol/store";
+              Minimize = "guess";
+              # GrowFileSystem = "yes";
             };
           };
         };
       };
 
-      boot.initrd.availableKernelModules = [ "xhci_pci" ];
+      # Because no generation is built at the first boot and the clock is updated during the first boot,
+      # gc is triggered and cleans out essential binaries, locking out user. 
+      # Need to disable gc to prevent it from happening.
+      nix.gc.automatic = false;
+      nix.optimise.automatic = false;
+
       boot.initrd.kernelModules = [ ];
       boot.kernelModules = [ ];
       boot.extraModulePackages = [ ];
 
+      boot.initrd.availableKernelModules = [
+        "xhci_pci"
+        "usbhid"
+        "usb_storage"
+        "vc4"
+        "pcie_brcmstb" # required for the pcie bus to work
+        "reset-raspberrypi" # required for vl805 firmware to load
+      ];
+
+      initConfig.defaultUser = "alex800121";
+      initConfig.hostName = "alexrpi4tp";
+
+      fileSystems."/".neededForBoot = true;
+      fileSystems."/boot".neededForBoot = true;
+      fileSystems."/nix".neededForBoot = true;
+
+      hardware.enableAllFirmware = true;
+      hardware.enableRedistributableFirmware = true;
+      boot.loader.grub.enable = false;
+      boot.loader.systemd-boot.enable = true;
+      boot.loader.generic-extlinux-compatible.enable = false;
+      boot.loader.efi.canTouchEfiVariables = false;
+
       fileSystems."/" = {
-        device = "/dev/disk/by-partlabel/root";
+        device = "/dev/disk/by-partlabel/nixos";
         fsType = "btrfs";
         options = [ "subvol=root-subvol" ];
       };
 
       fileSystems."/home" = {
-        device = "/dev/disk/by-partlabel/root";
+        device = "/dev/disk/by-partlabel/nixos";
         fsType = "btrfs";
         options = [ "subvol=home-subvol" ];
       };
 
-      # fileSystems."/swap" = {
-      #   device = "/dev/disk/by-uuid/7bdf8bd5-93b1-4e43-b670-59117c2a7258";
-      #   fsType = "btrfs";
-      #   options = [ "subvol=swap" ];
-      # };
-
       fileSystems."/nix" = {
-        device = "/dev/disk/by-partlabel/root";
+        device = "/dev/disk/by-partlabel/nixos";
         fsType = "btrfs";
         options = [ "subvol=nix-subvol" ];
       };
@@ -105,6 +141,25 @@
           "fmask=0022"
           "dmask=0022"
         ];
+      };
+      powerManagement.enable = false;
+
+      boot.kernelParams = [ "net.ifnames=0" ];
+      networking.useNetworkd = true;
+      systemd.network.enable = true;
+      systemd.network.networks."10-eth0" = {
+        matchConfig = {
+          Name = "eth0";
+        };
+        networkConfig = {
+          DHCP = true;
+          MulticastDNS = true;
+          LLMNR = true;
+        };
+        linkConfig = {
+          Multicast = true;
+          AllMulticast = true;
+        };
       };
 
       # swapDevices = [ ];
@@ -158,10 +213,10 @@
     {
       imports = [
         self.nixosModules.rpi4
-        self.nixosModules.topo
-        self.nixosModules.distributed-builds
         self.nixosModules.ssh-serve
         _hardware/alexrpi4tp.nix
+        self.nixosModules.topo
+        self.nixosModules.distributed-builds
         self.nixosModules.tailscale-server
         # self.nixosModules.nix-ld
         self.nixosModules.vaultwarden
