@@ -346,8 +346,22 @@
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_2",
         "nixpkgsUnstable": "nixpkgsUnstable",
+        "rpi4fw": "rpi4fw",
         "rust-overlay": "rust-overlay_2",
         "wrappers": "wrappers"
+      }
+    },
+    "rpi4fw": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1774198316,
+        "narHash": "sha256-zMJR5VKnHwt5KYoE6lW09HIF31rmuxx6XagNUMQR2+0=",
+        "type": "tarball",
+        "url": "https://github.com/pftf/RPi4/releases/download/v1.51/RPi4_UEFI_Firmware_v1.51.zip"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://github.com/pftf/RPi4/releases/download/v1.51/RPi4_UEFI_Firmware_v1.51.zip"
       }
     },
     "rust-overlay": {
