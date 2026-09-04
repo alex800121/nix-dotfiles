@@ -80,8 +80,8 @@
         unitConfig = {
           DefaultDependencies = false;
           ConditionPathExists = "!/swap/swapfile";
+          RequiresMountsFor = "/swap";
         };
-        requiresMountsFor = [ "/swap" ];
         before = [ "swap-swapfile.swap" ];
         requiredBy = [ "swap-swapfile.swap" ];
         serviceConfig = {
