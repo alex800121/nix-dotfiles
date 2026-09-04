@@ -54,8 +54,11 @@
             wsrep_node_address = config.services.vaultwarden.galera.ip;
             wsrep_on = "ON";
             wsrep_provider = "${pkgs.mariadb-galera}/lib/galera/libgalera_smm.so";
-            wsrep_sst_method = "rsync";
+            wsrep_sst_method = "mariabackup";
           };
+          environment.systemPackages = [
+            pkgs.socat
+          ];
         })
         (lib.mkIf config.services.vaultwarden.galera.tailscale.enable {
           systemd.services.mysql.wants = [
