@@ -58,8 +58,8 @@
         })
         ({
 
-          hardware.enableAllFirmware = true;
-          hardware.enableRedistributableFirmware = true;
+          hardware.enableAllFirmware = lib.mkDefault true;
+          hardware.enableRedistributableFirmware = lib.mkDefault true;
 
           nix.registry.nixpkgsUnstable.flake = inputs.nixpkgsUnstable;
 
@@ -131,7 +131,7 @@
           time.timeZone = lib.mkDefault "Asia/Taipei";
           i18n.defaultLocale = "en_US.UTF-8";
 
-          users.mutableUsers = true;
+          users.mutableUsers = lib.mkDefault true;
           users.groups.users.gid = 100;
           security.sudo.wheelNeedsPassword = false;
 
@@ -142,7 +142,7 @@
 
           environment.systemPackages = with pkgs; [
             busybox
-            neovim
+            (neovim.override {waylandSupport = false;})
           ];
 
           programs.git.enable = true;
@@ -288,7 +288,7 @@
           time.timeZone = lib.mkDefault "Asia/Taipei";
           i18n.defaultLocale = "en_US.UTF-8";
 
-          users.mutableUsers = true;
+          users.mutableUsers = lib.mkDefault true;
           users.groups.users.gid = 100;
           security.sudo.wheelNeedsPassword = false;
 

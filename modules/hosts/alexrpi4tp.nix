@@ -27,19 +27,39 @@
       imports = [
         "${modulesPath}/image/repart.nix"
         "${modulesPath}/profiles/minimal.nix"
+        # "${modulesPath}/profiles/image-based-appliance.nix"
+        "${modulesPath}/profiles/perlless.nix"
         self.nixosModules.minimal
+        # self.nixosModules.initConfig
         self.nixosModules.topo
         self.nixosModules.distributed-builds
         self.nixosModules.tailscale-server
       ];
 
+      # system.forbiddenDependenciesRegexes = lib.mkForce [ ];
+
+      initConfig.defaultUser = "alex800121";
+      initConfig.hostName = "alexrpi4tp";
+
+      nixpkgs.config.allowUnfree = true;
+      system.stateVersion = lib.mkDefault "26.05";
+
       boot.initrd.systemd.repart.enable = true;
       boot.initrd.systemd.enable = true;
+
+      services.getty.autologinUser = "root";
+      users.users.root.initialPassword = "";
 
       systemd.repart.partitions."10-root" = {
         Type = "root";
         GrowFileSystem = "yes";
+        Label = "NIXOS";
+        Format = "btrfs";
+        Minimize = "guess";
+        Subvolumes = "/root /nix /home /swap";
+        MakeDirectories = "/root /nix /home /swap /root/nix /root/home /root/swap /nix/store";
       };
+      programs.git.package = pkgs.gitMinimal;
 
       image.repart = {
         name = "alexrpi4tp";
@@ -56,22 +76,35 @@
             repartConfig = {
               Format = "vfat";
               Label = "ESP";
-              SizeMinBytes = "1G";
+              SizeMinBytes = "256M";
+              SizeMaxBytes = "256M";
               Type = "esp";
             };
           };
-          root = {
+          "20-store" = {
             storePaths = [ config.system.build.toplevel ];
-            nixStorePrefix = "/nix/store";
+            nixStorePrefix = "/";
             repartConfig = {
-              Format = "btrfs";
-              Label = "NIXOS";
-              Type = "root";
-              Subvolumes = "/root /home /nix /swap";
-              MakeDirectories = "/root /home /nix /swap /root/boot /root/nix /root/swap /root/home /nix/store";
+              Format = "squashfs";
+              Label = "STORE";
+              Type = "linux-generic";
+              # SizeMinBytes = "1G";
               Minimize = "guess";
             };
           };
+          # "30-root" = {
+          #   # storePaths = [ config.system.build.toplevel ];
+          #   # nixStorePrefix = "/nix/store";
+          #   repartConfig = {
+          #     Format = "btrfs";
+          #     Label = "NIXOS";
+          #     Type = "root";
+          #     Subvolumes = "/root /home /nix ";
+          #     MakeDirectories = "/root /home /nix /root/boot /root/nix /root/home /nix/store";
+          #     Minimize = "guess";
+          #     # SizeMinBytes = "1G";
+          #   };
+          # };
         };
       };
 
@@ -99,23 +132,20 @@
       nix.gc.automatic = false;
       nix.optimise.automatic = false;
 
-      boot.initrd.availableKernelModules = [
-        "xhci_pci"
-        "usbhid"
-        "usb_storage"
-        "vc4"
-        "pcie_brcmstb" # required for the pcie bus to work
-        "reset-raspberrypi" # required for vl805 firmware to load
-      ];
-
-      initConfig.defaultUser = "alex800121";
-      initConfig.hostName = "alexrpi4tp";
+      # boot.initrd.availableKernelModules = [
+      #   "xhci_pci"
+      #   "usbhid"
+      #   "usb_storage"
+      #   "vc4"
+      #   "pcie_brcmstb" # required for the pcie bus to work
+      #   "reset-raspberrypi" # required for vl805 firmware to load
+      # ];
 
       fileSystems."/".neededForBoot = true;
       fileSystems."/boot".neededForBoot = true;
 
-      hardware.enableAllFirmware = true;
-      hardware.enableRedistributableFirmware = true;
+      hardware.enableAllFirmware = false;
+      hardware.enableRedistributableFirmware = false;
       boot.loader.grub.enable = false;
       boot.loader.systemd-boot.enable = true;
       boot.loader.generic-extlinux-compatible.enable = false;
@@ -141,6 +171,11 @@
         ];
       };
 
+      fileSystems."/nix/store" = {
+        device = lib.mkForce "/dev/disk/by-partlabel/STORE";
+        fsType = "squashfs";
+      };
+
       fileSystems."/nix" = {
         device = lib.mkForce "/dev/disk/by-partlabel/NIXOS";
         fsType = "btrfs";
@@ -148,15 +183,6 @@
           "noatime"
           "compress=zstd"
           "subvol=nix"
-        ];
-      };
-
-      fileSystems."/swap" = {
-        device = lib.mkForce "/dev/disk/by-partlabel/NIXOS";
-        fsType = "btrfs";
-        options = [
-          "noatime"
-          "subvol=swap"
         ];
       };
 
@@ -171,23 +197,23 @@
 
       powerManagement.enable = false;
 
-      boot.kernelParams = [ "net.ifnames=0" ];
+      # boot.kernelParams = [ "net.ifnames=0" ];
       networking.useNetworkd = true;
       systemd.network.enable = true;
-      systemd.network.networks."10-eth0" = {
-        matchConfig = {
-          Name = "eth0";
-        };
-        networkConfig = {
-          DHCP = true;
-          MulticastDNS = true;
-          LLMNR = true;
-        };
-        linkConfig = {
-          Multicast = true;
-          AllMulticast = true;
-        };
-      };
+      # systemd.network.networks."10-eth0" = {
+      #   matchConfig = {
+      #     Name = "eth0";
+      #   };
+      #   networkConfig = {
+      #     DHCP = true;
+      #     MulticastDNS = true;
+      #     LLMNR = true;
+      #   };
+      #   linkConfig = {
+      #     Multicast = true;
+      #     AllMulticast = true;
+      #   };
+      # };
 
       # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
       # (the default) this is the recommended approach. When using systemd-networkd it's
@@ -195,6 +221,7 @@
       # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
       networking.useDHCP = lib.mkDefault true;
 
+      # nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
       nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
     };
 
