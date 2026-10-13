@@ -1,6 +1,11 @@
-{
+{ inputs, ... }: {
   flake.nixosModules.virt =
     { pkgs, config, ... }:
+    let
+      nixpkgsUnstable = import inputs.nixpkgsUnstable {
+        inherit (pkgs.stdenv.hostPlatform) system;
+      };
+    in
     {
 
       virtualisation = {
@@ -36,13 +41,13 @@
         spice-gtk
         spice-protocol
         win-spice
-        winboat
+        nixpkgsUnstable.winboat
         distrobox
       ];
 
       # for winboat
-      nixpkgs.config.permittedInsecurePackages = [
-        "electron-40.10.5"
-      ];
+      # nixpkgs.config.permittedInsecurePackages = [
+      #   "electron-40.10.5"
+      # ];
     };
 }

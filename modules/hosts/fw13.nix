@@ -24,6 +24,7 @@
           amd-7040.preventWakeOnAC = false;
           laptop13.audioEnhancement.enable = false;
         };
+        # boot.kernelParams = [ "mem_sleep_default=deep" ];
       };
     };
   };
@@ -127,6 +128,7 @@
         enable = true;
         remotes = {
           "flathub" = "https://dl.flathub.org/repo/flathub.flatpakrepo";
+          # "flathub-beta" = "https://flathub.org/beta-repo/flathub-beta.flatpakrepo";
         };
         packages = [
 
@@ -136,6 +138,7 @@
           "flathub:app/org.rncbc.qpwgraph//stable"
           # "flathub:app/org.gnome.NetworkDisplays//stable"
           "flathub:app/com.usebottles.bottles//stable"
+          # "flathub:app/com.vysp3r.ProtonPlus//stable"
           "flathub:app/org.gnome.DejaDup//stable"
 
           # Secret Management
@@ -153,13 +156,13 @@
           # Media
           "flathub:app/com.calibre_ebook.calibre//stable"
           "flathub:app/org.ardour.Ardour//stable"
-          "flathub:app/org.videolan.VLC//stable"
-          "flathub:app/org.musescore.MuseScore//stable"
           "flathub:app/com.spotify.Client//stable"
           "flathub:app/org.kde.kdenlive//stable"
           "flathub:app/org.gnome.SoundJuicer//stable"
           "flathub:app/com.obsproject.Studio//stable"
           "flathub:app/org.gimp.GIMP//stable"
+          # "flathub:app/org.musescore.MuseScore//stable"
+          # "flathub:app/org.videolan.VLC//stable"
           # "flathub:app/io.freetubeapp.FreeTube//stable"
           # "flathub:app/com.markopejic.downloader//stable"
 
@@ -182,7 +185,8 @@
           "com.usebottles.bottles" = {
             Context = {
               filesystems = [
-                "xdg-data/applications"
+                "xdg-data/applications:create"
+                "xdg-desktop:create"
               ];
             };
           };
