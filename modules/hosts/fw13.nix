@@ -82,6 +82,7 @@
         (self: super: {
           btop = super.btop.override { rocmSupport = true; };
         })
+        self.overlays.default
       ];
       boot.initrd.luks.devices."enc".preLVM = true;
       boot.initrd.luks.devices."enc".allowDiscards = true;
@@ -124,6 +125,8 @@
 
       environment.sessionVariables."XDG_DATA_DIRS" = [ "/var/lib/flatpak/exports/share" ];
 
+      services.xserver.enable = true;
+
       services.flatpak = {
         enable = true;
         remotes = {
@@ -140,13 +143,15 @@
           "flathub:app/com.usebottles.bottles//stable"
           # "flathub:app/com.vysp3r.ProtonPlus//stable"
           "flathub:app/org.gnome.DejaDup//stable"
+          # "flathub:app/io.github.totoshko88.RustConn//stable"
 
           # Secret Management
           "flathub:app/com.bitwarden.desktop//stable"
           # "flathub:app/org.keepassxc.KeePassXC//stable"
 
           # Browsers
-          "flathub:app/app.zen_browser.zen//stable"
+          # "flathub:app/app.zen_browser.zen//stable"
+          "flathub:app/org.mozilla.firefox//stable"
           "flathub:app/com.google.Chrome//stable"
           "flathub:app/com.opera.Opera//stable"
           # "flathub:app/io.gitlab.librewolf-community//stable"
@@ -198,11 +203,11 @@
       # xdg.autostart.enable = true;
       xdg.mime.enable = true;
       xdg.mime.defaultApplications = {
-        "default-web-browser" = [ "app.zen_browser.zen.desktop" ];
-        "x-scheme-handler/http" = [ "app.zen_browser.zen.desktop" ];
-        "application/xhtml+xml" = [ "app.zen_browser.zen.desktop" ];
-        "text/html" = [ "app.zen_browser.zen.desktop" ];
-        "x-scheme-handler/https" = [ "app.zen_browser.zen.desktop" ];
+        "default-web-browser" = [ "org.mozilla.firefox" ];
+        "x-scheme-handler/http" = [ "org.mozilla.firefox" ];
+        "application/xhtml+xml" = [ "org.mozilla.firefox" ];
+        "text/html" = [ "org.mozilla.firefox" ];
+        "x-scheme-handler/https" = [ "org.mozilla.firefox" ];
         "application/octet-stream" = [ "org.musescore.MuseScore.desktop" ];
         "application/vnd.openxmlformats-officedocument.wordprocessingml.document" = [
           "org.libreoffice.LibreOffice.writer.desktop"
@@ -210,10 +215,10 @@
         "application/vnd.oasis.opendocument.text" = [ "org.libreoffice.LibreOffice.writer.desktop" ];
       };
       xdg.mime.addedAssociations = {
-        "x-scheme-handler/http" = [ "app.zen_browser.zen.desktop" ];
-        "application/xhtml+xml" = [ "app.zen_browser.zen.desktop" ];
-        "text/html" = [ "app.zen_browser.zen.desktop" ];
-        "x-scheme-handler/https" = [ "app.zen_browser.zen.desktop" ];
+        "x-scheme-handler/http" = [ "org.mozilla.firefox" ];
+        "application/xhtml+xml" = [ "org.mozilla.firefox" ];
+        "text/html" = [ "org.mozilla.firefox" ];
+        "x-scheme-handler/https" = [ "org.mozilla.firefox" ];
         "application/octet-stream" = [ "org.musescore.MuseScore.desktop" ];
         "application/vnd.openxmlformats-officedocument.wordprocessingml.document" = [
           "org.libreoffice.LibreOffice.writer.desktop"
@@ -223,6 +228,7 @@
       environment.systemPackages = with pkgs; [
         # x32edit
         # proton-vpn
+        goose-pl
         gnome-network-displays
         libimobiledevice
         ifuse # optional, to mount using 'ifuse'
@@ -297,7 +303,8 @@
               };
 
               "org/gnome/shell".favorite-apps = [
-                "app.zen_browser.zen.desktop"
+                # "app.zen_browser.zen.desktop"
+                "org.mozilla.firefox.desktop"
                 "com.spotify.Client.desktop"
                 "com.visualstudio.code.desktop"
                 "kitty.desktop"

@@ -39,7 +39,7 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', '<leader>R', vim.lsp.buf.rename, bufopts('rename'))
   vim.keymap.set('n', '<leader>C', vim.lsp.buf.code_action, bufopts('code action'))
   vim.keymap.set('n', '<leader>cl', vim.lsp.codelens.run, bufopts('code lens'))
-  vim.keymap.set('n', '<leader>F', function() vim.lsp.buf.format { async = true } end, bufopts('code format'))
+  vim.keymap.set('n', '<leader>F', function() vim.lsp.buf.format({async = false}) end, bufopts('code format'))
   vim.keymap.set('n', '<leader>sl', vim.diagnostic.setloclist, opts('Set Location List'))
   vim.keymap.set('n', '<leader>sf', vim.diagnostic.setqflist, opts('Set Quickfix List'))
   vim.lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
@@ -87,6 +87,15 @@ vim.lsp.config['nil_ls'] = {
   on_attach = on_attach
 }
 vim.lsp.enable('nil_ls')
+
+vim.filetype.add({ extension = { goose = 'goose' } })
+vim.lsp.config['goose'] = {
+  cmd = { 'goose', 'lsp' },
+  filetypes = { 'goose' },
+  root_markers = { '.git' },
+  on_attach = on_attach,
+}
+vim.lsp.enable('goose')
 
 vim.lsp.config['lua_ls'] = {
   cmd = { "lua-language-server" },

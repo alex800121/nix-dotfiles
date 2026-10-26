@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ inputs, self, ... }:
 {
   imports = [ inputs.wrappers.flakeModules.wrappers ];
   flake.wrappers.neovim-module =
@@ -65,6 +65,7 @@
           nixfmt
           lua-language-server
           vscode-extensions.vadimcn.vscode-lldb
+          self.packages.${pkgs.stdenv.hostPlatform.system}.goose-pl
         ];
 
         settings.config_directory = ./luaConfig;

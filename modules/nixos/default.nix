@@ -191,7 +191,7 @@
       # List packages installed in system profile. To search, run:
       # $ nix search wget
       environment.systemPackages = with pkgs; [
-        firefox
+        # firefox
         kitty
         alacritty
         socat
@@ -224,13 +224,11 @@
       programs.localsend.enable = true;
       programs.localsend.openFirewall = true;
 
-      # environment.variables = {
-      #   QT_IM_MODULE = "fcitx";
-      #   GTK_IM_MODULE = "fcitx";
-      #   XMODIFIERS = "@im=fcitx";
-      #   NIXOS_OZONE_WL = "1";
-      #   XCURSOR_THEME = "Adwaita";
-      # };
+      environment.variables = {
+        # QT_IM_MODULE = "ibus";
+        # GTK_IM_MODULE = "ibus";
+        # XMODIFIERS = "@im=ibus";
+      };
 
       # Some programs need SUID wrappers, can be configured further or are
       # started in user sessions.

@@ -42,6 +42,21 @@
   outputs =
     inputs:
     inputs.flake-parts.lib.mkFlake { inherit inputs; } (top: {
-      imports = [ (inputs.import-tree ./modules) ];
+      imports = [
+        (inputs.import-tree ./modules)
+        inputs.flake-parts.flakeModules.easyOverlay
+      ];
+      systems = [
+        "x86_64-linux"
+        "aarch64-linux"
+      ];
+
+      perSystem = { config, pkgs, ... }: {
+        packages.goose-pl = pkgs.callPackage ./packages/goose-pl/package.nix { };
+        overlayAttrs = {
+          inherit (config.packages) goose-pl;
+        };
+      };
+
     });
 }
