@@ -79,6 +79,7 @@
                   "xwayland-indicator@swsnr.de"
                   "solaar-extension@sidevesh"
                   "tailscale-gnome-qs@tailscale-qs.github.io"
+                  "Battery-Health-Charging@maniacx.github.com"
                 ];
                 welcome-dialog-last-shown-version = "48.1";
               };
