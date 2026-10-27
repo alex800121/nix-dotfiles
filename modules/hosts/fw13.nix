@@ -58,6 +58,7 @@
         inputs.nixos-hardware.nixosModules.framework-13-7040-amd
         inputs.agenix.nixosModules.default
         inputs.declarative-flatpak.nixosModules.default
+        inputs.cpak.nixosModules.default
         self.nixosModules.default
         _hardware/amd.nix
         _hardware/fw13.nix
@@ -127,6 +128,7 @@
 
       services.xserver.enable = true;
 
+      services.cpak.enable = true;
       services.flatpak = {
         enable = true;
         remotes = {

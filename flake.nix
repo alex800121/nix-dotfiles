@@ -1,19 +1,19 @@
 {
   description = "NixOS configuration";
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
-    nixpkgsUnstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "https://channels.nixos.org/nixos-26.05/nixexprs.tar.zst";
+    nixpkgsUnstable.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.zst";
     declarative-flatpak.url = "github:in-a-dil-emma/declarative-flatpak/latest";
-    wrappers = {
-      url = "github:BirdeeHub/nix-wrapper-modules";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    wrappers.url = "github:BirdeeHub/nix-wrapper-modules";
+    # wrappers.inputs.nixpkgs.follows = "nixpkgs";
     rpi4fw = {
       url = "tarball+https://github.com/pftf/RPi4/releases/download/v1.51/RPi4_UEFI_Firmware_v1.51.zip";
       flake = false;
     };
     import-tree.url = "github:vic/import-tree";
     flake-parts.url = "github:hercules-ci/flake-parts";
+    cpak.url = "github:Containerpak/cpak/v2";
+    # cpak.inputs.nixpkgs.follows = "nixpkgs";
     nixos-hardware = {
       url = "github:NixOS/nixos-hardware/master";
     };
