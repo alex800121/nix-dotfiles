@@ -7,6 +7,11 @@
       pkgs,
       ...
     }:
+    let
+      nixpkgsUnstable = import inputs.nixpkgsUnstable {
+        inherit (pkgs.stdenv.hostPlatform) system;
+      };
+    in
     {
       hardware.logitech.wireless.enable = true;
       hardware.logitech.wireless.enableGraphical = true;
@@ -152,6 +157,7 @@
       services.gnome.gnome-settings-daemon.enable = true;
 
       environment.systemPackages = with pkgs.gnomeExtensions; [
+        nixpkgsUnstable.gnomeExtensions.battery-health-charging
         kimpanel
         appindicator
         xwayland-indicator
