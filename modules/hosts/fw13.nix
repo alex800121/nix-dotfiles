@@ -74,9 +74,15 @@
       initConfig.defaultUser = "alex800121";
       initConfig.hostName = "fw13";
 
-      system.fsPackages = [ pkgs.apfsprogs ];
-      boot.extraModulePackages = [ config.boot.kernelPackages.apfs ];
-      boot.initrd.kernelModules = [ "apfs" ];
+      # system.fsPackages = [ pkgs.apfsprogs ];
+      # boot.extraModulePackages = [ config.boot.kernelPackages.apfs ];
+      # boot.initrd.kernelModules = [ "apfs" ];
+
+      # conservative fix for unexpected shutdown when waking up from sleep.
+      # should switch to another LTS ASAP.
+      boot.kernelPackages = pkgs.linuxPackages_6_18;
+      boot.blacklistedKernelModules = [ "tiny_power_button" ];
+      # boot.kernelPackages = pkgs.linuxPackages_latest;
 
       hardware.framework.laptop13.audioEnhancement.enable = false;
       nixpkgs.overlays = [
