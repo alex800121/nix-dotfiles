@@ -53,3 +53,5 @@ vim.keymap.set("n", "<C-Left>", ":vertical resize -2<CR>", opts('Window: Resize 
 vim.keymap.set("n", "<C-Right>", ":vertical resize +2<CR>", opts('Window: Resize Right'))
 
 vim.keymap.set("n", "<leader> ", "<cmd>nohlsearch<CR>", opts('Clear Highlight Search'))
+
+vim.keymap.set("n", "<leader>e", MiniFiles.open, opts('Open MiniFiles'))

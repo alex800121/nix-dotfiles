@@ -19,6 +19,7 @@
           enable = true;
           data = with pkgs.vimPlugins; [
             mini-icons
+            mini-files
             gruvbox-nvim
             which-key-nvim
             (nvim-treesitter.withPlugins (
