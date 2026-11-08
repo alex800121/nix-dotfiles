@@ -6,10 +6,22 @@
       lib,
       ...
     }:
+    let
+      nixpkgsUnstable = import inputs.nixpkgsUnstable {
+        inherit (config.nixpkgs.hostPlatform) system;
+      };
+    in
     {
       imports = [ inputs.agenix.nixosModules.default ];
       options = { };
       config = {
+        nixpkgs.overlays = [
+          (self: super: { amneziawg-tools = nixpkgsUnstable.amneziawg-tools; })
+          (self: super: { amneziawg-go = nixpkgsUnstable.amneziawg-go; })
+        ];
+
+        boot.kernelPackages = nixpkgsUnstable.linuxPackages_6_18;
+
         networking.networkmanager = {
           unmanaged = [ "interface-name:awg0" ];
         };
@@ -67,10 +79,22 @@
       lib,
       ...
     }:
+    let
+      nixpkgsUnstable = import inputs.nixpkgsUnstable {
+        inherit (config.nixpkgs.hostPlatform) system;
+      };
+    in
     {
       imports = [ inputs.agenix.nixosModules.default ];
       options = { };
       config = {
+        nixpkgs.overlays = [
+          (self: super: { amneziawg-tools = nixpkgsUnstable.amneziawg-tools; })
+          (self: super: { amneziawg-go = nixpkgsUnstable.amneziawg-go; })
+        ];
+
+        boot.kernelPackages = nixpkgsUnstable.linuxPackages_6_18;
+
         age.secrets."amneziawg-private-${config.networking.hostName}.key".file =
           ../../../secrets/amneziawg-private-${config.networking.hostName}.age;
         age.secrets."amneziawg-shared.key".file = ../../../secrets/amneziawg-shared.age;

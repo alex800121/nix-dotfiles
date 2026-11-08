@@ -81,7 +81,7 @@
 
       # conservative fix for unexpected shutdown when waking up from sleep.
       # should switch to another LTS ASAP.
-      boot.kernelPackages = pkgs.linuxPackages_6_18;
+      boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_6_18;
       boot.blacklistedKernelModules = [ "tiny_power_button" ];
       # boot.kernelPackages = pkgs.linuxPackages_latest;
 
