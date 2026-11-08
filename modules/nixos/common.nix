@@ -142,7 +142,7 @@
 
           environment.systemPackages = with pkgs; [
             busybox
-            (neovim.override {waylandSupport = false;})
+            (neovim.override { waylandSupport = false; })
           ];
 
           programs.git.enable = true;
@@ -216,6 +216,7 @@
 
           nixpkgs.overlays = [
             inputs.rust-overlay.overlays.default
+            self.overlays.zellij
           ];
 
           nix.registry.nixpkgsUnstable.flake = inputs.nixpkgsUnstable;

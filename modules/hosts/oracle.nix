@@ -5,6 +5,7 @@
       self.nixosModules.topo
       self.nixosModules.vaultwarden
       self.nixosModules.borgbackup-vaultwarden
+      self.nixosModules.amneziawg-server
       {
         services.vaultwarden.borgbackup.enable = true;
         services.vaultwarden.borgbackup.servers = [ "acer-tp" ];

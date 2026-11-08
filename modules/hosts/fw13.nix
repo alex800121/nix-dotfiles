@@ -69,6 +69,7 @@
         self.nixosModules.de-gnome
         self.nixosModules.virt
         self.nixosModules.tailscale-client
+        self.nixosModules.amneziawg-client
       ];
 
       initConfig.defaultUser = "alex800121";

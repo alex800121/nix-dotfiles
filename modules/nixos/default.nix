@@ -26,7 +26,6 @@
         self.overlays.alacritty
         self.overlays.kitty
         self.overlays.neovim
-        self.overlays.zellij
       ];
 
       boot.binfmt.emulatedSystems = builtins.filter (x: x != system) [
