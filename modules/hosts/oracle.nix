@@ -73,6 +73,11 @@
       # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
       # networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
 
+      services.fail2ban.enable = true;
+      services.fail2ban.maxretry = 5;
+      services.fail2ban.bantime = "1h";
+      services.fail2ban.bantime-increment.enable = true;
+
       powerManagement.enable = false;
       networking.firewall.enable = lib.mkDefault true;
       networking.firewall = {
