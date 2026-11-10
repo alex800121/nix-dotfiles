@@ -25,6 +25,7 @@
         networking.networkmanager = {
           unmanaged = [ "interface-name:awg0" ];
         };
+
         services.resolved.enable = true;
         networking.firewall.checkReversePath = "loose";
 
