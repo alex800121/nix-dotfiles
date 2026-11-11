@@ -10,13 +10,13 @@
 }:
 stdenv.mkDerivation {
   pname = "goose";
-  version = "unstable";
+  version = "v2026.4";
 
   src = fetchFromGitHub {
     repo = "goose";
     owner = "aardappel";
-    rev = "a108677d300cb0e8bbb842c35a353abe67a20c6c";
-    hash = "sha256-qywuGZuDknQCxRiX+EkH65tVg9pR5eaFhkfFnzwXLfY=";
+    rev = "v2026.4";
+    hash = "sha256-EeTrRrECNyExsU8+dAh9JexQGnMOhgeuu8UoOD78wKw=";
   };
 
   nativeBuildInputs = [
