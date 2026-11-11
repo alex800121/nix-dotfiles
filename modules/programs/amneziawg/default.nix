@@ -41,7 +41,7 @@
         networking.wg-quick.interfaces.awg0 = {
           type = "amneziawg";
           configFile = config.age.secrets."amneziawg-private-${config.networking.hostName}.key".path;
-          autostart = true;
+          autostart = false;
         };
 
       };
@@ -89,6 +89,7 @@
         # IPv4 forwarding + NAT
         networking.nat = {
           enable = true;
+          enableIPv6 = true;
           externalInterface = "eth0";
           internalInterfaces = [ "awg0" ];
         };
