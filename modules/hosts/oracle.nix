@@ -45,6 +45,13 @@
         };
         networkConfig = {
           DHCP = true;
+          MulticastDNS = true;
+          LLMNR = true;
+          IPv6AcceptRA = true;
+        };
+        linkConfig = {
+          Multicast = true;
+          AllMulticast = true;
         };
       };
     in
@@ -89,22 +96,27 @@
       };
       networking.networkmanager.enable = false;
       boot.kernelParams = [ "net.ifnames=0" ];
-      networking.useNetworkd = true;
+
+      networking.useNetworkd = false;
+      networking.useDHCP = false;
+      networking.enableIPv6 = true;
+
       systemd.network.enable = true;
-      systemd.network.networks."10-eth0" = {
-        matchConfig = {
-          Name = "eth0";
-        };
-        networkConfig = {
-          DHCP = true;
-          MulticastDNS = true;
-          LLMNR = true;
-        };
-        linkConfig = {
-          Multicast = true;
-          AllMulticast = true;
-        };
-      };
+      # systemd.network.networks."10-eth0" = {
+      #   matchConfig = {
+      #     Name = "eth0";
+      #   };
+      #   networkConfig = {
+      #     DHCP = true;
+      #     MulticastDNS = true;
+      #     LLMNR = true;
+      #     IPv6AcceptRA = true;
+      #   };
+      #   linkConfig = {
+      #     Multicast = true;
+      #     AllMulticast = true;
+      #   };
+      # };
 
       services.resolved = {
         enable = true;
