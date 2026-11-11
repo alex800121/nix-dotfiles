@@ -29,7 +29,7 @@
         services.resolved.enable = true;
         networking.firewall.checkReversePath = "loose";
 
-        age.secrets."amneziawg-private-${config.networking.hostName}.key".file =
+        age.secrets."awg0.conf".file =
           ../../../secrets/amneziawg-private-${config.networking.hostName}.age;
 
         systemd.services.wg-quick-awg0.serviceConfig = {
@@ -40,7 +40,7 @@
         # AmneziaWG server
         networking.wg-quick.interfaces.awg0 = {
           type = "amneziawg";
-          configFile = config.age.secrets."amneziawg-private-${config.networking.hostName}.key".path;
+          configFile = config.age.secrets."awg0.conf".path;
           autostart = false;
         };
 
@@ -69,13 +69,13 @@
 
         boot.kernelPackages = nixpkgsUnstable.linuxPackages_6_18;
 
-        age.secrets."amneziawg-private-${config.networking.hostName}.key".file =
+        age.secrets."awg0.conf".file =
           ../../../secrets/amneziawg-private-${config.networking.hostName}.age;
 
         # AmneziaWG server
         networking.wg-quick.interfaces.awg0 = {
           type = "amneziawg";
-          configFile = config.age.secrets."amneziawg-private-${config.networking.hostName}.key".path;
+          configFile = config.age.secrets."awg0.conf".path;
           autostart = true;
         };
 
