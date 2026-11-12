@@ -34,4 +34,6 @@ in
   "amneziawg-private-oracle.age".publicKeys = fw13 ++ oracle;
   "amneziawg-private-fw13.age".publicKeys = fw13 ++ oracle;
   "amneziawg-private-pixel7a.age".publicKeys = fw13 ++ oracle;
+  "xray-server-oracle.age".publicKeys = fw13 ++ oracle;
+  "xray-client-fw13.age".publicKeys = fw13 ++ oracle;
 }
