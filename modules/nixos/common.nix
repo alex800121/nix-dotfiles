@@ -313,7 +313,6 @@
             btrfs-progs
             wl-clipboard
             jq
-            lemonade
             btop
             chawan
             pciutils

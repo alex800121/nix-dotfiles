@@ -26,7 +26,7 @@ vim.opt.timeoutlen = 0
 vim.opt.updatetime = 100
 
 vim.opt.clipboard = 'unnamedplus'
--- vim.g.clipboard = 'wl-copy'
+vim.g.clipboard = 'osc52'
 vim.opt.conceallevel = 0
 
 vim.opt.hlsearch = true
