@@ -80,8 +80,16 @@
                   "solaar-extension@sidevesh"
                   "tailscale-gnome-qs@tailscale-qs.github.io"
                   "Battery-Health-Charging@maniacx.github.com"
+                  "systemd-manager-neo@ladoleo.local"
                 ];
                 welcome-dialog-last-shown-version = "48.1";
+              };
+
+              "org/gnome/shell/extensions/systemd-manager-neo" = {
+                favorite-services = [
+                  "wg-quick-awg0.service"
+                  "tailscaled-set.service"
+                ];
               };
 
               "org/gnome/shell/extensions/kimpanel".vertical = true;
@@ -141,7 +149,12 @@
                 name = "Terminal";
               };
 
-              "org/gnome/desktop/interface".color-scheme = "prefer-dark";
+              "org/gnome/desktop/interface" = {
+                color-scheme = "prefer-dark";
+                cursor-size = lib.gvariant.mkInt32 32;
+                show-battery-percentage = true;
+                text-scaling-factor = 1.1200000000000001;
+              };
 
               "org/gnome/desktop/background" = {
                 color-shading-type = "solid";
@@ -159,6 +172,7 @@
 
       environment.systemPackages = with pkgs.gnomeExtensions; [
         nixpkgsUnstable.gnomeExtensions.battery-health-charging
+        nixpkgsUnstable.gnomeExtensions.systemd-manager-neo
         kimpanel
         appindicator
         xwayland-indicator
@@ -166,6 +180,7 @@
         tailscale-qs
         pkgs.gnome-tweaks
         solaar-extension
+
       ];
 
       xdg.terminal-exec.enable = true;

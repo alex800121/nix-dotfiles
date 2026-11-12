@@ -298,17 +298,42 @@
                 xwayland-scaling-factor = lib.gvariant.mkDouble 1.33333333333333333333;
               };
 
+              "org/gnome/desktop/input-sources" = {
+                mru-sources = [
+                  (lib.gvariant.mkTuple [
+                    "ibus"
+                    "chewing"
+                  ])
+                  (lib.gvariant.mkTuple [
+                    "xkb"
+                    "us"
+                  ])
+                ];
+                show-all-sources = true;
+                sources = [
+                  (lib.gvariant.mkTuple [
+                    "ibus"
+                    "chewing"
+                  ])
+                  (lib.gvariant.mkTuple [
+                    "xkb"
+                    "us"
+                  ])
+                ];
+                xkb-options = [ "terminate:ctrl_alt_bksp" ];
+              };
+
               "org/gnome/desktop/peripherals/touchpad" = {
                 tap-to-click = true;
                 disable-while-typing = true;
                 natural-scroll = true;
-                speed = 0.33333333333333333;
+                speed = 0.32600732600732596;
                 two-finger-scrolling-enabled = true;
               };
 
               "org/gnome/desktop/peripherals/mouse" = {
                 natural-scroll = false;
-                speed = 0.24778761061946897;
+                speed = 0.17647058823529416;
               };
 
               "org/gnome/shell".favorite-apps = [
