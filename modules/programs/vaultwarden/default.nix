@@ -135,6 +135,13 @@
           ];
 
           services.caddy.enable = true;
+          services.caddy.package = pkgs.caddy.withPlugins {
+            plugins = [
+              "github.com/caddy-dns/duckdns@v0.5.0"
+              "github.com/caddy-dns/cloudflare@v0.2.4"
+            ];
+            hash = "sha256-u+zIWWgVsYBZjhXXJnCo3DxYN5e6EY4kxiVvsFmZQ+c=";
+          };
 
           systemd.services.vaultwarden.wantedBy = [ "mysql.service" ];
           systemd.services.vaultwarden.requires = [ "mysql.service" ];
