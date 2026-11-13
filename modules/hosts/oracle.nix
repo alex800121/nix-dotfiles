@@ -6,6 +6,7 @@
       self.nixosModules.vaultwarden
       self.nixosModules.borgbackup-vaultwarden
       self.nixosModules.amneziawg-server
+      # self.nixosModules.xray-server
       {
         services.vaultwarden.borgbackup.enable = true;
         services.vaultwarden.borgbackup.servers = [ "acer-tp" ];

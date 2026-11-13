@@ -4,30 +4,32 @@
     {
       nix.distributedBuilds = true;
 
-      nix.settings.substituters = lib.mkAfter [
+      nix.settings.extra-substituters = [
+        "https://nix-community.cachix.org"
+        "ssh-ng://alex800121@oracle?priority=60"
+        "ssh-ng://alex800121@acer-tp?priority=60"
+        "ssh-ng://alex800121@alexrpi4tp?priority=60"
+        "ssh-ng://alex800121@fw13?priority=60"
+      ];
+      nix.settings.extra-trusted-substituters = [
         "https://nix-community.cachix.org"
         "ssh-ng://alex800121@oracle"
         "ssh-ng://alex800121@acer-tp"
         "ssh-ng://alex800121@alexrpi4tp"
         "ssh-ng://alex800121@fw13"
       ];
-      nix.settings.trusted-substituters = [
-        "https://nix-community.cachix.org"
-        "ssh-ng://alex800121@oracle"
-        "ssh-ng://alex800121@acer-tp"
-        "ssh-ng://alex800121@alexrpi4tp"
-        "ssh-ng://alex800121@fw13"
-      ];
-      nix.settings.trusted-users = [
+      nix.settings.extra-trusted-users = [
         "nix-ssh"
         "alex800121"
         "@wheel"
       ];
-      nix.settings.trusted-public-keys = [
+      nix.settings.extra-trusted-public-keys = [
         "nix-common:tfkDg1lt8EUsog/Gex0wLDW61jqUslDg9nevljQ6aKM="
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
         # "wezterm.cachix.org-1:kAbhjYUC9qvblTE+s7S+kl5XM1zVa4skO+E/1IDWdH0="
       ];
+
+      # nix.settings.max-jobs = 0;
 
       nix.buildMachines = lib.filter (x: x.hostName != config.networking.hostName) [
         {
@@ -41,7 +43,11 @@
             "kvm"
             "gccarch-armv8-a"
           ];
+          mandatoryFeatures = [
+            "big-parallel"
+          ];
           maxJobs = 2;
+          speedFactor = 2;
           protocol = "ssh-ng";
         }
         {
@@ -55,7 +61,11 @@
             "kvm"
             "gccarch-armv8-a"
           ];
+          mandatoryFeatures = [
+            "big-parallel"
+          ];
           maxJobs = 4;
+          speedFactor = 2;
           protocol = "ssh-ng";
         }
         {
@@ -69,7 +79,11 @@
             "kvm"
             "gccarch-armv8-a"
           ];
+          mandatoryFeatures = [
+            "big-parallel"
+          ];
           maxJobs = 1;
+          speedFactor = 1;
           protocol = "ssh-ng";
         }
         {
@@ -83,7 +97,11 @@
             "kvm"
             "gccarch-armv8-a"
           ];
+          mandatoryFeatures = [
+            "big-parallel"
+          ];
           maxJobs = 1;
+          speedFactor = 1;
           protocol = "ssh-ng";
         }
         {
@@ -99,7 +117,11 @@
             "big-parallel"
             "kvm"
           ];
+          mandatoryFeatures = [
+            "big-parallel"
+          ];
           maxJobs = 8;
+          speedFactor = 4;
           protocol = "ssh-ng";
         }
       ];

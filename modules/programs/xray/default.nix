@@ -19,7 +19,7 @@
           settingsFile = config.age.secrets."xray-server.json".path;
         };
 
-        networking.firewall.allowedTCPPorts = [ 443 ];
+        networking.firewall.allowedTCPPorts = [ 8443 ];
       };
     };
   flake.nixosModules.xray-client =
