@@ -22,7 +22,8 @@
         dnsPropagationCheck = false;
         domain = gateName;
         extraDomainNames = [ "*.${gateName}" ];
-        credentialFiles."DUCKDNS_TOKEN_FILE" = config.age.secrets."${ddtokenName}".path;
+        environmentFile = config.age.secrets."${ddtokenName}".path;
+        # credentialFiles."DUCKDNS_TOKEN_FILE" = config.age.secrets."${ddtokenName}".path;
         credentialFiles."DUCKDNS_PROPAGATION_TIMEOUT_FILE" = pkgs.writeText "dd_prop_timeout" "600";
         credentialFiles."DUCKDNS_TTL_FILE" = pkgs.writeText "dd_ttl" "200";
       };

@@ -1,4 +1,4 @@
-{ self, ... }: {
+{ inputs, self, ... }: {
   flake.nixosModules.vaultwarden =
     {
       pkgs,
@@ -14,8 +14,9 @@
     in
     {
       imports = [
-        self.nixosModules.acme-gate
+        # self.nixosModules.acme-gate
         self.nixosModules.keepalived-vaultwarden
+        inputs.agenix.nixosModules.default
       ];
 
       options = {
@@ -166,8 +167,29 @@
           boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
           boot.kernel.sysctl."net.ipv6.conf.all.forwarding" = 1;
 
+          age.secrets."ddtoken.env".file = ../../../secrets/ddtoken.age;
+          systemd.services.caddy.serviceConfig.EnvironmentFile = [
+            config.age.secrets."ddtoken.env".path
+          ];
+
+          services.caddy.virtualHosts."*.${gateName}".extraConfig = ''
+            tls {
+              dns duckdns {env.DUCKDNS_TOKEN}
+              propagation_timeout 5m
+            }
+
+            respond "Not found" 404
+          '';
+          services.caddy.virtualHosts."${gateName}".extraConfig = ''
+            tls {
+              dns duckdns {env.DUCKDNS_TOKEN}
+              propagation_timeout 5m
+            }
+
+            respond "Not found" 404
+          '';
           services.caddy.virtualHosts."${vwGateName}" = {
-            useACMEHost = gateName;
+            # useACMEHost = gateName;
             extraConfig = ''
               reverse_proxy http://${config.services.vaultwarden.config.ROCKET_ADDRESS}:${config.services.vaultwarden.config.ROCKET_PORT}
             '';

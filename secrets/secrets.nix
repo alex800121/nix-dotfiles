@@ -31,6 +31,8 @@ in
   "tsid.age".publicKeys = alexrpi4tp ++ oracle ++ oracle2 ++ oracle3 ++ acer-tp ++ fw13;
   "tssecret.age".publicKeys = alexrpi4tp ++ oracle ++ oracle2 ++ oracle3 ++ acer-tp ++ fw13;
   "nix_common.age".publicKeys = alexrpi4tp ++ oracle ++ oracle2 ++ oracle3 ++ acer-tp ++ fw13;
+  "cloudflare.age".publicKeys = alexrpi4tp ++ oracle ++ oracle2 ++ oracle3 ++ acer-tp ++ fw13;
+  "cloudflare-r2.age".publicKeys = alexrpi4tp ++ oracle ++ oracle2 ++ oracle3 ++ acer-tp ++ fw13;
   "amneziawg-private-oracle.age".publicKeys = fw13 ++ oracle;
   "amneziawg-private-fw13.age".publicKeys = fw13 ++ oracle;
   "amneziawg-private-pixel7a.age".publicKeys = fw13 ++ oracle;
