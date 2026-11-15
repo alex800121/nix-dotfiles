@@ -19,13 +19,17 @@
       security.acme.certs."${gateName}" = {
         dnsProvider = "duckdns";
         dnsResolver = "1.1.1.1:53";
-        dnsPropagationCheck = false;
+        dnsPropagationCheck = true;
         domain = gateName;
         extraDomainNames = [ "*.${gateName}" ];
         environmentFile = config.age.secrets."${ddtokenName}".path;
         # credentialFiles."DUCKDNS_TOKEN_FILE" = config.age.secrets."${ddtokenName}".path;
-        credentialFiles."DUCKDNS_PROPAGATION_TIMEOUT_FILE" = pkgs.writeText "dd_prop_timeout" "600";
-        credentialFiles."DUCKDNS_TTL_FILE" = pkgs.writeText "dd_ttl" "200";
+
+        credentialFiles = {
+          "DUCKDNS_PROPAGATION_TIMEOUT_FILE" = pkgs.writeText "dd-prop-timeout" "600";
+
+          "DUCKDNS_SEQUENCE_INTERVAL_FILE" = pkgs.writeText "dd-sequence-interval" "60";
+        };
       };
     };
 }
