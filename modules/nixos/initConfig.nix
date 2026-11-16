@@ -28,6 +28,7 @@
                 peers = lib.mkOption {
                   type = lib.types.listOf lib.types.str;
                   default = [ ];
+                  apply = lib.unique;
                 };
                 keepalived.router.id = lib.mkOption {
                   type = lib.types.nullOr lib.types.ints.u8;

@@ -143,7 +143,6 @@
           # "flathub-beta" = "https://flathub.org/beta-repo/flathub-beta.flatpakrepo";
         };
         packages = [
-
           # Utils
           "flathub:app/com.github.tchx84.Flatseal//stable"
           "flathub:app/it.mijorus.gearlever//stable"
@@ -154,12 +153,12 @@
           # "flathub:app/io.github.totoshko88.RustConn//stable"
 
           # Secret Management
+          # "flathub:app/org.keepassxc.KeePassXC//stable"
           "flathub:app/com.bitwarden.desktop//stable"
-          "flathub:app/org.keepassxc.KeePassXC//stable"
 
           # Browsers
           # "flathub:app/app.zen_browser.zen//stable"
-          "flathub:app/org.mozilla.firefox//stable"
+          # "flathub:app/org.mozilla.firefox//stable"
           "flathub:app/com.google.Chrome//stable"
           "flathub:app/com.opera.Opera//stable"
           # "flathub:app/io.gitlab.librewolf-community//stable"
@@ -209,11 +208,16 @@
       # xdg.autostart.enable = true;
       xdg.mime.enable = true;
       xdg.mime.defaultApplications = {
-        "default-web-browser" = [ "org.mozilla.firefox" ];
-        "x-scheme-handler/http" = [ "org.mozilla.firefox" ];
-        "application/xhtml+xml" = [ "org.mozilla.firefox" ];
-        "text/html" = [ "org.mozilla.firefox" ];
-        "x-scheme-handler/https" = [ "org.mozilla.firefox" ];
+        # "default-web-browser" = [ "org.mozilla.firefox" ];
+        # "x-scheme-handler/http" = [ "org.mozilla.firefox" ];
+        # "application/xhtml+xml" = [ "org.mozilla.firefox" ];
+        # "text/html" = [ "org.mozilla.firefox" ];
+        # "x-scheme-handler/https" = [ "org.mozilla.firefox" ];
+        "default-web-browser" = [ "firefox" ];
+        "x-scheme-handler/http" = [ "firefox" ];
+        "application/xhtml+xml" = [ "firefox" ];
+        "text/html" = [ "firefox" ];
+        "x-scheme-handler/https" = [ "firefox" ];
         "application/octet-stream" = [ "org.musescore.MuseScore.desktop" ];
         "application/vnd.openxmlformats-officedocument.wordprocessingml.document" = [
           "org.libreoffice.LibreOffice.writer.desktop"
@@ -221,19 +225,29 @@
         "application/vnd.oasis.opendocument.text" = [ "org.libreoffice.LibreOffice.writer.desktop" ];
       };
       xdg.mime.addedAssociations = {
-        "x-scheme-handler/http" = [ "org.mozilla.firefox" ];
-        "application/xhtml+xml" = [ "org.mozilla.firefox" ];
-        "text/html" = [ "org.mozilla.firefox" ];
-        "x-scheme-handler/https" = [ "org.mozilla.firefox" ];
+        # "x-scheme-handler/http" = [ "org.mozilla.firefox" ];
+        # "application/xhtml+xml" = [ "org.mozilla.firefox" ];
+        # "text/html" = [ "org.mozilla.firefox" ];
+        # "x-scheme-handler/https" = [ "org.mozilla.firefox" ];
+        "x-scheme-handler/http" = [ "firefox" ];
+        "application/xhtml+xml" = [ "firefox" ];
+        "text/html" = [ "firefox" ];
+        "x-scheme-handler/https" = [ "firefox" ];
         "application/octet-stream" = [ "org.musescore.MuseScore.desktop" ];
         "application/vnd.openxmlformats-officedocument.wordprocessingml.document" = [
           "org.libreoffice.LibreOffice.writer.desktop"
         ];
       };
 
+      programs.firefox.enable = true;
+      programs.firefox.nativeMessagingHosts.packages = [
+        pkgs.keepassxc
+      ];
+
       environment.systemPackages = with pkgs; [
         # x32edit
         # proton-vpn
+        keepassxc
         goose-pl
         gnome-network-displays
         libimobiledevice
@@ -335,7 +349,8 @@
 
               "org/gnome/shell".favorite-apps = [
                 # "app.zen_browser.zen.desktop"
-                "org.mozilla.firefox.desktop"
+                # "org.mozilla.firefox.desktop"
+                "firefox.desktop"
                 "com.spotify.Client.desktop"
                 "com.visualstudio.code.desktop"
                 "kitty.desktop"

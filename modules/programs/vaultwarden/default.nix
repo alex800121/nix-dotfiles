@@ -31,6 +31,7 @@
         services.vaultwarden.galera.peers = lib.mkOption {
           type = lib.types.listOf lib.types.str;
           default = config.initConfig.topo."${config.networking.hostName}".peers or [ ];
+          apply = lib.unique;
         };
         services.vaultwarden.galera.ip = lib.mkOption {
           type = lib.types.nullOr lib.types.str;
@@ -141,7 +142,7 @@
               "github.com/caddy-dns/duckdns@v0.5.0"
               "github.com/caddy-dns/cloudflare@v0.2.4"
             ];
-            hash = "sha256-u+zIWWgVsYBZjhXXJnCo3DxYN5e6EY4kxiVvsFmZQ+c=";
+            hash = "sha256-c35IfkdcovohSn2rVRsaiwpK28IwmCDTS2rqrSyp9zg=";
           };
 
           systemd.services.vaultwarden.wantedBy = [ "mysql.service" ];

@@ -105,6 +105,7 @@
         services.vaultwarden.borgbackup.servers = lib.mkOption {
           type = lib.types.listOf lib.types.str;
           default = [ ];
+          apply = lib.unique;
         };
       };
 

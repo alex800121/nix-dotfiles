@@ -40,6 +40,7 @@
         _hardware/desktop.nix
         # self.nixosModules.nix-ld
         self.nixosModules.tailscale-server
+        self.nixosModules.amneziawg-server
         inputs.agenix.nixosModules.default
         self.nixosModules.vaultwarden
       ];

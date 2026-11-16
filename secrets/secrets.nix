@@ -52,13 +52,18 @@ in
   "nix_common.age".publicKeys = all;
   "cloudflare.age".publicKeys = all;
   "cloudflare-r2.age".publicKeys = all;
-  "amneziawg-private-oracle.age".publicKeys = all;
-  "amneziawg-private-oracle2.age".publicKeys = all;
-  "amneziawg-private-oracle3.age".publicKeys = all;
-  "amneziawg-private-alexrpi4tp.age".publicKeys = all;
-  "amneziawg-private-acer-tp.age".publicKeys = all;
-  "amneziawg-private-fw13.age".publicKeys = all;
-  "amneziawg-private-pixel7a.age".publicKeys = all;
+  "awg/header.age".publicKeys = all;
+  "awg/oracle.age".publicKeys = all;
+  "awg/oracle2.age".publicKeys = all;
+  "awg/oracle3.age".publicKeys = all;
+  "awg/alexrpi4tp.age".publicKeys = all;
+  "awg/acer-tp.age".publicKeys = all;
+  "awg/fw13.age".publicKeys = all;
+  "awg/pixel7a.age".publicKeys = all;
+  "awg/conf-oracle.age".publicKeys = all;
+  "awg/conf-alexrpi4tp.age".publicKeys = all;
+  "awg/conf-fw13.age".publicKeys = all;
+  "awg/conf-pixel7a.age".publicKeys = all;
   "xray-server-oracle.age".publicKeys = fw13 ++ oracle;
   "xray-client-fw13.age".publicKeys = fw13 ++ oracle;
 }

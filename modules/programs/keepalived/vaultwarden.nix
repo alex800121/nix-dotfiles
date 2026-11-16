@@ -85,6 +85,7 @@
         services.vaultwarden.galera.tailscale.keepalived.peers = lib.mkOption {
           type = lib.types.listOf lib.types.str;
           default = config.services.vaultwarden.galera.peers or [ ];
+          apply = lib.unique;
         };
         services.vaultwarden.galera.tailscale.keepalived.router.id = lib.mkOption {
           type = lib.types.nullOr lib.types.ints.u8;
