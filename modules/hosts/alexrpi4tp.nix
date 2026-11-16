@@ -238,6 +238,7 @@
         self.nixosModules.topo
         self.nixosModules.distributed-builds
         self.nixosModules.tailscale-server
+        self.nixosModules.amneziawg-server
         # self.nixosModules.nix-ld
         self.nixosModules.vaultwarden
         self.nixosModules.borgbackup-vaultwarden

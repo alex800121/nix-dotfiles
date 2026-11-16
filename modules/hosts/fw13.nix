@@ -150,13 +150,12 @@
           "flathub:app/org.rncbc.qpwgraph//stable"
           # "flathub:app/org.gnome.NetworkDisplays//stable"
           "flathub:app/com.usebottles.bottles//stable"
-          # "flathub:app/com.vysp3r.ProtonPlus//stable"
           "flathub:app/org.gnome.DejaDup//stable"
           # "flathub:app/io.github.totoshko88.RustConn//stable"
 
           # Secret Management
           "flathub:app/com.bitwarden.desktop//stable"
-          # "flathub:app/org.keepassxc.KeePassXC//stable"
+          "flathub:app/org.keepassxc.KeePassXC//stable"
 
           # Browsers
           # "flathub:app/app.zen_browser.zen//stable"
@@ -164,8 +163,6 @@
           "flathub:app/com.google.Chrome//stable"
           "flathub:app/com.opera.Opera//stable"
           # "flathub:app/io.gitlab.librewolf-community//stable"
-          # Use system firefox
-          # "flathub:app/org.mozilla.firefox//stable"
 
           # Media
           "flathub:app/com.calibre_ebook.calibre//stable"
