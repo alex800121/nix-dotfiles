@@ -572,7 +572,7 @@ copy_on_select true
 // without the user being asked.
 // Default: false
 //
-// dangerously_enable_paste_buffer_read true
+dangerously_enable_paste_buffer_read true
 
 // Whether stacked panes display as a list with the expanded pane pinned to the bottom
 // Default: true
