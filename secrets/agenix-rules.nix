@@ -1,5 +1,5 @@
 let
-  all = alexrpi4tp ++ oracle ++ oracle2 ++ oracle3 ++ acer-tp ++ fw13;
+  all = alexrpi4tp ++ oracle ++ oracle2 ++ oracle3 ++ oracle4 ++ acer-tp ++ fw13;
   acer-tp-user = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMYRhvHSun0BXMV1oBi93FncWVFEma5pv6fKeruccOuW";
   acer-tp-system = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDzMKvJj6q/7kBnBwmVbihs23csYbDS27kFOvtZDLYzB";
   acer-tp = [
@@ -35,6 +35,12 @@ let
   oracle3 = [
     oracle3-user
     oracle3-system
+  ];
+  oracle4-user = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMZwJjOboE/KvYqtb9Ecmnotn/hOd4Zv7goI8d+6tCYD";
+  oracle4-system = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICk6UXDj18/taby2f3L4LVZTH76/XbII96oZtdv50lmM";
+  oracle4 = [
+    oracle4-user
+    oracle4-system
   ];
 in
 {

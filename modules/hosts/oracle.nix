@@ -32,6 +32,14 @@
     ];
   };
 
+  flake.nixosConfigurations.oracle4 = inputs.nixpkgs.lib.nixosSystem {
+    modules = [
+      self.nixosModules.oracle-common
+      self.nixosModules.topo
+      { initConfig.hostName = "oracle4"; }
+    ];
+  };
+
   flake.nixosModules.oracle-common =
     {
       pkgs,

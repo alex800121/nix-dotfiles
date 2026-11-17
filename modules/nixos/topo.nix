@@ -3,6 +3,12 @@
     { lib, config, ... }:
     {
       config.initConfig.topo = {
+        fw13 = {
+          id = 7;
+          peers = [
+            "oracle"
+          ];
+        };
         alexrpi4tp = {
           id = 2;
           peers = [
@@ -47,6 +53,9 @@
         };
         oracle3 = {
           id = 6;
+        };
+        oracle4 = {
+          id = 8;
         };
       };
     };

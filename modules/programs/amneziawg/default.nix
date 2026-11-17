@@ -10,9 +10,39 @@
       nixpkgsUnstable = import inputs.nixpkgsUnstable {
         inherit (config.nixpkgs.hostPlatform) system;
       };
+      inherit (config.networking) hostName;
+      inherit (config.initConfig.topo.${hostName}) id peers;
+      inherit (builtins) toString;
+      ip4 = "10.88.0.${toString id}/32";
+      ip6 = "fd88:88::${toString id}/128";
+      peerConf = builtins.map (
+        p:
+        let
+          pid = (config.initConfig.topo.${p}).id;
+          pip4 = "10.88.0.${toString pid}/32";
+          pip6 = "fd88:88::${toString pid}/128";
+        in
+        {
+          name = p;
+          publicKey = builtins.readFile ../../../secrets/awg/${p}.pub;
+          allowedIPs = [
+            "0.0.0.0/0"
+            "::/0"
+          ];
+          endpoint = "${p}ipv6.alexgate.dpdns.org:51820";
+          persistentKeepalive = 25;
+          dynamicEndpointRefreshRestartSeconds = 10;
+        }
+      ) peers;
+      ip = "${pkgs.iproute2}/bin/ip";
+      table = "2468";
+      mark = "0xca6c";
     in
     {
-      imports = [ inputs.agenix.nixosModules.default ];
+      imports = [
+        inputs.agenix.nixosModules.default
+        self.nixosModules.topo
+      ];
       options = { };
       config = {
         nixpkgs.overlays = [
@@ -29,18 +59,78 @@
         services.resolved.enable = true;
         networking.firewall.checkReversePath = "loose";
 
-        age.secrets."awg0.conf".file = ../../../secrets/awg/conf-${config.networking.hostName}.age;
-
-        systemd.services.wg-quick-awg0.serviceConfig = {
-          Restart = "on-failure";
-          RestartSec = "10s";
-        };
+        # AmneziaWG server
+        age.secrets."awg.key".file = ../../../secrets/awg/${hostName}.age;
+        age.secrets."header.key".file = ../../../secrets/awg/header.age;
 
         # AmneziaWG server
-        networking.wg-quick.interfaces.awg0 = {
+        networking.wireguard.useNetworkd = false;
+        networking.wireguard.interfaces.awg0 = {
+          # 將 AllowedIPs 的路由放到專用 table
+          table = table;
+          allowedIPsAsRoutes = true;
+
+          # 標記 AWG 外層 UDP，避免 routing loop
+          fwMark = mark;
+
+          postSetup = ''
+            ${pkgs.amneziawg-tools}/bin/awg set awg0 \
+            header-protection-key ${config.age.secrets."header.key".path}
+            for family in -4 -6; do
+              # 保留本地 LAN / 其他更明確的路由，
+              # 但忽略 main table 的 default route
+              ${ip} "$family" rule add \
+                pref 5300 \
+                lookup main suppress_prefixlength 0
+
+              # 普通流量走 AWG table
+              # 帶有 AWG fwmark 的外層 UDP 不會匹配
+              ${ip} "$family" rule add \
+                pref 5301 \
+                not fwmark ${mark} lookup ${table}
+            done
+          '';
+
+          preShutdown = ''
+            for family in -4 -6; do
+              ${ip} "$family" rule del \
+                pref 5301 \
+                not fwmark ${mark} lookup ${table} \
+                2>/dev/null || true
+
+              ${ip} "$family" rule del \
+                pref 5300 \
+                lookup main suppress_prefixlength 0 \
+                2>/dev/null || true
+            done
+          '';
+          ips = [
+            ip4
+            ip6
+          ];
           type = "amneziawg";
-          configFile = config.age.secrets."awg0.conf".path;
-          autostart = false;
+          privateKeyFile = config.age.secrets."awg.key".path;
+          dynamicEndpointRefreshSeconds = 30;
+          peers = peerConf;
+          mtu = 1280;
+          extraOptions = {
+            Jc = 4;
+            Jmin = 40;
+            Jmax = 100;
+            S1 = 64;
+            S2 = 96;
+            S3 = 16;
+            S4 = 16;
+            H1 = 918517201;
+            H2 = 918517202;
+            H3 = 918517203;
+            H4 = 918517204;
+
+            "content-padding-addition" = 16;
+            "rekey-after-time" = "100-120";
+            "rekey-timeout" = "5-7";
+            "keepalive-timeout" = "10-15";
+          };
         };
 
       };
@@ -125,7 +215,28 @@
           listenPort = 51820;
           privateKeyFile = config.age.secrets."awg.key".path;
           dynamicEndpointRefreshSeconds = 30;
-          peers = peerConf;
+          peers = peerConf ++ [
+            ({
+              name = "fw13";
+              publicKey = builtins.readFile ../../../secrets/awg/fw13.pub;
+              allowedIPs = [
+                "10.88.0.7/32"
+                "fd88:88::7/128"
+              ];
+              persistentKeepalive = 25;
+              dynamicEndpointRefreshRestartSeconds = 10;
+            })
+            ({
+              name = "pixel7a";
+              publicKey = builtins.readFile ../../../secrets/awg/pixel7a.pub;
+              allowedIPs = [
+                "10.88.0.101/32"
+                "fd88:88::101/128"
+              ];
+              persistentKeepalive = 25;
+              dynamicEndpointRefreshRestartSeconds = 10;
+            })
+          ];
           mtu = 1280;
           extraOptions = {
             Jc = 4;

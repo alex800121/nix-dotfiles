@@ -348,8 +348,6 @@
               };
 
               "org/gnome/shell".favorite-apps = [
-                # "app.zen_browser.zen.desktop"
-                # "org.mozilla.firefox.desktop"
                 "firefox.desktop"
                 "com.spotify.Client.desktop"
                 "com.visualstudio.code.desktop"

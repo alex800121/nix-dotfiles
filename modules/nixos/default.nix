@@ -241,9 +241,6 @@
         # prunePaths = [ "/media/alex800121" ];
       };
 
-      qt = {
-        enable = true;
-        style = "adwaita-dark";
-      };
+      qt.enable = true;
     };
 }

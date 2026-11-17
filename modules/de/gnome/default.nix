@@ -16,7 +16,6 @@
       hardware.logitech.wireless.enable = true;
       hardware.logitech.wireless.enableGraphical = true;
 
-      qt.platformTheme = "gnome";
       services.displayManager.gdm.enable = true;
 
       services.displayManager = {
@@ -174,7 +173,7 @@
         nixpkgsUnstable.gnomeExtensions.battery-health-charging
         nixpkgsUnstable.gnomeExtensions.systemd-manager-neo
         kimpanel
-        appindicator
+        nixpkgsUnstable.gnomeExtensions.appindicator
         xwayland-indicator
         tailscale-status
         tailscale-qs
