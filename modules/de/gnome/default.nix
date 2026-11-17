@@ -77,7 +77,7 @@
                   "gtk4-ding@smedius.gitlab.com"
                   "xwayland-indicator@swsnr.de"
                   "solaar-extension@sidevesh"
-                  "tailscale-gnome-qs@tailscale-qs.github.io"
+                  # "tailscale-gnome-qs@tailscale-qs.github.io"
                   "Battery-Health-Charging@maniacx.github.com"
                   "systemd-manager-neo@ladoleo.local"
                 ];
@@ -175,8 +175,8 @@
         kimpanel
         nixpkgsUnstable.gnomeExtensions.appindicator
         xwayland-indicator
-        tailscale-status
-        tailscale-qs
+        # tailscale-status
+        # tailscale-qs
         pkgs.gnome-tweaks
         solaar-extension
 

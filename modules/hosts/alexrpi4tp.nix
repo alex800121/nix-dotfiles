@@ -243,6 +243,7 @@
         self.nixosModules.vaultwarden
         self.nixosModules.borgbackup-vaultwarden
         inputs.agenix.nixosModules.default
+        self.nixosModules.syncthing
       ];
 
       nixpkgs.overlays = [

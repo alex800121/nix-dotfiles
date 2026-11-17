@@ -133,6 +133,18 @@
           };
         };
 
+        systemd.targets."wireguard-awg0".wantedBy = lib.mkForce [ ];
+
+        # 停止 Target 時也停止 Interface
+        systemd.services."wireguard-awg0".partOf = [
+          "wireguard-awg0.target"
+        ];
+
+        # 停止 Target 時也停止 DDNS refresh
+        systemd.services."wireguard-awg0-peer-oracle-refresh".partOf = [
+          "wireguard-awg0.target"
+        ];
+
       };
     };
   flake.nixosModules.amneziawg-server =

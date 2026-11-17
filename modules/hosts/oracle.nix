@@ -12,6 +12,7 @@
         services.vaultwarden.borgbackup.servers = [ "acer-tp" ];
         initConfig.hostName = "oracle";
       }
+      self.nixosModules.syncthing
     ];
 
   };
@@ -37,6 +38,7 @@
       self.nixosModules.oracle-common
       self.nixosModules.topo
       { initConfig.hostName = "oracle4"; }
+      self.nixosModules.syncthing
     ];
   };
 

@@ -70,6 +70,7 @@
         self.nixosModules.virt
         self.nixosModules.tailscale-client
         self.nixosModules.amneziawg-client
+        self.nixosModules.syncthing
       ];
 
       initConfig.defaultUser = "alex800121";
