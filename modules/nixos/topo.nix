@@ -5,12 +5,17 @@
       config.initConfig.topo = {
         fw13 = {
           id = 7;
-          peers = [
+          awgPeers = [
             "oracle"
           ];
         };
         alexrpi4tp = {
           id = 2;
+          awgPeers = [
+            "acer-tp"
+            "oracle"
+            "oracle4"
+          ];
           peers = [
             "acer-tp"
             "oracle"
@@ -24,6 +29,11 @@
         };
         acer-tp = {
           id = 3;
+          awgPeers = [
+            "oracle"
+            "alexrpi4tp"
+            "oracle4"
+          ];
           peers = [
             "oracle"
             "alexrpi4tp"
@@ -37,6 +47,11 @@
         };
         oracle = {
           id = 4;
+          awgPeers = [
+            "acer-tp"
+            "alexrpi4tp"
+            "oracle4"
+          ];
           peers = [
             "acer-tp"
             "alexrpi4tp"
@@ -56,6 +71,11 @@
         };
         oracle4 = {
           id = 8;
+          awgPeers = [
+            "acer-tp"
+            "alexrpi4tp"
+            "oracle"
+          ];
         };
       };
     };

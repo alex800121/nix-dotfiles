@@ -57,11 +57,13 @@ in
   "tssecret.age".publicKeys = all;
   "nix_common.age".publicKeys = all;
   "cloudflare.age".publicKeys = all;
+  "cloudflare-inadyn.age".publicKeys = all;
   "cloudflare-r2.age".publicKeys = all;
   "awg/header.age".publicKeys = all;
   "awg/oracle.age".publicKeys = all;
   "awg/oracle2.age".publicKeys = all;
   "awg/oracle3.age".publicKeys = all;
+  "awg/oracle4.age".publicKeys = all;
   "awg/alexrpi4tp.age".publicKeys = all;
   "awg/acer-tp.age".publicKeys = all;
   "awg/fw13.age".publicKeys = all;

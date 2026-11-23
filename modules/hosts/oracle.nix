@@ -37,6 +37,7 @@
     modules = [
       self.nixosModules.oracle-common
       self.nixosModules.topo
+      self.nixosModules.amneziawg-server
       { initConfig.hostName = "oracle4"; }
       self.nixosModules.syncthing
     ];

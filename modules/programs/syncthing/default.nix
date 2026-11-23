@@ -20,6 +20,7 @@
         id = lib.strings.trim (builtins.readFile ../../../secrets/syncthing/id-${x});
         autoAcceptFolders = true;
       });
+      user = config.initConfig.defaultUser;
     in
     {
       imports = [
@@ -28,19 +29,23 @@
       config = {
         age.secrets.guiPasswordFile = {
           file = ../../../secrets/syncthing/pw.age;
+          owner = user;
+          group = "users";
         };
         age.secrets.key = {
           file = ../../../secrets/syncthing/key-${hostName}.age;
+          owner = user;
+          group = "users";
         };
         age.secrets.cert = {
           file = ../../../secrets/syncthing/cert-${hostName}.age;
+          owner = user;
+          group = "users";
         };
 
-        systemd.targets.multi-user.wants = [
-          "syncthing@${config.initConfig.defaultUser}.service"
-        ];
-
         services.syncthing = {
+          inherit user;
+          group = "users";
           enable = true;
           openDefaultPorts = true;
           key = config.age.secrets.key.path;
@@ -48,11 +53,11 @@
           guiPasswordFile = config.age.secrets.guiPasswordFile.path;
           overrideDevices = false;
           overrideFolders = false;
-          systemService = false;
-          dataDir = "/home/${config.initConfig.defaultUser}";
+          systemService = true;
           settings.gui = {
             user = config.initConfig.defaultUser;
           };
+          dataDir = "/home/${user}";
           settings = {
             inherit devices;
             folders = {
@@ -61,9 +66,14 @@
                 devices = peers;
                 versioning = {
                   type = "simple";
-                  params.keep = "20";
+                  cleanupIntervalS = "604800";
+                  params = {
+                    keep = "30";
+                    cleanoutDays = "90";
+                  };
                 };
                 maxConflicts = -1;
+                ignorePerms = true;
               };
             };
           };

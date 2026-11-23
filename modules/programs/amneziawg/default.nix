@@ -11,7 +11,8 @@
         inherit (config.nixpkgs.hostPlatform) system;
       };
       inherit (config.networking) hostName;
-      inherit (config.initConfig.topo.${hostName}) id peers;
+      inherit (config.initConfig.topo.${hostName}) id;
+      peers = config.initConfig.topo.${hostName}.awgPeers;
       inherit (builtins) toString;
       ip4 = "10.88.0.${toString id}/32";
       ip6 = "fd88:88::${toString id}/128";
@@ -29,7 +30,7 @@
             "0.0.0.0/0"
             "::/0"
           ];
-          endpoint = "${p}ipv6.alexgate.dpdns.org:51820";
+          endpoint = "ipv6.${p}.alexgate.dpdns.org:51820";
           persistentKeepalive = 25;
           dynamicEndpointRefreshRestartSeconds = 10;
         }
@@ -133,6 +134,46 @@
           };
         };
 
+        age.secrets."cloudflare.include" = {
+          file = ../../../secrets/cloudflare-inadyn.age;
+          owner = "inadyn";
+          group = "inadyn";
+        };
+
+        services.inadyn = {
+          enable = true;
+          settings.allow-ipv6 = true;
+          interval = "*:0/10";
+          settings.provider = {
+            "cloudflare.com:2" = {
+              include = config.age.secrets."cloudflare.include".path;
+              username = "alexgate.dpdns.org";
+              hostname = [
+                "ipv6.awg.${hostName}.alexgate.dpdns.org"
+                "awg.${hostName}.alexgate.dpdns.org"
+              ];
+              ssl = true;
+              checkip-command = ''
+                ${pkgs.iproute2}/bin/ip -6 addr show dev awg0 | ${pkgs.ripgrep}/bin/rg inet6 | ${pkgs.gawk}/bin/awk -F '[ ]+|/' '{print $3}'
+              '';
+              proxied = false;
+            };
+            "cloudflare.com:3" = {
+              include = config.age.secrets."cloudflare.include".path;
+              username = "alexgate.dpdns.org";
+              hostname = [
+                "ipv4.awg.${hostName}.alexgate.dpdns.org"
+                "awg.${hostName}.alexgate.dpdns.org"
+              ];
+              ssl = true;
+              checkip-command = ''
+                ${pkgs.iproute2}/bin/ip -4 addr show dev awg0 | ${pkgs.ripgrep}/bin/rg inet | ${pkgs.gawk}/bin/awk -F '[ ]+|/' '{print $3}'
+              '';
+              proxied = false;
+            };
+          };
+        };
+
         systemd.targets."wireguard-awg0".wantedBy = lib.mkForce [ ];
 
         # 停止 Target 時也停止 Interface
@@ -159,7 +200,8 @@
         inherit (config.nixpkgs.hostPlatform) system;
       };
       inherit (config.networking) hostName;
-      inherit (config.initConfig.topo.${hostName}) peers id;
+      inherit (config.initConfig.topo.${hostName}) id;
+      peers = config.initConfig.topo.${hostName}.awgPeers;
       inherit (builtins) toString;
       ip4 = "10.88.0.${toString id}/32";
       ip6 = "fd88:88::${toString id}/128";
@@ -177,7 +219,7 @@
             pip4
             pip6
           ];
-          endpoint = "${p}ipv6.alexgate.dpdns.org:51820";
+          endpoint = "ipv6.${p}.alexgate.dpdns.org:51820";
           persistentKeepalive = 25;
           dynamicEndpointRefreshRestartSeconds = 10;
         }
@@ -190,21 +232,86 @@
       ];
       options = { };
       config = {
-        age.secrets."cloudflare.env".file = ../../../secrets/cloudflare.age;
-
-        services.cloudflare-ddns = {
-          enable = true;
-          ip4Domains = [
-            "${hostName}ipv4.alexgate.dpdns.org"
-            "${hostName}.alexgate.dpdns.org"
-          ];
-          ip6Domains = [
-            "${hostName}ipv6.alexgate.dpdns.org"
-            "${hostName}.alexgate.dpdns.org"
-          ];
-          credentialsFile = config.age.secrets."cloudflare.env".path;
-          updateCron = "@every 5m";
+        # age.secrets."cloudflare.env".file = ../../../secrets/cloudflare.age;
+        age.secrets."cloudflare.include" = {
+          file = ../../../secrets/cloudflare-inadyn.age;
+          owner = "inadyn";
+          group = "inadyn";
         };
+
+        services.inadyn = {
+          enable = true;
+          settings.allow-ipv6 = true;
+          interval = "*:0/2";
+          settings.provider = {
+            "cloudflare.com:2" = {
+              include = config.age.secrets."cloudflare.include".path;
+              username = "alexgate.dpdns.org";
+              hostname = [
+                "ipv6.awg.${hostName}.alexgate.dpdns.org"
+                "awg.${hostName}.alexgate.dpdns.org"
+              ];
+              ssl = true;
+              checkip-command = ''
+                ${pkgs.iproute2}/bin/ip -6 addr show dev awg0 | ${pkgs.ripgrep}/bin/rg inet6 | ${pkgs.gawk}/bin/awk -F '[ ]+|/' '{print $3}'
+              '';
+              proxied = false;
+            };
+            "cloudflare.com:3" = {
+              include = config.age.secrets."cloudflare.include".path;
+              username = "alexgate.dpdns.org";
+              hostname = [
+                "ipv4.awg.${hostName}.alexgate.dpdns.org"
+                "awg.${hostName}.alexgate.dpdns.org"
+              ];
+              ssl = true;
+              checkip-command = ''
+                ${pkgs.iproute2}/bin/ip -4 addr show dev awg0 | ${pkgs.ripgrep}/bin/rg inet | ${pkgs.gawk}/bin/awk -F '[ ]+|/' '{print $3}'
+              '';
+              proxied = false;
+            };
+            "cloudflare.com:4" = {
+              include = config.age.secrets."cloudflare.include".path;
+              username = "alexgate.dpdns.org";
+              hostname = [
+                "ipv6.${hostName}.alexgate.dpdns.org"
+                "${hostName}.alexgate.dpdns.org"
+              ];
+              ssl = true;
+              checkip-command = ''
+                ${pkgs.curl}/bin/curl -s -6 ifconfig.me/ip
+              '';
+              proxied = false;
+            };
+            "cloudflare.com:5" = {
+              include = config.age.secrets."cloudflare.include".path;
+              username = "alexgate.dpdns.org";
+              hostname = [
+                "ipv4.${hostName}.alexgate.dpdns.org"
+                "${hostName}.alexgate.dpdns.org"
+              ];
+              ssl = true;
+              checkip-command = ''
+                ${pkgs.curl}/bin/curl -s -4 ifconfig.me/ip
+              '';
+              proxied = false;
+            };
+          };
+        };
+
+        # services.cloudflare-ddns = {
+        #   enable = true;
+        #   ip4Domains = [
+        #     "ipv4.${hostName}.alexgate.dpdns.org"
+        #     "${hostName}.alexgate.dpdns.org"
+        #   ];
+        #   ip6Domains = [
+        #     "ipv6.${hostName}.alexgate.dpdns.org"
+        #     "${hostName}.alexgate.dpdns.org"
+        #   ];
+        #   credentialsFile = config.age.secrets."cloudflare.env".path;
+        #   updateCron = "@every 5m";
+        # };
 
         nixpkgs.overlays = [
           (self: super: { amneziawg-tools = nixpkgsUnstable.amneziawg-tools; })

@@ -139,13 +139,20 @@
               };
 
               "org/gnome/settings-daemon/plugins/media-keys".custom-keybindings = [
-                "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
+                "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/terminal/"
+                "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/keepassxc/"
               ];
 
-              "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
+              "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/terminal" = {
                 binding = "<Super>t";
                 command = "xdg-terminal";
                 name = "Terminal";
+              };
+
+              "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/keepassxc" = {
+                binding = "<Super>k";
+                command = "keepassxc";
+                name = "KeePassXC";
               };
 
               "org/gnome/desktop/interface" = {
