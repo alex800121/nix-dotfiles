@@ -30,7 +30,7 @@
             "0.0.0.0/0"
             "::/0"
           ];
-          endpoint = "ipv6.${p}.alexgate.dpdns.org:51820";
+          endpoint = "${p}.alexgate.dpdns.org:51820";
           persistentKeepalive = 25;
           dynamicEndpointRefreshRestartSeconds = 10;
         }
@@ -57,6 +57,73 @@
           unmanaged = [ "interface-name:awg0" ];
         };
 
+        # services.dnsproxy = {
+        #   enable = true;
+        #
+        #   settings = {
+        #     listen-addrs = [ "127.0.0.1" ];
+        #     listen-ports = [ 5053 ];
+        #
+        #     upstream = [
+        #       "https://1.1.1.1/dns-query"
+        #     ];
+        #   };
+        # };
+        #
+        # systemd.services.doh-bypass = {
+        #   description = "Direct DoH bootstrap routing";
+        #
+        #   wantedBy = [ "multi-user.target" ];
+        #   before = [ "dnsproxy.service" ];
+        #
+        #   path = [ pkgs.iproute2 ];
+        #
+        #   serviceConfig = {
+        #     Type = "oneshot";
+        #     RemainAfterExit = true;
+        #   };
+        #
+        #   script = ''
+        #     # Reconcile existing rules, including manually added ones
+        #     ip -4 rule del pref 5200 2>/dev/null || true
+        #     ip -4 rule del pref 5201 2>/dev/null || true
+        #
+        #     ip -4 rule add pref 5200 \
+        #       to 1.1.1.1/32 \
+        #       ipproto tcp dport 443 \
+        #       lookup main
+        #
+        #     ip -4 rule add pref 5201 \
+        #       to 1.0.0.1/32 \
+        #       ipproto tcp dport 443 \
+        #       lookup main
+        #   '';
+        #
+        #   preStop = ''
+        #     ip -4 rule del pref 5200 2>/dev/null || true
+        #     ip -4 rule del pref 5201 2>/dev/null || true
+        #   '';
+        # };
+        #
+        # systemd.services.dnsproxy = {
+        #   requires = [ "doh-bypass.service" ];
+        #   after = [ "doh-bypass.service" ];
+        # };
+        #
+        # services.resolved = {
+        #   settings.Resolve = {
+        #     DNS = [ "127.0.0.1:5053" ];
+        #
+        #     # Oracle DDNS 優先使用本機 DoH Proxy
+        #     Domains = [ "~." ];
+        #   };
+        # };
+        #
+        # systemd.services."wireguard-awg0-peer-oracle-refresh" = {
+        #   wants = [ "dnsproxy.service" ];
+        #   after = [ "dnsproxy.service" ];
+        # };
+        #
         services.resolved.enable = true;
         networking.firewall.checkReversePath = "loose";
 
@@ -176,15 +243,22 @@
 
         systemd.targets."wireguard-awg0".wantedBy = lib.mkForce [ ];
 
-        # 停止 Target 時也停止 Interface
-        systemd.services."wireguard-awg0".partOf = [
-          "wireguard-awg0.target"
-        ];
-
-        # 停止 Target 時也停止 DDNS refresh
-        systemd.services."wireguard-awg0-peer-oracle-refresh".partOf = [
-          "wireguard-awg0.target"
-        ];
+        systemd.services = lib.mkMerge (
+          [
+            {
+              # 停止 Target 時也停止 Interface
+              "wireguard-awg0".partOf = [
+                "wireguard-awg0.target"
+              ];
+            }
+          ]
+          ++ builtins.map (p: {
+            # 停止 Target 時也停止 DDNS refresh
+            "wireguard-awg0-peer-${p}-refresh".partOf = [
+              "wireguard-awg0.target"
+            ];
+          }) peers
+        );
 
       };
     };
@@ -219,7 +293,7 @@
             pip4
             pip6
           ];
-          endpoint = "ipv6.${p}.alexgate.dpdns.org:51820";
+          endpoint = "${p}.alexgate.dpdns.org:51820";
           persistentKeepalive = 25;
           dynamicEndpointRefreshRestartSeconds = 10;
         }

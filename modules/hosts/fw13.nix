@@ -136,6 +136,53 @@
 
       services.xserver.enable = true;
 
+      services.dnsproxy = {
+        enable = true;
+
+        settings = {
+          listen-addrs = [ "127.0.0.1" ];
+          listen-ports = [ 5353 ];
+
+          upstream = [
+            "https://dns10.quad9.net/dns-query"
+            "tls://dns10.quad9.net"
+            "quic://dns10.quad9.net"
+          ];
+
+          upstream-mode = "parallel";
+
+          bootstrap = [ "9.9.9.10:53" ];
+
+          cache = true;
+          timeout = "5s";
+        };
+
+        flags = [ "--http3" ];
+      };
+
+      services.resolved = {
+        enable = true;
+
+        settings.Resolve = {
+          DNS = [ "127.0.0.1:5353" ];
+          DNSOverTLS = "no";
+          DNSSEC = "no";
+          Domains = [ "~." ];
+          FallbackDNS = [ ];
+        };
+      };
+      services.tailscale.extraUpFlags = [
+        "--accept-dns=true"
+      ];
+
+      services.tailscale.extraSetFlags = [
+        "--accept-dns=true"
+      ];
+
+      programs.captive-browser.enable = true;
+      programs.captive-browser.interface = "wlan0";
+      programs.captive-browser.bindInterface = true;
+
       services.cpak.enable = true;
       services.flatpak = {
         enable = true;
@@ -300,6 +347,32 @@
 
       services.samba.enable = true;
       services.samba.smbd.enable = true;
+
+      systemd.user.services.goa-refresh = {
+        description = "Refresh GOA on graphical login";
+
+        wantedBy = [ "graphical-session.target" ];
+        after = [ "graphical-session.target" ];
+
+        serviceConfig.Type = "oneshot";
+
+        script = ''
+          pid=$(
+            ${pkgs.systemd}/bin/busctl --user --no-legend --no-pager list |
+            ${pkgs.gawk}/bin/awk '
+              $1 == "org.gnome.OnlineAccounts" &&
+              $2 ~ /^[0-9]+$/ {
+                print $2
+                exit
+              }
+            '
+          )
+
+          if [ -n "$pid" ]; then
+            kill "$pid"
+          fi
+        '';
+      };
 
       programs.dconf = {
         enable = true;
