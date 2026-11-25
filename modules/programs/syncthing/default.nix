@@ -67,7 +67,7 @@
                 devices = peers;
                 versioning = {
                   type = "simple";
-                  cleanupIntervalS = "604800";
+                  cleanupIntervalS = 604800;
                   params = {
                     keep = "30";
                     cleanoutDays = "90";

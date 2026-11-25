@@ -13,7 +13,7 @@ let
     alexrpi4tp-system
   ];
   fw12-user = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK3uLM6LKLkIh9pZD6ibhG0eu2An+wCrAzlhpb5+0Meg";
-  fw12-system = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIfv96d+HvjOemH99i+36KnYOJ5iL0Unfe6b3vMSGSKR";
+  fw12-system = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOx6BpYKOxtL6t+xfddXD/mVmP/EQGE1zd+5anOjagb3";
   fw12 = [
     fw12-user
     fw12-system

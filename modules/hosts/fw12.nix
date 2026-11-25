@@ -29,6 +29,9 @@
           AllMulticast = true;
         };
       };
+      nixpkgsUnstable = import inputs.nixpkgsUnstable {
+        inherit (config.nixpkgs.hostPlatform) system;
+      };
     in
     {
       imports = [
@@ -58,7 +61,7 @@
 
       # conservative fix for unexpected shutdown when waking up from sleep.
       # should switch to another LTS ASAP.
-      boot.kernelPackages = lib.mkForce pkgs.linuxPackages_7_3;
+      boot.kernelPackages = lib.mkForce nixpkgsUnstable.linuxPackages_7_3;
       # boot.kernelPackages = pkgs.linuxPackages_latest;
 
       nixpkgs.overlays = [
@@ -93,7 +96,7 @@
 
       boot.loader.systemd-boot.enable = false;
       boot.loader.limine.enable = true;
-      boot.loader.limine.secureBoot.enable = true;
+      # boot.loader.limine.secureBoot.enable = true;
       boot.loader.limine.extraConfig = ''
         remember_last_entry: yes
         timeout: 5
