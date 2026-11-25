@@ -5,7 +5,7 @@
       self.nixosModules.fw12
     ];
   };
-  flake.nixosModules.fw13 =
+  flake.nixosModules.fw12 =
     {
       config,
       pkgs,
@@ -58,7 +58,7 @@
 
       # conservative fix for unexpected shutdown when waking up from sleep.
       # should switch to another LTS ASAP.
-      boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
+      boot.kernelPackages = lib.mkForce pkgs.linuxPackages_7_3;
       # boot.kernelPackages = pkgs.linuxPackages_latest;
 
       nixpkgs.overlays = [

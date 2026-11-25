@@ -3,6 +3,12 @@
     { lib, config, ... }:
     {
       config.initConfig.topo = {
+        fw12 = {
+          id = 9;
+          awgPeers = [
+            "oracle"
+          ];
+        };
         fw13 = {
           id = 7;
           awgPeers = [

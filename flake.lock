@@ -224,6 +224,25 @@
         "type": "github"
       }
     },
+    "nixos-hardware-fw": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_3"
+      },
+      "locked": {
+        "lastModified": 1794809807,
+        "narHash": "sha256-YgJFhmg3ZlcToQzayITJJzBlC5ckxFloJyfKxsK/0zU=",
+        "owner": "FrameworkComputer",
+        "repo": "nixos-hardware",
+        "rev": "c233b7112595ee2c7aa52667154523e6bc92491e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "FrameworkComputer",
+        "ref": "framework-laptop12-ultra-series3",
+        "repo": "nixos-hardware",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1788179007,
@@ -283,6 +302,19 @@
     },
     "nixpkgs_3": {
       "locked": {
+        "lastModified": 1789546076,
+        "narHash": "sha256-vWkSk5bbfTqdtMoSgD9FshACO8JCvXTFi+3cqEp0mH0=",
+        "rev": "b1b875982b17dabde9b4a37f3e229e74913e6db3",
+        "type": "tarball",
+        "url": "https://releases.nixos.org/nixos/unstable/nixos-26.11pre1074753.b1b875982b17/nixexprs.tar.xz"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz"
+      }
+    },
+    "nixpkgs_4": {
+      "locked": {
         "lastModified": 1794552581,
         "narHash": "sha256-C0bP9ShRkxihpkAiWel93+JypO7ls9usnHRtK2VLvWA=",
         "rev": "f1e5c356f35d07e7b71a6b5e6c9338e0b029e0c0",
@@ -294,7 +326,7 @@
         "url": "https://channels.nixos.org/nixos-26.05/nixexprs.tar.zst"
       }
     },
-    "nixpkgs_4": {
+    "nixpkgs_5": {
       "locked": {
         "lastModified": 1794495034,
         "narHash": "sha256-E0hYoioqUtM2XmPPvYYpJgdADF5AW9oOoPSEiM9dTHQ=",
@@ -344,7 +376,8 @@
         "lanzaboote": "lanzaboote",
         "musnix": "musnix",
         "nixos-hardware": "nixos-hardware",
-        "nixpkgs": "nixpkgs_3",
+        "nixos-hardware-fw": "nixos-hardware-fw",
+        "nixpkgs": "nixpkgs_4",
         "nixpkgsUnstable": "nixpkgsUnstable",
         "rpi4fw": "rpi4fw",
         "rust-overlay": "rust-overlay_2",
@@ -407,7 +440,7 @@
     },
     "wrappers": {
       "inputs": {
-        "nixpkgs": "nixpkgs_4"
+        "nixpkgs": "nixpkgs_5"
       },
       "locked": {
         "lastModified": 1794827395,
