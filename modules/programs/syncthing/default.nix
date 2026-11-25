@@ -10,6 +10,7 @@
     let
       peers = [
         "fw13"
+        "fw12"
         "alexrpi4tp"
         "oracle"
         "oracle4"

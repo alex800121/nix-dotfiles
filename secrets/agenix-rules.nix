@@ -1,5 +1,5 @@
 let
-  all = alexrpi4tp ++ oracle ++ oracle2 ++ oracle3 ++ oracle4 ++ acer-tp ++ fw13;
+  all = alexrpi4tp ++ oracle ++ oracle2 ++ oracle3 ++ oracle4 ++ acer-tp ++ fw13 ++ fw12;
   acer-tp-user = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMYRhvHSun0BXMV1oBi93FncWVFEma5pv6fKeruccOuW";
   acer-tp-system = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDzMKvJj6q/7kBnBwmVbihs23csYbDS27kFOvtZDLYzB";
   acer-tp = [
@@ -11,6 +11,12 @@ let
   alexrpi4tp = [
     alexrpi4tp-user
     alexrpi4tp-system
+  ];
+  fw12-user = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK3uLM6LKLkIh9pZD6ibhG0eu2An+wCrAzlhpb5+0Meg";
+  fw12-system = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIfv96d+HvjOemH99i+36KnYOJ5iL0Unfe6b3vMSGSKR";
+  fw12 = [
+    fw12-user
+    fw12-system
   ];
   fw13-user = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG885XYlPfi2h6hiokfhvZgHF1y2f3JnL11j+ARJkrXE";
   fw13-system = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBQNzT1Bg7s93u10Keu/wZ7oJ8EynEZnSQAK712KQAkv";
@@ -59,6 +65,17 @@ in
   "cloudflare.age".publicKeys = all;
   "cloudflare-inadyn.age".publicKeys = all;
   "cloudflare-r2.age".publicKeys = all;
+  "syncthing/key-alexrpi4tp.age".publicKeys = fw13 ++ alexrpi4tp;
+  "syncthing/key-fw13.age".publicKeys = fw13;
+  "syncthing/key-oracle.age".publicKeys = fw13 ++ oracle;
+  "syncthing/key-oracle4.age".publicKeys = fw13 ++ oracle4;
+  "syncthing/key-fw12.age".publicKeys = fw13 ++ fw12;
+  "syncthing/cert-alexrpi4tp.age".publicKeys = fw13 ++ alexrpi4tp;
+  "syncthing/cert-fw13.age".publicKeys = fw13;
+  "syncthing/cert-oracle.age".publicKeys = fw13 ++ oracle;
+  "syncthing/cert-oracle4.age".publicKeys = fw13 ++ oracle4;
+  "syncthing/cert-fw12.age".publicKeys = fw13 ++ fw12;
+  "syncthing/pw.age".publicKeys = all;
   "awg/header.age".publicKeys = all;
   "awg/oracle.age".publicKeys = all;
   "awg/oracle2.age".publicKeys = all;
@@ -67,6 +84,7 @@ in
   "awg/alexrpi4tp.age".publicKeys = all;
   "awg/acer-tp.age".publicKeys = all;
   "awg/fw13.age".publicKeys = all;
+  "awg/fw12.age".publicKeys = all;
   "awg/pixel7a.age".publicKeys = all;
   "awg/conf-oracle.age".publicKeys = all;
   "awg/conf-alexrpi4tp.age".publicKeys = all;

@@ -14,6 +14,9 @@
     flake-parts.url = "github:hercules-ci/flake-parts";
     cpak.url = "github:Containerpak/cpak/v2";
     # cpak.inputs.nixpkgs.follows = "nixpkgs";
+    nixos-hardware-fw = {
+      url = "github:FrameworkComputer/nixos-hardware/framework-laptop12-ultra-series3";
+    };
     nixos-hardware = {
       url = "github:NixOS/nixos-hardware/master";
     };

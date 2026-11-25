@@ -57,6 +57,8 @@
               "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOVrCm9KX83d8Uv46MZ8aYm7frR9zuQwuK9opRB9/HZt root@oracle3"
               "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMZwJjOboE/KvYqtb9Ecmnotn/hOd4Zv7goI8d+6tCYD alex800121@oracle4"
               "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOUuERkiZc8Lwd9vlRxI+u28MGdZdXbwIkvyd/1nKUa2 root@oracle4"
+              "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK3uLM6LKLkIh9pZD6ibhG0eu2An+wCrAzlhpb5+0Meg alex800121@fw12"
+              "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIfv96d+HvjOemH99i+36KnYOJ5iL0Unfe6b3vMSGSKR root@fw12"
             ];
           };
         })
