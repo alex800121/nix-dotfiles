@@ -3,13 +3,13 @@
     modules = [
       self.nixosModules.oracle-common
       self.nixosModules.topo
-      self.nixosModules.vaultwarden
-      self.nixosModules.borgbackup-vaultwarden
+      # self.nixosModules.vaultwarden
+      # self.nixosModules.borgbackup-vaultwarden
       self.nixosModules.amneziawg-server
       # self.nixosModules.xray-server
       {
-        services.vaultwarden.borgbackup.enable = true;
-        services.vaultwarden.borgbackup.servers = [ "acer-tp" ];
+        # services.vaultwarden.borgbackup.enable = true;
+        # services.vaultwarden.borgbackup.servers = [ "acer-tp" ];
         initConfig.hostName = "oracle";
       }
       self.nixosModules.syncthing

@@ -240,8 +240,8 @@
         self.nixosModules.tailscale-server
         self.nixosModules.amneziawg-server
         # self.nixosModules.nix-ld
-        self.nixosModules.vaultwarden
-        self.nixosModules.borgbackup-vaultwarden
+        # self.nixosModules.vaultwarden
+        # self.nixosModules.borgbackup-vaultwarden
         inputs.agenix.nixosModules.default
         self.nixosModules.syncthing
       ];
@@ -250,8 +250,8 @@
         self.overlays.neovim-min
       ];
 
-      services.vaultwarden.borgbackup.enable = true;
-      services.vaultwarden.borgbackup.servers = [ "acer-tp" ];
+      # services.vaultwarden.borgbackup.enable = true;
+      # services.vaultwarden.borgbackup.servers = [ "acer-tp" ];
 
       boot.loader.systemd-boot.enable = true;
       boot.loader.generic-extlinux-compatible.enable = false;

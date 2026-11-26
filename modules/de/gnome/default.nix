@@ -179,6 +179,7 @@
       environment.systemPackages = with pkgs.gnomeExtensions; [
         nixpkgsUnstable.gnomeExtensions.battery-health-charging
         nixpkgsUnstable.gnomeExtensions.systemd-manager-neo
+        nixpkgsUnstable.gnomeExtensions.gjs-osk
         kimpanel
         nixpkgsUnstable.gnomeExtensions.appindicator
         xwayland-indicator

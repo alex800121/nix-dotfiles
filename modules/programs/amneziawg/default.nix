@@ -410,6 +410,16 @@
           dynamicEndpointRefreshSeconds = 30;
           peers = peerConf ++ [
             ({
+              name = "fw12";
+              publicKey = builtins.readFile ../../../secrets/awg/fw12.pub;
+              allowedIPs = [
+                "10.88.0.9/32"
+                "fd88:88::9/128"
+              ];
+              persistentKeepalive = 25;
+              dynamicEndpointRefreshRestartSeconds = 10;
+            })
+            ({
               name = "fw13";
               publicKey = builtins.readFile ../../../secrets/awg/fw13.pub;
               allowedIPs = [

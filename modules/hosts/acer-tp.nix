@@ -42,22 +42,22 @@
         self.nixosModules.tailscale-server
         self.nixosModules.amneziawg-server
         inputs.agenix.nixosModules.default
-        self.nixosModules.vaultwarden
+        # self.nixosModules.vaultwarden
       ];
 
       initConfig.defaultUser = "alex800121";
       initConfig.hostName = "acer-tp";
 
-      services.borgbackup.repos."vaultwarden" = {
-        authorizedKeys = builtins.map builtins.readFile [
-          ../../secrets/ssh_host_borgbackup_acer-tp_vaultwarden_alexrpi4tp.pub
-          ../../secrets/ssh_host_borgbackup_acer-tp_vaultwarden_db_alexrpi4tp.pub
-          ../../secrets/ssh_host_borgbackup_acer-tp_vaultwarden_oracle.pub
-          ../../secrets/ssh_host_borgbackup_acer-tp_vaultwarden_db_oracle.pub
-        ];
-        quota = "50G";
-        allowSubRepos = false;
-      };
+      # services.borgbackup.repos."vaultwarden" = {
+      #   authorizedKeys = builtins.map builtins.readFile [
+      #     ../../secrets/ssh_host_borgbackup_acer-tp_vaultwarden_alexrpi4tp.pub
+      #     ../../secrets/ssh_host_borgbackup_acer-tp_vaultwarden_db_alexrpi4tp.pub
+      #     ../../secrets/ssh_host_borgbackup_acer-tp_vaultwarden_oracle.pub
+      #     ../../secrets/ssh_host_borgbackup_acer-tp_vaultwarden_db_oracle.pub
+      #   ];
+      #   quota = "50G";
+      #   allowSubRepos = false;
+      # };
 
       networking.networkmanager.enable = false;
       networking.useNetworkd = true;
