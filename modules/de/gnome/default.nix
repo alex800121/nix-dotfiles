@@ -77,16 +77,16 @@
                   "gtk4-ding@smedius.gitlab.com"
                   "xwayland-indicator@swsnr.de"
                   "solaar-extension@sidevesh"
-                  # "tailscale-gnome-qs@tailscale-qs.github.io"
                   "Battery-Health-Charging@maniacx.github.com"
                   "systemd-manager-neo@ladoleo.local"
+                  "gjsosk@vishram1123.com"
                 ];
                 welcome-dialog-last-shown-version = "48.1";
               };
 
               "org/gnome/shell/extensions/systemd-manager-neo" = {
                 favorite-services = [
-                  "wg-quick-awg0.service"
+                  "wireguard-awg0.service"
                   "tailscaled-set.service"
                 ];
               };

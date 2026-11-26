@@ -202,7 +202,7 @@
 
           # Secret Management
           # "flathub:app/org.keepassxc.KeePassXC//stable"
-          "flathub:app/com.bitwarden.desktop//stable"
+          # "flathub:app/com.bitwarden.desktop//stable"
 
           # Browsers
           # "flathub:app/app.zen_browser.zen//stable"

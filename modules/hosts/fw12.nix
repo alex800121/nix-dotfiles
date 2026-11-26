@@ -96,7 +96,8 @@
 
       boot.loader.systemd-boot.enable = false;
       boot.loader.limine.enable = true;
-      # boot.loader.limine.secureBoot.enable = true;
+      boot.loader.limine.secureBoot.enable = true;
+      boot.loader.limine.secureBoot.autoEnrollKeys.enable = true;
       boot.loader.limine.extraConfig = ''
         remember_last_entry: yes
         timeout: 5
@@ -180,7 +181,7 @@
 
           # Secret Management
           # "flathub:app/org.keepassxc.KeePassXC//stable"
-          "flathub:app/com.bitwarden.desktop//stable"
+          # "flathub:app/com.bitwarden.desktop//stable"
 
           # Browsers
           # "flathub:app/app.zen_browser.zen//stable"
